@@ -1,0 +1,3 @@
+- Change application path at 'base_url' in application/bootstrap.php and 'RewriteBase' in .htaccess
+- Change configuration for database in application/config/database.php
+- Change timezone at date_default_timezone_set() in in application/bootstrap.php
