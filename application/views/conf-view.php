@@ -41,7 +41,18 @@
                 </div>
                 <div class="col-lg-6">
                   <p><h4>Category</h4></p>
-                  <p><?php echo $conf['category'] ?></p>
+                  <p><?php 
+                        foreach ($conf['category'] as $category) 
+                        {
+                          echo $category;
+
+                          if(end($conf['category']) != $category)
+                          {
+                              echo ", ";
+                          }
+                        }
+                      ?>
+                  </p>
                 </div>
               </div>
               <div class="row">
