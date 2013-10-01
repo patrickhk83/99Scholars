@@ -23,13 +23,13 @@
 	              	  <label>Duration</label>
 	              	  <div class="form-inline">
 	              	    <div class="form-group">
-	              	      <input type="date" class="form-control datepicker" id="start-date" placeholder="22/09/2013" name="start_date" data-date-format="dd/mm/yyyy"/>
+	              	      <input type="text" class="form-control datepicker" id="start-date" placeholder="22/09/2013" name="start_date" data-date-format="dd/mm/yyyy"/>
 	              	    </div>
 	              	    <div class="form-group">
 	              	      to
 	              	    </div>
 	              	    <div class="form-group">
-	              	      <input type="date" class="form-control datepicker" id="end-date" placeholder="24/09/2013" name="end_date" data-date-format="dd/mm/yyyy"/>
+	              	      <input type="text" class="form-control datepicker" id="end-date" placeholder="24/09/2013" name="end_date" data-date-format="dd/mm/yyyy"/>
 	              	    </div>
 	              	  </div>
 	              	</div>
@@ -43,13 +43,13 @@
 	              	  <label>Registration Period</label>
 	              	  <div class="form-inline">
 	              	    <div class="form-group">
-	              	      <input type="date" class="form-control datepicker" id="regis-start" placeholder="22/09/2013" name="regis_start" data-date-format="dd/mm/yyyy"/>
+	              	      <input type="text" class="form-control datepicker" id="regis-start" placeholder="22/09/2013" name="regis_start" data-date-format="dd/mm/yyyy"/>
 	              	    </div>
 	              	    <div class="form-group">
 	              	      to
 	              	    </div>
 	              	    <div class="form-group">
-	              	      <input type="date" class="form-control datepicker" id="regis-end" placeholder="24/09/2013" name="regis_end" data-date-format="dd/mm/yyyy"/>
+	              	      <input type="text" class="form-control datepicker" id="regis-end" placeholder="24/09/2013" name="regis_end" data-date-format="dd/mm/yyyy"/>
 	              	    </div>
 	              	  </div>
 	              	</div>
@@ -96,12 +96,12 @@
 	              	
 	              	<div class="form-group">
 	              	  <label>Deadline For Abstracts/Proposals</label>
-	              	  <input type="date" class="form-control datepicker" id="deadline" placeholder="10/09/2013" name="deadline" data-date-format="dd/mm/yyyy"/>
+	              	  <input type="text" class="form-control datepicker" id="deadline" placeholder="10/09/2013" name="deadline" data-date-format="dd/mm/yyyy"/>
 	              	</div>
 
 	              	<div class="form-group">
 	              	  <label>Notification of Acceptance</label>
-	              	  <input type="date" class="form-control datepicker" id="accept_notify" placeholder="10/09/2013" name="accept_notify" data-date-format="dd/mm/yyyy"/>
+	              	  <input type="text" class="form-control datepicker" id="accept_notify" placeholder="10/09/2013" name="accept_notify" data-date-format="dd/mm/yyyy"/>
 	              	</div>
 
 	              	

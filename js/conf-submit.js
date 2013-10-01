@@ -1,7 +1,9 @@
 var categoryCount = 1;
 
 $(function(){
- 	$('.datepicker').datepicker();
+ 	$('.datepicker').datepicker({
+ 		autoclose: true
+ 	});
  	
  	$('#add-category-btn').click(addCategory);
  });
