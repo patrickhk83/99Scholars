@@ -1,7 +1,16 @@
 <?php defined('SYSPATH') or die('No direct script access.');
-
-class Controller_Signup extends Controller {
-    
+/**
+ * @package   Modules
+ * @category  Kopauth
+ * @author    Fady Khalife
+ * @link      http://opauth.org
+ */
+class Controller_Kopauth_Auth extends Controller
+{
+    /**
+     * Opauth strategy entrypoint.
+     * Direct to a provider for authentication or handle a callback response.
+     */
     public function action_authenticate()
     {
         $kopauth = Kopauth::instance();
@@ -10,7 +19,7 @@ class Controller_Signup extends Controller {
         // If missing strategy param or their already authenticated just return to start screen
         if (empty($strategy) OR $kopauth->is_authenticated($strategy))
         {
-            $this->redirect(URL::site(Route::get('home')->uri()));
+            $this->redirect(URL::site(Route::get('kopauth')->uri()));
         }
         
         // Run opauth
@@ -28,7 +37,7 @@ class Controller_Signup extends Controller {
             }
             
             // Redirect to start to see authed session or error flash message
-            $this->redirect(URL::site(Route::get('home')->uri()));
+            $this->redirect(URL::site(Route::get('kopauth')->uri()));
         }
     }
     
@@ -46,7 +55,7 @@ class Controller_Signup extends Controller {
             );
         }
         
-        $this->response->body(View::factory('providers')->render());
+        $this->response->body(View::factory('kopauth/providers')->render());
     }
     
     /**
@@ -68,7 +77,7 @@ class Controller_Signup extends Controller {
         if ( ! Kopauth::instance()->is_authenticated($strategy))
         {
             // Not authenticated for passed provide, redirect to auth
-            $auth_route = URL::site(Route::get('signup')->uri(array(
+            $auth_route = URL::site(Route::get('kopauth')->uri(array(
                 'action'   => 'authenticate',
                 'strategy' => $strategy
             )));
@@ -79,7 +88,7 @@ class Controller_Signup extends Controller {
         $data = Kopauth::instance()->get_authenticated($strategy);
         
         // Render with data
-        $this->response->body(View::factory('sessiondata')
+        $this->response->body(View::factory('kopauth/sessiondata')
             ->set('data', $data)
             ->render());
     }
@@ -90,46 +99,7 @@ class Controller_Signup extends Controller {
     public function action_logout()
     {
         Kopauth::instance()->clear_authenticated($this->request->param('strategy'));
-        $this->redirect(URL::site(Route::get('home')->uri()));
+        $this->redirect(URL::site(Route::get('kopauth')->uri()));
     }
-	public function action_index()
-	{
-		if(HTTP_Request::POST == $this->request->method())
-		{
-			//TODO: add user
-
-			//redirect to profile page
-			$this->response->redirect('profile');
-			
-		}
-		else
-		{
-			$view = View::factory('signup');
-			$this->response->body($view);
-		}
-		
-	}
-
-	public function action_after_submit()
-	{
-		if(HTTP_Request::POST == $this->request->method())
-		{
-			//TODO: add user
-
-			$session = Session::instance();
-			$tmp_conf = $session->get('tmp_conf');
-
-			//add conference
-			$conf_service = new Service_Conference();
-			$conf_service->create($tmp_conf);
-
-			//redirect to conference page
-			//TODO: get id after create conference
-			$this->request->redirect('conference/1', 302);
-		}
-		$view = View::factory('signup');
-
-		$view->after_submit = TRUE;
-		$this->response->body($view);
-	}
 }
+    

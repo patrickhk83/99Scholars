@@ -105,6 +105,7 @@ if (isset($_SERVER['KOHANA_ENV']))
 Kohana::init(array(
 	'base_url'   => '/99scholars/',
 	'index_file' => FALSE,
+		'kopauth'=>'/kopauth/',
 ));
 
 /**
@@ -130,6 +131,7 @@ Kohana::modules(array(
 	 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
 	// 'unittest'   => MODPATH.'unittest',   // Unit testing
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
+	'kopauth'	=> MODPATH.'kopauth',
 	));
 
 Cookie::$salt = 'foobar';
