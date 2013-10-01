@@ -46,8 +46,7 @@ class Service_Conference {
 		$type = $this->get_type($conf->get('type'));
 		$model['type'] = $type->get('name');
 
-		$category = $this->get_category($conf->get('category'));
-		$model['category'] = $category->get('name');
+		$model['category'] = $this->get_categories($id);
 
 		$venue = $this->get_venue($conf->get('venue'));
 		$model['venue'] = $venue;
@@ -101,10 +100,25 @@ class Service_Conference {
 		return $type;
 	}
 
-	protected function get_category($id)
+	protected function get_category_name($id)
 	{
 		$category = ORM::factory('ConferenceCategory', $id);
-		return $category;
+		return $category->get('name');
+	}
+
+	protected function get_categories($conf_id)
+	{
+		$cat_confs = ORM::factory('CategoryConference')
+						->where('conference', '=', $conf_id)
+						->find_all();
+
+		$cat_array = array();
+
+		foreach ($cat_confs as $cat_conf) {
+			array_push($cat_array, $this->get_category_name($cat_conf->get('category')));
+		}
+
+		return $cat_array;
 	}
 
 	public function create($conference)
@@ -155,7 +169,6 @@ class Service_Conference {
 						'organizer',
 						'website',
 						'type',
-						'category',
 						'deadline',
 						'contact_person',
 						'contact_email',
@@ -170,6 +183,16 @@ class Service_Conference {
 		$regis->end_date = $this->convert_date($conference['regis_end']);
 		$regis->conference_id = $conf_id;
 		$regis->save();
+
+		$categories = $conference['category'];
+
+		foreach ($categories as $category) 
+		{
+			$cat_conf = ORM::factory('CategoryConference');
+			$cat_conf->conference = $conf_id;
+			$cat_conf->category = $category;
+			$cat_conf->save();
+		}
 
 		return $conf_id;
 	}
