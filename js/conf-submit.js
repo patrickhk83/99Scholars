@@ -12,7 +12,7 @@ var addCategory = function()
 	var option = '<div id="category' + categoryCount + '">' +
 	  				'<div class="form-inline">' +
 	    				'<div class="form-group">' +
-	    				'<select class="form-control category-option">' +
+	    				'<select class="form-control category-option" name="category[option' + categoryCount + ']">' +
 	    	  			'<option>Choose Conference\'s Category</option>' +
 	    	  			'<option value="1">Technology</option>' +
       	          	    '<option value="2">Linguistics</option>' +

@@ -78,7 +78,7 @@
 	              	      <div id="category1">
 	              	        <div class="form-inline">
 	              	          <div class="form-group">
-	              	          	<select class="form-control category-option">
+	              	          	<select class="form-control category-option" name="category[option1]">
 	              	          	  <option>Choose Conference's Category</option>
 	              	          	  <option value="1">Technology</option>
 	              	          	  <option value="2">Linguistics</option>
