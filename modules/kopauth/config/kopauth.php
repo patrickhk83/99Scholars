@@ -47,12 +47,12 @@ return array(
             'app_secret' => '4f54537cff3430a86627eb1c7860f3af',
         ),
 		'Google' => array(
-            'app_id'     => '00000002',
-            'app_secret' => '3jfdu6kder7tuwjrtwyhr645jfk678du',
+            'client_id'     => '1038568618403.apps.googleusercontent.com',
+            'client_secret' => 'R0AzXKi41RXNswdjcWAWhNRE',
         ),
 		'Linkedin' => array(
             'api_key'     => 'rwlcp9jpx9lj',
-            'secret_key' =>  'CiGy2aaD1y9pnxmD',
+            'secret_key' => 'CiGy2aaD1y9pnxmD',
         ),
         // Define strategies and their respective configs here
     ),
