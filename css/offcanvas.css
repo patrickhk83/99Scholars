@@ -32,17 +32,17 @@ td.time {
 	width: 80px;
 }
 
-/*#userEmail {
-	width: 200px;
+#add-category-btn {
+  margin: 7px 0 0 5px;
 }
 
-#userPassword {
-	width: 200px;
+.category-option {
+  margin-bottom: 7px;
 }
 
-#confirmPassword {
-	width: 200px;
-}*/
+.del-category-btn {
+  margin-left: 5px;
+}
 
 /*
  * Off Canvas

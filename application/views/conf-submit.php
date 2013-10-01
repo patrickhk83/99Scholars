@@ -71,13 +71,27 @@
 	              	    <option value="1">Conference</option>
 	              	  </select>
 	              	</div>
-	              	
+
 	              	<div class="form-group">
 	              	  <label>Category</label>
-	              	  <select class="form-control" name="category">
-	              	    <option>Choose Conference's Category</option>
-	              	    <option value="1">Technology</option>
-	              	  </select>
+	              	    <div id="conf-category">
+	              	      <div id="category1">
+	              	        <div class="form-inline">
+	              	          <div class="form-group">
+	              	          	<select class="form-control category-option">
+	              	          	  <option>Choose Conference's Category</option>
+	              	          	  <option value="1">Technology</option>
+	              	          	  <option value="2">Linguistics</option>
+	              	          	  <option value="3">Psychology</option>
+	              	          	</select>
+	              	          </div>
+	              	          <div class="form-group">
+	              	          	
+	              	          </div>
+	              	        </div>
+	              	      </div>
+	              	    </div>
+	              	    <div><a href="#" id="add-category-btn">Add more category</a></div>
 	              	</div>
 	              	
 	              	<div class="form-group">
@@ -170,8 +184,6 @@
     <?php echo HTML::script('js/bootstrap.min.js') ?>
     <?php echo HTML::script('js/offcanvas.js') ?>
     <?php echo HTML::script('js/bootstrap-datepicker.js') ?>
-    <script>
-    	$('.datepicker').datepicker();
-    </script>
+    <?php echo HTML::script('js/conf-submit.js') ?>
   </body>
 </html>
