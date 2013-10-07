@@ -5,7 +5,7 @@ class Controller_Article extends Controller_Template {
 	
 	public $template = 'template';
 		
-	const INDEX_PAGE = 'index.php/article';
+	const INDEX_PAGE = 'article/index';
 	
 	public function action_index() {
 		$articles = ORM::factory('article')->find_all(); // loads all article object from table
@@ -42,7 +42,9 @@ class Controller_Article extends Controller_Template {
 		$article = new Model_Article($article_id);
 
 		$article->delete();
-		$this->request->redirect(self::INDEX_PAGE);
+		
+		$this->redirect('/article', 302);
+		
 	}
 	
 	// save the article
@@ -54,7 +56,7 @@ class Controller_Article extends Controller_Template {
 		
 		try {
 			$article->save(); // saves article to database
-			$this->request->redirect(self::INDEX_PAGE);
+		 $this->redirect('/article', 302);
 		} catch (ORM_Validation_Exception $ex) {
 			$errors = $ex->errors('validation');
 		}

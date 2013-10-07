@@ -28,6 +28,7 @@ class Model_Article extends ORM {
 					array(':value', 10)	// validation parameters
 				),
 			),
+			
 		);
 	}
 	
@@ -35,6 +36,7 @@ class Model_Article extends ORM {
 		return array(
 			'title'         => 'Title',
 			'content'       => 'Content',
+			'time' => 'time',
 		);
 	}
 	
