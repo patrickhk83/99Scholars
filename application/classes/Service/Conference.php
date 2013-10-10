@@ -7,9 +7,93 @@ class Service_Conference {
 		return $this->populate();
 	}
 
-	public function list_by($country, $type = "all")
+	public function list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $page, $limit = 20)
 	{
-		return $this->populate_by_country();
+		$has_condition = false;
+
+		$sql = "select * from conference as c where ";
+
+		if(isset($category) && !empty($category))
+		{
+			$sql = $sql."(c.id in (select conference from category_conference where category in (".$category."))) ";
+			$has_condition = true;
+		}
+
+		if(isset($accept_abstract) && $accept_abstract)
+		{
+			if($has_condition)
+			{
+				$sql = $sql."and ";
+			}
+			else
+			{
+				$has_condition = true;
+			}
+
+			$sql = $sql."(curdate() < c.deadline) ";
+		}
+
+		if(isset($start_date) && !empty($start_date))
+		{
+			if($has_condition)
+			{
+				$sql = $sql."and ";
+			}
+			else
+			{
+				$has_condition = true;
+			}
+
+			$sql = $sql."('".$start_date."' >= c.start_date) ";
+		}
+
+		if(isset($end_date) && !empty($end_date))
+		{
+			if($has_condition)
+			{
+				$sql = $sql."and ";
+			}
+			else
+			{
+				$has_condition = true;
+			}
+
+			$sql = $sql."('".$end_date."' <= c.end_date) ";
+		}
+
+		if(isset($type) && !empty($type))
+		{
+			if($has_condition)
+			{
+				$sql = $sql."and ";
+			}
+			else
+			{
+				$has_condition = true;
+			}
+
+			$sql = $sql."(c.type in (".$type.")) ";
+		}
+
+		if(isset($country) && !empty($country))
+		{
+			if($has_condition)
+			{
+				$sql = $sql."and ";
+			}
+			else
+			{
+				$has_condition = true;
+			}
+
+			$sql = $sql."(c.venue in (select v.id from venue as v where v.address in (select a.id from address as a where a.country in (".$country.")))) ";
+		}
+
+		$sql = $sql."limit ".($page*$limit).",".$limit;
+
+		$result = DB::query(Database::SELECT, $sql)->execute();
+
+		return $result;
 	}
 
 	public function get($id)

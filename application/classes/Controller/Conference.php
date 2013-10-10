@@ -48,4 +48,23 @@ class Controller_Conference extends Controller {
 			$this->response->body($view);
 		}
 	}
+
+	public function action_search()
+	{
+		$category = $this->request->query('cat');
+		$accept_abstract = $this->request->query('abstract');
+		$start_date = $this->request->query('start_date');
+		$end_date = $this->request->query('end_date');
+		$type = $this->request->query('type');
+		$country = $this->request->query('country');
+		$page = $this->request->query('page');
+
+		$conf_service = new Service_Conference();
+		$conferences = $conf_service->list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $page);
+
+		$view = View::factory('conf-search-result');
+		$view->conferences = $conferences;
+
+		$this->response->body($view);
+	}
 }
