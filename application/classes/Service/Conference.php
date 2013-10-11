@@ -12,10 +12,14 @@ class Service_Conference {
 		$has_condition = false;
 
 		$sql = "select * from conference as c where ";
+		$count_sql = "select count(*) as total from conference as c where ";
+		$condition = "";
+
+		$result = array();
 
 		if(isset($category) && !empty($category))
 		{
-			$sql = $sql."(c.id in (select conference from category_conference where category in (".$category."))) ";
+			$condition = $condition."(c.id in (select conference from category_conference where category in (".$category."))) ";
 			$has_condition = true;
 		}
 
@@ -23,77 +27,88 @@ class Service_Conference {
 		{
 			if($has_condition)
 			{
-				$sql = $sql."and ";
+				$condition = $condition."and ";
 			}
 			else
 			{
 				$has_condition = true;
 			}
 
-			$sql = $sql."(curdate() < c.deadline) ";
+			$condition = $condition."(curdate() < c.deadline) ";
 		}
 
 		if(isset($start_date) && !empty($start_date))
 		{
 			if($has_condition)
 			{
-				$sql = $sql."and ";
+				$condition = $condition."and ";
 			}
 			else
 			{
 				$has_condition = true;
 			}
 
-			$sql = $sql."('".$start_date."' >= c.start_date) ";
+			$condition = $condition."('".$this->convert_date($start_date)."' >= c.start_date) ";
 		}
 
 		if(isset($end_date) && !empty($end_date))
 		{
 			if($has_condition)
 			{
-				$sql = $sql."and ";
+				$condition = $condition."and ";
 			}
 			else
 			{
 				$has_condition = true;
 			}
 
-			$sql = $sql."('".$end_date."' <= c.end_date) ";
+			$condition = $condition."('".$this->convert_date($end_date)."' <= c.end_date) ";
 		}
 
 		if(isset($type) && !empty($type))
 		{
 			if($has_condition)
 			{
-				$sql = $sql."and ";
+				$condition = $condition."and ";
 			}
 			else
 			{
 				$has_condition = true;
 			}
 
-			$sql = $sql."(c.type in (".$type.")) ";
+			$condition = $condition."(c.type in (".$type.")) ";
 		}
 
 		if(isset($country) && !empty($country))
 		{
 			if($has_condition)
 			{
-				$sql = $sql."and ";
+				$condition = $condition."and ";
 			}
 			else
 			{
 				$has_condition = true;
 			}
 
-			$sql = $sql."(c.venue in (select v.id from venue as v where v.address in (select a.id from address as a where a.country in (".$country.")))) ";
+			$condition = $condition."(c.venue in (select v.id from venue as v where v.address in (select a.id from address as a where a.country in (".$country.")))) ";
 		}
 
-		$sql = $sql."limit ".($page*$limit).",".$limit;
+		if($page == 0)
+		{
+			$count_sql = $count_sql.$condition;
 
-		$result = DB::query(Database::SELECT, $sql)->execute();
+			$count_result = DB::query(Database::SELECT, $count_sql)->execute();
 
-		return $this->convert_for_listing($result->as_array());
+			$result['total'] = $count_result->get('total');
+		}
+
+		$sql = $sql.$condition."limit ".($page*$limit).",".$limit;
+
+		$result['conferences'] = $this->convert_for_listing(
+									DB::query(Database::SELECT, $sql)
+									->execute()->as_array());
+
+		return $result;
 	}
 
 	protected function convert_for_listing($results)

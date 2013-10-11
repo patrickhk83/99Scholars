@@ -11,22 +11,23 @@
                   <div id="category-criteria">
                     <div id="category-option1">
                       <select class="form-control criteria-option">
-                        <option>Select Category</option>
-                        <option>Technology</option>
-                        <option>Linguistics</option>
-                        <option>Psychology</option>
+                        <option value="0">Select Category</option>
+                        <option value="1">Technology</option>
+                        <option value="2">Linguistics</option>
+                        <option value="3">Psychology</option>
                       </select>
                     </div>
-                  </div>      
+                  </div>
+                  <div class="add-criteria-link"><a href="#" id="add-category-link">Add more category</a></div>      
                 </li>
-                <li class="criteria-container"><h5>Call for abstract only <input type="checkbox"/></h5></li>
+                <li class="criteria-container"><h5>Call for abstract only <input type="checkbox" id="accept-abstract"/></h5></li>
                 <li><h5>Filter by Conference Date</h5></li>
                 <li class="criteria-container">
                   <div class="form-group">
-                    <input type="text" class="form-control datepicker criteria-option" placeholder="Start Date">
+                    <input type="text" class="form-control datepicker criteria-option" placeholder="Start Date" id="start-date" data-date-format="dd/mm/yyyy">
                   </div>
                   <div class="form-group">
-                    <input type="text" class="form-control datepicker criteria-option" placeholder="End Date"/>
+                    <input type="text" class="form-control datepicker criteria-option" placeholder="End Date" id="end-date" data-date-format="dd/mm/yyyy"/>
                   </div>
                 </li>
                 <li><h5>Filter by Type</h5></li>
@@ -34,30 +35,33 @@
                   <div id="type-criteria">
                     <div id="type-option1">
                       <select class="form-control criteria-option">
-                        <option>Select Type</option>
-                        <option>Conference</option>
-                        <option>Seminar</option>
-                        <option>Workshop</option>
-                        <option>Webinar</option>
-                        <option>Online Conference</option>
+                        <option value="0">Select Type</option>
+                        <option value="1">Conference</option>
+                        <option value="2">Seminar</option>
+                        <option value="3">Workshop</option>
+                        <option value="4">Webinar</option>
+                        <option value="5">Online Conference</option>
                       </select>
                     </div>
                   </div>
+                  <div class="add-criteria-link"><a href="#" id="add-type-link">Add more type</a></div>
                 </li>
                 <li><h5>Filter by Country</h5></li>
                 <li class="criteria-container">
                   <div id="country-criteria">
                     <div id="country-option1">
                       <select class="form-control criteria-option">
-                        <option>Argentina</option>
-                        <option>Brazil</option>
-                        <option>China</option>
-                        <option>Hong Kong</option>
-                        <option>Singapore</option>
-                        <option>Thailand</option>
+                        <option value="0">Select Country</option>
+                        <option value="1">Argentina</option>
+                        <option value="2">Brazil</option>
+                        <option value="3">China</option>
+                        <option value="4">Hong Kong</option>
+                        <option value="5">Singapore</option>
+                        <option value="6">Thailand</option>
                       </select>
                     </div>
                   </div>
+                  <div class="add-criteria-link"><a href="#" id="add-country-link">Add more country</a></div>
                 </li>
               </ul>
             </form>
@@ -79,7 +83,7 @@
 
           <div class="row">
             <div class="col-lg-12">
-              <h2>1,298 Conferences found</h2> <br>
+              <h2><span id="total-display">1,298</span> Conferences found</h2> <br>
             <div class="row">
 	            <div class="col-lg-12">
                 <div id="conf-list">

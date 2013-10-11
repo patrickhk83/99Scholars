@@ -60,10 +60,15 @@ class Controller_Conference extends Controller {
 		$page = $this->request->query('page');
 
 		$conf_service = new Service_Conference();
-		$conferences = $conf_service->list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $page);
+		$result = $conf_service->list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $page);
 
 		$view = View::factory('conf-search-result');
-		$view->conferences = $conferences;
+		$view->conferences = $result['conferences'];
+
+		if(array_key_exists('total', $result))
+		{
+			$view->total = $result['total'];
+		}
 
 		$this->response->body($view);
 	}
