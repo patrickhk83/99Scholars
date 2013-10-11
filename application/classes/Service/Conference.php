@@ -93,7 +93,27 @@ class Service_Conference {
 
 		$result = DB::query(Database::SELECT, $sql)->execute();
 
-		return $result;
+		return $this->convert_for_listing($result->as_array());
+	}
+
+	protected function convert_for_listing($results)
+	{
+		$conferences = array();
+
+		foreach ($results as $result) 
+		{
+			$conference = array();
+
+			$conference['id'] = $result['id'];
+			$conference['name'] = $result['name'];
+			$conference['duration'] = $this->to_readable_date($result['start_date'])." - ".$this->to_readable_date($result['end_date']);
+			$conference['type'] = $this->get_type($result['type'])->get('name');
+			$conference['location'] = "Oxford, United Kingdom";
+
+			array_push($conferences, $conference);
+		}
+
+		return $conferences;
 	}
 
 	public function get($id)
