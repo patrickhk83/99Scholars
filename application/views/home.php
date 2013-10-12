@@ -52,7 +52,7 @@
                     <div id="country-option1">
                       <select class="form-control criteria-option">
                         <option value="0">Select Country</option>
-                        <option value="1">Argentina</option>
+                        <option value="1">United States</option>
                         <option value="2">Brazil</option>
                         <option value="3">China</option>
                         <option value="4">Hong Kong</option>
