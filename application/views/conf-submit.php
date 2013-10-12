@@ -69,6 +69,10 @@
 	              	  <select class="form-control" name="type">
 	              	    <option>Choose Conference's Type</option>
 	              	    <option value="1">Conference</option>
+	              	    <option value="2">Seminar</option>
+                        <option value="3">Workshop</option>
+                        <option value="4">Webinar</option>
+                        <option value="5">Online Conference</option>
 	              	  </select>
 	              	</div>
 
@@ -152,6 +156,11 @@
 	              	  <select class="form-control" name="country">
 	              	    <option>Choose Country</option>
 	              	    <option value="1">United States</option>
+	              	    <option value="2">Brazil</option>
+                        <option value="3">China</option>
+                        <option value="4">Hong Kong</option>
+                        <option value="5">Singapore</option>
+                        <option value="6">Thailand</option>
 	              	  </select>
 	              	</div>
 	              </div>
