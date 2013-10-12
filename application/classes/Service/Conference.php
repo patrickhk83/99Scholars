@@ -23,7 +23,7 @@ class Service_Conference {
 			$has_condition = true;
 		}
 
-		if(isset($accept_abstract) && $accept_abstract)
+		if(isset($accept_abstract) && $accept_abstract == 'true')
 		{
 			if($has_condition)
 			{
