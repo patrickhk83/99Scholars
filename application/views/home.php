@@ -99,7 +99,7 @@
 	            	  <?php endforeach ?>
                 </div>
 	              
-	              <div class="row">
+	              <!--div class="row">
 	              	<div class="col-lg-12">
 	              		<ul class="pagination">
 	              		  <li class="disabled"><a href="#">&laquo;</a></li>
@@ -111,7 +111,7 @@
 	              		  <li><a href="#">&raquo;</a></li>
 	              		</ul>
 	              	</div>
-	              </div><!--/row-->
+	              </div--><!--/row-->
 	              
 	            </div><!--/span-->
             </div><!--/row-->
