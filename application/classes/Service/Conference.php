@@ -124,7 +124,7 @@ class Service_Conference {
 			$conference['name'] = $result['name'];
 			$conference['duration'] = $this->to_readable_date($result['start_date'])." - ".$this->to_readable_date($result['end_date']);
 			$conference['type'] = $this->get_type($result['type'])->get('name');
-			$conference['location'] = "Oxford, United Kingdom";
+			$conference['location'] = $this->get_venue_short_location($result['venue']);
 
 			array_push($conferences, $conference);
 		}
@@ -181,6 +181,24 @@ class Service_Conference {
 					->find();
 
 		return $period;
+	}
+
+	protected function get_venue_short_location($venue_id)
+	{
+		$venue = $this->get_venue($venue_id);
+
+		$location;
+
+		if(isset($venue['state']) && trim($venue['state']) !== '')
+		{
+			$location = $venue['state'];
+		}
+		else
+		{
+			$location = $venue['city'];
+		}
+
+		return $location.", ".$venue['country'];
 	}
 
 	protected function get_venue($id)
