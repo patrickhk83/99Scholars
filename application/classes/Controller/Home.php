@@ -9,7 +9,10 @@ class Controller_Home extends Controller {
 
 		//list conference
 		$confService = new Service_Conference();
-		$view->conferences = $confService->list_all();
+		$result = $confService->list_all();
+
+		$view->total = $result['total'];
+		$view->conferences = $result['conferences'];
 
 		$this->response->body($view);
 	}

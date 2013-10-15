@@ -9,6 +9,16 @@ $(function(){
 		autoclose: true
 	});
 
+	$('#conf-list').infinitescroll({
+		navSelector: 'div.paging',
+		nextSelector: '#next-paging',
+		itemSelector: 'div.row',
+		pathParse: function(path,page){
+                    return [searchUrl + '?page=', getAllCriteria(true)];
+                },
+		debug: true
+	});
+
 	$('#add-category-link').click(addCategory);
 	$('#add-type-link').click(addType);
 	$('#add-country-link').click(addCountry);
@@ -111,9 +121,54 @@ function delCountry(countryId)
 var updateSearchResult = function(page)
 {
 	//set optional parameter
-	if(typeof page === 'object' || typeof page === 'undefined') page = 0;
+	if(typeof page === 'object' || typeof page === 'undefined') page = 1;
 
 	var url = searchUrl;
+
+	url += getAllCriteria();
+
+	//start at the 1st page
+	url += '&page=' + page;
+
+	$.get(url, function (data){
+
+		$('#conf-list').infinitescroll('destroy');
+		$('#conf-list').data('infinitescroll', null);
+
+		$('#conf-list').html(data);
+
+		if(page == 1)
+		{
+			var total = $('#total-search-result').val();
+			$('#total-display').html(total);
+		}
+
+		$('#conf-list').infinitescroll({
+			navSelector: 'div.paging',
+			nextSelector: '#next-paging',
+			itemSelector: 'div.row',
+			pathParse: function(path,page){
+	                    return [searchUrl + '?page=', getAllCriteria(true)];
+	                },
+			debug: true
+		});
+	});
+}
+
+function getAllCriteria(appendOther)
+{
+	 appendOther = typeof appendOther === 'undefined' ? false : true;
+
+	var query;
+
+	if(appendOther)
+	{
+		query = '&';
+	}
+	else
+	{
+		query = '?';
+	}
 
 	//conference's categories
 	var categories = new Array();
@@ -124,19 +179,19 @@ var updateSearchResult = function(page)
 		categories.push($(this).val());
 	});
 
-	url += '?cat=' + categories.join(',');
+	query += 'cat=' + categories.join(',');
 
 	//is conference accepting abstract
 	var isAcceptAbstract = $('#accept-abstract').is(':checked');
-	url += '&abstract=' + isAcceptAbstract;
+	query += '&abstract=' + isAcceptAbstract;
 
 	//start date
 	var startDate = $('#start-date').val();
-	url += '&start_date=' + startDate;
+	query += '&start_date=' + startDate;
 
 	//end date
 	var endDate = $('#end-date').val();
-	url += '&end_date=' + endDate;
+	query += '&end_date=' + endDate;
 
 	//type
 	var types = new Array();
@@ -147,7 +202,7 @@ var updateSearchResult = function(page)
 		types.push($(this).val());
 	});
 
-	url += '&type=' + types.join(',');
+	query += '&type=' + types.join(',');
 
 	//country
 	var countries = new Array();
@@ -158,18 +213,7 @@ var updateSearchResult = function(page)
 		countries.push($(this).val());
 	});
 
-	url += '&country=' + countries.join(',');
+	query += '&country=' + countries.join(',');
 
-	//start at the 1st page
-	url += '&page=' + page;
-
-	$.get(url, function (data){
-		$('#conf-list').html(data);
-
-		if(page == 0)
-		{
-			var total = $('#total-search-result').val();
-			$('#total-display').html(total);
-		}
-	});
+	return query;
 }
