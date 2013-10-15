@@ -152,7 +152,10 @@ var updateSearchResult = function(page)
 			itemSelector: 'div.row',
 			pathParse: function(path,page){
 	                    return [searchUrl + '?page=', getAllCriteria(true)];
-	                },
+	        },
+	        loading: {
+        		finishedMsg: '<em>You have reached the end of search result.</em>'
+        	},
 			debug: true
 		});
 	});
