@@ -102,8 +102,7 @@ class Service_Conference {
 			$result['total'] = $count_result->get('total');
 		}
 
-		//disable limit for testing purpose
-		$sql = $sql.$condition;//."limit ".($page*$limit).",".$limit;
+		$sql = $sql.$condition."limit ".($page*$limit).",".$limit;
 
 		$result['conferences'] = $this->convert_for_listing(
 									DB::query(Database::SELECT, $sql)
