@@ -100,7 +100,7 @@
 	            	  <?php endforeach ?>
                   
                 </div>
-                <div class="paging"><a href="/99scholars/conference/search?page=2" id="next-paging">next</a></div>
+                <div class="paging"><a href="/99scholars/conference/search?page=2" id="next-paging"></a></div>
 	              
 	            </div><!--/span-->
             </div><!--/row-->
