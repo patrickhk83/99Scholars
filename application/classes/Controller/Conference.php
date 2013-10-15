@@ -59,6 +59,11 @@ class Controller_Conference extends Controller {
 		$country = $this->request->query('country');
 		$page = $this->request->query('page');
 
+		if(!isset($page) || $page == '' || $page == 0)
+		{
+			$page = 1;
+		}
+
 		$conf_service = new Service_Conference();
 		$result = $conf_service->list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $page-1);
 
