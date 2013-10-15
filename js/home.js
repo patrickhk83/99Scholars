@@ -111,7 +111,7 @@ function delCountry(countryId)
 var updateSearchResult = function(page)
 {
 	//set optional parameter
-	if(typeof page === 'object' || typeof page === 'undefined') page = 0;
+	if(typeof page === 'object' || typeof page === 'undefined') page = 1;
 
 	var url = searchUrl;
 
@@ -166,7 +166,7 @@ var updateSearchResult = function(page)
 	$.get(url, function (data){
 		$('#conf-list').html(data);
 
-		if(page == 0)
+		if(page == 1)
 		{
 			var total = $('#total-search-result').val();
 			$('#total-display').html(total);
