@@ -11,13 +11,20 @@ class Service_Conference {
 	{
 		$has_condition = false;
 
-		$sql = "select * from conference as c where ";
-		$count_sql = "select count(*) as total from conference as c where ";
+		$sql = "select * from conference as c ";
+		$count_sql = "select count(*) as total from conference as c ";
 		$condition = "";
 
 		$result = array();
 
-		if(isset($category) && !empty($category))
+		//check if there is any criteria
+		if($this->has_value($category) || $this->has_value($accept_abstract) || $this->has_value($start_date) || $this->has_value($end_date) || $this->has_value($type) || $this->has_value($country))
+		{
+			$sql = $sql."where ";
+			$count_sql = $count_sql."where ";
+		}
+
+		if($this->has_value($category))
 		{
 			$condition = $condition."(c.id in (select conference from category_conference where category in (".$category."))) ";
 			$has_condition = true;
@@ -37,7 +44,7 @@ class Service_Conference {
 			$condition = $condition."(curdate() < c.deadline) ";
 		}
 
-		if(isset($start_date) && !empty($start_date))
+		if($this->has_value($start_date))
 		{
 			if($has_condition)
 			{
@@ -51,7 +58,7 @@ class Service_Conference {
 			$condition = $condition."('".$this->convert_date($start_date)."' >= c.start_date) ";
 		}
 
-		if(isset($end_date) && !empty($end_date))
+		if($this->has_value($end_date))
 		{
 			if($has_condition)
 			{
@@ -65,7 +72,7 @@ class Service_Conference {
 			$condition = $condition."('".$this->convert_date($end_date)."' <= c.end_date) ";
 		}
 
-		if(isset($type) && !empty($type))
+		if($this->has_value($type))
 		{
 			if($has_condition)
 			{
@@ -79,7 +86,7 @@ class Service_Conference {
 			$condition = $condition."(c.type in (".$type.")) ";
 		}
 
-		if(isset($country) && !empty($country))
+		if($this->has_value($country))
 		{
 			if($has_condition)
 			{
@@ -362,6 +369,11 @@ class Service_Conference {
 	{
 		$date = date_parse($input);
 		return date('j F Y', mktime(0, 0, 0, $date['month'], $date['day'], $date['year']));
+	}
+
+	private function has_value($param)
+	{
+		return isset($param) && !empty($param);
 	}
 
 	//only for mockup
