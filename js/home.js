@@ -14,7 +14,6 @@ $(function(){
 		nextSelector: '#next-paging',
 		itemSelector: 'div.row',
 		pathParse: function(path,page){
-					//var link = $(this.nextSelector).attr('href');
                     return [searchUrl + '?page=', getAllCriteria(true)];
                 },
 		debug: true
@@ -132,6 +131,10 @@ var updateSearchResult = function(page)
 	url += '&page=' + page;
 
 	$.get(url, function (data){
+
+		$('#conf-list').infinitescroll('destroy');
+		$('#conf-list').data('infinitescroll', null);
+
 		$('#conf-list').html(data);
 
 		if(page == 1)
@@ -139,6 +142,16 @@ var updateSearchResult = function(page)
 			var total = $('#total-search-result').val();
 			$('#total-display').html(total);
 		}
+
+		$('#conf-list').infinitescroll({
+			navSelector: 'div.paging',
+			nextSelector: '#next-paging',
+			itemSelector: 'div.row',
+			pathParse: function(path,page){
+	                    return [searchUrl + '?page=', getAllCriteria(true)];
+	                },
+			debug: true
+		});
 	});
 }
 
