@@ -9,6 +9,17 @@ $(function(){
 		autoclose: true
 	});
 
+	$('#conf-list').infinitescroll({
+		navSelector: 'div.paging',
+		nextSelector: '#next-paging',
+		itemSelector: 'div.row',
+		pathParse: function(path,page){
+					//var link = $(this.nextSelector).attr('href');
+                    return [searchUrl + '?page=', getAllCriteria(true)];
+                },
+		debug: true
+	});
+
 	$('#add-category-link').click(addCategory);
 	$('#add-type-link').click(addType);
 	$('#add-country-link').click(addCountry);
@@ -115,50 +126,7 @@ var updateSearchResult = function(page)
 
 	var url = searchUrl;
 
-	//conference's categories
-	var categories = new Array();
-
-	$('[id^=category-option] select').filter(function(){
-		return $(this).val() > 0;
-	}).each(function(index){
-		categories.push($(this).val());
-	});
-
-	url += '?cat=' + categories.join(',');
-
-	//is conference accepting abstract
-	var isAcceptAbstract = $('#accept-abstract').is(':checked');
-	url += '&abstract=' + isAcceptAbstract;
-
-	//start date
-	var startDate = $('#start-date').val();
-	url += '&start_date=' + startDate;
-
-	//end date
-	var endDate = $('#end-date').val();
-	url += '&end_date=' + endDate;
-
-	//type
-	var types = new Array();
-
-	$('[id^=type-option] select').filter(function(){
-		return $(this).val() > 0;
-	}).each(function(index) {
-		types.push($(this).val());
-	});
-
-	url += '&type=' + types.join(',');
-
-	//country
-	var countries = new Array();
-
-	$('[id^=country-option] select').filter(function(){
-		return $(this).val() > 0;
-	}).each(function(index){
-		countries.push($(this).val());
-	});
-
-	url += '&country=' + countries.join(',');
+	url += getAllCriteria();
 
 	//start at the 1st page
 	url += '&page=' + page;
@@ -172,4 +140,67 @@ var updateSearchResult = function(page)
 			$('#total-display').html(total);
 		}
 	});
+}
+
+function getAllCriteria(appendOther)
+{
+	 appendOther = typeof appendOther === 'undefined' ? false : true;
+
+	var query;
+
+	if(appendOther)
+	{
+		query = '&';
+	}
+	else
+	{
+		query = '?';
+	}
+
+	//conference's categories
+	var categories = new Array();
+
+	$('[id^=category-option] select').filter(function(){
+		return $(this).val() > 0;
+	}).each(function(index){
+		categories.push($(this).val());
+	});
+
+	query += 'cat=' + categories.join(',');
+
+	//is conference accepting abstract
+	var isAcceptAbstract = $('#accept-abstract').is(':checked');
+	query += '&abstract=' + isAcceptAbstract;
+
+	//start date
+	var startDate = $('#start-date').val();
+	query += '&start_date=' + startDate;
+
+	//end date
+	var endDate = $('#end-date').val();
+	query += '&end_date=' + endDate;
+
+	//type
+	var types = new Array();
+
+	$('[id^=type-option] select').filter(function(){
+		return $(this).val() > 0;
+	}).each(function(index) {
+		types.push($(this).val());
+	});
+
+	query += '&type=' + types.join(',');
+
+	//country
+	var countries = new Array();
+
+	$('[id^=country-option] select').filter(function(){
+		return $(this).val() > 0;
+	}).each(function(index){
+		countries.push($(this).val());
+	});
+
+	query += '&country=' + countries.join(',');
+
+	return query;
 }

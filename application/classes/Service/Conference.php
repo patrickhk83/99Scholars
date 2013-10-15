@@ -2,12 +2,12 @@
 
 class Service_Conference {
 
-	public function list_all($page = 0, $limit = 20)
+	public function list_all()
 	{
-		return $this->populate();
+		return $this->list_by(null, null, null, null, null, null);
 	}
 
-	public function list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $page, $limit = 20)
+	public function list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $page = 0, $limit = 20)
 	{
 		$has_condition = false;
 
@@ -18,7 +18,7 @@ class Service_Conference {
 		$result = array();
 
 		//check if there is any criteria
-		if($this->has_value($category) || $this->has_value($accept_abstract) || $this->has_value($start_date) || $this->has_value($end_date) || $this->has_value($type) || $this->has_value($country))
+		if($this->has_value($category) || ((isset($accept_abstract) && $accept_abstract == 'true')) || $this->has_value($start_date) || $this->has_value($end_date) || $this->has_value($type) || $this->has_value($country))
 		{
 			$sql = $sql."where ";
 			$count_sql = $count_sql."where ";

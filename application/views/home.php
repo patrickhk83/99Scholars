@@ -83,10 +83,11 @@
 
           <div class="row">
             <div class="col-lg-12">
-              <h2><span id="total-display">1,298</span> Conferences found</h2> <br>
+              <h2><span id="total-display"><?php echo $total ?></span> Conferences found</h2> <br>
             <div class="row">
 	            <div class="col-lg-12">
                 <div id="conf-list">
+                  
 	                <?php foreach ($conferences as $conf): ?>
 	                	<div class="row">
   		              	<div class="col-lg-6">
@@ -97,7 +98,9 @@
   		              	<div class="col-lg-2"><a class="btn btn-info" href="#">Book</a></div>
 		                </div><!--/row-->
 	            	  <?php endforeach ?>
+                  
                 </div>
+                <div class="paging"><a href="/99scholars/conference/search?page=2" id="next-paging">next</a></div>
 	              
 	            </div><!--/span-->
             </div><!--/row-->
@@ -126,5 +129,6 @@
     <script src="js/offcanvas.js"></script>
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/home.js"></script>
+    <script src="js/jquery.infinitescroll.min.js"></script>
   </body>
 </html>
