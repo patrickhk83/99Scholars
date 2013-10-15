@@ -83,35 +83,24 @@
 
           <div class="row">
             <div class="col-lg-12">
-              <h2><span id="total-display">1,298</span> Conferences found</h2> <br>
+              <h2><span id="total-display"><?php echo $total ?></span> Conferences found</h2> <br>
             <div class="row">
 	            <div class="col-lg-12">
                 <div id="conf-list">
+                  
 	                <?php foreach ($conferences as $conf): ?>
 	                	<div class="row">
   		              	<div class="col-lg-6">
-  		              	  <p><strong><a href="schedule.html"><?php echo $conf['name'] ?></a></strong> <br/> <?php echo $conf['location'] ?></p>
+  		              	  <p><strong><a href="<?php echo URL::site('conference/view/'.$conf['id'])?>"><?php echo $conf['name'] ?></a></strong> <br/> <?php echo $conf['location'] ?></p>
   		              	</div>
   		              	<div class="col-lg-2"><?php echo $conf['type'] ?></div>
   		              	<div class="col-lg-2"><?php echo $conf['duration'] ?></div>
   		              	<div class="col-lg-2"><a class="btn btn-info" href="#">Book</a></div>
 		                </div><!--/row-->
 	            	  <?php endforeach ?>
+                  
                 </div>
-	              
-	              <!--div class="row">
-	              	<div class="col-lg-12">
-	              		<ul class="pagination">
-	              		  <li class="disabled"><a href="#">&laquo;</a></li>
-	              		  <li class="active"><a href="#">1</a></li>
-	              		  <li><a href="#">2</a></li>
-	              		  <li><a href="#">3</a></li>
-	              		  <li><a href="#">4</a></li>
-	              		  <li><a href="#">5</a></li>
-	              		  <li><a href="#">&raquo;</a></li>
-	              		</ul>
-	              	</div>
-	              </div--><!--/row-->
+                <div class="paging"><a href="/99scholars/conference/search?page=2" id="next-paging"></a></div>
 	              
 	            </div><!--/span-->
             </div><!--/row-->
@@ -140,5 +129,6 @@
     <script src="js/offcanvas.js"></script>
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/home.js"></script>
+    <script src="js/jquery.infinitescroll.min.js"></script>
   </body>
 </html>
