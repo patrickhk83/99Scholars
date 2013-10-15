@@ -130,6 +130,7 @@ class Service_Conference {
 			$conference['name'] = $result['name'];
 			$conference['duration'] = $this->to_readable_date($result['start_date'])." - ".$this->to_readable_date($result['end_date']);
 			$conference['type'] = $this->get_type($result['type'])->get('name');
+			$conference['type_style'] = $this->get_type_style($conference['type']);
 			$conference['location'] = $this->get_venue_short_location($result['venue']);
 
 			array_push($conferences, $conference);
@@ -374,6 +375,25 @@ class Service_Conference {
 	private function has_value($param)
 	{
 		return isset($param) && !empty($param);
+	}
+
+	private function get_type_style($type_name)
+	{
+		switch($type_name) 
+		{
+			case 'Conference' : 
+				return 'primary';
+			case 'Seminar' :
+				return 'success';
+			case 'Workshop' :
+				return 'warning';
+			case 'Webinar' :
+				return 'danger';
+			case 'Online Conference' :
+				return 'default';
+		}
+
+		return 'default';
 	}
 
 	//only for mockup
