@@ -83,7 +83,9 @@
 
           <div class="row">
             <div class="col-lg-12">
-              <h2><span id="total-display"><?php echo $total ?></span> Conferences found</h2> <br>
+              <div id="total-conference-display">
+                <h2><span id="total-display"><?php echo $total ?></span> Conferences found</h2> <span id="clear-filter-container">( <a href="#" id="clear-filter-btn">clear all filter</a> )</span>
+              </div>
             <div class="row">
 	            <div class="col-lg-12">
                 <div id="conf-list">

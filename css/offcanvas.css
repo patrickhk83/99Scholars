@@ -86,6 +86,14 @@ td.time {
   margin-left: 5px;
 }
 
+#total-conference-display {
+  margin-bottom: 20px;
+}
+
+#total-conference-display h2 {
+  display: inline-block;
+}
+
 /*
  * Off Canvas
  * --------------------------------------------------

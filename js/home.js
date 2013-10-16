@@ -29,9 +29,13 @@ $(function(){
 	$('#category-option1').change(updateSearchResult);
 	$('#type-option1').change(updateSearchResult);
 	$('#country-option1').change(updateSearchResult);
-	$('#accept-abstract').change(updateSearchResult);
+	$('#accept-abstract').change(updateAcceptAbstract);
 	$('#start-date').change(updateSearchResult);
 	$('#end-date').change(updateSearchResult);
+
+	hideClearFilterButton();
+	$('#clear-filter-btn').click(clearFilter);
+
 
 });
 
@@ -52,6 +56,8 @@ var addCategory = function()
 	
 	$('#category-criteria').append(option);
 	$('#category-option' + categoryCount).change(updateSearchResult);
+
+	showClearFilterButton();
 
 	return false;
 }
@@ -81,6 +87,8 @@ var addType = function()
 	
 	$('#type-criteria').append(option);
 	$('#type-option' + typeCount).change(updateSearchResult);
+
+	showClearFilterButton();
 
 	return false;
 }
@@ -112,6 +120,8 @@ var addCountry = function()
 	$('#country-criteria').append(option);
 	$('#country-option' + countryCount).change(updateSearchResult);
 
+	showClearFilterButton();
+
 	return false;
 }
 
@@ -119,6 +129,11 @@ function delCountry(countryId)
 {
 	$('#country-option' + countryId).remove();
 	updateSearchResult();
+}
+
+var updateAcceptAbstract = function()
+{
+	showClearFilterButton();
 }
 
 var updateSearchResult = function(page)
@@ -222,4 +237,46 @@ function getAllCriteria(appendOther)
 	query += '&country=' + countries.join(',');
 
 	return query;
+}
+
+function showClearFilterButton()
+{
+	$('#clear-filter-container').show();
+}
+
+function hideClearFilterButton()
+{
+	$('#clear-filter-container').hide();
+}
+
+var clearFilter = function()
+{
+	hideClearFilterButton();
+
+	$('#category-criteria div:not(:first-child)').each(function(index){
+		$(this).remove();
+	});
+
+	$('#category-criteria select').val(0);
+
+	$('#accept-abstract').attr('checked', false);
+
+	$('#start-date').val('');
+	$('#end-date').val('');
+
+	$('#type-criteria div:not(:first-child)').each(function(index){
+		$(this).remove();
+	});
+
+	$('#type-criteria select').val(0);
+
+	$('#country-criteria div:not(:first-child)').each(function(index){
+		$(this).remove();
+	});
+
+	$('#country-criteria select').val(0);
+
+	updateSearchResult();
+
+	return false;
 }
