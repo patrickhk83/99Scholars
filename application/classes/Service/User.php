@@ -7,9 +7,14 @@ class Service_User {
 		$user = ORM::factory('user');
 
 		$user->email = $email;
-		$user->password = md5($password);
+		$user->password = $this->encrypt_password($password);
 		$user->save();
 
 		return array('id' => $user->pk());
+	}
+
+	public function encrypt_password($password)
+	{
+		return md5($password);
 	}
 }
