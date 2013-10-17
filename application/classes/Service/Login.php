@@ -4,12 +4,23 @@ class Service_Login {
 
 	public function login($email, $password)
 	{
-		//TODO: Do authorization using Auth module, and login info should be in session
-		if($email == 'admin@99scholars.org' && $password == 'password')
+		$user_service = new Service_User();
+		$user = $user_service->get_by_email($email);
+
+		//TODO: throw exception instead of returning null
+		if(isset($user))
 		{
-			Cookie::set('login', 'true');
-			Cookie::set('user', '1');
-			return TRUE;
+			if($user['password'] === $user_service->encrypt_password($password))
+			{
+				Cookie::set('login', 'true');
+				Cookie::set('user', $user['id']);
+				return TRUE;
+			}
+			else
+			{
+				return FALSE;
+			}
+			
 		}
 		else
 		{

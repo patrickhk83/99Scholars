@@ -9,6 +9,9 @@
           <?php if(isset($after_submit) && $after_submit) { ?>
             <h4>One more step to submit your conference!</h4>
           <?php } ?>
+          <?php if(isset($error)) { ?>
+            <div class="alert alert-warning"><?php echo $error ?></div>
+          <?php } ?>
           <div class="jumbotron">
            <h3>Signup with 
             <?php
@@ -81,18 +84,18 @@
           <div class="row">
             <div class="col-lg-12">
               <h3>Signup with email</h3>
-              <form role="form">
+              <form role="form" action="<?php echo URL::site('signup') ?>" method="post">
               	<div class="form-group">
-              	  <label for="userEmail">Email address</label>
-              	  <input type="email" class="form-control" id="userEmail" placeholder="Enter email"/>	
+              	  <label for="email">Email address</label>
+              	  <input type="email" class="form-control" id="email" placeholder="Enter email" name="email"/>	
               	</div>
               	<div class="form-group">
-              	  <label for="userPassword">Password</label>
-              	  <input type="password" class="form-control" id="userPassword" placeholder="Password" />
+              	  <label for="password">Password</label>
+              	  <input type="password" class="form-control" id="password" placeholder="Password" name="password"/>
               	</div>
               	<div class="form-group">
-              	  <label for="confirmPassword">Confirm Password</label>
-              	  <input type="password" class="form-control" id="confirmPassword" placeholder="Password again" />
+              	  <label for="confirm-password">Confirm Password</label>
+              	  <input type="password" class="form-control" id="confirm-password" placeholder="Password again" name="confirm_password"/>
               	</div>
               	<button type="submit" class="btn btn-success">Signup</button> or <a href="#">Cancel</a>
               </form>
