@@ -96,11 +96,22 @@ class Controller_Signup extends Controller {
 	{
 		if(HTTP_Request::POST == $this->request->method())
 		{
-			//TODO: add user
+            $signup_service = new Service_Signup();
+            $result = $signup_service->add_user($this->request->post('email'),
+                                                $this->request->post('password'),
+                                                $this->request->post('confirm_password'));
 
-			//redirect to profile page
-			$this->response->redirect('profile');
-			
+			if(isset($result['error']))
+            {
+                $view = View::factory('signup');
+                $view->error = $result['error'];
+                $this->response->body($view);
+            }
+            else
+            {
+                //TODO: Change to profile page after signup is complete
+                $this->redirect('/', 302);
+            }
 		}
 		else
 		{
