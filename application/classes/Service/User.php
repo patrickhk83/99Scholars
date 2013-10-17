@@ -4,7 +4,7 @@ class Service_User {
 
 	public function create($email, $password)
 	{
-		$user = ORM::factory('user');
+		$user = ORM::factory('User');
 
 		$user->email = $email;
 		$user->password = $this->encrypt_password($password);
@@ -15,7 +15,7 @@ class Service_User {
 
 	public function get_by_email($email)
 	{
-		$user = ORM::factory('user')
+		$user = ORM::factory('User')
 					->where('email', '=', $email)
 					->find();
 
