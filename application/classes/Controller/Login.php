@@ -2,20 +2,15 @@
 
 class Controller_Login extends Controller {
 
-	protected $loginService;
-
-	public function before()
-	{
-		$this->loginService = new Service_Login();
-	}
-
 	public function action_index()
 	{
+		$login_service = new Service_Login();
+
 		$email = $this->request->post('email');
 		$password = $this->request->post('password');
 		
 
-		if($this->loginService->login($email, $password))
+		if($login_service->login($email, $password))
 		{
 			$this->redirect('/', 302);
 		}

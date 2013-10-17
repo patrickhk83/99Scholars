@@ -13,6 +13,26 @@ class Service_User {
 		return array('id' => $user->pk());
 	}
 
+	public function get_by_email($email)
+	{
+		$user = ORM::factory('user')
+					->where('email', '=', $email)
+					->find();
+
+		if(!$user->loaded())
+		{
+			return null;
+		}
+		else
+		{
+			return array(
+					'id' => $user->get('id'),
+					'email' => $user->get('email'),
+					'password' => $user->get('password')
+					);
+		}
+	}
+
 	public function encrypt_password($password)
 	{
 		return md5($password);
