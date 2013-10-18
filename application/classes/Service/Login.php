@@ -12,8 +12,7 @@ class Service_Login {
 		{
 			if($user['password'] === $user_service->encrypt_password($password))
 			{
-				Cookie::set('login', 'true');
-				Cookie::set('user', $user['id']);
+				$this->store_login_info($user['id']);
 				return TRUE;
 			}
 			else
@@ -27,5 +26,17 @@ class Service_Login {
 			return FALSE;
 		}
 		
+	}
+
+	public function store_login_info($user_id)
+	{
+		Cookie::set('login', 'true');
+		Cookie::set('user', $user_id);
+	}
+
+	public function clear_login_info()
+	{
+		Cookie::delete('login');
+		Cookie::delete('user');
 	}
 }
