@@ -96,10 +96,7 @@ class Controller_Signup extends Controller {
 	{
 		if(HTTP_Request::POST == $this->request->method())
 		{
-            $signup_service = new Service_Signup();
-            $result = $signup_service->add_user($this->request->post('email'),
-                                                $this->request->post('password'),
-                                                $this->request->post('confirm_password'));
+            $result = $this->add_user($this->request->post());
 
 			if(isset($result['error']))
             {
@@ -125,22 +122,46 @@ class Controller_Signup extends Controller {
 	{
 		if(HTTP_Request::POST == $this->request->method())
 		{
-			//TODO: add user
+			$result = $this->add_user($this->request->post());
 
-			$session = Session::instance();
-			$tmp_conf = $session->get('tmp_conf');
+            if(isset($result['error']))
+            {
+                $view = View::factory('signup');
+                $view->after_submit = TRUE;
+                $view->error = $result['error'];
+                $this->response->body($view);
+            }
+            else
+            {
+                $session = Session::instance();
+                $tmp_conf = $session->get('tmp_conf');
 
-			//add conference
-			$conf_service = new Service_Conference();
-			$conf_service->create($tmp_conf);
+                //add conference
+                $conf_service = new Service_Conference();
+                $conf_id = $conf_service->create($tmp_conf);
 
-			//redirect to conference page
-			//TODO: get id after create conference
-			$this->request->redirect('conference/1', 302);
+                $session->delete('tmp_conf');
+
+                //redirect to conference page
+                $this->redirect('conference/view/'.$conf_id, 302);
+            }
 		}
-		$view = View::factory('signup');
+        else
+        {
+            $view = View::factory('signup');
 
-		$view->after_submit = TRUE;
-		$this->response->body($view);
+            $view->after_submit = TRUE;
+            $this->response->body($view);
+        }
 	}
+
+    protected function add_user($post_data)
+    {
+        $signup_service = new Service_Signup();
+        $result = $signup_service->add_user($this->request->post('email'),
+                                            $this->request->post('password'),
+                                            $this->request->post('confirm_password'));
+
+        return $result;
+    }
 }
