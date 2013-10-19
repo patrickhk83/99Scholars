@@ -12,9 +12,9 @@
             <h4>One more step to submit your conference!</h4>
             <?php $signup_url = $signup_url.'/after_submit' ?>
           <?php } ?>
-          
+          <?php if(isset($error)) { ?>
             <div class="alert alert-warning"><?php echo $error ?></div>
-          
+          <?php } ?>
           <div class="jumbotron">
            <h3>Signup with 
             <?php
