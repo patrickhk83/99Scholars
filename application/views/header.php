@@ -41,23 +41,7 @@
             <li><a href="#contact">Contact</a></li>
           </ul>
 
-          <?php 
-
-            //check for login user
-            //TODO: Check user from session
-            if(Cookie::get('login'))
-            {
-              //TODO: Get user info from session and send to view
-              $login = TRUE;
-            }
-            else
-            {
-              $login = FALSE;
-            }
-
-          ?>
-
-          <?php if(!$login) { ?>
+          <?php if(!Service_Login::is_login()) { ?>
 
             <form class="navbar-form navbar-right" action="<?php echo URL::site('login') ?>" method="post">
               <div class="form-group">

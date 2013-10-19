@@ -39,4 +39,18 @@ class Service_Login {
 		Cookie::delete('login');
 		Cookie::delete('user');
 	}
+
+	public static function is_login()
+	{
+		$cookie = Cookie::get('login');
+
+		if($cookie)
+		{
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
 }

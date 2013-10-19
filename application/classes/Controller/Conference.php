@@ -20,10 +20,8 @@ class Controller_Conference extends Controller {
 	{
 		if(HTTP_Request::POST == $this->request->method())
 		{
-			//check login, should get from session
-			$login = Cookie::get('login');
 			
-			if($login)
+			if(Service_Login::is_login())
 			{
 				//save conference data to database
 				$conf_service = new Service_Conference();

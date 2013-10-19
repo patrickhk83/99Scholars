@@ -1,5 +1,7 @@
 <?php include Kohana::find_file('views', 'header') ?>
 
+      <?php $signup_url = 'signup' ?>
+
       <div class="row row-offcanvas row-offcanvas-right">
         
         <div class="col-xs- col-sm-12 col-lg-6 col-md-6 col-lg-offset-3 col-md-offset-3">
@@ -8,6 +10,7 @@
           </p>
           <?php if(isset($after_submit) && $after_submit) { ?>
             <h4>One more step to submit your conference!</h4>
+            <?php $signup_url = $signup_url.'/after_submit' ?>
           <?php } ?>
           <?php if(isset($error)) { ?>
             <div class="alert alert-warning"><?php echo $error ?></div>
@@ -84,7 +87,7 @@
           <div class="row">
             <div class="col-lg-12">
               <h3>Signup with email</h3>
-              <form role="form" action="<?php echo URL::site('signup') ?>" method="post">
+              <form role="form" action="<?php echo URL::site($signup_url) ?>" method="post">
               	<div class="form-group">
               	  <label for="email">Email address</label>
               	  <input type="email" class="form-control" id="email" placeholder="Enter email" name="email"/>	
