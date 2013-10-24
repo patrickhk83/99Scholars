@@ -145,3 +145,12 @@ Route::set('default', '(<controller>(/<action>(/<id>)))')
 		'controller' => 'home',
 		'action'     => 'index',
 	));
+
+Route::set('conference', '(<controller>(/<action>(/<id>(/<session>(/<session_id>)))))',
+	array(
+		'controller' => 'conference',
+		'session' => 'session'
+	))
+	->defaults(array(
+		'action'     => 'index',
+	));

@@ -4,16 +4,29 @@ class Controller_Conference extends Controller {
 
 	public function action_view()
 	{
+		//disable for mockup
 		$id = $this->request->param('id');
 		
-		$view = View::factory('conf-view');
+		/*$view = View::factory('conf-view');
 
 		$conf_service = new Service_Conference();
 		$conf = $conf_service->get_for_view($id);
 
-		$view->conf = $conf;
+		$view->conf = $conf;*/
 
-		$this->response->body($view);
+		//mockup page
+		$session_id = $this->request->param('session_id');
+		if(isset($session_id))
+		{
+			$view = View::factory('presentation');
+			$this->response->body($view);
+		}
+		else
+		{
+			$view = View::factory('schedule');
+			$view->id = $id;
+			$this->response->body($view);
+		}
 	}
 
 	public function action_submit()

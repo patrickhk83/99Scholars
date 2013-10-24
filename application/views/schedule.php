@@ -31,15 +31,15 @@
 		            </tr>
 		            <tr>
 		              <td class="time">10:00AM</td>
-		              <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
+		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
+		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
+		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
 		            </tr>
 		            <tr>
 		              <td class="time">11:00AM</td>
-		              <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
+		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
+		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
+		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
 		            </tr>
 		            <tr>
 		              <td class="time">12:00PM</td>
@@ -47,33 +47,33 @@
 		            </tr>
 		            <tr>
 		              <td class="time">01:00PM</td>
-		              <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
+		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
+		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
+		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
 		            </tr>
 		            <tr>
 		              <td class="time">02:00PM</td>
-		              <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
+		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
+		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
+		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
 		            </tr>
 		            <tr>
 		              <td class="time">03:00PM</td>
-		              <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
+		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
+		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
+		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
 		            </tr>
 		            <tr>
 		              <td class="time">04:00PM</td>
-		              <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
+		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
+		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
+		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
 		            </tr>
 		            <tr>
 		              <td class="time">05:00PM</td>
-		             <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
-		             <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
-		             <td class="slot"><strong><a href="presentation-detail.html">Presentation Title</a></strong><br/>Speaker Name</td>
+		             <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
+		             <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
+		             <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
 		            </tr>
 		            <tr>
 		              <td class="time">06:00PM</td>
