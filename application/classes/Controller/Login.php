@@ -12,7 +12,7 @@ class Controller_Login extends Controller {
 
 		if($login_service->login($email, $password))
 		{
-			$this->redirect('/', 302);
+			$this->redirect('/profile', 302);
 		}
 		else
 		{
