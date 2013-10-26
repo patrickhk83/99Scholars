@@ -106,8 +106,7 @@ class Controller_Signup extends Controller {
             }
             else
             {
-                //TODO: Change to profile page after signup is complete
-                $this->redirect('/', 302);
+                $this->redirect('/profile', 302);
             }
 		}
 		else
