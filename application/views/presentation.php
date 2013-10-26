@@ -179,6 +179,6 @@
     <?php echo HTML::script('js/jquery.js') ?>
     <?php echo HTML::script('js/bootstrap.min.js') ?>
     <?php echo HTML::script('js/offcanvas.js') ?>
-    <?php echo HTML::script('js/presentation-detail.js') ?>>
+    <?php echo HTML::script('js/presentation-detail.js') ?>
   </body>
 </html>
