@@ -13,7 +13,9 @@ class Controller_Profile extends Controller {
 		else
 		{
 			//TODO: get current user
-			
+
+			$view = View::factory('profile');
+			$this->response->body($view);
 		}
 	}
 }
