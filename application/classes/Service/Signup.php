@@ -8,7 +8,7 @@ class Service_Signup {
 								'password_not_matched' => 'Please type the same password'
 							);
 
-	public function add_user($email, $password, $confirm_password)
+	public function add_user($first_name, $last_name, $email, $password, $confirm_password)
 	{
 		$result = array();
 
@@ -30,7 +30,7 @@ class Service_Signup {
         }
 
         $user_service = new Service_User();
-        $result = $user_service->create($email, $password);
+        $result = $user_service->create($email, $password, $first_name, $last_name);
       
        return $result;
 	}

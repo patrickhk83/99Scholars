@@ -2,12 +2,14 @@
 
 class Service_User {
 
-	public function create($email, $password)
+	public function create($email, $password, $first_name, $last_name)
 	{
 		$user = ORM::factory('User');
 
 		$user->email = $email;
 		$user->password = $this->encrypt_password($password);
+		$user->firstname = $first_name;
+		$user->lastname = $last_name;
 		$user->save();
 
 		return array('id' => $user->pk());
