@@ -18,8 +18,16 @@ class Controller_Profile extends Controller {
 			$result = $user_service->get_by_id($user_id);
 
 			$view = View::factory('profile');
+
+			$view->is_owner = TRUE;
+
+			//TODO: query work count
+			$view->work_count = array('publication' => 0, 'project' => 0, 'presentation' => 0);
+
 			$view->first_name = $result['first_name'];
 			$view->last_name = $result['last_name'];
+
+
 			$this->response->body($view);
 		}
 	}
