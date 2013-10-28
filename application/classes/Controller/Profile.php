@@ -12,9 +12,14 @@ class Controller_Profile extends Controller {
 		}
 		else
 		{
-			//TODO: get current user
+			$user_id = $login_service->get_user_in_session();
+
+			$user_service = new Service_User();
+			$result = $user_service->get_by_id($user_id);
 
 			$view = View::factory('profile');
+			$view->first_name = $result['first_name'];
+			$view->last_name = $result['last_name'];
 			$this->response->body($view);
 		}
 	}

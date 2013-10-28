@@ -35,6 +35,26 @@ class Service_User {
 		}
 	}
 
+	public function get_by_id($id)
+	{
+		$user = ORM::factory('User')
+					->where('id', '=', $id)
+					->find();
+
+		if(!$user->loaded())
+		{
+			return null;
+		}
+		else
+		{
+			return array(
+					'email' => $user->get('email'),
+					'first_name' => $user->get('firstname'),
+					'last_name' => $user->get('lastname')
+					);
+		}
+	}
+
 	public function encrypt_password($password)
 	{
 		return md5($password);

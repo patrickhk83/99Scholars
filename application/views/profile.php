@@ -12,7 +12,7 @@
               <div class="row">
                 <div class="col-lg-2 col-md-2"><img src="img/profile.png" class="img-rounded"/></div><!--span-->
                 <div class="col-lg-8 col-md-8">
-                    <h3>Virginia Yip</h3>
+                    <h3><?php echo $first_name." ".$last_name ?></h3>
                     <p><span class="text-muted">Ph.D., Linguistics, Cornell University</span><br>
                     <a href="#"><strong>The Chinese University of Hong Kong</strong></a><br>
                     Professor and Chairperson, Department of Linguistics and Modern Languages<br>
