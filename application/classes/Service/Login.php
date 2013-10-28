@@ -30,21 +30,24 @@ class Service_Login {
 
 	public function store_login_info($user_id)
 	{
-		Cookie::set('login', 'true');
-		Cookie::set('user', $user_id);
+		$session = Session::instance();
+		$session->set('login', 'true');
+		$session->set('user', $user_id);
 	}
 
 	public function clear_login_info()
 	{
-		Cookie::delete('login');
-		Cookie::delete('user');
+		$session = Session::instance();
+		$session->delete('login');
+		$session->delete('user');
 	}
 
 	public static function is_login()
 	{
-		$cookie = Cookie::get('login');
+		$session = Session::instance();
+		$login = $session->get('login');
 
-		if($cookie)
+		if($login)
 		{
 			return TRUE;
 		}
