@@ -49,10 +49,10 @@
                 <div class="col-lg-12">
                   <br>
                   <ul class="nav nav-tabs" id="profile-tab">
-                    <li><a href="#info" data-toggle="tab">Overview</a></li>
-                    <li><a href="#publication" data-toggle="tab">Publications (<?php echo $work_count['publication'] ?>)</a></li>
-                    <li><a href="#project" data-toggle="tab">Projects (<?php echo $work_count['project'] ?>)</a></li>
-                    <li><a href="#presentation" data-toggle="tab">Presentations (<?php echo $work_count['presentation'] ?>)</a></li>
+                    <li><a href="#info" data-toggle="tab" id="overview-link">Overview</a></li>
+                    <li><a href="#publication" data-toggle="tab" id="publication-link">Publications (<?php echo $work_count['publication'] ?>)</a></li>
+                    <li><a href="#project" data-toggle="tab" id="project-link">Projects (<?php echo $work_count['project'] ?>)</a></li>
+                    <li><a href="#presentation" data-toggle="tab" id="presentation-link">Presentations (<?php echo $work_count['presentation'] ?>)</a></li>
                   </ul>
                   
                   <div class="tab-content">
