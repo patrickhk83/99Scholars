@@ -31,4 +31,13 @@ class Controller_Profile extends Controller {
 			$this->response->body($view);
 		}
 	}
+
+	public function action_view()
+	{
+		$work_type = $this->request->param('id');
+
+		//TODO: Add service to handle different type of work
+		$view = View::factory('user_'.$work_type);
+		$this->response->body($view);
+	}
 }
