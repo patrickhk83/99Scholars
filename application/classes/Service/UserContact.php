@@ -10,4 +10,17 @@ class Service_UserContact {
 		$user_contact->email = $email;
 		$user_contact->save();
 	}
+
+	public function update($user_id, $data)
+	{
+		$query = DB::update('user_contact')->set(array(
+						'tel' => $data['tel'],
+						'fax' => $data['fax'],
+						'email' => $data['email'],
+						'website' => $data['website']
+					))
+					->where('user', '=', $user_id);
+
+		$query->execute();
+	}
 }

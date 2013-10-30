@@ -16,5 +16,8 @@ class Service_UserProfile {
 
 		$user_service = new Service_User();
 		$user_service->update($data['user_id'], $data);
+
+		$user_contact_service = new Service_UserContact();
+		$user_contact_service->update($data['user_id'], $data);
 	}
 }
