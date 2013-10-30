@@ -16,7 +16,7 @@
                 </div><!--span-->
                 <div class="col-lg-2 col-md-2">
                 	<p><br></p>
-                	<p><button class="btn btn-primary btn-block">Done editing</button></p>
+                	<p><a href="<?php echo URL::site('profile') ?>"><button class="btn btn-primary btn-block">Done editing</button></a></p>
                 </div><!--span-->
               </div>
               <div class="row">
