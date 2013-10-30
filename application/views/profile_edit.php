@@ -61,10 +61,10 @@
 	                    	      </div>
 	                     	      <div class="user-overview-content">
 	                    	      	<h4>Contact Information</h4>
-	                    	      	<div class="form-group">
+	                    	      	<!--div class="form-group">
 	                    	      	  <label for="address">Address</label>
-	                    	      	  <textarea class="form-control" rows="3" name="address"><?php echo $user['contact']['address'] ?></textarea>
-	                    	      	</div>
+	                    	      	  <textarea class="form-control" rows="3" name="address"></textarea>
+	                    	      	</div-->
 	                    	      	<div class="form-group">
 	                    	      	  <label for="tel">Tel</label>
 	                    	      	  <input type="text" class="form-control" name="tel" id="tel" value="<?php echo $user['contact']['tel'] ?>"/>
