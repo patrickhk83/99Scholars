@@ -48,6 +48,7 @@ class Service_User {
 		else
 		{
 			return array(
+					'id' => $user->get('id'),
 					'email' => $user->get('email'),
 					'first_name' => $user->get('firstname'),
 					'last_name' => $user->get('lastname'),
@@ -60,9 +61,55 @@ class Service_User {
 	{
 		$user = $this->get_by_id($id);
 
-		//TODO: get contact information
+		$contact = $this->get_contact_info($id);
+
+		$user['contact'] = $contact;
 
 		return $user;
+	}
+
+	public function get_contact_info($user_id)
+	{
+		$contact = ORM::factory('UserContact')
+						->where('user', '=', $user_id)
+						->find();
+
+		if(!$contact->loaded())
+		{
+			return array(
+					'contact_id' => '',
+					'address' => '',
+					'tel' => '',
+					'fax' => '',
+					'email' => '',
+					'website' => ''
+					);
+		}
+		else
+		{
+			return array(
+					'contact_id' => $contact->get('id'),
+					'address' => $contact->get('address'),
+					'tel' => $contact->get('tel'),
+					'fax' => $contact->get('fax'),
+					'email' => $contact->get('email'),
+					'website' => $contact->get('website')
+					);
+		}
+	}
+
+	public function update($id, $data)
+	{
+		$query = DB::update('user')
+					->set(array(
+						'firstname' => $data['first_name'],
+						'lastname' => $data['last_name'],
+						'background' => $data['background'],
+						//'birth_date' => $data['birth_date'] TODO: handle date format
+					))
+					->where('id', '=', $id);
+
+		$query->execute();
 	}
 
 	public function encrypt_password($password)

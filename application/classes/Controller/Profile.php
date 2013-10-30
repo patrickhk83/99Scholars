@@ -47,7 +47,13 @@ class Controller_Profile extends Controller {
 	{
 		if(HTTP_Request::POST == $this->request->method())
 		{
+			$update_type = $this->request->param('id');
 
+			$profile_service = new Service_UserProfile();
+			$profile_service->update($update_type, $this->request->post());
+
+			//TODO: return status in json format
+			echo 'ok';
 		}
 		else
 		{

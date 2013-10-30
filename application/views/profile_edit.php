@@ -38,9 +38,10 @@
                     <div class="tab-pane fade active profile-content" id="info">
                     	<div class="row">
                     	    <div class="col-lg-6">
-                    	      <form role="form">
+                    	      <form role="form" id="gen-info-form">
 	                    	      <div class="user-overview-content">
 	                    	      	<h4>Personal Information</h4>
+	                    	      	<input type="hidden" name="user_id" value="<?php echo $user['id'] ?>"/>
 	                    	      	<div class="form-group">
 	                    	      	  <label for="first-name">First Name</label>
 	                    	      	  <input type="text" class="form-control" name="first_name" id="first-name" value="<?php echo $user['first_name'] ?>"/>
@@ -56,32 +57,32 @@
 	                    	      </div>
 	                    	      <div class="user-overview-content">
 	                    	      	<h4>Background / Research Interests</h4>
-	                    	      	<textarea class="form-control" rows="5"></textarea>
+	                    	      	<textarea class="form-control" rows="5" name="background"><?php echo $user['background'] ?></textarea>
 	                    	      </div>
 	                     	      <div class="user-overview-content">
 	                    	      	<h4>Contact Information</h4>
 	                    	      	<div class="form-group">
 	                    	      	  <label for="address">Address</label>
-	                    	      	  <textarea class="form-control" rows="3"></textarea>
+	                    	      	  <textarea class="form-control" rows="3" name="address"><?php echo $user['contact']['address'] ?></textarea>
 	                    	      	</div>
 	                    	      	<div class="form-group">
 	                    	      	  <label for="tel">Tel</label>
-	                    	      	  <input type="text" class="form-control" name="tel" id="tel"/>
+	                    	      	  <input type="text" class="form-control" name="tel" id="tel" value="<?php echo $user['contact']['tel'] ?>"/>
 	                    	      	</div>
 	                    	      	<div class="form-group">
 	                    	      	  <label for="fax">Fax</label>
-	                    	      	  <input type="text" class="form-control" name="fax" id="fax"/>
+	                    	      	  <input type="text" class="form-control" name="fax" id="fax" value="<?php echo $user['contact']['fax'] ?>"/>
 	                    	      	</div>
 	                    	      	<div class="form-group">
 	                    	      	  <label for="email">Email</label>
-	                    	      	  <input type="text" class="form-control" name="email" id="email"/>
+	                    	      	  <input type="text" class="form-control" name="email" id="email" value="<?php echo $user['contact']['email'] ?>"/>
 	                    	      	</div>
 	                    	      	<div class="form-group">
 	                    	      	  <label for="website">Website</label>
-	                    	      	  <input type="text" class="form-control" name="website" id="website"/>
+	                    	      	  <input type="text" class="form-control" name="website" id="website" value="<?php echo $user['contact']['website'] ?>"/>
 	                    	      	</div>
 	                    	      </div>
-	                    	      <button type="submit" class="btn btn-default">Save</button>
+	                    	      <button type="button" class="btn btn-default" id="gen-info-save-btn">Save</button>
                     	      </form>
                     	    </div><!--span-->
                     	</div><!--/row-->
