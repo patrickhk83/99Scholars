@@ -27,6 +27,8 @@ class Controller_Profile extends Controller {
 			$view->first_name = $result['first_name'];
 			$view->last_name = $result['last_name'];
 
+			$contact = $user_service->get_contact_info($user_id);
+			$view->contact_info = $contact;
 
 			$this->response->body($view);
 		}

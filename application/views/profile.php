@@ -108,12 +108,10 @@
                                     <div class="well">
                                       <p><strong>Contact Information</strong></p>
                                       <?php if(isset($contact_info)) { ?>
-                                        <p>Department of Linguistics and Modern Languages<br>
-                                        The Chinese University of Hong Kong<br>
-                                        Shatin, New Territories, Hong Kong<br>
-                                        Tel: 3943-7019<br>
-                                        Fax: 2603-7755<br>
-                                        Email: vcymatthews@cuhk.edu.hk</p>
+                                        <p>Tel: <?php echo $contact_info['tel'] ?><br>
+                                        Fax: <?php echo $contact_info['fax'] ?><br>
+                                        Email: <?php echo $contact_info['email'] ?><br>
+                                        Website: <?php echo $contact_info['website'] ?></p>
                                       <?php } else { ?>
                                         <p class="text-muted"><em><a href="#">Edit your profile</a> to show your contact information here</em></p>
                                       <?php } ?>
