@@ -43,11 +43,11 @@
 	                    	      	<h4>Personal Information</h4>
 	                    	      	<div class="form-group">
 	                    	      	  <label for="first-name">First Name</label>
-	                    	      	  <input type="text" class="form-control" name="first_name" id="first-name"/>
+	                    	      	  <input type="text" class="form-control" name="first_name" id="first-name" value="<?php echo $user['first_name'] ?>"/>
 	                    	      	</div>
 	                    	      	<div class="form-group">
 	                    	      	  <label for="last-name">Last Name</label>
-	                    	      	  <input type="text" class="form-control" name="last_name" id="last-name"/>
+	                    	      	  <input type="text" class="form-control" name="last_name" id="last-name" value="<?php echo $user['last_name'] ?>"/>
 	                    	      	</div>
 	                    	      	<div class="form-group">
 	                    	      	  <label for="birth-date">Date of Birth</label>

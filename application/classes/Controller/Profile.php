@@ -51,9 +51,14 @@ class Controller_Profile extends Controller {
 		}
 		else
 		{
-			
-			
+			$login_service = new Service_Login();
+			$user_id = $login_service->get_user_in_session();
+
+			$user_service = new Service_User();
+			$user = $user_service->get_info_for_editing($user_id);
+
 			$view = View::factory('profile_edit');
+			$view->user = $user;
 			$this->response->body($view);
 		}
 	}

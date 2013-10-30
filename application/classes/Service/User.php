@@ -50,9 +50,19 @@ class Service_User {
 			return array(
 					'email' => $user->get('email'),
 					'first_name' => $user->get('firstname'),
-					'last_name' => $user->get('lastname')
+					'last_name' => $user->get('lastname'),
+					'background' => $user->get('background')
 					);
 		}
+	}
+
+	public function get_info_for_editing($id)
+	{
+		$user = $this->get_by_id($id);
+
+		//TODO: get contact information
+
+		return $user;
 	}
 
 	public function encrypt_password($password)
