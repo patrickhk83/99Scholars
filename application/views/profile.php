@@ -108,10 +108,20 @@
                                     <div class="well">
                                       <p><strong>Contact Information</strong></p>
                                       <?php if(isset($contact_info)) { ?>
-                                        <p>Tel: <?php echo $contact_info['tel'] ?><br>
-                                        Fax: <?php echo $contact_info['fax'] ?><br>
-                                        Email: <?php echo $contact_info['email'] ?><br>
-                                        Website: <?php echo $contact_info['website'] ?></p>
+                                        <p>
+                                          <?php if(isset($contact_info['tel'])) ?>
+                                            Tel: <?php echo $contact_info['tel'] ?><br>
+                                          <?php } ?>
+                                          <?php if(isset($contact_info['fax'])) { ?>
+                                            Fax: <?php echo $contact_info['fax'] ?><br>
+                                          <?php } ?>
+                                          <?php if(isset($contact_info['email'])) ?>
+                                            Email: <?php echo $contact_info['email'] ?><br>
+                                          <?php } ?>
+                                          <?php if(isset($contact_info['website'])) ?>
+                                            Website: <?php echo $contact_info['website'] ?>
+                                          <?php } ?>
+                                        </p>
                                       <?php } else { ?>
                                         <p class="text-muted"><em><a href="#">Edit your profile</a> to show your contact information here</em></p>
                                       <?php } ?>

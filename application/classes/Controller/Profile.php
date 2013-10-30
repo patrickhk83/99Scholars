@@ -27,6 +27,7 @@ class Controller_Profile extends Controller {
 			$view->first_name = $result['first_name'];
 			$view->last_name = $result['last_name'];
 
+			//TODO: bundle service to display user's info to UserProfile service
 			$contact = $user_service->get_contact_info($user_id);
 			$view->contact_info = $contact;
 
