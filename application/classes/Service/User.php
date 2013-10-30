@@ -12,7 +12,12 @@ class Service_User {
 		$user->lastname = $last_name;
 		$user->save();
 
-		return array('id' => $user->pk());
+		$user_id = $user->pk();
+
+		$user_contact_service = new Service_UserContact();
+		$user_contact_service->create_with_email($user_id, $email);
+
+		return array('id' => $user_id);
 	}
 
 	public function get_by_email($email)
