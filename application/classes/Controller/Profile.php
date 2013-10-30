@@ -32,6 +32,7 @@ class Controller_Profile extends Controller {
 		}
 	}
 
+	//for loading user's profile tab via ajax
 	public function action_view()
 	{
 		$work_type = $this->request->param('id');
@@ -39,5 +40,21 @@ class Controller_Profile extends Controller {
 		//TODO: Add service to handle different type of work
 		$view = View::factory('user_'.$work_type);
 		$this->response->body($view);
+	}
+
+
+	public function action_edit()
+	{
+		if(HTTP_Request::POST == $this->request->method())
+		{
+
+		}
+		else
+		{
+			
+			
+			$view = View::factory('profile_edit');
+			$this->response->body($view);
+		}
 	}
 }
