@@ -2,6 +2,10 @@ var baseEditUrl = document.URL;
 
 $(function(){
 	
+	$('.datepicker').datepicker({
+		autoclose: true
+	});
+
 	$('#profile-tab a:first').tab('show');
 	$('#gen-info-save-btn').click(saveGeneralInfo);
 });

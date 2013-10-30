@@ -52,7 +52,7 @@
 	                    	      	</div>
 	                    	      	<div class="form-group">
 	                    	      	  <label for="birth-date">Date of Birth</label>
-	                    	      	  <input type="text" class="form-control" name="birth_date" id="birth-date"/>
+	                    	      	  <input type="text" class="form-control datepicker" name="birth_date" id="birth-date" value="<?php echo $user['birth_date'] ?>" data-date-format="dd/mm/yyyy"/>
 	                    	      	</div>
 	                    	      </div>
 	                    	      <div class="user-overview-content">
@@ -390,6 +390,7 @@
     <?php echo HTML::script('js/jquery.js') ?>
     <?php echo HTML::script('js/bootstrap.min.js') ?>
     <?php echo HTML::script('js/offcanvas.js') ?>
+    <?php echo HTML::script('js/bootstrap-datepicker.js') ?>
     <?php echo HTML::script('js/profile_edit.js') ?>
   </body>
 </html>

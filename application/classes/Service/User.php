@@ -57,7 +57,8 @@ class Service_User {
 					'email' => $user->get('email'),
 					'first_name' => $user->get('firstname'),
 					'last_name' => $user->get('lastname'),
-					'background' => $user->get('background')
+					'background' => $user->get('background'),
+					'birth_date' => $user->get('birth_date')
 					);
 		}
 	}
@@ -65,6 +66,8 @@ class Service_User {
 	public function get_info_for_editing($id)
 	{
 		$user = $this->get_by_id($id);
+
+		$user['birth_date'] = Util_Date::convert_date_to_display($user['birth_date']);
 
 		$contact = $this->get_contact_info($id);
 
@@ -110,7 +113,7 @@ class Service_User {
 						'firstname' => $data['first_name'],
 						'lastname' => $data['last_name'],
 						'background' => $data['background'],
-						//'birth_date' => $data['birth_date'] TODO: handle date format
+						'birth_date' => Util_Date::convert_date($data['birth_date'])
 					))
 					->where('id', '=', $id);
 
