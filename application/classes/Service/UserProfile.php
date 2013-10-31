@@ -35,11 +35,25 @@ class Service_UserProfile {
 		$org_dao = new Dao_Organization();
 		$org_id = $org_dao->create($data['university'], null);
 
-		$degree_service = new Service_Degree();
+		$degree_service = new Dao_Degree();
 		$degree_service->create($user_id,
 								$data['degree_type'],
 								$data['major'],
 								$org_id,
 								$data['year']);
+	}
+
+	public function render_edit_tab($user_id, $tab_name)
+	{
+		$view = View::factory('profile/edit/edit_'.$tab_name);
+
+		switch ($tab_name) {
+			case 'degree':
+				$degree_service = new Service_Degree();
+				$view->degrees = $degree_service->get_degree_for_edit($user_id);
+				break;
+		}
+
+		return $view;
 	}
 }

@@ -34,9 +34,16 @@ var saveDegreeInfo = function()
 {
 	var url = baseEditUrl + 'create/degree';
 	var data = $('#degree-form').serialize();
+	console.log(data);
 
 	$.post(url, data, function(data){
 		alert('ok');
+		var degree_type = $('#degree-type').val();
+		var html = '<tr><td>' + $('#degree-type option[value="' + degree_type + '"]').text() + ', ' + $('#major').val() + ', ' + $('#graduated-university').val() + ', ' + $('#graduated-year').val() + '</td>' +
+					'<td><span class="glyphicon glyphicon-pencil"></span></td>' + 
+            		'<td><span class="glyphicon glyphicon-trash"></span></td>';
+
+        $('#degree-container').append(html);
 	});
 }
 

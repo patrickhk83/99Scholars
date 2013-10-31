@@ -52,7 +52,10 @@ class Controller_Profile extends Controller {
 
 		if(isset($tab_name))
 		{
-			$view = View::factory('profile/edit/edit_'.$tab_name);
+			$user_id = Service_Login::get_user_in_session();
+
+			$profile_service = new Service_UserProfile();
+			$view = $profile_service->render_edit_tab($user_id, $tab_name);
 			$this->response->body($view);
 		} 
 		else

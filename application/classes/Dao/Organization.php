@@ -13,4 +13,11 @@ class Dao_Organization {
 
 		return $org->pk();
 	}
+
+	public function get($id)
+	{
+		$org = ORM::factory('Organization', $id);
+
+		return $org;
+	}
 }

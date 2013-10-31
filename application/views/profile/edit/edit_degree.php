@@ -34,17 +34,16 @@
           </div><!--span-->
       </div><!--/row-->
       <table class="table table-striped">
-        <tbody>
-          <tr>
-            <td>M.A., German linguistics, University of Melbourne, 1980</td>
-            <td><span class="glyphicon glyphicon-pencil"></span></td>
-            <td><span class="glyphicon glyphicon-trash"></span></td>
-          </tr>
-          <tr>
-            <td>B.A., Psychology, University of Melbourne, 1975</td>
-            <td><span class="glyphicon glyphicon-pencil"></span></td>
-            <td><span class="glyphicon glyphicon-trash"></span></td>
-          </tr>
+        <tbody id="degree-container">
+          <?php if(isset($degrees)) { ?>
+            <?php foreach ($degrees as $degree) { ?>
+              <tr>
+                <td><?php echo $degree['type'].', '.$degree['major'].', '.$degree['university'].', '.$degree['year'] ?></td>
+                <td><span class="glyphicon glyphicon-pencil"></span></td>
+                <td><span class="glyphicon glyphicon-trash"></span></td>
+              </tr>
+            <?php } ?>
+          <?php }?> 
         </tbody>
       </table>
     </div><!--span-->

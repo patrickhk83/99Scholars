@@ -2,18 +2,45 @@
 
 class Service_Degree {
 
-	public function create($user_id, $degree_type, $major, $institute, $graduate_year)
+	public function get_degree_for_edit($user_id)
 	{
-		$degree = ORM::factory('Degree');
+		$degree_dao = new Dao_Degree();
+		$results = $degree_dao->get_by_user_id($user_id);
 
-		$degree->user = $user_id;
-		$degree->degree = $degree_type;
-		$degree->major = $major;
-		$degree->institute = $institute;
-		$degree->graduate_year = $graduate_year;
+		$degrees = array();
 
-		$degree->save();
+		foreach ($results->as_array() as $result) {
+			$degree = array();
 
-		return $degree->pk();
+			$degree['type'] = $this->get_degree_name($result->get('degree'));
+			$degree['major'] = $result->get('major');
+			$degree['university'] = $this->get_institute_name($result->get('institute'));
+			$degree['year'] = $result->get('graduate_year');
+
+			array_push($degrees, $degree);
+		}
+
+		return $degrees;
+	}
+
+	protected function get_institute_name($id)
+	{
+		$org_dao = new Dao_Organization();
+		$org = $org_dao->get($id);
+
+		return $org->get('name');
+	}
+
+	//TODO: map to real table
+	protected function get_degree_name($id)
+	{
+		switch ($id) {
+			case 1:
+				return 'B.A.';
+			case 2:
+				return 'M.A.';
+			case 3:
+				return 'Ph.D.';
+		}
 	}
 }
