@@ -17,7 +17,7 @@ class Controller_Profile extends Controller {
 			$user_service = new Service_User();
 			$result = $user_service->get_by_id($user_id);
 
-			$view = View::factory('profile');
+			$view = View::factory('profile/profile');
 
 			$view->is_owner = TRUE;
 
@@ -41,7 +41,7 @@ class Controller_Profile extends Controller {
 		$work_type = $this->request->param('id');
 
 		//TODO: Add service to handle different type of work
-		$view = View::factory('user_'.$work_type);
+		$view = View::factory('profile/user_'.$work_type);
 		$this->response->body($view);
 	}
 
@@ -66,7 +66,7 @@ class Controller_Profile extends Controller {
 			$user_service = new Service_User();
 			$user = $user_service->get_info_for_editing($user_id);
 
-			$view = View::factory('profile_edit');
+			$view = View::factory('profile/edit/profile_edit');
 			$view->user = $user;
 			$this->response->body($view);
 		}
