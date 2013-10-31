@@ -44,6 +44,10 @@ var saveDegreeInfo = function()
             		'<td><span class="glyphicon glyphicon-trash"></span></td>';
 
         $('#degree-container').append(html);
+
+        $('#major').val('');
+        $('#graduated-university').val('');
+
 	});
 }
 
