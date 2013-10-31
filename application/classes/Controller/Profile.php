@@ -48,6 +48,30 @@ class Controller_Profile extends Controller {
 
 	public function action_edit()
 	{
+
+		$tab_name = $this->request->param('id');
+
+		if(isset($tab_name))
+		{
+			$view = View::factory('profile/edit/edit_'.$tab_name);
+			$this->response->body($view);
+		} 
+		else
+		{
+			$login_service = new Service_Login();
+			$user_id = $login_service->get_user_in_session();
+
+			$user_service = new Service_User();
+			$user = $user_service->get_info_for_editing($user_id);
+
+			$view = View::factory('profile/edit/profile_edit');
+			$view->user = $user;
+			$this->response->body($view);
+		}
+	}
+
+	public function action_update()
+	{
 		if(HTTP_Request::POST == $this->request->method())
 		{
 			$update_type = $this->request->param('id');
@@ -57,28 +81,6 @@ class Controller_Profile extends Controller {
 
 			//TODO: return status in json format
 			echo 'ok';
-		}
-		else
-		{
-			$tab_name = $this->request->param('id');
-
-			if(isset($tab_name))
-			{
-				$view = View::factory('profile/edit/edit_'.$tab_name);
-				$this->response->body($view);
-			} 
-			else
-			{
-				$login_service = new Service_Login();
-				$user_id = $login_service->get_user_in_session();
-
-				$user_service = new Service_User();
-				$user = $user_service->get_info_for_editing($user_id);
-
-				$view = View::factory('profile/edit/profile_edit');
-				$view->user = $user;
-				$this->response->body($view);
-			}
 		}
 	}
 }

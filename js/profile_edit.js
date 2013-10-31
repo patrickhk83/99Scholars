@@ -1,9 +1,14 @@
 var isDegreeLoaded = false;
 
-var baseEditUrl = document.URL + '/';
+var baseUrl = '';
+var moduleName = 'profile';
+var baseEditUrl = '';
 
 $(function(){
 	
+	baseUrl = $('#base-url').val();
+	baseEditUrl = baseUrl + moduleName + "/";
+
 	$('.datepicker').datepicker({
 		autoclose: true
 	});
@@ -16,7 +21,7 @@ $(function(){
 
 var saveGeneralInfo = function()
 {
-	var url = baseEditUrl + 'general';
+	var url = baseEditUrl + 'update/general';
 	var data = $('#gen-info-form').serialize();
 
 	$.post(url, data, function(data){
