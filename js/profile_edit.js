@@ -14,12 +14,13 @@ $(function(){
 	});
 
 	$('#profile-tab a:first').tab('show');
-	$('#gen-info-save-btn').click(saveGeneralInfo);
+
+	$('#gen-info-save-btn').click(updateGeneralInfo);
 
 	$('#degree-link').click(loadDegreeTab);
 });
 
-var saveGeneralInfo = function()
+var updateGeneralInfo = function()
 {
 	var url = baseEditUrl + 'update/general';
 	var data = $('#gen-info-form').serialize();
@@ -29,15 +30,27 @@ var saveGeneralInfo = function()
 	});
 }
 
+var saveDegreeInfo = function()
+{
+	var url = baseEditUrl + 'create/degree';
+	var data = $('#degree-form').serialize();
+
+	$.post(url, data, function(data){
+		alert('ok');
+	});
+}
+
+
 var loadDegreeTab = function()
 {
 	if(!isDegreeLoaded)
 	{
-		var url = baseEditUrl + 'degree';
+		var url = baseEditUrl + 'edit/degree';
 
 		$.get(url, function(data){
 			$('#degree').html(data);
 			isDegreeLoaded = true;
+			$('#add-degree-btn').click(saveDegreeInfo);
 		});
 	}
 }

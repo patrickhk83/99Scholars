@@ -42,7 +42,7 @@ class Service_Login {
 		$session->delete('user');
 	}
 
-	public function get_user_in_session()
+	public static function get_user_in_session()
 	{
 		$session = Session::instance();
 		return $session->get('user');

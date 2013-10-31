@@ -4,15 +4,14 @@ class Controller_Profile extends Controller {
 
 	public function action_index()
 	{
-		$login_service = new Service_Login();
 
-		if(!$login_service->is_login())
+		if(!Service_Login::is_login())
 		{
 			$this->redirect('/', 302);
 		}
 		else
 		{
-			$user_id = $login_service->get_user_in_session();
+			$user_id = Service_Login::get_user_in_session();
 
 			$user_service = new Service_User();
 			$result = $user_service->get_by_id($user_id);
@@ -67,6 +66,22 @@ class Controller_Profile extends Controller {
 			$view = View::factory('profile/edit/profile_edit');
 			$view->user = $user;
 			$this->response->body($view);
+		}
+	}
+
+	public function action_create()
+	{
+		if(HTTP_Request::POST == $this->request->method())
+		{
+			$create_type = $this->request->param('id');
+
+			$user_id = Service_Login::get_user_in_session();
+
+			$profile_service = new Service_UserProfile();
+			$profile_service->create($create_type, $user_id, $this->request->post());
+
+			//TODO: return status in json format
+			echo 'ok';
 		}
 	}
 
