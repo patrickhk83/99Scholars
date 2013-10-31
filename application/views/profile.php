@@ -109,16 +109,16 @@
                                       <p><strong>Contact Information</strong></p>
                                       <?php if(isset($contact_info)) { ?>
                                         <p>
-                                          <?php if(isset($contact_info['tel'])) ?>
+                                          <?php if(isset($contact_info['tel'])) { ?>
                                             Tel: <?php echo $contact_info['tel'] ?><br>
                                           <?php } ?>
                                           <?php if(isset($contact_info['fax'])) { ?>
                                             Fax: <?php echo $contact_info['fax'] ?><br>
                                           <?php } ?>
-                                          <?php if(isset($contact_info['email'])) ?>
+                                          <?php if(isset($contact_info['email'])) { ?>
                                             Email: <?php echo $contact_info['email'] ?><br>
                                           <?php } ?>
-                                          <?php if(isset($contact_info['website'])) ?>
+                                          <?php if(isset($contact_info['website'])) { ?>
                                             Website: <?php echo $contact_info['website'] ?>
                                           <?php } ?>
                                         </p>
