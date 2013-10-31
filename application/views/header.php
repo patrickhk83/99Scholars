@@ -24,6 +24,7 @@
   </head>
 
   <body>
+    <input type="hidden" id="base-url" value="<?php echo URL::site('') ?>">
     <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
       <div class="container">
         <div class="navbar-header">
