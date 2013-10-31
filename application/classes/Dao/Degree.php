@@ -17,12 +17,16 @@ class Dao_Degree {
 		return $degree->pk();
 	}
 
-	public function get_by_user_id($user_id)
+	public function get_by_user_id($user_id, $recent_first = FALSE)
 	{
-		$degrees = ORM::factory('Degree')
-						->where('user', '=', $user_id)
-						->find_all();
+		$query = ORM::factory('Degree')
+						->where('user', '=', $user_id);
+		
+		if($recent_first)
+		{
+			$query->order_by('graduate_year', 'asc');
+		}
 
-		return $degrees;
+		return $query->find_all();
 	}
 }
