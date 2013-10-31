@@ -23,15 +23,15 @@
                 <div class="col-lg-12">
                   <br>
                   <ul class="nav nav-tabs" id="profile-tab">
-                    <li><a href="#info" data-toggle="tab">General information</a></li>
-                    <li><a href="#degree" data-toggle="tab">Degree</a></li>
-                    <li><a href="#position" data-toggle="tab">Position</a></li>
-                    <li><a href="#journal" data-toggle="tab">Journals</a></li>
-                    <li><a href="#conf-proc" data-toggle="tab">Conference Proceedings</a></li>
-                    <li><a href="#chapter" data-toggle="tab">Book Chapters</a></li>
-                    <li><a href="#book" data-toggle="tab">Books</a></li>
-                    <li><a href="#project" data-toggle="tab">Projects</a></li>
-                    <li><a href="#presentation" data-toggle="tab">Presentations</a></li>
+                    <li><a href="#info" data-toggle="tab" id="info-link">General information</a></li>
+                    <li><a href="#degree" data-toggle="tab" id="degree-link">Degree</a></li>
+                    <li><a href="#position" data-toggle="tab" id="position-link">Position</a></li>
+                    <li><a href="#journal" data-toggle="tab" id="journal-link">Journals</a></li>
+                    <li><a href="#conf-proc" data-toggle="tab" id="conf-proc-link">Conference Proceedings</a></li>
+                    <li><a href="#chapter" data-toggle="tab" id="chapter-link">Book Chapters</a></li>
+                    <li><a href="#book" data-toggle="tab" id="book-link">Books</a></li>
+                    <li><a href="#project" data-toggle="tab" id="project-link">Projects</a></li>
+                    <li><a href="#presentation" data-toggle="tab" id="presentation-link">Presentations</a></li>
                   </ul>
                   
                   <div class="tab-content">
@@ -88,25 +88,7 @@
                     	</div><!--/row-->
                     </div>
                     <div class="tab-pane fade profile-content" id="degree">
-                      <div class="row">
-                          <div class="col-lg-12">
-                            <p><button class="btn btn-success">Add degree</button></p>
-                            <table class="table table-striped">
-                              <tbody>
-                                <tr>
-                                  <td>M.A., German linguistics, University of Melbourne, 1980</td>
-                                  <td><span class="glyphicon glyphicon-pencil"></span></td>
-                                  <td><span class="glyphicon glyphicon-trash"></span></td>
-                                </tr>
-                                <tr>
-                                  <td>B.A., Psychology, University of Melbourne, 1975</td>
-                                  <td><span class="glyphicon glyphicon-pencil"></span></td>
-                                  <td><span class="glyphicon glyphicon-trash"></span></td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div><!--span-->
-                      </div><!--/row-->
+                      
                     </div>
                     <div class="tab-pane fade profile-content" id="position">
                       <div class="row">
