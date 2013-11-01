@@ -138,7 +138,8 @@ class Service_UserProfile {
 				break;
 
 			case 'journal':
-
+				$journal_service = new Service_Journal();
+				$view->journals = $journal_service->get_journal_list_for_display($user_id);
 				break;
 		}
 

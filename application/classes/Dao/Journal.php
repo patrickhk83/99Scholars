@@ -22,4 +22,17 @@ class Dao_Journal {
 
 		return $journal->pk();
 	}
+
+	public function get_by_user_id($user_id, $recent_first = FALSE)
+	{
+		$query = ORM::factory('Journal')
+						->where('author', '=', $user_id);
+
+		if($recent_first)
+		{
+			$query->order_by('publish_year', 'desc');
+		}
+
+		return $query->find_all();
+	}
 }

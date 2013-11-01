@@ -58,17 +58,15 @@
 	</div><!--/row-->
   	<table class="table table-striped">
             <tbody id="journal-container">
-              <tr>
-                <td>Cutler, A. (1976). Phoneme-monitoring reaction time as a function of preceding intonation contour.
-                <em>Perception &amp; Psychophysics</em>, 20, 55-60.</td>
-                <td><span class="glyphicon glyphicon-pencil"></span></td>
-                <td><span class="glyphicon glyphicon-trash"></span></td>
-              </tr>
-              <tr>
-                <td>Cutler, A. &amp; Foss, D.J. (1977). On the role of sentence stress in sentence processing. <em>Language and Speech</em>, 20, 1-10.</td>
-                <td><span class="glyphicon glyphicon-pencil"></span></td>
-                <td><span class="glyphicon glyphicon-trash"></span></td>
-              </tr>
+              <?php if(isset($journals)) { ?>
+              	<?php foreach($journals as $journal) { ?>
+              	  <tr>
+              	  	<td><?php echo $journal ?></td>
+              	  	<td><span class="glyphicon glyphicon-pencil"></span></td>
+                	<td><span class="glyphicon glyphicon-trash"></span></td>
+              	  </tr>
+              	<?php } ?>
+              <?php } ?>
             </tbody>
           </table>
   </div><!--span-->
