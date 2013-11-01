@@ -2,7 +2,7 @@
     <div class="col-lg-12">
       <div class="row">
           <div class="col-lg-4">
-            <div class="add-profle-form">
+            <div class="add-profile-form">
               <form role="form" id="degree-form">
                 <div class="form-group">
                   <label for="degree-type">Degree Type</label>
