@@ -39,11 +39,20 @@
       </div><!--/row-->
       <table class="table table-striped">
         <tbody id="position-container">
-          <tr>
-            <td>Professor and Chairperson<br><span class="text-muted">Department of Linguistics and Modern Languages, The Chinese University of Hong Kong</span></td>
-            <td><span class="glyphicon glyphicon-pencil"></span></td>
-            <td><span class="glyphicon glyphicon-trash"></span></td>
-          </tr>
+          <?php if(isset($positions)) { ?>
+            <?php foreach ($positions as $position) { ?>
+              <tr>
+                <td>
+                  <?php echo $position['title'] ?><br>
+                  <span class="text-muted">
+                    <?php echo $position['department'].', '.$position['affiliation'] ?>
+                  </span>
+                </td>
+                <td><span class="glyphicon glyphicon-pencil"></span></td>
+                <td><span class="glyphicon glyphicon-trash"></span></td>
+              </tr>
+            <?php } ?>
+          <?php } ?>
         </tbody>
       </table>
     </div><!--span-->

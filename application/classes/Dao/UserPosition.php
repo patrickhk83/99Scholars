@@ -17,4 +17,17 @@ class Dao_UserPosition {
 
 		return $position->pk();
 	}
+
+	public function get_by_user_id($user_id, $recent_first = FALSE)
+	{
+		$query = ORM::factory('UserPosition')
+						->where('user', '=', $user_id);
+
+		if($recent_first)
+		{
+			$query->order_by('start', 'desc');
+		}
+
+		return $query->find_all();
+	}
 }

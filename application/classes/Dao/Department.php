@@ -13,4 +13,10 @@ class Dao_Department {
 
 		return $department->pk();
 	}
+
+	public function get($id)
+	{
+		$department = ORM::factory('Department', $id);
+		return $department;
+	}
 }

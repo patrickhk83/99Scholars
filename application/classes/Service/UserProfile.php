@@ -79,7 +79,8 @@ class Service_UserProfile {
 				break;
 
 			case 'position':
-
+				$position_service = new Service_UserPosition();
+				$view->positions = $position_service->get_position_list($user_id);
 				break;
 		}
 
