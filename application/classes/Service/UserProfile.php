@@ -21,6 +21,10 @@ class Service_UserProfile {
 			case 'position':
 				$this->create_position($user_id, $data);
 				break;
+
+			case 'journal':
+				$this->create_journal($user_id, $data);
+				break;
 		}
 	}
 
@@ -62,6 +66,24 @@ class Service_UserProfile {
 								$data['to']);
 	}
 
+	protected function create_journal($user_id, $data)
+	{
+		$journal_dao = new Dao_Journal();
+		$journal_dao->create($user_id,
+								$data['has_coauthor'],
+								$data['status'],
+								$data['year'],
+								$data['title'],
+								$data['journal'],
+								$data['volume'],
+								$data['issue'],
+								$data['start'],
+								$data['end'],
+								$data['link']);
+
+		//TODO: check if there is co-author
+	}
+
 	private function create_organization($name)
 	{
 		$org_dao = new Dao_Organization();
@@ -81,6 +103,10 @@ class Service_UserProfile {
 			case 'position':
 				$position_service = new Service_UserPosition();
 				$view->positions = $position_service->get_position_list($user_id);
+				break;
+
+			case 'journal':
+
 				break;
 		}
 

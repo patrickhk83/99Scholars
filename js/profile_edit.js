@@ -4,6 +4,7 @@ var baseEditUrl = '';
 
 var isDegreeLoaded = false;
 var isPositionLoaded = false;
+var isJournalLoaded = false;
 
 $(function(){
 	
@@ -20,6 +21,7 @@ $(function(){
 
 	$('#degree-link').click(loadDegreeTab);
 	$('#position-link').click(loadPositionTab);
+	$('#journal-link').click(loadJournalTab);
 });
 
 var updateGeneralInfo = function()
@@ -77,6 +79,16 @@ var savePositionInfo = function()
 	});
 }
 
+var saveJournalInfo = function()
+{
+	var url = baseEditUrl + 'create/journal';
+	var data = $('#journal-form').serialize();
+
+	$.post(url, data, function(data){
+		alert('ok');
+	});
+}
+
 
 var loadDegreeTab = function()
 {
@@ -110,6 +122,20 @@ var loadPositionTab = function()
 			$('#position-to').datepicker({
 				autoclose: true
 			});*/
+		});
+	}
+}
+
+var loadJournalTab = function()
+{
+	if(!isJournalLoaded)
+	{
+		var url = baseEditUrl + 'edit/journal';
+
+		$.get(url, function(data){
+			$('#journal').html(data);
+			isJournalLoaded = true;
+			$('#add-journal-btn').click(saveJournalInfo);
 		});
 	}
 }
