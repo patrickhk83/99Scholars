@@ -48,10 +48,7 @@ var saveDegreeInfo = function()
             		'<td><span class="glyphicon glyphicon-trash"></span></td>';
 
         $('#degree-container').append(html);
-
-        $('#major').val('');
-        $('#graduated-university').val('');
-
+        $('#degree-form')[0].reset();
 	});
 }
 
@@ -72,10 +69,7 @@ var savePositionInfo = function()
                   '<td><span class="glyphicon glyphicon-trash"></span></td></tr>'
 
         $('#position-container').append(html);
-
-        $('#position-title').val('');
-        $('#position-department').val('');
-        $('#position-institute').val('');
+        $('#position-form')[0].reset();
 	});
 }
 
@@ -91,6 +85,7 @@ var saveJournalInfo = function()
                   	'<td><span class="glyphicon glyphicon-trash"></span></td></tr>'
 
 		$('#journal-container').append(html);
+		$('#journal-form')[0].reset();
 	});
 }
 
