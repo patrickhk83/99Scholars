@@ -36,7 +36,6 @@ var saveDegreeInfo = function()
 {
 	var url = baseEditUrl + 'create/degree';
 	var data = $('#degree-form').serialize();
-	console.log(data);
 
 	$.post(url, data, function(data){
 		alert('ok');
@@ -51,6 +50,16 @@ var saveDegreeInfo = function()
         $('#major').val('');
         $('#graduated-university').val('');
 
+	});
+}
+
+var savePositionInfo = function()
+{
+	var url = baseEditUrl + 'create/position';
+	var data = $('#position-form').serialize();
+
+	$.post(url, data, function(data){
+		alert('ok');
 	});
 }
 
@@ -78,6 +87,7 @@ var loadPositionTab = function()
 		$.get(url, function(data){
 			$('#position').html(data);
 			isPositionLoaded = true;
+			$('#add-position-btn').click(savePositionInfo);
 
 			/*$('#position-from').datepicker({
 				autoclose: true

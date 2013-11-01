@@ -17,6 +17,10 @@ class Service_UserProfile {
 			case 'degree':
 				$this->create_degree($user_id, $data);
 				break;
+
+			case 'position':
+				$this->create_position($user_id, $data);
+				break;
 		}
 	}
 
@@ -32,15 +36,36 @@ class Service_UserProfile {
 
 	protected function create_degree($user_id, $data)
 	{
-		$org_dao = new Dao_Organization();
-		$org_id = $org_dao->create($data['university'], null);
+		$org_id = $this->create_organization($data['university']);
 
-		$degree_service = new Dao_Degree();
-		$degree_service->create($user_id,
+		$degree_dao = new Dao_Degree();
+		$degree_dao->create($user_id,
 								$data['degree_type'],
 								$data['major'],
 								$org_id,
 								$data['year']);
+	}
+
+	protected function create_position($user_id, $data)
+	{
+		$org_id = $this->create_organization($data['institute']);
+
+		$dep_dao = new Dao_Department();
+		$dep_id = $dep_dao->create($data['department'], null, $org_id);
+
+		$position_dao = new Dao_UserPosition();
+		$position_dao->create($user_id,
+								$data['title'],
+								$dep_id,
+								$org_id,
+								$data['from'],
+								$data['to']);
+	}
+
+	private function create_organization($name)
+	{
+		$org_dao = new Dao_Organization();
+		return $org_dao->create($name, null);
 	}
 
 	public function render_edit_tab($user_id, $tab_name)
@@ -54,7 +79,7 @@ class Service_UserProfile {
 				break;
 
 			case 'position':
-				
+
 				break;
 		}
 
