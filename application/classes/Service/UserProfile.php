@@ -52,6 +52,10 @@ class Service_UserProfile {
 				$degree_service = new Service_Degree();
 				$view->degrees = $degree_service->get_degree_list($user_id);
 				break;
+
+			case 'position':
+				
+				break;
 		}
 
 		return $view;

@@ -91,20 +91,7 @@
                       
                     </div>
                     <div class="tab-pane fade profile-content" id="position">
-                      <div class="row">
-                          <div class="col-lg-12">
-                            <p><button class="btn btn-success">Add position</button></p>
-                            <table class="table table-striped">
-                              <tbody>
-                                <tr>
-                                  <td>Professor and Chairperson<br><span class="text-muted">Department of Linguistics and Modern Languages, The Chinese University of Hong Kong</span></td>
-                                  <td><span class="glyphicon glyphicon-pencil"></span></td>
-                                  <td><span class="glyphicon glyphicon-trash"></span></td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div><!--span-->
-                      </div><!--/row-->
+                      
                     </div>
                     <div class="tab-pane fade profile-content" id="journal">
                       <div class="row">

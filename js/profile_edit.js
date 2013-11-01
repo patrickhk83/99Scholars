@@ -1,8 +1,9 @@
-var isDegreeLoaded = false;
-
 var baseUrl = '';
 var moduleName = 'profile';
 var baseEditUrl = '';
+
+var isDegreeLoaded = false;
+var isPositionLoaded = false;
 
 $(function(){
 	
@@ -18,6 +19,7 @@ $(function(){
 	$('#gen-info-save-btn').click(updateGeneralInfo);
 
 	$('#degree-link').click(loadDegreeTab);
+	$('#position-link').click(loadPositionTab);
 });
 
 var updateGeneralInfo = function()
@@ -63,6 +65,27 @@ var loadDegreeTab = function()
 			$('#degree').html(data);
 			isDegreeLoaded = true;
 			$('#add-degree-btn').click(saveDegreeInfo);
+		});
+	}
+}
+
+var loadPositionTab = function()
+{
+	if(!isPositionLoaded)
+	{
+		var url = baseEditUrl + 'edit/position';
+
+		$.get(url, function(data){
+			$('#position').html(data);
+			isPositionLoaded = true;
+
+			/*$('#position-from').datepicker({
+				autoclose: true
+			});
+
+			$('#position-to').datepicker({
+				autoclose: true
+			});*/
 		});
 	}
 }
