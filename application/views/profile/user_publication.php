@@ -2,7 +2,7 @@
     <div class="col-lg-12">
         <div class="well">
             <label class="checkbox-inline publication-criteria">
-                <input type="checkbox" checked="check" id="journal-check"/> Journal <span class="text-muted">(12)</span>
+                <input type="checkbox" checked="check" id="journal-check"/> Journal <span class="text-muted">(<?php echo $publications['count']['journal'] ?>)</span>
             </label>
             <label class="checkbox-inline publication-criteria"> 
                 <input type="checkbox" checked="check" id="conf-check"/> Conference proceeding <span class="text-muted">(2)</span>
@@ -16,53 +16,18 @@
         </div><!--well-->
         <div class="row" id="journal-listing-container">
             <div class="col-lg-12">
+              <?php if(isset($publications['journals'])) { ?>
               <h4>Journals</h4>
               <table class="table table-striped">
                 <tbody>
+                  <?php foreach($publications['journals'] as $journal) { ?>
                   <tr>
-                    <td>Cutler, A. (1976). Phoneme-monitoring reaction time as a function of preceding intonation contour.
-                    <em>Perception &amp; Psychophysics</em>, 20, 55-60.</td>
+                    <td><?php echo $journal ?></td>
                   </tr>
-                  <tr>
-                    <td>Cutler, A. &amp; Foss, D.J. (1977). On the role of sentence stress in sentence processing. <em>Language and Speech</em>, 20, 1-10.</td>
-                  </tr>
-                  <tr>
-                    <td>Fay, D. &amp; Cutler, A. (1977). Malapropisms and the structure of the mental lexicon. <em>Linguistic Inquiry, 8</em>,
-                    505-520.</td>
-                  </tr>
-                  <tr>
-                    <td>Cutler, A. &amp; Cooper, W.E. (1978). Phoneme-monitoring in the context of different phonetic sequences.
-                    <em>Journal of Phonetics</em>, 6, 221-225.</td>
-                  </tr>
-                  <tr>
-                    <td>Swinney, D.A. &amp; Cutler, A. (1979). The access and processing of idiomatic expressions. <em>Journal of Verbal Learning and Verbal Behavior, 18</em>, 523-534.</td>
-                  </tr>
-                  <tr>
-                    <td>Cutler, A. &amp; Fodor, J.A. (1979). Semantic focus and sentence comprehension. <em>Cognition, 7</em>, 49-59.</td>
-                  </tr>
-                  <tr>
-                    <td>Cutler, A. (1976). Phoneme-monitoring reaction time as a function of preceding intonation contour.
-                    <em>Perception &amp; Psychophysics</em>, 20, 55-60.</td>
-                  </tr>
-                  <tr>
-                    <td>Cutler, A. &amp; Foss, D.J. (1977). On the role of sentence stress in sentence processing. <em>Language and Speech</em>, 20, 1-10.</td>
-                  </tr>
-                  <tr>
-                    <td>Fay, D. &amp; Cutler, A. (1977). Malapropisms and the structure of the mental lexicon. <em>Linguistic Inquiry, 8</em>,
-                    505-520.</td>
-                  </tr>
-                  <tr>
-                    <td>Cutler, A. &amp; Cooper, W.E. (1978). Phoneme-monitoring in the context of different phonetic sequences.
-                    <em>Journal of Phonetics</em>, 6, 221-225.</td>
-                  </tr>
-                  <tr>
-                    <td>Swinney, D.A. &amp; Cutler, A. (1979). The access and processing of idiomatic expressions. <em>Journal of Verbal Learning and Verbal Behavior, 18</em>, 523-534.</td>
-                  </tr>
-                  <tr>
-                    <td>Cutler, A. &amp; Fodor, J.A. (1979). Semantic focus and sentence comprehension. <em>Cognition, 7</em>, 49-59.</td>
-                  </tr>
+                <?php } ?>
                 </tbody>
               </table>
+              <?php } ?>
             </div><!--span-->
         </div><!--/row-->
         <div class="row" id="conf-proc-container">

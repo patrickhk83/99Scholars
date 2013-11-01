@@ -122,6 +122,27 @@ class Service_UserProfile {
 		return $org_dao->create($name, null);
 	}
 
+	public function render_view_tab($user_id, $tab_name)
+	{
+		$view = View::factory('profile/user_'.$tab_name);
+
+		switch ($tab_name) {
+			case 'publication':
+				$publications = array();
+
+				$journal_service = new Service_Journal();
+				$journals = $journal_service->get_journal_list_for_display($user_id);
+
+				$publications['journals'] = $journals;
+				$publications['count']['journal'] = count($journals);
+
+				$view->publications = $publications;
+				break;
+		}
+
+		return $view;
+	}
+
 	public function render_edit_tab($user_id, $tab_name)
 	{
 		$view = View::factory('profile/edit/edit_'.$tab_name);

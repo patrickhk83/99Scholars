@@ -32,11 +32,16 @@ class Controller_Profile extends Controller {
 	//for loading user's profile tab via ajax
 	public function action_view()
 	{
-		$work_type = $this->request->param('id');
+		$tab_name = $this->request->param('id');
 
-		//TODO: Add service to handle different type of work
-		$view = View::factory('profile/user_'.$work_type);
-		$this->response->body($view);
+		if(isset($tab_name))
+		{
+			$user_id = Service_Login::get_user_in_session();
+
+			$profile_service = new Service_UserProfile();
+			$view = $profile_service->render_view_tab($user_id, $tab_name);
+			$this->response->body($view);
+		}
 	}
 
 
