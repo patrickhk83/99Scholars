@@ -2,10 +2,10 @@
 
 class Service_Degree {
 
-	public function get_degree_for_edit($user_id)
+	public function get_degree_list($user_id, $recent_first = FALSE)
 	{
 		$degree_dao = new Dao_Degree();
-		$results = $degree_dao->get_by_user_id($user_id);
+		$results = $degree_dao->get_by_user_id($user_id, $recent_first);
 
 		$degrees = array();
 

@@ -24,7 +24,7 @@ class Dao_Degree {
 		
 		if($recent_first)
 		{
-			$query->order_by('graduate_year', 'asc');
+			$query->order_by('graduate_year', 'desc');
 		}
 
 		return $query->find_all();

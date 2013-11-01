@@ -50,10 +50,31 @@ class Service_UserProfile {
 		switch ($tab_name) {
 			case 'degree':
 				$degree_service = new Service_Degree();
-				$view->degrees = $degree_service->get_degree_for_edit($user_id);
+				$view->degrees = $degree_service->get_degree_list($user_id);
 				break;
 		}
 
 		return $view;
+	}
+
+	public function get_overview_info($user_id)
+	{
+		$result = array();
+
+		$user_service = new Service_User();
+		$result['general'] = $user_service->get_by_id($user_id);
+
+		$degree_service = new Service_Degree();
+		$degree = $degree_service->get_degree_list($user_id, TRUE);
+
+		if(!empty($degree))
+		{
+			$result['degree'] = $degree;
+			$result['general']['latest_degree'] = $degree[0];
+		}
+
+		$result['contact'] = $user_service->get_contact_info($user_id);
+
+		return $result;
 	}
 }

@@ -13,12 +13,12 @@
                 <div class="col-lg-2 col-md-2"><img src="img/profile.png" class="img-rounded"/></div><!--span-->
                 <div class="col-lg-8 col-md-8">
                     <!-- Begin user's name -->
-                    <h3><?php echo $first_name." ".$last_name ?></h3>
+                    <h3><?php echo $info['general']['first_name']." ".$info['general']['last_name'] ?></h3>
                     <!-- End user's name -->
 
                     <!-- Begin latest degree -->
-                    <?php if(isset($latest_degree)) { ?>
-                      <p><span class="text-muted">Ph.D., Linguistics, Cornell University</span><br>
+                    <?php if(isset($info['general']['latest_degree'])) { ?>
+                      <p><span class="text-muted"><?php echo $info['general']['latest_degree']['type'].', '.$info['general']['latest_degree']['major'].', '.$info['general']['latest_degree']['university'].', '.$info['general']['latest_degree']['year'] ?></span><br>
                     <?php } else { ?>
                       <p><span class="text-muted"><em><a href="#">Edit your profile</a> to show your degree here</em></span><br>
                     <?php } ?>
@@ -64,10 +64,13 @@
                                     <!-- Begin qualifications -->
                                     <div class="user-overview-content">
                                       <h4>Qualifications</h4>
-                                      <?php if(isset($degree)) { ?>
-                                        <p>Ph.D., Linguistics, Cornell University, 1984<br>
-                                        M.A., German linguistics, University of Melbourne, 1980<br>
-                                        B.A., Psychology, University of Melbourne, 1975<br><br></p>
+                                      <?php if(isset($info['degree'])) { ?>
+                                        <p>
+                                          <?php foreach ($info['degree'] as $degree) { ?>
+                                            <?php echo $degree['type'].', '.$degree['major'].', '.$degree['university'].', '.$degree['year'] ?></td>
+                                            <br>
+                                          <?php } ?>
+                                        </p>
                                       <?php } else { ?>
                                         <p class="text-muted"><em><a href="#">Edit your profile</a> to show all your degree here</em></p>
                                       <?php } ?>
@@ -77,10 +80,8 @@
                                     <!-- Begin user's background -->
                                     <div class="user-overview-content">
                                       <h4>Background / Research Interests</h4>
-                                      <?php if(isset($background)) { ?>
-                                        <p>Language acquisition; Syntax and semantics<br><br>
-                                      
-                                        My interests lie in the logical problem of language acquisition and syntactic/semantic acquisition, with special reference to Mandarin-speaking and Cantonese-speaking children. My acquisition research has been related to several topics.<br><br></p>
+                                      <?php if(isset($info['general']['background'])) { ?>
+                                        <p><?php echo $info['general']['background'] ?></p>
                                       <?php } else { ?>
                                         <p class="text-muted"><em><a href="#">Edit your profile</a> to show your background or research interests here</em></p>
                                       <?php } ?>
@@ -107,19 +108,19 @@
                                     <!-- Begin contact info -->
                                     <div class="well">
                                       <p><strong>Contact Information</strong></p>
-                                      <?php if(isset($contact_info)) { ?>
+                                      <?php if(isset($info['contact'])) { ?>
                                         <p>
-                                          <?php if(isset($contact_info['tel'])) { ?>
-                                            Tel: <?php echo $contact_info['tel'] ?><br>
+                                          <?php if(isset($info['contact']['tel'])) { ?>
+                                            Tel: <?php echo $info['contact']['tel'] ?><br>
                                           <?php } ?>
-                                          <?php if(isset($contact_info['fax'])) { ?>
-                                            Fax: <?php echo $contact_info['fax'] ?><br>
+                                          <?php if(isset($info['contact']['fax'])) { ?>
+                                            Fax: <?php echo $info['contact']['fax'] ?><br>
                                           <?php } ?>
-                                          <?php if(isset($contact_info['email'])) { ?>
-                                            Email: <?php echo $contact_info['email'] ?><br>
+                                          <?php if(isset($info['contact']['email'])) { ?>
+                                            Email: <?php echo $info['contact']['email'] ?><br>
                                           <?php } ?>
-                                          <?php if(isset($contact_info['website'])) { ?>
-                                            Website: <?php echo $contact_info['website'] ?>
+                                          <?php if(isset($info['contact']['website'])) { ?>
+                                            Website: <?php echo $info['contact']['website'] ?>
                                           <?php } ?>
                                         </p>
                                       <?php } else { ?>

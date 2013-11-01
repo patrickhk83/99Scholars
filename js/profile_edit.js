@@ -38,6 +38,7 @@ var saveDegreeInfo = function()
 
 	$.post(url, data, function(data){
 		alert('ok');
+		//TODO: get display text from json response
 		var degree_type = $('#degree-type').val();
 		var html = '<tr><td>' + $('#degree-type option[value="' + degree_type + '"]').text() + ', ' + $('#major').val() + ', ' + $('#graduated-university').val() + ', ' + $('#graduated-year').val() + '</td>' +
 					'<td><span class="glyphicon glyphicon-pencil"></span></td>' + 

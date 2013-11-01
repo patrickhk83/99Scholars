@@ -13,22 +13,17 @@ class Controller_Profile extends Controller {
 		{
 			$user_id = Service_Login::get_user_in_session();
 
-			$user_service = new Service_User();
-			$result = $user_service->get_by_id($user_id);
+			$profile_service = new Service_UserProfile();
 
 			$view = View::factory('profile/profile');
+
+			$view->info = $profile_service->get_overview_info($user_id);
 
 			$view->is_owner = TRUE;
 
 			//TODO: query work count
 			$view->work_count = array('publication' => 0, 'project' => 0, 'presentation' => 0);
 
-			$view->first_name = $result['first_name'];
-			$view->last_name = $result['last_name'];
-
-			//TODO: bundle service to display user's info to UserProfile service
-			$contact = $user_service->get_contact_info($user_id);
-			$view->contact_info = $contact;
 
 			$this->response->body($view);
 		}
