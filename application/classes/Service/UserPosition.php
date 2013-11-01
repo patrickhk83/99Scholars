@@ -2,10 +2,10 @@
 
 class Service_UserPosition {
 
-	public function get_position_list($user_id)
+	public function get_position_list($user_id, $recent_first = FALSE)
 	{
 		$position_dap = new Dao_UserPosition();
-		$results = $position_dap->get_by_user_id($user_id);
+		$results = $position_dap->get_by_user_id($user_id, $recent_first);
 
 		$positions = array();
 

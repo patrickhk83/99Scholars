@@ -25,9 +25,9 @@
                     <!-- End latest degree -->
 
                     <!-- Begin latest position -->
-                    <?php if(isset($current_position)) { ?>
-                      <strong>The Chinese University of Hong Kong</strong><br>
-                      Professor and Chairperson, Department of Linguistics and Modern Languages<br>
+                    <?php if(isset($info['position'])) { ?>
+                      <strong><?php echo $info['position']['affiliation'] ?></strong><br>
+                      <?php echo $info['position']['title'].', '.$info['position']['department'] ?><br>
                     <?php } else { ?>
                       <span class="text-muted"><em><a href="#">Edit your profile</a> to show your position here</em></span><br>
                     <?php } ?>

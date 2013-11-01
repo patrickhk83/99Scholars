@@ -105,6 +105,14 @@ class Service_UserProfile {
 
 		$result['contact'] = $user_service->get_contact_info($user_id);
 
+		$position_service = new Service_UserPosition();
+		$positions = $position_service->get_position_list($user_id);
+
+		if(!empty($positions))
+		{
+			$result['position'] = $positions[0];
+		}
+
 		return $result;
 	}
 }
