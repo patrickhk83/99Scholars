@@ -6,11 +6,6 @@ var baseViewUrl = document.URL + '/view/';
 
 $(function(){
 	$('#profile-tab a:first').tab('show');
-	
-	$('#journal-check').change(journalEnabler);
-	$('#conf-check').change(conferenceEnabler);
-	$('#chapter-check').change(chapterEnabler);
-	$('#book-check').change(bookEnabler);
 
 	$('#publication-link').click(loadPublicationTab);
 	$('#project-link').click(loadProjectTab);
@@ -83,6 +78,11 @@ var loadPublicationTab = function()
 		$.get(url, function(data){
 			$('#publication').html(data);
 			isPublicationLoaded = true;
+
+			$('#journal-check').change(journalEnabler);
+			$('#conf-check').change(conferenceEnabler);
+			$('#chapter-check').change(chapterEnabler);
+			$('#book-check').change(bookEnabler);
 		});
 	}
 }
