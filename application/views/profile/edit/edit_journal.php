@@ -57,7 +57,7 @@
 	    </div><!--span-->
 	</div><!--/row-->
   	<table class="table table-striped">
-            <tbody>
+            <tbody id="journal-container">
               <tr>
                 <td>Cutler, A. (1976). Phoneme-monitoring reaction time as a function of preceding intonation contour.
                 <em>Perception &amp; Psychophysics</em>, 20, 55-60.</td>
@@ -66,61 +66,6 @@
               </tr>
               <tr>
                 <td>Cutler, A. &amp; Foss, D.J. (1977). On the role of sentence stress in sentence processing. <em>Language and Speech</em>, 20, 1-10.</td>
-                <td><span class="glyphicon glyphicon-pencil"></span></td>
-                <td><span class="glyphicon glyphicon-trash"></span></td>
-              </tr>
-              <tr>
-                <td>Fay, D. &amp; Cutler, A. (1977). Malapropisms and the structure of the mental lexicon. <em>Linguistic Inquiry, 8</em>,
-                505-520.</td>
-                <td><span class="glyphicon glyphicon-pencil"></span></td>
-                <td><span class="glyphicon glyphicon-trash"></span></td>
-              </tr>
-              <tr>
-                <td>Cutler, A. &amp; Cooper, W.E. (1978). Phoneme-monitoring in the context of different phonetic sequences.
-                <em>Journal of Phonetics</em>, 6, 221-225.</td>
-                <td><span class="glyphicon glyphicon-pencil"></span></td>
-                <td><span class="glyphicon glyphicon-trash"></span></td>
-              </tr>
-              <tr>
-                <td>Swinney, D.A. &amp; Cutler, A. (1979). The access and processing of idiomatic expressions. <em>Journal of Verbal Learning and Verbal Behavior, 18</em>, 523-534.</td>
-                <td><span class="glyphicon glyphicon-pencil"></span></td>
-                <td><span class="glyphicon glyphicon-trash"></span></td>
-              </tr>
-              <tr>
-                <td>Cutler, A. &amp; Fodor, J.A. (1979). Semantic focus and sentence comprehension. <em>Cognition, 7</em>, 49-59.</td>
-                <td><span class="glyphicon glyphicon-pencil"></span></td>
-                <td><span class="glyphicon glyphicon-trash"></span></td>
-              </tr>
-              <tr>
-                <td>Cutler, A. (1976). Phoneme-monitoring reaction time as a function of preceding intonation contour.
-                <em>Perception &amp; Psychophysics</em>, 20, 55-60.</td>
-                <td><span class="glyphicon glyphicon-pencil"></span></td>
-                <td><span class="glyphicon glyphicon-trash"></span></td>
-              </tr>
-              <tr>
-                <td>Cutler, A. &amp; Foss, D.J. (1977). On the role of sentence stress in sentence processing. <em>Language and Speech</em>, 20, 1-10.</td>
-                <td><span class="glyphicon glyphicon-pencil"></span></td>
-                <td><span class="glyphicon glyphicon-trash"></span></td>
-              </tr>
-              <tr>
-                <td>Fay, D. &amp; Cutler, A. (1977). Malapropisms and the structure of the mental lexicon. <em>Linguistic Inquiry, 8</em>,
-                505-520.</td>
-                <td><span class="glyphicon glyphicon-pencil"></span></td>
-                <td><span class="glyphicon glyphicon-trash"></span></td>
-              </tr>
-              <tr>
-                <td>Cutler, A. &amp; Cooper, W.E. (1978). Phoneme-monitoring in the context of different phonetic sequences.
-                <em>Journal of Phonetics</em>, 6, 221-225.</td>
-                <td><span class="glyphicon glyphicon-pencil"></span></td>
-                <td><span class="glyphicon glyphicon-trash"></span></td>
-              </tr>
-              <tr>
-                <td>Swinney, D.A. &amp; Cutler, A. (1979). The access and processing of idiomatic expressions. <em>Journal of Verbal Learning and Verbal Behavior, 18</em>, 523-534.</td>
-                <td><span class="glyphicon glyphicon-pencil"></span></td>
-                <td><span class="glyphicon glyphicon-trash"></span></td>
-              </tr>
-              <tr>
-                <td>Cutler, A. &amp; Fodor, J.A. (1979). Semantic focus and sentence comprehension. <em>Cognition, 7</em>, 49-59.</td>
                 <td><span class="glyphicon glyphicon-pencil"></span></td>
                 <td><span class="glyphicon glyphicon-trash"></span></td>
               </tr>

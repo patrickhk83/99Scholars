@@ -86,6 +86,11 @@ var saveJournalInfo = function()
 
 	$.post(url, data, function(data){
 		alert('ok');
+		var html = '<tr><td>' + data.result_to_display + '</td>' +
+					'<td><span class="glyphicon glyphicon-pencil"></span></td>' +
+                  	'<td><span class="glyphicon glyphicon-trash"></span></td></tr>'
+
+		$('#journal-container').append(html);
 	});
 }
 

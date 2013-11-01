@@ -13,19 +13,23 @@ class Service_UserProfile {
 
 	public function create($type, $user_id, $data)
 	{
+		$result;
+
 		switch ($type) {
 			case 'degree':
-				$this->create_degree($user_id, $data);
+				$result = $this->create_degree($user_id, $data);
 				break;
 
 			case 'position':
-				$this->create_position($user_id, $data);
+				$result = $this->create_position($user_id, $data);
 				break;
 
 			case 'journal':
-				$this->create_journal($user_id, $data);
+				$result = $this->create_journal($user_id, $data);
 				break;
 		}
+
+		return $result;
 	}
 
 	protected function update_general_info($data)
@@ -48,6 +52,11 @@ class Service_UserProfile {
 								$data['major'],
 								$org_id,
 								$data['year']);
+
+		$result = array();
+		$result['status'] = 'ok';
+
+		return $result;
 	}
 
 	protected function create_position($user_id, $data)
@@ -64,6 +73,11 @@ class Service_UserProfile {
 								$org_id,
 								$data['from'],
 								$data['to']);
+
+		$result = array();
+		$result['status'] = 'ok';
+
+		return $result;
 	}
 
 	protected function create_journal($user_id, $data)
@@ -82,6 +96,24 @@ class Service_UserProfile {
 								$data['link']);
 
 		//TODO: check if there is co-author
+
+		$result = array();
+		$result['status'] = 'ok';
+
+		$user_service = new Service_User();
+		$user = $user_service->get_by_id($user_id);
+
+		$result['result_to_display'] = Util_Journal::format($user['last_name'],
+															$user['first_name'],
+															$data['year'],
+															$data['title'],
+															$data['journal'],
+															$data['volume'],
+															$data['issue'],
+															$data['start'],
+															$data['end']);
+
+		return $result;
 	}
 
 	private function create_organization($name)
