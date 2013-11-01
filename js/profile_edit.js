@@ -60,6 +60,20 @@ var savePositionInfo = function()
 
 	$.post(url, data, function(data){
 		alert('ok');
+		//TODO: get display text from json response
+
+		var html = '<tr><td>' + $('#position-title').val() + '<br>' +
+                  '<span class="text-muted">' + 
+                  $('#position-department').val() + ', ' + $('#position-institute').val() +
+                  '</span></td>' +
+                  '<td><span class="glyphicon glyphicon-pencil"></span></td>' +
+                  '<td><span class="glyphicon glyphicon-trash"></span></td></tr>'
+
+        $('#position-container').append(html);
+
+        $('#position-title').val('');
+        $('#position-department').val('');
+        $('#position-institute').val('');
 	});
 }
 
