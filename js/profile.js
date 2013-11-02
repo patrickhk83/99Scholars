@@ -10,6 +10,11 @@ $(function(){
 	$('#publication-link').click(loadPublicationTab);
 	$('#project-link').click(loadProjectTab);
 	$('#presentation-link').click(loadPresentationTab);
+
+	$('#journal-check').change(journalEnabler);
+	$('#conf-check').change(conferenceEnabler);
+	$('#chapter-check').change(chapterEnabler);
+	$('#book-check').change(bookEnabler);
 	
 });
 

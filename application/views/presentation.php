@@ -10,7 +10,7 @@
             <div class="col-lg-12">
               <p><strong>17 September, 10:00AM - 11:00AM</strong></p>
               <p><h2>Build and deploy your own Big Data distribution with Apache Bigtop</h2></p>
-              <p><strong>Speaker : </strong> <a href="#">Bruno Mahé</a></p>
+              <p><strong>Speaker : </strong> <a href="<?php echo URL::site('user') ?>">Bruno Mahé</a></p>
               <p><strong>Audience level:</strong> Intermediate</p>
             </div><!--/span--> 
           </div><!--/row--> 
