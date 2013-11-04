@@ -120,6 +120,12 @@ class Service_User {
 		$query->execute();
 	}
 
+	public function attend_conference($user, $conferemce)
+	{
+		$atten_dao = new Dao_Attendee();
+		$atten_dao->create($user, $conferemce);
+	}
+
 	public function encrypt_password($password)
 	{
 		return md5($password);

@@ -96,4 +96,13 @@ class Controller_Conference extends Controller {
 
 		$this->response->body($view);
 	}
+
+	public function action_attend()
+	{
+		$conf_id = $this->request->param('id');
+		$user_id = Service_Login::get_user_in_session();
+
+		$user_service = new Service_User();
+		$user_service->attend_conference($user_id, $conf_id);
+	}
 }
