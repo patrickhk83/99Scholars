@@ -135,29 +135,17 @@
               <p>
                 <table class="table" id="attendee-list">
                   <?php if(isset($info['attendees'])) { ?>
-                    <tr>
-                  <td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
-                    <td>
-                      <p><a href="<?php echo URL::site('user') ?>"><strong>Mark Otto</strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>
-                      <p></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
-                    <td>
-                      <p><a href="<?php echo URL::site('user') ?>"><strong>Jacob Thornton</strong></a> <br/> <small class="text-muted">Queen's University</small></p>
-                      <p></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
-                    <td>
-                      <p><a href="<?php echo URL::site('user') ?>"><strong>Larry Bird</strong></a> <br/> <small class="text-muted">University of California, Los Angeles</small></p>
-                      <p></p>
-                    </td>
-                  </tr>
+                    <?php foreach($info['attendees'] as $attendee) { ?>
+                      <tr>
+                        <td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
+                        <td>
+                          <p><a href="<?php echo URL::site('user') ?>"><strong><?php echo $attendee['name'] ?></strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>
+                          <p></p>
+                        </td>
+                      </tr>
+                    <?php } ?>
                   <?php } else { ?>
-                    There is no attendee, <a href="#">be the first one</a>
+                    There is no attendee right now, <a href="#">be the first one</a>
                   <?php } ?>
                 </table>
               </p>

@@ -12,4 +12,13 @@ class Dao_Attendee {
 		$attendee->save();
 		return $attendee->pk();
 	}
+
+	public function get_attendee_list($conference_id)
+	{
+		$attendees = ORM::factory('Attendee')
+						->where('conference', '=', $conference_id)
+						->find_all();
+
+		return $attendees;
+	}
 }
