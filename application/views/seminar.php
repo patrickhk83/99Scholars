@@ -1,5 +1,4 @@
 <?php include Kohana::find_file('views', 'header') ?>
-
 <div class="row row-offcanvas row-offcanvas-right">
         
         <div class="col-xs-12 col-sm-12">
@@ -8,10 +7,10 @@
           </p>
           <div class="row">
             <div class="col-lg-12">
-              <p><strong>17 September, 10:00AM - 11:00AM</strong></p>
+              
               <p><h2>Build and deploy your own Big Data distribution with Apache Bigtop</h2></p>
               <p><strong>Speaker : </strong> <a href="<?php echo URL::site('user') ?>">Bruno Mahé</a></p>
-              <p><strong>Audience level:</strong> Intermediate</p>
+			  <p><strong>17 September, 10:00AM - 11:00AM</strong><br><strong>Oxford, United Kingdom</strong> <span class="text-muted">(<a href="#">view map</a>)</span></p>
             </div><!--/span--> 
           </div><!--/row--> 
           <div class="row">
@@ -64,7 +63,7 @@
 	          	        <p><a href="#">picture.png</a> <span class="text-muted">(127 kB)</span></p>
 	          	      </div><!--span-->
 	          	      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-	          	        <?php echo HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?> 
+	          	        <?php echo HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
 	          	        <p><a href="#">picture.png</a> <span class="text-muted">(127 kB)</span></p>
 	          	      </div><!--span-->
 	          	      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
@@ -88,7 +87,7 @@
           </div><!--/row-->
           <div class="row">
               <div class="col-lg-12">
-              	 <p><a href="my-schedule.html"><button class="btn btn-primary">Add to my schedule</button></a></p>
+              	 <p><a href="my-schedule.html"><button type="button" class="btn btn-primary" id="join-btn">Add to my schedule</button></a></p>
               </div><!--span-->
           </div><!--/row-->
           <div class="row">
@@ -133,7 +132,7 @@
             <div class="col-lg-4">
               <p><h4 class="text-muted">Attendees</h4></p>
               <p>
-                <table class="table">
+                <table class="table" id="attendee-list">
                   <tr>
               		<td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
                     <td>
@@ -179,6 +178,6 @@
     <?php echo HTML::script('js/jquery.js') ?>
     <?php echo HTML::script('js/bootstrap.min.js') ?>
     <?php echo HTML::script('js/offcanvas.js') ?>
-    <?php echo HTML::script('js/presentation-detail.js') ?>
+    <?php echo HTML::script('js/seminar.js') ?>
   </body>
 </html>
