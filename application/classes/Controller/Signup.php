@@ -106,8 +106,7 @@ class Controller_Signup extends Controller {
             }
             else
             {
-                //TODO: Change to profile page after signup is complete
-                $this->redirect('/', 302);
+                $this->redirect('/profile', 302);
             }
 		}
 		else
@@ -158,7 +157,9 @@ class Controller_Signup extends Controller {
     protected function add_user($post_data)
     {
         $signup_service = new Service_Signup();
-        $result = $signup_service->add_user($this->request->post('email'),
+        $result = $signup_service->add_user($this->request->post('first_name'),
+                                            $this->request->post('last_name'),
+                                            $this->request->post('email'),
                                             $this->request->post('password'),
                                             $this->request->post('confirm_password'));
 

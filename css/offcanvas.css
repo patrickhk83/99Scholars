@@ -48,6 +48,11 @@ td.time {
 	padding-left: 10px;
 }
 
+.profile-content {
+  padding-left: 10px;
+  margin-top: 10px;
+}
+
 .flex-video {
   position: relative;
   padding-top: 25px;
@@ -93,6 +98,25 @@ td.time {
 #total-conference-display h2 {
   display: inline-block;
 }
+
+.criteria-header {
+    margin-bottom: 10px;
+}
+
+.publication-criteria {
+  margin-right: 15px;
+}
+
+.signup-header {
+  margin-bottom: 20px;
+}
+
+.user-overview-content {
+  margin-bottom: 30px;
+}
+
+.add-profile-form {
+margin-bottom: 30px}
 
 /*
  * Off Canvas

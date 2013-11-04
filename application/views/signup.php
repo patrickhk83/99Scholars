@@ -86,8 +86,16 @@
           
           <div class="row">
             <div class="col-lg-12">
-              <h3>Signup with email</h3>
+              <h3 class="signup-header">Signup with email</h3>
               <form role="form" action="<?php echo URL::site($signup_url) ?>" method="post">
+                <div class="form-group">
+                  <label for="first-name">First Name</label>
+                  <input type="text" class="form-control" id="first-name" placeholder="Your First Name" name="first_name"/> 
+                </div>
+                <div class="form-group">
+                  <label for="last-name">Last Name</label>
+                  <input type="text" class="form-control" id="last-name" placeholder="Your Last Name"name="last_name"/>  
+                </div>
               	<div class="form-group">
               	  <label for="email">Email address</label>
               	  <input type="email" class="form-control" id="email" placeholder="Enter email" name="email"/>	

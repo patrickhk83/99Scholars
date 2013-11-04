@@ -24,6 +24,7 @@
   </head>
 
   <body>
+    <input type="hidden" id="base-url" value="<?php echo URL::site('') ?>">
     <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -57,7 +58,7 @@
             <?php } else { ?>
 
             <div class="navbar-form navbar-right">
-              <a href="profile.html"><button type="submit" class="btn btn-default">My Profile</button></a>
+              <a href="<?php echo URL::site('profile') ?>"><button type="submit" class="btn btn-default">My Profile</button></a>
               <a href="<?php echo URL::site('logout') ?>"><button type="button" class="btn btn-danger">Log out</button></a>
             </div>
 
