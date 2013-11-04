@@ -12,7 +12,7 @@
                 <div class="col-lg-2 col-md-2"><img src="img/profile.png" class="img-rounded"/></div><!--span-->
                 <div class="col-lg-8 col-md-8">
                 	<h3>Virginia Yip</h3>
-                	<p><span class="text-muted">Ph.D., Linguistics, Cornell University</span><br>
+                	<p><span class="text-muted">Ph.D., Linguistics, University of Southern California</span><br>
                 	<a href="#"><strong>The Chinese University of Hong Kong</strong></a><br>
                 	Professor and Chairperson, Department of Linguistics and Modern Languages<br>
                 	<span class="glyphicon glyphicon-envelope"></span> <span class="glyphicon glyphicon-globe"></span> <span class="glyphicon glyphicon-phone"></span></p>
@@ -27,6 +27,7 @@
                 <div class="col-lg-12">
                   <br>
                   <ul class="nav nav-tabs" id="profile-tab">
+                    <li><a href="#event" data-toggle="tab">Events</a></li>
                     <li><a href="#info" data-toggle="tab">Overview</a></li>
                     <li><a href="#publication" data-toggle="tab">Publications (20)</a></li>
                     <li><a href="#project" data-toggle="tab">Projects (4)</a></li>
@@ -34,13 +35,50 @@
                   </ul>
                   
                   <div class="tab-content">
+                    <div class="tab-pane fade active profile-content" id="event">
+                        <div class="row">
+                            <div class="col-lg-12">
+                              <h4>Upcoming events Virginia Yip will attends</h4>
+                              <div class="row conf-list">
+                                <div class="col-lg-12">
+                                  <div class="row">
+                                    <div class="col-lg-8">
+                                      <p><strong><a href="<?php echo URL::site('seminar') ?>">4th Global Conference: Performance: Visual Aspects of Performance Practice</a></strong> <br/> Oxford, United Kingdom</p>
+                                    </div>
+                                    <!--div class="col-lg-2"><button type="button" class="btn btn-primary btn-xs">Conference</button></div-->
+                                    <div class="col-lg-2">19 Sep 2013</div>
+                                    <div class="col-lg-2"><a class="btn btn-info btn-block" href="#">Book</a></div>
+                                  </div><!--/row-->
+                                  
+                                  <div class="row">
+                                    <div class="col-lg-8">
+                                      <p><strong><a href="<?php echo URL::site('seminar') ?>">The Best in Heritage 2013</a></strong> <br/> Dubrovnik, Croatia</p>
+                                    </div>
+                                    <!--div class="col-lg-2"><button type="button" class="btn btn-success btn-xs">Seminar</button></div-->
+                                    <div class="col-lg-2">19 Sep 2013</div>
+                                    <div class="col-lg-2"><a class="btn btn-info btn-block" href="#">Book</a></div>
+                                  </div><!--/row-->
+                                  
+                                  <div class="row">
+                                    <div class="col-lg-8">
+                                      <p><strong><a href="<?php echo URL::site('seminar') ?>">2nd Global Conference: The Graphic Novel</a></strong> <br/> Oxford, United Kingdom</p>
+                                    </div>
+                                    <!--div class="col-lg-2"><button type="button" class="btn btn-primary btn-xs">Conference</button></div-->
+                                    <div class="col-lg-2">19 Sep 2013</div>
+                                    <div class="col-lg-2"><a class="btn btn-info btn-block" href="#">Book</a></div>
+                                  </div><!--/row-->
+                                  </div><!--span-->
+                              </div><!--row-->
+                            </div><!--span-->
+                        </div><!--/row-->
+                    </div>
                     <div class="tab-pane fade active profile-content" id="info">
                     	<div class="row">
                     	    <div class="col-lg-12">
                     	      <div class="row">
                     	          <div class="col-lg-8 col-md-8">
                     	          	<h4>Qualifications</h4>
-                    	          	<p>Ph.D., Linguistics, Cornell University, 1984<br>
+                    	          	<p>Ph.D., Linguistics, University of Southern California, 1984<br>
                     	          	M.A., German linguistics, University of Melbourne, 1980<br>
                     	          	B.A., Psychology, University of Melbourne, 1975<br><br></p>
                     	          	<h4>Research Interests</h4>
