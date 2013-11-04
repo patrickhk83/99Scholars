@@ -85,9 +85,9 @@
               
             </div><!--/span--> 
           </div><!--/row-->
-          <div class="row">
+          <div class="row attachment-content">
               <div class="col-lg-12">
-              	 <p><a href="my-schedule.html"><button type="button" class="btn btn-primary" id="join-btn">Add to my schedule</button></a></p>
+              	 <p><a href="my-schedule.html"><button type="button" class="btn btn-primary" id="join-btn">Attend this seminar</button></a></p>
               </div><!--span-->
           </div><!--/row-->
           <div class="row">
@@ -133,27 +133,31 @@
               <p><h4 class="text-muted">Attendees</h4></p>
               <p>
                 <table class="table" id="attendee-list">
-                  <tr>
-              		<td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
+                  <?php if(isset($info['attendees'])) { ?>
+                    <tr>
+                  <td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
                     <td>
                       <p><a href="<?php echo URL::site('user') ?>"><strong>Mark Otto</strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>
                       <p></p>
                     </td>
                   </tr>
                   <tr>
-                  	<td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
+                    <td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
                     <td>
                       <p><a href="<?php echo URL::site('user') ?>"><strong>Jacob Thornton</strong></a> <br/> <small class="text-muted">Queen's University</small></p>
                       <p></p>
                     </td>
                   </tr>
                   <tr>
-                  	<td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
+                    <td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
                     <td>
                       <p><a href="<?php echo URL::site('user') ?>"><strong>Larry Bird</strong></a> <br/> <small class="text-muted">University of California, Los Angeles</small></p>
                       <p></p>
                     </td>
                   </tr>
+                  <?php } else { ?>
+                    There is no attendee, <a href="#">be the first one</a>
+                  <?php } ?>
                 </table>
               </p>
             </div><!--/span--> 
