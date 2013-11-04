@@ -26,6 +26,7 @@ class Controller_Conference extends Controller {
 			{
 				$view = View::factory('seminar');
 				$view->conf = $conf;
+				$view->id = $id;
 				$this->response->body($view);
 			}
 			else

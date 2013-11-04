@@ -1,4 +1,5 @@
 <?php include Kohana::find_file('views', 'header') ?>
+<input type="hidden" id="conf-id" value="<?php echo $id ?>">
 <div class="row row-offcanvas row-offcanvas-right">
         
         <div class="col-xs-12 col-sm-12">
