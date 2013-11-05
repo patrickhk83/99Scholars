@@ -1,4 +1,5 @@
 <?php include Kohana::find_file('views', 'header') ?>
+<input type="hidden" id="user-id" value="<?php echo $user_id ?>">
 
 <div class="row row-offcanvas row-offcanvas-right">
         

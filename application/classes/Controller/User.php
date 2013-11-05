@@ -22,6 +22,8 @@ class Controller_User extends Controller {
 			//TODO: query work count
 			$view->work_count = array('publication' => 0, 'project' => 0, 'presentation' => 0);
 
+			$view->user_id = $user_id;
+
 			$this->response->body($view);
 		}
 	}

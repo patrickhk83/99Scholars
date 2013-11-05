@@ -1,10 +1,16 @@
+var baseUrl = '';
+var moduleName = 'profile';
+var baseViewUrl = '';
+
 var isPublicationLoaded = false;
 var isProjectLoaded = false;
 var isPresentationLoaded = false;
 
-var baseViewUrl = document.URL + '/view/';
-
 $(function(){
+
+	baseUrl = $('#base-url').val();
+	baseViewUrl = baseUrl + moduleName + "/";
+
 	$('#profile-tab a:first').tab('show');
 
 	$('#publication-link').click(loadPublicationTab);
@@ -78,7 +84,7 @@ var loadPublicationTab = function()
 {
 	if(!isPublicationLoaded)
 	{
-		var url = baseViewUrl + 'publication';
+		var url = baseViewUrl + 'publication/' + $('#user-id').val();
 
 		$.get(url, function(data){
 			$('#publication').html(data);
@@ -96,7 +102,7 @@ var loadProjectTab = function()
 {
 	if(!isProjectLoaded)
 	{
-		var url = baseViewUrl + 'project';
+		var url = baseViewUrl + 'project/' + $('#user-id').val();
 
 		$.get(url, function(data){
 			$('#project').html(data);
@@ -109,7 +115,7 @@ var loadPresentationTab = function()
 {
 	if(!isPresentationLoaded)
 	{
-		var url = baseViewUrl + 'presentation';
+		var url = baseViewUrl + 'presentation/' + $('#user-id').val();
 
 		$.get(url, function(data){
 			$('#presentation').html(data);
