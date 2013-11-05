@@ -31,7 +31,14 @@ class Controller_Profile extends Controller {
 		}
 	}
 
-	
+	public function action_event()
+	{
+		$tab_name = 'event';
+		$user_id = $this->request->param('id');
+		$view = $this->render_tab($user_id, $tab_name);
+
+		$this->response->body($view);
+	}
 
 	public function action_publication()
 	{

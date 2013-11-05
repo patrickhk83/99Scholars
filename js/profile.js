@@ -2,6 +2,7 @@ var baseUrl = '';
 var moduleName = 'profile';
 var baseViewUrl = '';
 
+var isEventLoaded = false;
 var isPublicationLoaded = false;
 var isProjectLoaded = false;
 var isPresentationLoaded = false;
@@ -13,6 +14,7 @@ $(function(){
 
 	$('#profile-tab a:first').tab('show');
 
+	$('#event-link').click(loadEventTab);
 	$('#publication-link').click(loadPublicationTab);
 	$('#project-link').click(loadProjectTab);
 	$('#presentation-link').click(loadPresentationTab);
@@ -77,6 +79,19 @@ var bookEnabler = function()
 	else
 	{
 		container.hide(400);
+	}
+}
+
+var loadEventTab = function()
+{
+	if(!isEventLoaded)
+	{
+		var url = baseViewUrl + 'event/' + $('#user-id').val();
+
+		$.get(url, function(data){
+			$('#event').html(data);
+			isEventLoaded = true;
+		});
 	}
 }
 

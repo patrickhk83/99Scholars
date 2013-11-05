@@ -367,6 +367,17 @@ class Service_Conference {
 		return $attendees;
 	}
 
+	public function get_conference_user_attend($user_id)
+	{
+		$sql = 'select * from conference as c where c.id in (select conference from attendee as a where a.user = '.$user_id.')';
+
+		$results = $this->convert_for_listing(
+						DB::query(Database::SELECT, $sql)
+						->execute()->as_array());
+
+		return $results;
+	}
+
 	public function update($conference)
 	{
 		$conf = ORM::factory('Conference');
