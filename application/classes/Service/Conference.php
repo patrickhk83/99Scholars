@@ -178,6 +178,9 @@ class Service_Conference {
 		$venue = $this->get_venue($conf->get('venue'));
 		$model['venue'] = $venue;
 
+		//TODO: get short address without calling DB
+		$model['location'] = $this->get_venue_short_location($conf->get('venue'));
+
 		return $model;
 	}
 

@@ -27,6 +27,12 @@ class Controller_Conference extends Controller {
 				$view = View::factory('seminar');
 				$view->info = $conf;
 
+				//TODO: create seminar service
+				$seminar_dao = new Dao_Seminar();
+				$seminar = $seminar_dao->get_by_conference_id($id);
+				$view->info['speaker'] = $seminar->get('speaker');
+				$view->info['abstract'] = $seminar->get('abstract');
+
 				$attendees = $conf_service->get_attendee($id);
 
 				if(count($attendees) > 0)

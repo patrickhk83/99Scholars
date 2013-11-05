@@ -14,4 +14,13 @@ class Dao_Seminar {
 
 		return $seminar->pk();
 	}
+
+	public function get_by_conference_id($conf_id)
+	{
+		$seminar = ORM::factory('Seminar')
+						->where('conference', '=', $conf_id)
+						->find();
+
+		return $seminar;
+	}
 }
