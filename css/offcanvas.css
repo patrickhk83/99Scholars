@@ -116,7 +116,12 @@ td.time {
 }
 
 .add-profile-form {
-margin-bottom: 30px}
+  margin-bottom: 30px;
+}
+
+#address-form, #conf-submit-container {
+  display: none;
+}
 
 /*
  * Off Canvas

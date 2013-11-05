@@ -178,6 +178,9 @@ class Service_Conference {
 		$venue = $this->get_venue($conf->get('venue'));
 		$model['venue'] = $venue;
 
+		//TODO: get short address without calling DB
+		$model['location'] = $this->get_venue_short_location($conf->get('venue'));
+
 		return $model;
 	}
 
@@ -299,9 +302,13 @@ class Service_Conference {
 		$conference['organizer'] = $org_id;
 
 		$conference['start_date'] = $this->convert_date($conference['start_date']);
-		$conference['end_date'] = $this->convert_date($conference['end_date']);
-		$conference['deadline'] = $this->convert_date($conference['deadline']);
-		$conference['accept_notify'] = $this->convert_date($conference['accept_notify']);
+
+		if($conference['type'] == 1)
+		{
+			$conference['end_date'] = $this->convert_date($conference['end_date']);
+			$conference['deadline'] = $this->convert_date($conference['deadline']);
+			$conference['accept_notify'] = $this->convert_date($conference['accept_notify']);
+		}
 
 		$conf = ORM::factory('Conference')
 				->values(
@@ -323,11 +330,14 @@ class Service_Conference {
 
 		$conf_id = $conf->pk();
 
-		$regis = ORM::factory('Registration');
-		$regis->start_date = $this->convert_date($conference['regis_start']);
-		$regis->end_date = $this->convert_date($conference['regis_end']);
-		$regis->conference_id = $conf_id;
-		$regis->save();
+		if($conference['type'] == 1)
+		{
+			$regis = ORM::factory('Registration');
+			$regis->start_date = $this->convert_date($conference['regis_start']);
+			$regis->end_date = $this->convert_date($conference['regis_end']);
+			$regis->conference_id = $conf_id;
+			$regis->save();
+		}
 
 		$categories = $conference['category'];
 
@@ -339,7 +349,19 @@ class Service_Conference {
 			$cat_conf->save();
 		}
 
+		//TODO: separate type of conference
+		if($conference['type'] == 2)
+		{
+			$this->create_seminar($conf_id, $conference);
+		}
+
 		return $conf_id;
+	}
+
+	private function create_seminar($conf_id, $data)
+	{
+		$seminar_dao = new Dao_Seminar();
+		$seminar_dao->create($conf_id, $data['speaker'], $data['abstract']);
 	}
 
 	public function get_attendee($conf_id)
@@ -430,38 +452,5 @@ class Service_Conference {
 		}
 
 		return 'default';
-	}
-
-	//only for mockup
-	private function populate()
-	{
-		$conferences = array(
-							array("name" => "4th Global Conference: Performance: Visual Aspects of Performance Practice", "location" => "Oxford, United Kingdom", "type" => "Conference", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "The Best in Heritage 2013 ", "location" => "Dubrovnik, Croatia", "type" => "Seminar", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "2nd Global Conference: The Graphic Novel", "location" => "Oxford, United Kingdom", "type" => "Conference", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "Land Labour Capital", "location" => "Limerick, Ireland", "type" => "Workshop", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "Arts and Narrative", "location" => "Langley, Canada", "type" => "Webinar", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "4th Global Conference: Performance: Visual Aspects of Performance Practice", "location" => "Oxford, United Kingdom", "type" => "Conference", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "The Best in Heritage 2013 ", "location" => "Dubrovnik, Croatia", "type" => "Seminar", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "2nd Global Conference: The Graphic Novel", "location" => "Oxford, United Kingdom", "type" => "Conference", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "Land Labour Capital", "location" => "Limerick, Ireland", "type" => "Workshop", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "Arts and Narrative", "location" => "Langley, Canada", "type" => "Webinar", "duration" => "17 - 19 Sep 2013"),
-						);
-
-		return $conferences;
-	}
-
-	//only for mockup
-	private function populate_by_country()
-	{
-		$conferences = array(
-							array("name" => "4th Global Conference: Performance: Visual Aspects of Performance Practice", "location" => "Oxford, United Kingdom", "type" => "Conference", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "The Best in Heritage 2013 ", "location" => "Oxford, United Kingdom", "type" => "Seminar", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "2nd Global Conference: The Graphic Novel", "location" => "Oxford, United Kingdom", "type" => "Conference", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "Land Labour Capital", "location" => "Oxford, United Kingdom", "type" => "Workshop", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "Arts and Narrative", "location" => "Oxford, United Kingdom", "type" => "Webinar", "duration" => "17 - 19 Sep 2013"),
-						);
-
-		return $conferences;
 	}
 }
