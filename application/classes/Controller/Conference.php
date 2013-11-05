@@ -4,15 +4,7 @@ class Controller_Conference extends Controller {
 
 	public function action_view()
 	{
-		//disable for mockup
 		$id = $this->request->param('id');
-		
-		/*$view = View::factory('conf-view');
-
-		$conf_service = new Service_Conference();
-		$conf = $conf_service->get_for_view($id);
-
-		$view->conf = $conf;*/
 
 		//mockup page
 		$session_id = $this->request->param('session_id');
@@ -23,9 +15,34 @@ class Controller_Conference extends Controller {
 		}
 		else
 		{
-			$view = View::factory('schedule');
-			$view->id = $id;
-			$this->response->body($view);
+			//disable for mockup	
+			//$view = View::factory('conf-view');
+
+			$conf_service = new Service_Conference();
+			$conf = $conf_service->get_for_view($id);
+
+			//TODO: properly check conference type
+			if($conf['type'] == 'Seminar')
+			{
+				$view = View::factory('seminar');
+				$view->info = $conf;
+
+				$attendees = $conf_service->get_attendee($id);
+
+				if(count($attendees) > 0)
+				{
+					$view->info['attendees'] = $attendees;
+				}
+
+				$view->id = $id;
+				$this->response->body($view);
+			}
+			else
+			{
+				$view = View::factory('schedule');
+				$view->id = $id;
+				$this->response->body($view);
+			}
 		}
 	}
 
@@ -87,5 +104,22 @@ class Controller_Conference extends Controller {
 		}
 
 		$this->response->body($view);
+	}
+
+	public function action_attend()
+	{
+		$conf_id = $this->request->param('id');
+		$user_id = Service_Login::get_user_in_session();
+
+		$user_service = new Service_User();
+		$user_service->attend_conference($user_id, $conf_id);
+
+		$user = $user_service->get_by_id($user_id);
+
+		$result['id'] = $user_id;
+		$result['name'] = $user['first_name'].' '.$user['last_name'];
+
+		$this->response->headers('Content-Type', 'application/json; charset=utf-8');
+		$this->response->body(json_encode($result));
 	}
 }

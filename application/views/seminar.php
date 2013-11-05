@@ -1,4 +1,5 @@
 <?php include Kohana::find_file('views', 'header') ?>
+<input type="hidden" id="conf-id" value="<?php echo $id ?>">
 <div class="row row-offcanvas row-offcanvas-right">
         
         <div class="col-xs-12 col-sm-12">
@@ -8,7 +9,7 @@
           <div class="row">
             <div class="col-lg-12">
               
-              <p><h2>Build and deploy your own Big Data distribution with Apache Bigtop</h2></p>
+              <p><h2><?php echo $info['name'] ?></h2></p>
               <p><strong>Speaker : </strong> <a href="<?php echo URL::site('user') ?>">Bruno Mahé</a></p>
 			  <p><strong>17 September, 10:00AM - 11:00AM</strong><br><strong>Oxford, United Kingdom</strong> <span class="text-muted">(<a href="#">view map</a>)</span></p>
             </div><!--/span--> 
@@ -85,9 +86,9 @@
               
             </div><!--/span--> 
           </div><!--/row-->
-          <div class="row">
+          <div class="row attachment-content">
               <div class="col-lg-12">
-              	 <p><a href="my-schedule.html"><button type="button" class="btn btn-primary" id="join-btn">Add to my schedule</button></a></p>
+              	 <p><a href="my-schedule.html"><button type="button" class="btn btn-primary" id="join-btn">Attend this seminar</button></a></p>
               </div><!--span-->
           </div><!--/row-->
           <div class="row">
@@ -133,27 +134,19 @@
               <p><h4 class="text-muted">Attendees</h4></p>
               <p>
                 <table class="table" id="attendee-list">
-                  <tr>
-              		<td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
-                    <td>
-                      <p><a href="<?php echo URL::site('user') ?>"><strong>Mark Otto</strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>
-                      <p></p>
-                    </td>
-                  </tr>
-                  <tr>
-                  	<td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
-                    <td>
-                      <p><a href="<?php echo URL::site('user') ?>"><strong>Jacob Thornton</strong></a> <br/> <small class="text-muted">Queen's University</small></p>
-                      <p></p>
-                    </td>
-                  </tr>
-                  <tr>
-                  	<td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
-                    <td>
-                      <p><a href="<?php echo URL::site('user') ?>"><strong>Larry Bird</strong></a> <br/> <small class="text-muted">University of California, Los Angeles</small></p>
-                      <p></p>
-                    </td>
-                  </tr>
+                  <?php if(isset($info['attendees'])) { ?>
+                    <?php foreach($info['attendees'] as $attendee) { ?>
+                      <tr>
+                        <td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
+                        <td>
+                          <p><a href="<?php echo URL::site('user/profile/'.$attendee['id']) ?>"><strong><?php echo $attendee['name'] ?></strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>
+                          <p></p>
+                        </td>
+                      </tr>
+                    <?php } ?>
+                  <?php } else { ?>
+                    <tr id="attendee-placeholder"><td>There is no attendee right now, <a href="#" id="suggest-join-btn">be the first one</a></td></tr>
+                  <?php } ?>
                 </table>
               </p>
             </div><!--/span--> 

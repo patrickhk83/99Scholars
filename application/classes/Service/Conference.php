@@ -342,6 +342,42 @@ class Service_Conference {
 		return $conf_id;
 	}
 
+	public function get_attendee($conf_id)
+	{
+		$attend_dao = new Dao_Attendee();
+		$results = $attend_dao->get_attendee_list($conf_id);
+
+		$user_service = new Service_User();
+
+		$attendees = array();
+
+		foreach ($results as $result) 
+		{
+			$attendee = array();
+
+			$user = $user_service->get_by_id($result->get('user'));
+
+			$attendee['id'] = $user['id'];
+			$attendee['name'] = $user['first_name'].' '.$user['last_name'];
+			//TODO: get user's affiliation
+
+			array_push($attendees, $attendee);
+		}
+
+		return $attendees;
+	}
+
+	public function get_conference_user_attend($user_id)
+	{
+		$sql = 'select * from conference as c where c.id in (select conference from attendee as a where a.user = '.$user_id.')';
+
+		$results = $this->convert_for_listing(
+						DB::query(Database::SELECT, $sql)
+						->execute()->as_array());
+
+		return $results;
+	}
+
 	public function update($conference)
 	{
 		$conf = ORM::factory('Conference');
