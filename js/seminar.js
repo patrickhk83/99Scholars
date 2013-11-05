@@ -1,11 +1,13 @@
 var baseUrl = '';
 var moduleName = 'conference';
 var baseConfUrl = '';
+var baseProfileUrl = ''
 
 $(function(){
 
 	baseUrl = $('#base-url').val();
 	baseConfUrl = baseUrl + moduleName + "/";
+	baseProfileUrl = baseUrl + 'user/profile/';
 
 	$('#attachment-tab a:first').tab('show');
 	
@@ -26,7 +28,7 @@ var joinSeminar = function()
 		var html = '<tr style="display:none">' + 
 			'<td width="40px"><img src="' + baseUrl + '/img/avatar.jpg" width="40"/></td>' +
 		  '<td>' +
-		    '<p><a href="#"><strong>John Doe</strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>' +
+		    '<p><a href="' + baseProfileUrl + data.id + '"><strong>' + data.name + '</strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>' +
 		    '<p></p>' +
 		  '</td>' +
 		'</tr>';

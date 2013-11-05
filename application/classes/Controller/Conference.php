@@ -113,5 +113,13 @@ class Controller_Conference extends Controller {
 
 		$user_service = new Service_User();
 		$user_service->attend_conference($user_id, $conf_id);
+
+		$user = $user_service->get_by_id($user_id);
+
+		$result['id'] = $user_id;
+		$result['name'] = $user['first_name'].' '.$user['last_name'];
+
+		$this->response->headers('Content-Type', 'application/json; charset=utf-8');
+		$this->response->body(json_encode($result));
 	}
 }
