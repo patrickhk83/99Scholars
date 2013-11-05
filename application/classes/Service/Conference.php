@@ -346,7 +346,19 @@ class Service_Conference {
 			$cat_conf->save();
 		}
 
+		//TODO: separate type of conference
+		if($conference['type'] == 2)
+		{
+			$this->create_seminar($conf_id, $conference);
+		}
+
 		return $conf_id;
+	}
+
+	private function create_seminar($conf_id, $data)
+	{
+		$seminar_dao = new Dao_Seminar();
+		$seminar_dao->create($conf_id, $data['speaker'], $data['abstract']);
 	}
 
 	public function get_attendee($conf_id)
