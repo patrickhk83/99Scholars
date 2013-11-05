@@ -1,12 +1,40 @@
+var baseUrl = '';
+var moduleName = 'conference';
+var baseViewUrl = '';
+
 var categoryCount = 1;
 
 $(function(){
+
+	baseUrl = $('#base-url').val();
+	baseViewUrl = baseUrl + moduleName + "/";
+
  	$('.datepicker').datepicker({
  		autoclose: true
  	});
- 	
- 	$('#add-category-btn').click(addCategory);
+
+ 	$('#conf-type').change(showConfForm);
  });
+
+var showConfForm = function()
+{
+	var confType = $('#conf-type').val();
+	var url;
+
+	switch(confType)
+	{
+		case '1':
+			url = baseViewUrl + 'form/conference';
+			$.get(url, function(data){
+				$('#form-body').html(data);
+				$('#add-category-btn').click(addCategory);
+			});
+			break;
+	}
+
+	$('#address-form').show();
+	$('#conf-submit-container').show();
+}
 
 var addCategory = function() 
 {

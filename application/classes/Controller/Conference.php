@@ -122,4 +122,13 @@ class Controller_Conference extends Controller {
 		$this->response->headers('Content-Type', 'application/json; charset=utf-8');
 		$this->response->body(json_encode($result));
 	}
+
+	public function action_form()
+	{
+		$conf_type = $this->request->param('id');
+
+		$view = View::factory('conference/form_'.$conf_type);
+
+		$this->response->body($view);
+	}
 }
