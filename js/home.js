@@ -3,6 +3,7 @@ var typeCount = 1;
 var countryCount = 1;
 
 var searchUrl = document.URL + 'conference/search';
+var bookUrl = document.URL + 'conference/attend/'
 
 $(function(){
 	$('.datepicker').datepicker({
@@ -279,4 +280,12 @@ var clearFilter = function()
 	updateSearchResult();
 
 	return false;
+}
+
+function bookConference(confId)
+{
+	var url = bookUrl + confId;
+	$.get(url, function(data){
+		alert('Thanks for joining this conference');
+	});
 }

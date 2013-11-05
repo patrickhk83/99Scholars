@@ -97,7 +97,7 @@
   		              	</div>
   		              	<div class="col-lg-2"><button type="button" class="btn btn-<?php echo $conf['type_style'] ?> btn-xs"><?php echo $conf['type'] ?></button></div>
   		              	<div class="col-lg-2"><?php echo $conf['duration'] ?></div>
-  		              	<div class="col-lg-2"><a class="btn btn-info" href="#">Book</a></div>
+  		              	<div class="col-lg-2"><a class="btn btn-info" href="#" onclick="bookConference(<?php echo $conf['id'] ?>)">Book</a></div>
 		                </div><!--/row-->
 	            	  <?php endforeach ?>
                   
