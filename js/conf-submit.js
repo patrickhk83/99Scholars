@@ -9,10 +9,6 @@ $(function(){
 	baseUrl = $('#base-url').val();
 	baseViewUrl = baseUrl + moduleName + "/";
 
- 	$('.datepicker').datepicker({
- 		autoclose: true
- 	});
-
  	$('#conf-type').change(showConfForm);
  });
 
@@ -28,6 +24,22 @@ var showConfForm = function()
 			$.get(url, function(data){
 				$('#form-body').html(data);
 				$('#add-category-btn').click(addCategory);
+
+				$('.datepicker').datepicker({
+			 		autoclose: true
+			 	});
+			});
+			break;
+
+		case '2':
+			url = baseViewUrl + 'form/seminar';
+			$.get(url, function(data){
+				$('#form-body').html(data);
+				$('#add-category-btn').click(addCategory);
+
+				$('.datepicker').datepicker({
+			 		autoclose: true
+			 	});
 			});
 			break;
 	}

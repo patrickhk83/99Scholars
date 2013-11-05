@@ -11,7 +11,7 @@
               
               <p><h2><?php echo $info['name'] ?></h2></p>
               <p><strong>Speaker : </strong> <a href="<?php echo URL::site('user') ?>">Bruno Mahé</a></p>
-			  <p><strong>17 September, 10:00AM - 11:00AM</strong><br><strong>Oxford, United Kingdom</strong> <span class="text-muted">(<a href="#">view map</a>)</span></p>
+			  <p><strong>17 September</strong><br><strong>Oxford, United Kingdom</strong> <span class="text-muted">(<a href="#">view map</a>)</span></p>
             </div><!--/span--> 
           </div><!--/row--> 
           <div class="row">

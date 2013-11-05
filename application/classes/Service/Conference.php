@@ -299,9 +299,13 @@ class Service_Conference {
 		$conference['organizer'] = $org_id;
 
 		$conference['start_date'] = $this->convert_date($conference['start_date']);
-		$conference['end_date'] = $this->convert_date($conference['end_date']);
-		$conference['deadline'] = $this->convert_date($conference['deadline']);
-		$conference['accept_notify'] = $this->convert_date($conference['accept_notify']);
+
+		if($conference['type'] == 1)
+		{
+			$conference['end_date'] = $this->convert_date($conference['end_date']);
+			$conference['deadline'] = $this->convert_date($conference['deadline']);
+			$conference['accept_notify'] = $this->convert_date($conference['accept_notify']);
+		}
 
 		$conf = ORM::factory('Conference')
 				->values(
@@ -323,11 +327,14 @@ class Service_Conference {
 
 		$conf_id = $conf->pk();
 
-		$regis = ORM::factory('Registration');
-		$regis->start_date = $this->convert_date($conference['regis_start']);
-		$regis->end_date = $this->convert_date($conference['regis_end']);
-		$regis->conference_id = $conf_id;
-		$regis->save();
+		if($conference['type'] == 1)
+		{
+			$regis = ORM::factory('Registration');
+			$regis->start_date = $this->convert_date($conference['regis_start']);
+			$regis->end_date = $this->convert_date($conference['regis_end']);
+			$regis->conference_id = $conf_id;
+			$regis->save();
+		}
 
 		$categories = $conference['category'];
 
