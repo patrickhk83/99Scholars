@@ -8,7 +8,7 @@ class Controller_User extends Controller {
 		$this->response->body($view);
 	}
 
-	public function action_view()
+	public function action_profile()
 	{
 		$user_id = $this->request->param('id', NULL);
 
