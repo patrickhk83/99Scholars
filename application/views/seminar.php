@@ -145,7 +145,7 @@
                       </tr>
                     <?php } ?>
                   <?php } else { ?>
-                    There is no attendee right now, <a href="#">be the first one</a>
+                    <tr id="attendee-placeholder"><td>There is no attendee right now, <a href="#" id="suggest-join-btn">be the first one</a></td></tr>
                   <?php } ?>
                 </table>
               </p>

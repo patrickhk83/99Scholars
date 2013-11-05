@@ -28,7 +28,11 @@ class Controller_Conference extends Controller {
 				$view->info = $conf;
 
 				$attendees = $conf_service->get_attendee($id);
-				$view->info['attendees'] = $attendees;
+
+				if(count($attendees) > 0)
+				{
+					$view->info['attendees'] = $attendees;
+				}
 
 				$view->id = $id;
 				$this->response->body($view);
