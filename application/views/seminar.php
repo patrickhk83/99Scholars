@@ -139,7 +139,7 @@
                       <tr>
                         <td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
                         <td>
-                          <p><a href="<?php echo URL::site('user') ?>"><strong><?php echo $attendee['name'] ?></strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>
+                          <p><a href="<?php echo URL::site('user/profile/'.$attendee['id']) ?>"><strong><?php echo $attendee['name'] ?></strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>
                           <p></p>
                         </td>
                       </tr>

@@ -51,6 +51,7 @@
                   <br>
                   <ul class="nav nav-tabs" id="profile-tab">
                     <li><a href="#info" data-toggle="tab" id="overview-link">Overview</a></li>
+                    <li><a href="#event" data-toggle="tab" id="event-link">Events</a></li>
                     <li><a href="#publication" data-toggle="tab" id="publication-link">Publications (<?php echo $work_count['publication'] ?>)</a></li>
                     <li><a href="#project" data-toggle="tab" id="project-link">Projects (<?php echo $work_count['project'] ?>)</a></li>
                     <li><a href="#presentation" data-toggle="tab" id="presentation-link">Presentations (<?php echo $work_count['presentation'] ?>)</a></li>
@@ -146,14 +147,13 @@
                             </div><!--span-->
                         </div><!--/row-->
                     </div>
+                    <div class="tab-pane fade profile-content" id="event"
+                    ></div>
                     <div class="tab-pane fade profile-content" id="publication">
-                        
                     </div>
                     <div class="tab-pane fade profile-content" id="project">
-                        
                     </div>
                     <div class="tab-pane fade active profile-content" id="presentation">
-                        
                     </div>
                   </div>
                 </div>  
