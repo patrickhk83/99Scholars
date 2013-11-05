@@ -13,6 +13,7 @@ $(function(){
 	
 	$('#join-btn').click(joinSeminar);
 	$('#suggest-join-btn').click(joinSeminar);
+	$('#top-join-btn').click(joinSeminar);
 });
 
 var joinSeminar = function()

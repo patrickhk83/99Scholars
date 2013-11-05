@@ -8,10 +8,22 @@
           </p>
           <div class="row">
             <div class="col-lg-12">
+              <div class="row">
+                  <div class="col-lg-12">
+                    <p><h2><?php echo $info['name'] ?></h2></p>
+                    <p><strong>Speaker : </strong> <a href="<?php echo URL::site('user') ?>"><?php echo $info['speaker'] ?></a></p>
+                  </div><!--span-->
+              </div><!--/row-->
+              <div class="row">
+                  <div class="col-lg-8">
+                    <p><strong><?php echo $info['start_date'] ?></strong><br><strong><?php echo $info['location'] ?></strong> <span class="text-muted">(<a href="#">view map</a>)</span></p>
+                  </div><!--span-->
+                  <div class="col-lg-4">
+                    <p class="text-right"><button type="button" class="btn btn-primary" id="top-join-btn">Attend this seminar</button></p>
+                  </div>
+              </div><!--/row-->
               
-              <p><h2><?php echo $info['name'] ?></h2></p>
-              <p><strong>Speaker : </strong> <a href="<?php echo URL::site('user') ?>"><?php echo $info['speaker'] ?></a></p>
-			  <p><strong><?php echo $info['start_date'] ?></strong><br><strong><?php echo $info['location'] ?></strong> <span class="text-muted">(<a href="#">view map</a>)</span></p>
+              
             </div><!--/span--> 
           </div><!--/row--> 
           <div class="row">
@@ -83,7 +95,7 @@
           </div><!--/row-->
           <div class="row attachment-content">
               <div class="col-lg-12">
-              	 <p><a href="my-schedule.html"><button type="button" class="btn btn-primary" id="join-btn">Attend this seminar</button></a></p>
+              	 <p><a href="#"><button type="button" class="btn btn-primary" id="join-btn">Attend this seminar</button></a></p>
               </div><!--span-->
           </div><!--/row-->
           <div class="row">
