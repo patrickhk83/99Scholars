@@ -10,7 +10,7 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="row">
-                <div class="col-lg-2 col-md-2"><img src="img/profile.png" class="img-rounded"/></div><!--span-->
+                <div class="col-lg-2 col-md-2"><?php echo HTML::image('img/profile.png', array('class' => 'img-rounded')) ?></div><!--span-->
                 <div class="col-lg-8 col-md-8">
                     <!-- Begin user's name -->
                     <h3><?php echo $info['general']['first_name']." ".$info['general']['last_name'] ?></h3>
