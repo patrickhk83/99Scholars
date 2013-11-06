@@ -19,8 +19,7 @@ $(function(){
 var joinSeminar = function(e)
 {
 	var btn = $(e.target);
-	btn.removeClass('btn-primary').addClass('btn-default');
-	btn.text('Working ').append('<img src="' + baseUrl + 'img/loader.gif">');
+	displayProgress(btn);
 
 	var confId = $('#conf-id').val();
 
@@ -54,4 +53,10 @@ var joinSeminar = function(e)
 	});
 
 	return false;
+}
+
+function displayProgress(btn)
+{
+	btn.removeClass('btn-primary btn-info').addClass('btn-default');
+	btn.text('Working ').append('<img src="' + baseUrl + 'img/loader.gif">');
 }
