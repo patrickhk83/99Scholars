@@ -11,7 +11,7 @@ class Service_Conference {
 	{
 		$has_condition = false;
 
-		$sql = "select * from conference as c ";
+		$sql = "select c.id, c.name, c.start_date, c.end_date, c.type, c.venue from conference as c ";
 		$count_sql = "select count(*) as total from conference as c ";
 		$condition = "";
 
