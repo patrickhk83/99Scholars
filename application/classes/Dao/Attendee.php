@@ -21,4 +21,13 @@ class Dao_Attendee {
 
 		return $attendees;
 	}
+
+	public function delete($user_id, $conference_id)
+	{
+		$query = DB::delete('attendee')
+					->where('user', '=', $user_id)
+					->where('conference', '=', $conference_id);
+
+		$query->execute();
+	}
 }

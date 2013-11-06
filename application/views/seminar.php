@@ -143,7 +143,7 @@
                 <table class="table" id="attendee-list">
                   <?php if(isset($info['attendees'])) { ?>
                     <?php foreach($info['attendees'] as $attendee) { ?>
-                      <tr>
+                      <tr id="attendee-<?php echo $attendee['id'] ?>">
                         <td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
                         <td>
                           <p><a href="<?php echo URL::site('user/profile/'.$attendee['id']) ?>"><strong><?php echo $attendee['name'] ?></strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>
