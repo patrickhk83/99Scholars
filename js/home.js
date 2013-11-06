@@ -1,14 +1,14 @@
 var baseUrl = '';
+var searchUrl = ''
 
 var categoryCount = 1;
 var typeCount = 1;
 var countryCount = 1;
 
-var searchUrl = document.URL + 'conference/search';
-
 $(function(){
 
 	baseUrl = $('#base-url').val();
+	searchUrl = baseUrl + 'conference/search';
 
 
 	$('.datepicker').datepicker({
