@@ -288,4 +288,6 @@ function bookConference(confId)
 	$.get(url, function(data){
 		alert('Thanks for joining this conference');
 	});
+
+	return false;
 }
