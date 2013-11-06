@@ -109,8 +109,10 @@ class Controller_Conference extends Controller {
 			$page = 1;
 		}
 
+		$user_id = Service_Login::get_user_in_session();
+
 		$conf_service = new Service_Conference();
-		$result = $conf_service->list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $page-1);
+		$result = $conf_service->list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $user_id, $page-1);
 
 		$view = View::factory('conf-search-result');
 		$view->conferences = $result['conferences'];

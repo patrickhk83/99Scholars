@@ -2,16 +2,25 @@
 
 class Service_Conference {
 
-	public function list_all()
+	public function list_all($user_id = NULL)
 	{
-		return $this->list_by(null, null, null, null, null, null);
+		return $this->list_by(null, null, null, null, null, null, $user_id);
 	}
 
-	public function list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $page = 0, $limit = 20)
+	public function list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $user_id = NULL, $page = 0, $limit = 20)
 	{
 		$has_condition = false;
 
-		$sql = "select c.id, c.name, c.start_date, c.end_date, c.type, c.venue from conference as c ";
+		$attendee_field = '';
+		$attendee_join = '';
+
+		if(isset($user_id) && $user_id !== NULL)
+		{
+			$attendee_field = ", d.id as booked ";
+			$attendee_join = "LEFT OUTER JOIN attendee d ON c.id = d.conference and d.user = ".$user_id." ";
+		}
+
+		$sql = "select c.id, c.name, c.start_date, c.end_date, c.type, c.venue".$attendee_field." from conference as c ".$attendee_join;
 		$count_sql = "select count(*) as total from conference as c ";
 		$condition = "";
 
@@ -132,6 +141,15 @@ class Service_Conference {
 			$conference['type'] = $this->get_type($result['type'])->get('name');
 			$conference['type_style'] = $this->get_type_style($conference['type']);
 			$conference['location'] = $this->get_venue_short_location($result['venue']);
+
+			if(isset($result['booked']))
+			{
+				$conference['is_booked'] = TRUE;
+			}
+			else
+			{
+				$conference['is_booked'] = FALSE;
+			}
 
 			array_push($conferences, $conference);
 		}
