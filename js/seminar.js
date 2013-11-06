@@ -16,13 +16,21 @@ $(function(){
 	$('#top-join-btn').click(joinSeminar);
 });
 
-var joinSeminar = function()
+var joinSeminar = function(e)
 {
+	var btn = $(e.target);
+	btn.removeClass('btn-primary').addClass('btn-default');
+	btn.text('Working ').append('<img src="' + baseUrl + 'img/loader.gif">');
+
 	var confId = $('#conf-id').val();
 
 	var url = baseConfUrl + 'attend/' + confId;
 
 	$.get(url, function(data){
+
+		var bookBtn = $('.book-conf-btn');
+		bookBtn.removeClass('btn-default btn-primary').addClass('btn-info');
+		bookBtn.text('Cancel booking');
 
 		alert('Thanks for joining this seminar');
 		
