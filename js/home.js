@@ -306,18 +306,21 @@ function bookConference(confId, element)
 
 		btn.prop("onclick", null);
 
-		btn.off('click').on('click', {id: confId, element: btn}, cancelBooking);
+		btn.off('click').on('click', {id: confId, element: btn}, cancelBookingFacade);
 
 	});
 
 	return false;
 }
 
-function cancelBooking(e)
+function cancelBookingFacade(e)
 {
-	var confId = e.data.id;
-	var btn = e.data.element;
+	cancelBooking(e.data.id, e.data.element);
+}
 
+function cancelBooking(confId, element)
+{
+	var btn = $(element);
 	displayProgress(btn);
 
 	var url = baseUrl + 'conference/cancel/' + confId;
