@@ -40,6 +40,17 @@ class Controller_Conference extends Controller {
 					$view->info['attendees'] = $attendees;
 				}
 
+				$view->is_attended = FALSE;
+				$user_id = Service_Login::get_user_in_session();
+
+				foreach ($attendees as $attendee) 
+				{
+					if($attendee['id'] === $user_id)
+					{
+						$view->is_attended = TRUE;
+					}
+				}
+
 				$view->id = $id;
 				$this->response->body($view);
 			}

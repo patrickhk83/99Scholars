@@ -19,7 +19,14 @@
                     <p><strong><?php echo $info['start_date'] ?></strong><br><strong><?php echo $info['location'] ?></strong> <span class="text-muted">(<a href="#">view map</a>)</span></p>
                   </div><!--span-->
                   <div class="col-lg-4">
-                    <p class="text-right"><button type="button" class="btn btn-primary book-conf-btn" id="top-join-btn">Attend this seminar</button></p>
+                    <p class="text-right">
+                      <?php if($is_attended) { ?>
+                        <button type="button" class="btn btn-info cancel-book-btn">Cancel booking</button>
+                      <?php } else { ?>
+                        <button type="button" class="btn btn-primary book-conf-btn">Attend this seminar</button>
+                      <?php } ?>
+                      
+                    </p>
                   </div>
               </div><!--/row-->
               
@@ -95,7 +102,13 @@
           </div><!--/row-->
           <div class="row attachment-content">
               <div class="col-lg-12">
-              	 <p><a href="#"><button type="button" class="btn btn-primary book-conf-btn" id="join-btn">Attend this seminar</button></a></p>
+              	 <p>
+                  <?php if($is_attended) { ?>
+                    <a href="#"><button type="button" class="btn btn-info cancel-book-btn">Cancel booking</button></a>
+                  <?php } else { ?>
+                    <a href="#"><button type="button" class="btn btn-primary book-conf-btn">Attend this seminar</button></a>
+                  <?php } ?>
+                 </p>
               </div><!--span-->
           </div><!--/row-->
           <div class="row">
@@ -152,7 +165,7 @@
                       </tr>
                     <?php } ?>
                   <?php } else { ?>
-                    <tr id="attendee-placeholder"><td>There is no attendee right now, <a href="#" id="suggest-join-btn">be the first one</a></td></tr>
+                    <tr id="attendee-placeholder"><td>There is no attendee right now</td></tr>
                   <?php } ?>
                 </table>
               </p>

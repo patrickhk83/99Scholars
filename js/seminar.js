@@ -11,9 +11,13 @@ $(function(){
 
 	$('#attachment-tab a:first').tab('show');
 	
-	$('#join-btn').on('click', joinSeminar);
-	$('#suggest-join-btn').on('click', joinSeminar);
-	$('#top-join-btn').on('click', joinSeminar);
+	$('.book-conf-btn').each(function(index){
+		$(this).on('click', joinSeminar);
+	});
+
+	$('.cancel-book-btn').each(function(index){
+		$(this).on('click', cancelBooking);
+	});
 });
 
 var joinSeminar = function(e)
@@ -28,10 +32,10 @@ var joinSeminar = function(e)
 	$.get(url, function(data){
 
 		var bookBtn = $('.book-conf-btn');
-		bookBtn.removeClass('btn-default btn-primary').addClass('btn-info');
+		bookBtn.removeClass('btn-default btn-primary book-conf-btn').addClass('btn-info cancel-book-btn');
 		bookBtn.text('Cancel booking');
 
-		$('.book-conf-btn').each(function(index){
+		$('.cancel-book-btn').each(function(index){
 			$(this).off('click').on('click', cancelBooking);
 		});
 
@@ -69,9 +73,13 @@ var cancelBooking = function(e)
 	var url = baseConfUrl + 'cancel/' + confId;
 
 	$.get(url, function(data){
-		var bookBtn = $('.book-conf-btn');
-		bookBtn.removeClass('btn-info').addClass('btn-primary');
+		var bookBtn = $('.cancel-book-btn');
+		bookBtn.removeClass('btn-info cancel-book-btn').addClass('btn-primary book-conf-btn');
 		bookBtn.text('Attend this seminar');
+
+		$('.book-conf-btn').each(function(index){
+			$(this).on('click', joinSeminar);
+		});
 
 		$('#attendee-' + data.id).remove();
 	});
