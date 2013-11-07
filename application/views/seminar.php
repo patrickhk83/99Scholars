@@ -8,10 +8,29 @@
           </p>
           <div class="row">
             <div class="col-lg-12">
+              <div class="row">
+                  <div class="col-lg-12">
+                    <p><h2><?php echo $info['name'] ?></h2></p>
+                    <p><strong>Speaker : </strong> <a href="<?php echo URL::site('user') ?>"><?php echo $info['speaker'] ?></a></p>
+                  </div><!--span-->
+              </div><!--/row-->
+              <div class="row">
+                  <div class="col-lg-8">
+                    <p><strong><?php echo $info['start_date'] ?></strong><br><strong><?php echo $info['location'] ?></strong> <span class="text-muted">(<a href="#">view map</a>)</span></p>
+                  </div><!--span-->
+                  <div class="col-lg-4">
+                    <p class="text-right">
+                      <?php if($is_attended) { ?>
+                        <button type="button" class="btn btn-info cancel-book-btn">Cancel booking</button>
+                      <?php } else { ?>
+                        <button type="button" class="btn btn-primary book-conf-btn">Attend this seminar</button>
+                      <?php } ?>
+                      
+                    </p>
+                  </div>
+              </div><!--/row-->
               
-              <p><h2><?php echo $info['name'] ?></h2></p>
-              <p><strong>Speaker : </strong> <a href="<?php echo URL::site('user') ?>"><?php echo $info['speaker'] ?></a></p>
-			  <p><strong><?php echo $info['start_date'] ?></strong><br><strong><?php echo $info['location'] ?></strong> <span class="text-muted">(<a href="#">view map</a>)</span></p>
+              
             </div><!--/span--> 
           </div><!--/row--> 
           <div class="row">
@@ -83,7 +102,13 @@
           </div><!--/row-->
           <div class="row attachment-content">
               <div class="col-lg-12">
-              	 <p><a href="my-schedule.html"><button type="button" class="btn btn-primary" id="join-btn">Attend this seminar</button></a></p>
+              	 <p>
+                  <?php if($is_attended) { ?>
+                    <a href="#"><button type="button" class="btn btn-info cancel-book-btn">Cancel booking</button></a>
+                  <?php } else { ?>
+                    <a href="#"><button type="button" class="btn btn-primary book-conf-btn">Attend this seminar</button></a>
+                  <?php } ?>
+                 </p>
               </div><!--span-->
           </div><!--/row-->
           <div class="row">
@@ -131,7 +156,7 @@
                 <table class="table" id="attendee-list">
                   <?php if(isset($info['attendees'])) { ?>
                     <?php foreach($info['attendees'] as $attendee) { ?>
-                      <tr>
+                      <tr id="attendee-<?php echo $attendee['id'] ?>">
                         <td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
                         <td>
                           <p><a href="<?php echo URL::site('user/profile/'.$attendee['id']) ?>"><strong><?php echo $attendee['name'] ?></strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>
@@ -140,7 +165,7 @@
                       </tr>
                     <?php } ?>
                   <?php } else { ?>
-                    <tr id="attendee-placeholder"><td>There is no attendee right now, <a href="#" id="suggest-join-btn">be the first one</a></td></tr>
+                    <tr id="attendee-placeholder"><td>There is no attendee right now</td></tr>
                   <?php } ?>
                 </table>
               </p>

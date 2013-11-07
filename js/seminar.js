@@ -11,21 +11,37 @@ $(function(){
 
 	$('#attachment-tab a:first').tab('show');
 	
-	$('#join-btn').click(joinSeminar);
-	$('#suggest-join-btn').click(joinSeminar);
+	$('.book-conf-btn').each(function(index){
+		$(this).on('click', joinSeminar);
+	});
+
+	$('.cancel-book-btn').each(function(index){
+		$(this).on('click', cancelBooking);
+	});
 });
 
-var joinSeminar = function()
+var joinSeminar = function(e)
 {
+	var btn = $(e.target);
+	displayProgress(btn);
+
 	var confId = $('#conf-id').val();
 
 	var url = baseConfUrl + 'attend/' + confId;
 
 	$.get(url, function(data){
 
+		var bookBtn = $('.book-conf-btn');
+		bookBtn.removeClass('btn-default btn-primary book-conf-btn').addClass('btn-info cancel-book-btn');
+		bookBtn.text('Cancel booking');
+
+		$('.cancel-book-btn').each(function(index){
+			$(this).off('click').on('click', cancelBooking);
+		});
+
 		alert('Thanks for joining this seminar');
 		
-		var html = '<tr style="display:none">' + 
+		var html = '<tr style="display:none" id="attendee-"' + data.id + '>' + 
 			'<td width="40px"><img src="' + baseUrl + '/img/avatar.jpg" width="40"/></td>' +
 		  '<td>' +
 		    '<p><a href="' + baseProfileUrl + data.id + '"><strong>' + data.name + '</strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>' +
@@ -45,4 +61,35 @@ var joinSeminar = function()
 	});
 
 	return false;
+}
+
+var cancelBooking = function(e)
+{
+	var btn = $(e.target);
+	displayProgress(btn);
+
+	var confId = $('#conf-id').val();
+
+	var url = baseConfUrl + 'cancel/' + confId;
+
+	$.get(url, function(data){
+		var bookBtn = $('.cancel-book-btn');
+		bookBtn.removeClass('btn-info cancel-book-btn').addClass('btn-primary book-conf-btn');
+		bookBtn.text('Attend this seminar');
+
+		$('.book-conf-btn').each(function(index){
+			$(this).on('click', joinSeminar);
+		});
+
+		$('#attendee-' + data.id).remove();
+	});
+
+
+	return false;
+}
+
+function displayProgress(btn)
+{
+	btn.removeClass('btn-primary btn-info').addClass('btn-default');
+	btn.text('Working ').append('<img src="' + baseUrl + 'img/loader.gif">');
 }

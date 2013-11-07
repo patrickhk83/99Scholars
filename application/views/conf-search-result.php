@@ -9,6 +9,12 @@
 		</div>
 		<div class="col-lg-2"><button type="button" class="btn btn-<?php echo $conf['type_style'] ?> btn-xs"><?php echo $conf['type'] ?></button></div>
 		<div class="col-lg-2"><?php echo $conf['duration'] ?></div>
-		<div class="col-lg-2"><a class="btn btn-info" href="#">Book</a></div>
+		<div class="col-lg-2">
+			<?php if($conf['is_booked']) { ?>
+              <button type="button" class="btn btn-info btn-block" onclick="cancelBooking(<?php echo $conf['id'] ?>, this)">Cancel booking</button>
+            <?php } else { ?>
+              <button type="button" class="btn btn-primary btn-block" onclick="bookConference(<?php echo $conf['id'] ?>, this)">Book</button>
+            <?php } ?>
+		</div>
 	</div><!--/row-->
 <?php endforeach ?>

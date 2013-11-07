@@ -40,6 +40,17 @@ class Controller_Conference extends Controller {
 					$view->info['attendees'] = $attendees;
 				}
 
+				$view->is_attended = FALSE;
+				$user_id = Service_Login::get_user_in_session();
+
+				foreach ($attendees as $attendee) 
+				{
+					if($attendee['id'] === $user_id)
+					{
+						$view->is_attended = TRUE;
+					}
+				}
+
 				$view->id = $id;
 				$this->response->body($view);
 			}
@@ -98,8 +109,10 @@ class Controller_Conference extends Controller {
 			$page = 1;
 		}
 
+		$user_id = Service_Login::get_user_in_session();
+
 		$conf_service = new Service_Conference();
-		$result = $conf_service->list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $page-1);
+		$result = $conf_service->list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $user_id, $page-1);
 
 		$view = View::factory('conf-search-result');
 		$view->conferences = $result['conferences'];
@@ -125,6 +138,21 @@ class Controller_Conference extends Controller {
 		$result['id'] = $user_id;
 		$result['name'] = $user['first_name'].' '.$user['last_name'];
 
+		$this->response->headers('Content-Type', 'application/json; charset=utf-8');
+		$this->response->body(json_encode($result));
+	}
+
+	public function action_cancel()
+	{
+		$conf_id = $this->request->param('id');
+		$user_id = Service_Login::get_user_in_session();
+
+		$user_service = new Service_User();
+		$user_service->cancel_booking($user_id, $conf_id);
+
+		$result['id'] = $user_id;
+
+		//TODO: create super controller to support ajax function
 		$this->response->headers('Content-Type', 'application/json; charset=utf-8');
 		$this->response->body(json_encode($result));
 	}
