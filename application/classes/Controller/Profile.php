@@ -24,24 +24,55 @@ class Controller_Profile extends Controller {
 			//TODO: query work count
 			$view->work_count = array('publication' => 0, 'project' => 0, 'presentation' => 0);
 
+			$view->user_id = $user_id;
+
 
 			$this->response->body($view);
 		}
 	}
 
-	//for loading user's profile tab via ajax
-	public function action_view()
+	public function action_event()
 	{
-		$tab_name = $this->request->param('id');
+		$tab_name = 'event';
+		$user_id = $this->request->param('id');
+		$view = $this->render_tab($user_id, $tab_name);
 
-		if(isset($tab_name))
-		{
-			$user_id = Service_Login::get_user_in_session();
+		$this->response->body($view);
+	}
 
-			$profile_service = new Service_UserProfile();
-			$view = $profile_service->render_view_tab($user_id, $tab_name);
-			$this->response->body($view);
-		}
+	public function action_publication()
+	{
+		$tab_name = 'publication';
+		$user_id = $this->request->param('id');
+		$view = $this->render_tab($user_id, $tab_name);
+
+		$this->response->body($view);
+	}
+
+	public function action_project()
+	{
+		$tab_name = 'project';
+		$user_id = $this->request->param('id');
+		$view = $this->render_tab($user_id, $tab_name);
+
+		$this->response->body($view);
+	}
+
+	public function action_presentation()
+	{
+		$tab_name = 'presentation';
+		$user_id = $this->request->param('id');
+		$view = $this->render_tab($user_id, $tab_name);
+
+		$this->response->body($view);
+	}
+
+	protected function render_tab($user_id, $tab_name)
+	{
+		$profile_service = new Service_UserProfile();
+		$view = $profile_service->render_view_tab($user_id, $tab_name);
+
+		return $view;
 	}
 
 

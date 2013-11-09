@@ -2,16 +2,25 @@
 
 class Service_Conference {
 
-	public function list_all()
+	public function list_all($user_id = NULL)
 	{
-		return $this->list_by(null, null, null, null, null, null);
+		return $this->list_by(null, null, null, null, null, null, $user_id);
 	}
 
-	public function list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $page = 0, $limit = 20)
+	public function list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $user_id = NULL, $page = 0, $limit = 20)
 	{
 		$has_condition = false;
 
-		$sql = "select * from conference as c ";
+		$attendee_field = '';
+		$attendee_join = '';
+
+		if(isset($user_id) && $user_id !== NULL)
+		{
+			$attendee_field = ", d.id as booked ";
+			$attendee_join = "LEFT OUTER JOIN attendee d ON c.id = d.conference and d.user = ".$user_id." ";
+		}
+
+		$sql = "select c.id, c.name, c.start_date, c.end_date, c.type, c.venue".$attendee_field." from conference as c ".$attendee_join;
 		$count_sql = "select count(*) as total from conference as c ";
 		$condition = "";
 
@@ -133,6 +142,15 @@ class Service_Conference {
 			$conference['type_style'] = $this->get_type_style($conference['type']);
 			$conference['location'] = $this->get_venue_short_location($result['venue']);
 
+			if(isset($result['booked']))
+			{
+				$conference['is_booked'] = TRUE;
+			}
+			else
+			{
+				$conference['is_booked'] = FALSE;
+			}
+
 			array_push($conferences, $conference);
 		}
 
@@ -177,6 +195,9 @@ class Service_Conference {
 
 		$venue = $this->get_venue($conf->get('venue'));
 		$model['venue'] = $venue;
+
+		//TODO: get short address without calling DB
+		$model['location'] = $this->get_venue_short_location($conf->get('venue'));
 
 		return $model;
 	}
@@ -299,9 +320,13 @@ class Service_Conference {
 		$conference['organizer'] = $org_id;
 
 		$conference['start_date'] = $this->convert_date($conference['start_date']);
-		$conference['end_date'] = $this->convert_date($conference['end_date']);
-		$conference['deadline'] = $this->convert_date($conference['deadline']);
-		$conference['accept_notify'] = $this->convert_date($conference['accept_notify']);
+
+		if($conference['type'] == 1)
+		{
+			$conference['end_date'] = $this->convert_date($conference['end_date']);
+			$conference['deadline'] = $this->convert_date($conference['deadline']);
+			$conference['accept_notify'] = $this->convert_date($conference['accept_notify']);
+		}
 
 		$conf = ORM::factory('Conference')
 				->values(
@@ -323,11 +348,14 @@ class Service_Conference {
 
 		$conf_id = $conf->pk();
 
-		$regis = ORM::factory('Registration');
-		$regis->start_date = $this->convert_date($conference['regis_start']);
-		$regis->end_date = $this->convert_date($conference['regis_end']);
-		$regis->conference_id = $conf_id;
-		$regis->save();
+		if($conference['type'] == 1)
+		{
+			$regis = ORM::factory('Registration');
+			$regis->start_date = $this->convert_date($conference['regis_start']);
+			$regis->end_date = $this->convert_date($conference['regis_end']);
+			$regis->conference_id = $conf_id;
+			$regis->save();
+		}
 
 		$categories = $conference['category'];
 
@@ -339,7 +367,55 @@ class Service_Conference {
 			$cat_conf->save();
 		}
 
+		//TODO: separate type of conference
+		if($conference['type'] == 2)
+		{
+			$this->create_seminar($conf_id, $conference);
+		}
+
 		return $conf_id;
+	}
+
+	private function create_seminar($conf_id, $data)
+	{
+		$seminar_dao = new Dao_Seminar();
+		$seminar_dao->create($conf_id, $data['speaker'], $data['abstract']);
+	}
+
+	public function get_attendee($conf_id)
+	{
+		$attend_dao = new Dao_Attendee();
+		$results = $attend_dao->get_attendee_list($conf_id);
+
+		$user_service = new Service_User();
+
+		$attendees = array();
+
+		foreach ($results as $result) 
+		{
+			$attendee = array();
+
+			$user = $user_service->get_by_id($result->get('user'));
+
+			$attendee['id'] = $user['id'];
+			$attendee['name'] = $user['first_name'].' '.$user['last_name'];
+			//TODO: get user's affiliation
+
+			array_push($attendees, $attendee);
+		}
+
+		return $attendees;
+	}
+
+	public function get_conference_user_attend($user_id)
+	{
+		$sql = 'select * from conference as c where c.id in (select conference from attendee as a where a.user = '.$user_id.')';
+
+		$results = $this->convert_for_listing(
+						DB::query(Database::SELECT, $sql)
+						->execute()->as_array());
+
+		return $results;
 	}
 
 	public function update($conference)
@@ -394,38 +470,5 @@ class Service_Conference {
 		}
 
 		return 'default';
-	}
-
-	//only for mockup
-	private function populate()
-	{
-		$conferences = array(
-							array("name" => "4th Global Conference: Performance: Visual Aspects of Performance Practice", "location" => "Oxford, United Kingdom", "type" => "Conference", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "The Best in Heritage 2013 ", "location" => "Dubrovnik, Croatia", "type" => "Seminar", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "2nd Global Conference: The Graphic Novel", "location" => "Oxford, United Kingdom", "type" => "Conference", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "Land Labour Capital", "location" => "Limerick, Ireland", "type" => "Workshop", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "Arts and Narrative", "location" => "Langley, Canada", "type" => "Webinar", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "4th Global Conference: Performance: Visual Aspects of Performance Practice", "location" => "Oxford, United Kingdom", "type" => "Conference", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "The Best in Heritage 2013 ", "location" => "Dubrovnik, Croatia", "type" => "Seminar", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "2nd Global Conference: The Graphic Novel", "location" => "Oxford, United Kingdom", "type" => "Conference", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "Land Labour Capital", "location" => "Limerick, Ireland", "type" => "Workshop", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "Arts and Narrative", "location" => "Langley, Canada", "type" => "Webinar", "duration" => "17 - 19 Sep 2013"),
-						);
-
-		return $conferences;
-	}
-
-	//only for mockup
-	private function populate_by_country()
-	{
-		$conferences = array(
-							array("name" => "4th Global Conference: Performance: Visual Aspects of Performance Practice", "location" => "Oxford, United Kingdom", "type" => "Conference", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "The Best in Heritage 2013 ", "location" => "Oxford, United Kingdom", "type" => "Seminar", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "2nd Global Conference: The Graphic Novel", "location" => "Oxford, United Kingdom", "type" => "Conference", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "Land Labour Capital", "location" => "Oxford, United Kingdom", "type" => "Workshop", "duration" => "17 - 19 Sep 2013"),
-							array("name" => "Arts and Narrative", "location" => "Oxford, United Kingdom", "type" => "Webinar", "duration" => "17 - 19 Sep 2013"),
-						);
-
-		return $conferences;
 	}
 }

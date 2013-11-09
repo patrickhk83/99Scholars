@@ -1,10 +1,16 @@
+var baseUrl = '';
+var searchUrl = ''
+
 var categoryCount = 1;
 var typeCount = 1;
 var countryCount = 1;
 
-var searchUrl = document.URL + 'conference/search';
-
 $(function(){
+
+	baseUrl = $('#base-url').val();
+	searchUrl = baseUrl + 'conference/search';
+
+
 	$('.datepicker').datepicker({
 		autoclose: true
 	});
@@ -279,4 +285,56 @@ var clearFilter = function()
 	updateSearchResult();
 
 	return false;
+}
+
+function bookConferenceFacade(e)
+{
+	bookConference(e.data.id, e.data.element);
+}
+
+function bookConference(confId, element)
+{
+	var btn = $(element);
+	displayProgress(btn);
+
+	var url = baseUrl + 'conference/attend/' + confId;
+	$.get(url, function(data){
+		alert('Thanks for joining this conference');
+
+		btn.removeClass('btn-default').addClass('btn-info');
+		btn.text('Cancel booking');
+
+		btn.prop("onclick", null);
+
+		btn.off('click').on('click', {id: confId, element: btn}, cancelBookingFacade);
+
+	});
+
+	return false;
+}
+
+function cancelBookingFacade(e)
+{
+	cancelBooking(e.data.id, e.data.element);
+}
+
+function cancelBooking(confId, element)
+{
+	var btn = $(element);
+	displayProgress(btn);
+
+	var url = baseUrl + 'conference/cancel/' + confId;
+
+	$.get(url, function(data){
+		btn.removeClass('btn-default').addClass('btn-primary');
+		btn.text('Book');
+
+		btn.off('click').on('click', {id: confId, element: btn}, bookConferenceFacade);
+	});
+}
+
+function displayProgress(btn)
+{
+	btn.removeClass('btn-primary btn-info').addClass('btn-default');
+	btn.text('Working ').append('<img src="' + baseUrl + 'img/loader.gif">');
 }

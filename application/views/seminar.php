@@ -1,4 +1,5 @@
 <?php include Kohana::find_file('views', 'header') ?>
+<input type="hidden" id="conf-id" value="<?php echo $id ?>">
 <div class="row row-offcanvas row-offcanvas-right">
         
         <div class="col-xs-12 col-sm-12">
@@ -7,10 +8,29 @@
           </p>
           <div class="row">
             <div class="col-lg-12">
+              <div class="row">
+                  <div class="col-lg-12">
+                    <p><h2><?php echo $info['name'] ?></h2></p>
+                    <p><strong>Speaker : </strong> <a href="<?php echo URL::site('user') ?>"><?php echo $info['speaker'] ?></a></p>
+                  </div><!--span-->
+              </div><!--/row-->
+              <div class="row">
+                  <div class="col-lg-8">
+                    <p><strong><?php echo $info['start_date'] ?></strong><br><strong><?php echo $info['location'] ?></strong> <span class="text-muted">(<a href="#">view map</a>)</span></p>
+                  </div><!--span-->
+                  <div class="col-lg-4">
+                    <p class="text-right">
+                      <?php if($is_attended) { ?>
+                        <button type="button" class="btn btn-info cancel-book-btn">Cancel booking</button>
+                      <?php } else { ?>
+                        <button type="button" class="btn btn-primary book-conf-btn">Attend this seminar</button>
+                      <?php } ?>
+                      
+                    </p>
+                  </div>
+              </div><!--/row-->
               
-              <p><h2>Build and deploy your own Big Data distribution with Apache Bigtop</h2></p>
-              <p><strong>Speaker : </strong> <a href="<?php echo URL::site('user') ?>">Bruno Mahé</a></p>
-			  <p><strong>17 September, 10:00AM - 11:00AM</strong><br><strong>Oxford, United Kingdom</strong> <span class="text-muted">(<a href="#">view map</a>)</span></p>
+              
             </div><!--/span--> 
           </div><!--/row--> 
           <div class="row">
@@ -26,14 +46,9 @@
             <div class="tab-content">
               <div class="tab-pane fade active attachment-content" id="info">
               	<p><h4>Description</h4></p>
-              	<p>Apache Bigtop is a project for the integration of the Apache Hadoop ecosystem. It includes recipes to build, test and deploy these components. In this tutorial we will go through each steps to learn about how you can build and customize the packages yourself as well as deploy these components to make your own cluster (physical machines or in the cloud)</p>
+              	<p><?php echo $info['description'] ?></p>
               	<p><h4>Abstract</h4></p>
-              	<p>The goal of this tutorial is to introduce people to Apache Bigtop and to show how it can help them build their own Big Data solution tailored to their own problems.</p>
-              	<p>This tutorial will start by describing the life cycle of a component in Apache Bigtop and how are these steps related and why they are needed. Starting with building packages, validating them and deploying them.</p>
-              	<p>Then attendees will go through the steps to build their own component. This will also give them an introduction to packaging (what is a package, how to build one, how to adapt it) along the way.</p>
-              	<p>After building their first component, they can now deploy it. First manually, then through the puppet recipes provided by Apache Bigtop. This will also give them an introduction to deployment practices, whether on physical cluster or in the cloud.</p>
-              	<p>So by the end of this tutorial, attendees would learn how to customize, build and deploy their own Apache Hadoop based cluster.</p>
-              	<p>In order to make the best use of the time, a virtual machine image will be provided so as to shorten the setup time.</p>
+              	<p><?php echo $info['abstract'] ?></p>
               </div>
               <div class="tab-pane fade active attachment-content" id="video">
               	<div class="row">
@@ -85,9 +100,15 @@
               
             </div><!--/span--> 
           </div><!--/row-->
-          <div class="row">
+          <div class="row attachment-content">
               <div class="col-lg-12">
-              	 <p><a href="my-schedule.html"><button type="button" class="btn btn-primary" id="join-btn">Add to my schedule</button></a></p>
+              	 <p>
+                  <?php if($is_attended) { ?>
+                    <a href="#"><button type="button" class="btn btn-info cancel-book-btn">Cancel booking</button></a>
+                  <?php } else { ?>
+                    <a href="#"><button type="button" class="btn btn-primary book-conf-btn">Attend this seminar</button></a>
+                  <?php } ?>
+                 </p>
               </div><!--span-->
           </div><!--/row-->
           <div class="row">
@@ -133,27 +154,19 @@
               <p><h4 class="text-muted">Attendees</h4></p>
               <p>
                 <table class="table" id="attendee-list">
-                  <tr>
-              		<td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
-                    <td>
-                      <p><a href="<?php echo URL::site('user') ?>"><strong>Mark Otto</strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>
-                      <p></p>
-                    </td>
-                  </tr>
-                  <tr>
-                  	<td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
-                    <td>
-                      <p><a href="<?php echo URL::site('user') ?>"><strong>Jacob Thornton</strong></a> <br/> <small class="text-muted">Queen's University</small></p>
-                      <p></p>
-                    </td>
-                  </tr>
-                  <tr>
-                  	<td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
-                    <td>
-                      <p><a href="<?php echo URL::site('user') ?>"><strong>Larry Bird</strong></a> <br/> <small class="text-muted">University of California, Los Angeles</small></p>
-                      <p></p>
-                    </td>
-                  </tr>
+                  <?php if(isset($info['attendees'])) { ?>
+                    <?php foreach($info['attendees'] as $attendee) { ?>
+                      <tr id="attendee-<?php echo $attendee['id'] ?>">
+                        <td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
+                        <td>
+                          <p><a href="<?php echo URL::site('user/profile/'.$attendee['id']) ?>"><strong><?php echo $attendee['name'] ?></strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>
+                          <p></p>
+                        </td>
+                      </tr>
+                    <?php } ?>
+                  <?php } else { ?>
+                    <tr id="attendee-placeholder"><td>There is no attendee right now</td></tr>
+                  <?php } ?>
                 </table>
               </p>
             </div><!--/span--> 

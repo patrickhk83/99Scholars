@@ -138,6 +138,10 @@ class Service_UserProfile {
 
 				$view->publications = $publications;
 				break;
+
+			case 'event':
+				$conf_service = new Service_Conference();
+				$view->events = $conf_service->get_conference_user_attend($user_id);
 		}
 
 		return $view;
