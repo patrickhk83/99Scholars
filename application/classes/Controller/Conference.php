@@ -130,13 +130,22 @@ class Controller_Conference extends Controller {
 		$conf_id = $this->request->param('id');
 		$user_id = Service_Login::get_user_in_session();
 
-		$user_service = new Service_User();
-		$user_service->attend_conference($user_id, $conf_id);
+		if(isset($user_id) && $user_id !== NULL)
+		{
+			$user_service = new Service_User();
+			$user_service->attend_conference($user_id, $conf_id);
 
-		$user = $user_service->get_by_id($user_id);
+			$user = $user_service->get_by_id($user_id);
 
-		$result['id'] = $user_id;
-		$result['name'] = $user['first_name'].' '.$user['last_name'];
+			$result['status'] = 'ok';
+			$result['id'] = $user_id;
+			$result['name'] = $user['first_name'].' '.$user['last_name'];
+		}
+		else
+		{
+			$result['status'] = 'error';
+			$result['message'] = 'Please login before booking conference.';
+		}
 
 		$this->response->headers('Content-Type', 'application/json; charset=utf-8');
 		$this->response->body(json_encode($result));

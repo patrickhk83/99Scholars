@@ -47,33 +47,42 @@ var joinSeminar = function(e)
 
 	$.get(url, function(data){
 
-		var bookBtn = $('.book-conf-btn');
-		bookBtn.removeClass('btn-default btn-primary book-conf-btn').addClass('btn-info cancel-book-btn');
-		bookBtn.text('Cancel booking');
-
-		$('.cancel-book-btn').each(function(index){
-			$(this).off('click').on('click', cancelBooking);
-		});
-
-		alert('Thanks for joining this seminar');
-		
-		var html = '<tr style="display:none" id="attendee-"' + data.id + '>' + 
-			'<td width="40px"><img src="' + baseUrl + '/img/avatar.jpg" width="40"/></td>' +
-		  '<td>' +
-		    '<p><a href="' + baseProfileUrl + data.id + '"><strong>' + data.name + '</strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>' +
-		    '<p></p>' +
-		  '</td>' +
-		'</tr>';
-		
-		var ele = $(html);
-		
-		if($('#attendee-placeholder').length > 0)
+		if(data.status == 'ok')
 		{
-			$('#attendee-placeholder').hide();
+			var bookBtn = $('.book-conf-btn');
+			bookBtn.removeClass('btn-default btn-primary book-conf-btn').addClass('btn-info cancel-book-btn');
+			bookBtn.text('Cancel booking');
+
+			$('.cancel-book-btn').each(function(index){
+				$(this).off('click').on('click', cancelBooking);
+			});
+
+			alert('Thanks for joining this seminar');
+			
+			var html = '<tr style="display:none" id="attendee-"' + data.id + '>' + 
+				'<td width="40px"><img src="' + baseUrl + '/img/avatar.jpg" width="40"/></td>' +
+			  '<td>' +
+			    '<p><a href="' + baseProfileUrl + data.id + '"><strong>' + data.name + '</strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>' +
+			    '<p></p>' +
+			  '</td>' +
+			'</tr>';
+			
+			var ele = $(html);
+			
+			if($('#attendee-placeholder').length > 0)
+			{
+				$('#attendee-placeholder').hide();
+			}
+			
+			$('#attendee-list').append(ele);
+			ele.show('slow');
 		}
-		
-		$('#attendee-list').append(ele);
-		ele.show('slow');
+		else
+		{
+			alert(data.message);
+			btn.removeClass('btn-default').addClass('btn-primary');
+			btn.text('Attend this seminar');
+		}
 	});
 
 	return false;
