@@ -191,6 +191,7 @@
     <?php echo HTML::script('js/jquery.js') ?>
     <?php echo HTML::script('js/bootstrap.min.js') ?>
     <?php echo HTML::script('js/offcanvas.js') ?>
+    <?php echo HTML::script('js/jquery-ui.js') ?>
     <?php echo HTML::script('js/seminar.js') ?>
   </body>
 </html>
