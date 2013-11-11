@@ -113,42 +113,102 @@
           </div><!--/row-->
           <div class="row">
             <div class="col-lg-8">
-              <p><h4>Discussion</h4></p>
-              <p>
-                <table class="table">
-                  <tr>
-                    <td width="60px"><?php echo HTML::image('img/avatar.jpg') ?></td>
-                    <td>
-                      <p><a href="<?php echo URL::site('user') ?>"><strong>Mark Otto</strong></a> <small class="text-muted">Massachusetts Institute of Technology</small></p>
-                      <p>This seems like a great session. I'm looking forward to join this session and discuss with you guys afterward.</p>
-                      <p><small class="text-muted">2 hours ago</small></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="60px"><?php echo HTML::image('img/avatar.jpg') ?></td>
-                    <td>
-                      <p><a href="<?php echo URL::site('user') ?>"><strong>Jacob Thornton</strong></a> <small class="text-muted">Queen's University</small></p>
-                      <p>Hi, I'm Jacob. See you at the conference!</p>
-                      <p><small class="text-muted">1 hour ago</small></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="60px"><?php echo HTML::image('img/avatar.jpg') ?></td>
-                    <td>
-                      <p><a href="<?php echo URL::site('user') ?>"><strong>Larry Bird</strong></a> <small class="text-muted">University of California, Los Angeles</small></p>
-                      <p>I have a question about the 2nd topic.</p>
-                      <p><small class="text-muted">5 minutes ago</small></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="60px"><?php echo HTML::image('img/avatar.jpg') ?></td>
-                    <td>
-                      <p><textarea class="form-control" rows="4" placeholder="Type your comment here"></textarea></p>
-                      <p><button type="button" class="btn btn-primary">Submit</button></p>
-                    </td>
-                  </tr>
+              <h4 class="text-muted">Discussion</h4>
+              <hr style="margin-bottom: 0px; margin-top: 5px;">
+              <div id="topics-container">
+                <table class="table table-hover">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p><strong><a href="#" style="color: #000000" class="topic-title">This is a topic for discussion</a></strong><br><small><a href="#">Sheldon Cooper</a> <span class="text-muted">last updated 37 minutes ago</span></small></p>
+                        <p></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p><strong><a href="#" style="color: #000000" class="topic-title">This is a much more longer topic for discussion</a></strong><br><small><a href="#">Sheldon Cooper</a> <span class="text-muted">last updated 6 hours ago</span></small></p>
+                        <p></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p><strong><a href="#" style="color: #000000" class="topic-title">This is another topic for discussion</a></strong><br><small><a href="#">Sheldon Cooper</a> <span class="text-muted">last updated 6 hours ago</span></small></p>
+                        <p></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p><strong><a href="#" style="color: #000000" class="topic-title">This is another much more longer topic for discussion that will take some space</a></strong><br><small><a href="#">Sheldon Cooper</a> <span class="text-muted">last updated 6 hours ago</span></small></p>
+                        <p></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <form role="form">
+                          <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Post your topic">
+                          </div>
+                          <div class="form-group">
+                            <textarea class="form-control" rows="4" placeholder="And what you'd like to say"></textarea>
+                          </div>
+                          <div class="form-group text-right">
+                            <button type="button" class="btn btn-primary">Submit</button>
+                          </div>
+                        </form>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
-              </p>
+              </div>
+              <div id="topic-detail-container">
+                <p><small><a href="#" id="back-topic-link"><span class="glyphicon glyphicon-chevron-left"></span> Back to topics</a></small></p>
+                <div id="topic-header">
+                  <p><strong>This is a much more longer topic for discussion</strong></p>
+                </div>
+                <div id="topic-discussion">
+                  <table class="table">
+                    <tr class="well">
+                      <td width="60px"><?php echo HTML::image('img/avatar.jpg') ?></td>
+                      <td>
+                        <p><a href="<?php echo URL::site('user') ?>"><strong>Sheldon Cooper</strong></a> <small class="text-muted">Massachusetts Institute of Technology</small></p>
+                        <p>Apache Bigtop is a project for the integration of the Apache Hadoop ecosystem. It includes recipes to build, test and deploy these components. In this tutorial we will go through each steps to learn about how you can build and customize the packages yourself as well as deploy these components to make your own cluster (physical machines or in the cloud)</p>
+                        <p><small class="text-muted">2 hours ago</small></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="60px"><?php echo HTML::image('img/avatar.jpg') ?></td>
+                      <td>
+                        <p><a href="<?php echo URL::site('user') ?>"><strong>Mark Otto</strong></a> <small class="text-muted">Massachusetts Institute of Technology</small></p>
+                        <p>This seems like a great session. I'm looking forward to join this session and discuss with you guys afterward.</p>
+                        <p><small class="text-muted">2 hours ago</small></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="60px"><?php echo HTML::image('img/avatar.jpg') ?></td>
+                      <td>
+                        <p><a href="<?php echo URL::site('user') ?>"><strong>Jacob Thornton</strong></a> <small class="text-muted">Queen's University</small></p>
+                        <p>Hi, I'm Jacob. See you at the conference!</p>
+                        <p><small class="text-muted">1 hour ago</small></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="60px"><?php echo HTML::image('img/avatar.jpg') ?></td>
+                      <td>
+                        <p><a href="<?php echo URL::site('user') ?>"><strong>Larry Bird</strong></a> <small class="text-muted">University of California, Los Angeles</small></p>
+                        <p>I have a question about the 2nd topic.</p>
+                        <p><small class="text-muted">5 minutes ago</small></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="60px"><?php echo HTML::image('img/avatar.jpg') ?></td>
+                      <td>
+                        <p><textarea class="form-control" rows="4" placeholder="Type your comment here"></textarea></p>
+                        <p><button type="button" class="btn btn-primary">Submit</button></p>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
             </div><!-- /span -->
             <div class="col-lg-4">
               <p><h4 class="text-muted">Attendees</h4></p>

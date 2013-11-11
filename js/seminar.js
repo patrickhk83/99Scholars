@@ -18,6 +18,22 @@ $(function(){
 	$('.cancel-book-btn').each(function(index){
 		$(this).on('click', cancelBooking);
 	});
+
+	$('.topic-title').each(function(index){
+		$(this).on('click', function(){
+			$('#topics-container').effect('drop', function(){
+				$('#topic-detail-container').show();
+			});
+
+			return false;
+		});
+	});
+
+	$('#back-topic-link').on('click', function(){
+		$('#topic-detail-container').hide();
+		$('#topics-container').effect('slide');
+		return false;
+	});
 });
 
 var joinSeminar = function(e)
