@@ -19,6 +19,8 @@ $(function(){
 		$(this).on('click', cancelBooking);
 	});
 
+	$('#add-topic-btn').on('click', addTopic);
+
 	$('.topic-title').each(function(index){
 		$(this).on('click', function(){
 			$('#topics-container').effect('drop', function(){
@@ -111,6 +113,26 @@ var cancelBooking = function(e)
 
 
 	return false;
+}
+
+var addTopic = function()
+{
+	var url = baseUrl + 'topic/create';
+	var data = $('#topic-form').serialize();
+
+	$.post(url, data, function(response){
+		if(response.status == 'ok')
+		{
+			var html = $(response.html);
+
+			$('#topics').append(html);
+			html.effect('highlight');
+		}
+		else
+		{
+			alert(response.message);
+		}
+	});
 }
 
 function displayProgress(btn)

@@ -117,42 +117,33 @@
               <hr style="margin-bottom: 0px; margin-top: 5px;">
               <div id="topics-container">
                 <table class="table table-hover">
-                  <tbody>
-                    <tr>
-                      <td>
-                        <p><strong><a href="#" style="color: #000000" class="topic-title">This is a topic for discussion</a></strong><br><small><a href="#">Sheldon Cooper</a> <span class="text-muted">last updated 37 minutes ago</span></small></p>
-                        <p></p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <p><strong><a href="#" style="color: #000000" class="topic-title">This is a much more longer topic for discussion</a></strong><br><small><a href="#">Sheldon Cooper</a> <span class="text-muted">last updated 6 hours ago</span></small></p>
-                        <p></p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <p><strong><a href="#" style="color: #000000" class="topic-title">This is another topic for discussion</a></strong><br><small><a href="#">Sheldon Cooper</a> <span class="text-muted">last updated 6 hours ago</span></small></p>
-                        <p></p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <p><strong><a href="#" style="color: #000000" class="topic-title">This is another much more longer topic for discussion that will take some space</a></strong><br><small><a href="#">Sheldon Cooper</a> <span class="text-muted">last updated 6 hours ago</span></small></p>
-                        <p></p>
-                      </td>
-                    </tr>
+                  <tbody id="topics">
+                    <?php if(isset($info['topics'])) { ?>
+                      
+                      <?php foreach ($info['topics'] as $topic) { ?>
+                        <tr>
+                          <td>
+                            <p>
+                              <a href="#" class="topic-title"><?php echo $topic['title'] ?></a> 
+                              <br><small><a href="<?php echo $topic['author_id'] ?>"><?php echo $topic['author_name'] ?></a> <span class="text-muted"><?php echo $topic['last_update'] ?></span></small>
+                            </p>
+                          </td>
+                        </tr>
+                      <? } ?>
+                        
+                    <?php } ?>
                   </tbody>
                 </table>
                 <form role="form" id="topic-form">
+                  <input type="hidden" name="conf_id" value="<?php echo $id ?>">
                   <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Post your topic">
+                    <input type="text" class="form-control" placeholder="Post your topic" name="title">
                   </div>
                   <div class="form-group">
-                    <textarea class="form-control" rows="4" placeholder="And what you'd like to say"></textarea>
+                    <textarea class="form-control" rows="4" placeholder="And what you'd like to say" name="content"></textarea>
                   </div>
                   <div class="form-group text-right">
-                    <button type="button" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-primary" id="add-topic-btn">Submit</button>
                   </div>
                 </form>
               </div>
