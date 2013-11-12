@@ -142,23 +142,19 @@
                         <p></p>
                       </td>
                     </tr>
-                    <tr>
-                      <td>
-                        <form role="form">
-                          <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Post your topic">
-                          </div>
-                          <div class="form-group">
-                            <textarea class="form-control" rows="4" placeholder="And what you'd like to say"></textarea>
-                          </div>
-                          <div class="form-group text-right">
-                            <button type="button" class="btn btn-primary">Submit</button>
-                          </div>
-                        </form>
-                      </td>
-                    </tr>
                   </tbody>
                 </table>
+                <form role="form" id="topic-form">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Post your topic">
+                  </div>
+                  <div class="form-group">
+                    <textarea class="form-control" rows="4" placeholder="And what you'd like to say"></textarea>
+                  </div>
+                  <div class="form-group text-right">
+                    <button type="button" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
               </div>
               <div id="topic-detail-container">
                 <p><small><a href="#" id="back-topic-link"><span class="glyphicon glyphicon-chevron-left"></span> Back to topics</a></small></p>
