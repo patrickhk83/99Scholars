@@ -50,7 +50,10 @@ class Service_ConferenceTopic {
 		$topic['author_name'] = $topic_result['firstname'].' '.$topic_result['lastname'];
 		$topic['last_update'] = Util_Date::time_elapsed($topic_result['created_date']).' ago';
 
-		//TODO: get comment
+		$comment_service = new Service_ConferenceComment();
+		$comments = $comment_service->get_comment_list($topic_id);
+		$topic['comments'] = $comments;
+		
 		return $topic;
 	}
 }
