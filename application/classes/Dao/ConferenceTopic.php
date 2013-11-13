@@ -26,4 +26,15 @@ class Dao_ConferenceTopic {
 					->execute()
 					->as_array();
 	}
+
+	public function get_with_author($id)
+	{
+		$sql = 'SELECT c.id, c.conference, c.title, c.content, c.created_date, u.id AS user_id, u.firstname, u.lastname FROM conference_topic c '
+				.'LEFT OUTER JOIN user u ON c.created_by = u.id '
+				.'WHERE c.id = '.$id;
+
+		return DB::query(Database::SELECT, $sql)
+					->execute()
+					->as_array()[0];
+	}
 }

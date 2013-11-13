@@ -48,7 +48,11 @@ class Controller_Topic extends Controller {
 
 		if(isset($id) && $id !== NULL)
 		{
+			$topic_service = new Service_ConferenceTopic();
+			$topic = $topic_service->get_with_comment($id);
+
 			$view = View::factory('discussion/topic_detail');
+			$view->topic = $topic;
 
 			$result['status'] = 'ok';
 			$result['html'] = $view->render();

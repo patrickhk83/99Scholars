@@ -35,4 +35,22 @@ class Service_ConferenceTopic {
 
 		return $topics;
 	}
+
+	public function get_with_comment($topic_id)
+	{
+		$topic = array();
+
+		$topic_dao = new Dao_ConferenceTopic();
+		$topic_result = $topic_dao->get_with_author($topic_id);
+
+		$topic['id'] = $topic_result['id'];
+		$topic['title'] = $topic_result['title'];
+		$topic['content'] = $topic_result['content'];
+		$topic['author_id'] = $topic_result['user_id'];
+		$topic['author_name'] = $topic_result['firstname'].' '.$topic_result['lastname'];
+		$topic['last_update'] = Util_Date::time_elapsed($topic_result['created_date']).' ago';
+
+		//TODO: get comment
+		return $topic;
+	}
 }

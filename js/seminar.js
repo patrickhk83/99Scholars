@@ -126,6 +126,26 @@ var addTopic = function()
 	});
 }
 
+var addComment = function()
+{
+	var url = baseUrl + 'discuss/create';
+	var data = $('#comment-form').serialize();
+
+	$.post(url, data, function(response){
+		if(response.status == 'ok')
+		{
+			var html = $(response.html);
+			$('#comments').append(html);
+			html.effect('highlight');
+		}
+		else
+		{
+			alert(response.message);
+		}
+	});
+
+}
+
 var showTopic = function(topic_id)
 {
 	var url = baseUrl + 'topic/view/' + topic_id;
@@ -135,6 +155,7 @@ var showTopic = function(topic_id)
 			{
 				$('#topic-detail').html(response.html);
 				$('#topic-detail-container').show();
+				$('#add-comment-btn').on('click', addComment);
 			}
 			else
 			{
