@@ -21,17 +21,8 @@ $(function(){
 
 	$('#add-topic-btn').on('click', addTopic);
 
-	$('.topic-title').each(function(index){
-		$(this).on('click', function(){
-			$('#topics-container').effect('drop', function(){
-				$('#topic-detail-container').show();
-			});
-
-			return false;
-		});
-	});
-
 	$('#back-topic-link').on('click', function(){
+		$('#topic-detail').empty();
 		$('#topic-detail-container').hide();
 		$('#topics-container').effect('slide');
 		return false;
@@ -133,6 +124,26 @@ var addTopic = function()
 			alert(response.message);
 		}
 	});
+}
+
+var showTopic = function(topic_id)
+{
+	var url = baseUrl + 'topic/view/' + topic_id;
+	$('#topics-container').effect('drop', function(){
+		$.get(url, function(response){
+			if(response.status == 'ok')
+			{
+				$('#topic-detail').html(response.html);
+				$('#topic-detail-container').show();
+			}
+			else
+			{
+				alert(response.message);
+			}
+		});
+	});
+
+	return false;
 }
 
 function displayProgress(btn)

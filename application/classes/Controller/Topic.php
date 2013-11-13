@@ -41,4 +41,20 @@ class Controller_Topic extends Controller {
 			$this->response->body(json_encode($result));
 		}
 	}
+
+	public function action_view()
+	{
+		$id = $this->request->param('id');
+
+		if(isset($id) && $id !== NULL)
+		{
+			$view = View::factory('discussion/topic_detail');
+
+			$result['status'] = 'ok';
+			$result['html'] = $view->render();
+
+			$this->response->headers('Content-Type', 'application/json; charset=utf-8');
+			$this->response->body(json_encode($result));
+		}
+	}
 }
