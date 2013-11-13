@@ -113,42 +113,40 @@
           </div><!--/row-->
           <div class="row">
             <div class="col-lg-8">
-              <p><h4>Discussion</h4></p>
-              <p>
-                <table class="table">
-                  <tr>
-                    <td width="60px"><?php echo HTML::image('img/avatar.jpg') ?></td>
-                    <td>
-                      <p><a href="<?php echo URL::site('user') ?>"><strong>Mark Otto</strong></a> <small class="text-muted">Massachusetts Institute of Technology</small></p>
-                      <p>This seems like a great session. I'm looking forward to join this session and discuss with you guys afterward.</p>
-                      <p><small class="text-muted">2 hours ago</small></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="60px"><?php echo HTML::image('img/avatar.jpg') ?></td>
-                    <td>
-                      <p><a href="<?php echo URL::site('user') ?>"><strong>Jacob Thornton</strong></a> <small class="text-muted">Queen's University</small></p>
-                      <p>Hi, I'm Jacob. See you at the conference!</p>
-                      <p><small class="text-muted">1 hour ago</small></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="60px"><?php echo HTML::image('img/avatar.jpg') ?></td>
-                    <td>
-                      <p><a href="<?php echo URL::site('user') ?>"><strong>Larry Bird</strong></a> <small class="text-muted">University of California, Los Angeles</small></p>
-                      <p>I have a question about the 2nd topic.</p>
-                      <p><small class="text-muted">5 minutes ago</small></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="60px"><?php echo HTML::image('img/avatar.jpg') ?></td>
-                    <td>
-                      <p><textarea class="form-control" rows="4" placeholder="Type your comment here"></textarea></p>
-                      <p><button type="button" class="btn btn-primary">Submit</button></p>
-                    </td>
-                  </tr>
+              <h4 class="text-muted">Discussion</h4>
+              <hr style="margin-bottom: 0px; margin-top: 5px;">
+              <div id="topics-container">
+                <table class="table table-hover">
+                  <tbody id="topics">
+                    <?php if(isset($info['topics'])) 
+                      { 
+                        foreach ($info['topics'] as $topic) 
+                        { 
+                          echo View::factory('discussion/topic_title')->bind('topic', $topic);
+                        }
+                      } 
+                    ?>
+                  </tbody>
                 </table>
-              </p>
+                <form role="form" id="topic-form">
+                  <input type="hidden" name="conf_id" value="<?php echo $id ?>">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Post your topic" name="title">
+                  </div>
+                  <div class="form-group">
+                    <textarea class="form-control" rows="4" placeholder="And what you'd like to say" name="content"></textarea>
+                  </div>
+                  <div class="form-group text-right">
+                    <button type="button" class="btn btn-primary" id="add-topic-btn">Submit</button>
+                  </div>
+                </form>
+              </div>
+              <div id="topic-detail-container">
+                <p><small><a href="#" id="back-topic-link"><span class="glyphicon glyphicon-chevron-left"></span> Back to topics</a></small></p>
+                <div id="topic-detail">
+                  
+                </div>
+              </div>
             </div><!-- /span -->
             <div class="col-lg-4">
               <p><h4 class="text-muted">Attendees</h4></p>
@@ -191,6 +189,7 @@
     <?php echo HTML::script('js/jquery.js') ?>
     <?php echo HTML::script('js/bootstrap.min.js') ?>
     <?php echo HTML::script('js/offcanvas.js') ?>
+    <?php echo HTML::script('js/jquery-ui.js') ?>
     <?php echo HTML::script('js/seminar.js') ?>
   </body>
 </html>

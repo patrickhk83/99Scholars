@@ -123,6 +123,14 @@ td.time {
   display: none;
 }
 
+#topic-detail-container {
+  display: none; 
+  margin-top: 10px
+}
+
+.topic-title {
+  color: #000000
+}
 /*
  * Off Canvas
  * --------------------------------------------------

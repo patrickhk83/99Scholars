@@ -299,15 +299,24 @@ function bookConference(confId, element)
 
 	var url = baseUrl + 'conference/attend/' + confId;
 	$.get(url, function(data){
-		alert('Thanks for joining this conference');
 
-		btn.removeClass('btn-default').addClass('btn-info');
-		btn.text('Cancel booking');
+		if(data.status == 'ok')
+		{
+			alert('Thanks for joining this conference');
 
-		btn.prop("onclick", null);
+			btn.removeClass('btn-default').addClass('btn-info');
+			btn.text('Cancel booking');
 
-		btn.off('click').on('click', {id: confId, element: btn}, cancelBookingFacade);
+			btn.prop("onclick", null);
 
+			btn.off('click').on('click', {id: confId, element: btn}, cancelBookingFacade);
+		}
+		else
+		{
+			alert(data.message);
+			btn.removeClass('btn-default').addClass('btn-primary');
+			btn.text('Book');
+		}
 	});
 
 	return false;

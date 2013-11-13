@@ -18,6 +18,15 @@ $(function(){
 	$('.cancel-book-btn').each(function(index){
 		$(this).on('click', cancelBooking);
 	});
+
+	$('#add-topic-btn').on('click', addTopic);
+
+	$('#back-topic-link').on('click', function(){
+		$('#topic-detail').empty();
+		$('#topic-detail-container').hide();
+		$('#topics-container').effect('slide');
+		return false;
+	});
 });
 
 var joinSeminar = function(e)
@@ -31,33 +40,42 @@ var joinSeminar = function(e)
 
 	$.get(url, function(data){
 
-		var bookBtn = $('.book-conf-btn');
-		bookBtn.removeClass('btn-default btn-primary book-conf-btn').addClass('btn-info cancel-book-btn');
-		bookBtn.text('Cancel booking');
-
-		$('.cancel-book-btn').each(function(index){
-			$(this).off('click').on('click', cancelBooking);
-		});
-
-		alert('Thanks for joining this seminar');
-		
-		var html = '<tr style="display:none" id="attendee-"' + data.id + '>' + 
-			'<td width="40px"><img src="' + baseUrl + '/img/avatar.jpg" width="40"/></td>' +
-		  '<td>' +
-		    '<p><a href="' + baseProfileUrl + data.id + '"><strong>' + data.name + '</strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>' +
-		    '<p></p>' +
-		  '</td>' +
-		'</tr>';
-		
-		var ele = $(html);
-		
-		if($('#attendee-placeholder').length > 0)
+		if(data.status == 'ok')
 		{
-			$('#attendee-placeholder').hide();
+			var bookBtn = $('.book-conf-btn');
+			bookBtn.removeClass('btn-default btn-primary book-conf-btn').addClass('btn-info cancel-book-btn');
+			bookBtn.text('Cancel booking');
+
+			$('.cancel-book-btn').each(function(index){
+				$(this).off('click').on('click', cancelBooking);
+			});
+
+			alert('Thanks for joining this seminar');
+			
+			var html = '<tr style="display:none" id="attendee-"' + data.id + '>' + 
+				'<td width="40px"><img src="' + baseUrl + '/img/avatar.jpg" width="40"/></td>' +
+			  '<td>' +
+			    '<p><a href="' + baseProfileUrl + data.id + '"><strong>' + data.name + '</strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>' +
+			    '<p></p>' +
+			  '</td>' +
+			'</tr>';
+			
+			var ele = $(html);
+			
+			if($('#attendee-placeholder').length > 0)
+			{
+				$('#attendee-placeholder').hide();
+			}
+			
+			$('#attendee-list').append(ele);
+			ele.show('slow');
 		}
-		
-		$('#attendee-list').append(ele);
-		ele.show('slow');
+		else
+		{
+			alert(data.message);
+			btn.removeClass('btn-default').addClass('btn-primary');
+			btn.text('Attend this seminar');
+		}
 	});
 
 	return false;
@@ -84,6 +102,67 @@ var cancelBooking = function(e)
 		$('#attendee-' + data.id).remove();
 	});
 
+
+	return false;
+}
+
+var addTopic = function()
+{
+	var url = baseUrl + 'topic/create';
+	var data = $('#topic-form').serialize();
+
+	$.post(url, data, function(response){
+		if(response.status == 'ok')
+		{
+			var html = $(response.html);
+
+			$('#topics').append(html);
+			html.effect('highlight');
+		}
+		else
+		{
+			alert(response.message);
+		}
+	});
+}
+
+var addComment = function()
+{
+	var url = baseUrl + 'discuss/create';
+	var data = $('#comment-form').serialize();
+
+	$.post(url, data, function(response){
+		if(response.status == 'ok')
+		{
+			var html = $(response.html);
+			$('#comments').append(html);
+			html.effect('highlight');
+		}
+		else
+		{
+			alert(response.message);
+		}
+	});
+
+}
+
+var showTopic = function(topic_id)
+{
+	var url = baseUrl + 'topic/view/' + topic_id;
+	$('#topics-container').effect('drop', function(){
+		$.get(url, function(response){
+			if(response.status == 'ok')
+			{
+				$('#topic-detail').html(response.html);
+				$('#topic-detail-container').show();
+				$('#add-comment-btn').on('click', addComment);
+			}
+			else
+			{
+				alert(response.message);
+			}
+		});
+	});
 
 	return false;
 }
