@@ -12,16 +12,24 @@ class Controller_Topic extends Controller {
 			if(isset($user_id) && $user_id !== NULL)
 			{
 				$topic_service = new Service_ConferenceTopic();
-				$topic_service->create($user_id, $this->request->post());
+				$topic_id = $topic_service->create($user_id, $this->request->post());
 
 				$user_service = new Service_User();
 				$user = $user_service->get_by_id($user_id);
 
+				$topic = array(
+							'id' => $topic_id,
+							'title' => $this->request->post('title'),
+							'author_id' => $user_id,
+							'author_name' => $user['first_name'].' '.$user['last_name'],
+							'last_update' => 'just now');
+
+				$topic_view = View::factory('discussion/topic_title');
+				$topic_view->topic = $topic;
+
 				$result['status'] = 'ok';
-				$result['html'] = '<tr><td><p>'
-									.'<strong><a href="#" class="topic-title">'.$this->request->post('title').'</a></strong> '
-									.'<br><small><a href="#">'.$user['first_name'].' '.$user['last_name'].'</a> <span class="text-muted">1 minute ago</span></small>'
-									.'</p></td></tr>';
+				$result['id'] = $topic_id;
+				$result['html'] = $topic_view->render();
 			}
 			else
 			{

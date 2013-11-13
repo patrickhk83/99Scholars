@@ -51,6 +51,10 @@ class Controller_Conference extends Controller {
 					}
 				}
 
+				$topic_service = new Service_ConferenceTopic();
+
+				$view->info['topics'] = $topic_service->get_topic_list($id);
+
 				$view->id = $id;
 				$this->response->body($view);
 			}

@@ -12,4 +12,27 @@ class Service_ConferenceTopic {
 
 		return $topic_id;
 	}
+
+	public function get_topic_list($conf_id)
+	{
+		$topic_dao = new Dao_ConferenceTopic();
+		$results = $topic_dao->get_topic_list_with_author($conf_id);
+
+		$topics = array();
+
+		foreach ($results as $result) 
+		{
+			$topic = array();
+
+			$topic['id'] = $result['id'];
+			$topic['title'] = $result['title'];
+			$topic['author_id'] = $result['user_id'];
+			$topic['author_name'] = $result['firstname'].' '.$result['lastname'];
+			$topic['last_update'] = Util_Date::time_elapsed($result['created_date']).' ago';
+
+			array_push($topics, $topic);
+		}
+
+		return $topics;
+	}
 }

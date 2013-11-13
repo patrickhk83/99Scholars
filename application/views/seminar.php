@@ -118,20 +118,14 @@
               <div id="topics-container">
                 <table class="table table-hover">
                   <tbody id="topics">
-                    <?php if(isset($info['topics'])) { ?>
-                      
-                      <?php foreach ($info['topics'] as $topic) { ?>
-                        <tr>
-                          <td>
-                            <p>
-                              <a href="#" class="topic-title"><?php echo $topic['title'] ?></a> 
-                              <br><small><a href="<?php echo $topic['author_id'] ?>"><?php echo $topic['author_name'] ?></a> <span class="text-muted"><?php echo $topic['last_update'] ?></span></small>
-                            </p>
-                          </td>
-                        </tr>
-                      <? } ?>
-                        
-                    <?php } ?>
+                    <?php if(isset($info['topics'])) 
+                      { 
+                        foreach ($info['topics'] as $topic) 
+                        { 
+                          echo View::factory('discussion/topic_title')->bind('topic', $topic);
+                        }
+                      } 
+                    ?>
                   </tbody>
                 </table>
                 <form role="form" id="topic-form">
