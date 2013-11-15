@@ -35,6 +35,6 @@ class Dao_ConferenceTopic {
 
 		return DB::query(Database::SELECT, $sql)
 					->execute()
-					->as_array()[0];
+					->as_array();
 	}
 }
