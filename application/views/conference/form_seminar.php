@@ -19,12 +19,12 @@
 
 <div class="form-group">
   <label>Abstract</label>
-  <textarea class="form-control required" rows="4" name="abstract"></textarea>
+  <textarea class="form-control" rows="4" name="abstract"></textarea>
 </div>
 
 <div class="form-group">
   <label>Description</label>
-  <textarea class="form-control required" rows="4" placeholder="What your seminar is about?" name="description"></textarea>
+  <textarea class="form-control" rows="4" placeholder="What your seminar is about?" name="description"></textarea>
 </div>
 
 <!--div class="form-group">
@@ -49,7 +49,7 @@
 
 <div class="form-group">
   <label>Website</label>
-  <input type="text" class="form-control required" id="website" placeholder="URL of conference's website" name="website"/>
+  <input type="text" class="form-control" id="website" placeholder="URL of conference's website" name="website"/>
 </div>
 
 <div class="form-group">
