@@ -19,16 +19,14 @@ var showConfForm = function()
 
 	switch(confType)
 	{
+
 		case '1':
 			url = baseViewUrl + 'form/conference';
 			$.get(url, function(data){
 				$('#form-body').html(data);
-				$('#add-category-btn').click(addCategory);
-
-				$('.datepicker').datepicker({
-			 		autoclose: true
-			 	});
+				$('#add-category-btn').click(addCategory);	
 			});
+			
 			break;
 
 		case '2':
@@ -36,14 +34,15 @@ var showConfForm = function()
 			$.get(url, function(data){
 				$('#form-body').html(data);
 				$('#add-category-btn').click(addCategory);
-
-				$('.datepicker').datepicker({
-			 		autoclose: true
-			 	});
 			});
+			
 			break;
 	}
 
+	$('.datepicker').datepicker({
+		autoclose: true
+	});
+	$('#form-conference').validate();
 	$('#address-form').show();
 	$('#conf-submit-container').show();
 }
@@ -54,8 +53,8 @@ var addCategory = function()
 	var option = '<div id="category' + categoryCount + '">' +
 	  				'<div class="form-inline">' +
 	    				'<div class="form-group">' +
-	    				'<select class="form-control category-option" name="category[option' + categoryCount + ']">' +
-	    	  			'<option>Choose Conference\'s Category</option>' +
+	    				'<select class="form-control category-option required" name="category[option' + categoryCount + ']">' +
+	    	  			'<option value="">Choose Conference\'s Category</option>' +
 	    	  			'<option value="1">Technology</option>' +
       	          	    '<option value="2">Linguistics</option>' +
       	          	    '<option value="3">Psychology</option>' +

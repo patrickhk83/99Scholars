@@ -131,6 +131,11 @@ td.time {
 .topic-title {
   color: #000000
 }
+
+label.error {
+  color:red;
+}
+
 /*
  * Off Canvas
  * --------------------------------------------------
