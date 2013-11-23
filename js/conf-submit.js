@@ -25,6 +25,9 @@ var showConfForm = function()
 			$.get(url, function(data){
 				$('#form-body').html(data);
 				$('#add-category-btn').click(addCategory);	
+				$('.datepicker').datepicker({
+					autoclose: true
+				});
 			});
 			
 			break;
@@ -34,14 +37,15 @@ var showConfForm = function()
 			$.get(url, function(data){
 				$('#form-body').html(data);
 				$('#add-category-btn').click(addCategory);
+				$('.datepicker').datepicker({
+					autoclose: true
+				});
 			});
 			
 			break;
 	}
 
-	$('.datepicker').datepicker({
-		autoclose: true
-	});
+	
 	$('#form-conference').validate();
 	$('#address-form').show();
 	$('#conf-submit-container').show();

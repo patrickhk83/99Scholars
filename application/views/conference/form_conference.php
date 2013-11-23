@@ -1,6 +1,6 @@
 <div class="form-group">
   <label for="conf-name">Conference's Name</label>
-  <input type="text" class="form-control required" id="conf-name" placeholder="Enter name of the conference" name="name"/>	
+  <input type="text" class="form-control" id="conf-name" placeholder="Enter name of the conference" name="name"/>	
 </div>
 
 <div class="form-group">
@@ -27,13 +27,13 @@
   <label>Registration Period</label>
   <div class="form-inline">
     <div class="form-group">
-      <input type="text" class="form-control datepicker required" id="regis-start" placeholder="22/09/2013" name="regis_start" data-date-format="dd/mm/yyyy"/>
+      <input type="text" class="form-control datepicker" id="regis-start" placeholder="22/09/2013" name="regis_start" data-date-format="dd/mm/yyyy"/>
     </div>
     <div class="form-group">
       to
     </div>
     <div class="form-group">
-      <input type="text" class="form-control datepicker required" id="regis-end" placeholder="24/09/2013" name="regis_end" data-date-format="dd/mm/yyyy"/>
+      <input type="text" class="form-control datepicker" id="regis-end" placeholder="24/09/2013" name="regis_end" data-date-format="dd/mm/yyyy"/>
     </div>
   </div>
 </div>
@@ -72,12 +72,12 @@
 
 <div class="form-group">
   <label>Deadline For Abstracts/Proposals</label>
-  <input type="text" class="form-control datepicker required" id="deadline" placeholder="10/09/2013" name="deadline" data-date-format="dd/mm/yyyy"/>
+  <input type="text" class="form-control datepicker" id="deadline" placeholder="10/09/2013" name="deadline" data-date-format="dd/mm/yyyy"/>
 </div>
 
 <div class="form-group">
   <label>Notification of Acceptance</label>
-  <input type="text" class="form-control datepicker required" id="accept_notify" placeholder="10/09/2013" name="accept_notify" data-date-format="dd/mm/yyyy"/>
+  <input type="text" class="form-control datepicker" id="accept_notify" placeholder="10/09/2013" name="accept_notify" data-date-format="dd/mm/yyyy"/>
 </div>
 
 
