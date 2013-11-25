@@ -30,8 +30,5 @@ class Controller_Login extends Controller {
 			$view = View::factory('login');
 			$this->response->body($view);
 		}
-
-		
-		
 	}
 }

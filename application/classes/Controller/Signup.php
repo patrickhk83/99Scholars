@@ -133,16 +133,13 @@ class Controller_Signup extends Controller {
             else
             {
                 $session = Session::instance();
-                $tmp_conf = $session->get('tmp_conf');
-
-                //add conference
-                $conf_service = new Service_Conference();
-                $conf_id = $conf_service->create($tmp_conf);
-
+                $conference_entry = $session->get('tmp_conf');
                 $session->delete('tmp_conf');
 
-                //redirect to conference page
-                $this->redirect('conference/view/'.$conf_id, 302);
+                //add conference
+                $service_conference = Service_Conference::instance();
+                $id = $service_conference->create($conference_entry);
+                $this->redirect('conference/view/'.$id, 302);
             }
 		}
         else

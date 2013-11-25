@@ -1,55 +1,40 @@
 <div class="form-group">
   <label for="conf-name">Seminar's Name</label>
-  <input type="text" class="form-control required" id="conf-name" placeholder="Enter name of the conference" name="name"/>	
+  <input type="text" class="form-control required" id="conf-name" placeholder="Enter name of the conference" name="Conference[name]"/>	
 </div>
 
 <div class="form-group">
   <label>Date</label>
   <div class="form-inline">
     <div class="form-group">
-      <input type="text" class="form-control datepicker required" id="start-date" placeholder="22/09/2013" name="start_date" data-date-format="dd/mm/yyyy"/>
+      <input type="text" class="form-control datepicker required" id="start-date" placeholder="22/09/2013" name="Conference[start_date]" data-date-format="dd/mm/yyyy"/>
     </div>
   </div>
 </div>
 
 <div class="form-group">
   <label>Speaker</label>
-  <input type="text" class="form-control required" name="speaker">
+  <input type="text" class="form-control required" name="Seminar[speaker]">
 </div>
 
 <div class="form-group">
   <label>Abstract</label>
-  <textarea class="form-control" rows="4" name="abstract"></textarea>
+  <textarea class="form-control" rows="4" name="Seminar[abstract]"></textarea>
 </div>
 
 <div class="form-group">
   <label>Description</label>
-  <textarea class="form-control" rows="4" placeholder="What your seminar is about?" name="description"></textarea>
+  <textarea class="form-control" rows="4" placeholder="What your seminar is about?" name="Conference[description]"></textarea>
 </div>
-
-<!--div class="form-group">
-  <label>Registration Period</label>
-  <div class="form-inline">
-    <div class="form-group">
-      <input type="text" class="form-control datepicker" id="regis-start" placeholder="22/09/2013" name="regis_start" data-date-format="dd/mm/yyyy"/>
-    </div>
-    <div class="form-group">
-      to
-    </div>
-    <div class="form-group">
-      <input type="text" class="form-control datepicker" id="regis-end" placeholder="24/09/2013" name="regis_end" data-date-format="dd/mm/yyyy"/>
-    </div>
-  </div>
-</div-->
 
 <div class="form-group">
   <label>Organizer</label>
-  <input type="text" class="form-control required" id="organizer-name" placeholder="Name of the organizer" name="organizer"/>
+  <input type="text" class="form-control required" id="organizer-name" placeholder="Name of the organizer" name="Organization[name]"/>
 </div>
 
 <div class="form-group">
   <label>Website</label>
-  <input type="text" class="form-control" id="website" placeholder="URL of conference's website" name="website"/>
+  <input type="text" class="form-control" id="website" placeholder="URL of conference's website" name="Conference[website]"/>
 </div>
 
 <div class="form-group">
@@ -58,7 +43,7 @@
       <div id="category1">
         <div class="form-inline">
           <div class="form-group">
-          	<select class="form-control category-option required" name="category[option1]">
+          	<select class="form-control category-option required" name="Category[1][category]">
           	  <option value="">Choose Conference's Category</option>
           	  <option value="1">Technology</option>
           	  <option value="2">Linguistics</option>
@@ -76,10 +61,10 @@
 
 <div class="form-group">
   <label>Contact Person</label>
-  <input type="text" class="form-control required" id="contact-person" placeholder="Name of contact person" name="contact_person"/>
+  <input type="text" class="form-control required" id="contact-person" placeholder="Name of contact person" name="Conference[contact_person]"/>
 </div>
 
 <div class="form-group">
   <label>Contact Email</label>
-  <input type="email" class="form-control required" id="contact-email" placeholder="Email for contact" name="contact_email"/>
+  <input type="email" class="form-control required" id="contact-email" placeholder="Email for contact" name="Conference[contact_email]"/>
 </div>
