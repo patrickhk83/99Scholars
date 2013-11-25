@@ -2,6 +2,24 @@
 
 class Service_Conference {
 
+	/**
+	 * @var   Kohana_Cache instances
+	 */
+	protected static $instance = array();
+
+	 /**
+	 * get Service_Conference by singleton
+     * @return Service_Conference
+     */
+    public static function instance()
+    {
+        if ( ! (self::$instance instanceof Service_Conference))
+        {
+            self::$instance = new Service_Conference;
+        }
+        return self::$instance;
+    }
+
 	public function list_all($user_id = NULL)
 	{
 		return $this->list_by(null, null, null, null, null, null, $user_id);
@@ -287,99 +305,96 @@ class Service_Conference {
 		return $cat_array;
 	}
 
-	public function create($conference)
+	public function create($data)
 	{
 
-		$address = ORM::factory('Address')
-					->values(
-						$conference,
-						array(
-							'address',
-							'city',
-							'state',
-							'postal_code',
-							'country'))
-					->create();
+		Log::instance()->add(Log::INFO, '_create_conference data: :data', array(
+    		':data' => print_r($data, true),
+		));
 
-		$address_id = $address->pk();
-
-		$venue = ORM::factory('Venue');
-		$venue->name = $conference['venue_name'];
-		$venue->address = $address_id;
-		$venue->save();
-
-		$venue_id = $venue->pk();
-
-		$conference['venue'] = $venue_id;
-
-		$organizer = ORM::factory('Organization');
-		$organizer->name = $conference['organizer'];
-		$organizer->save();
-
-		$org_id = $organizer->pk();
-		$conference['organizer'] = $org_id;
-
-		$conference['start_date'] = $this->convert_date($conference['start_date']);
-
-		if($conference['type'] == 1)
-		{
-			$conference['end_date'] = $this->convert_date($conference['end_date']);
-			$conference['deadline'] = $this->convert_date($conference['deadline']);
-			$conference['accept_notify'] = $this->convert_date($conference['accept_notify']);
-		}
-
-		$conf = ORM::factory('Conference')
-				->values(
-					$conference, 
-					array(
-						'name',
-						'start_date',
-						'end_date',
-						'description',
-						'organizer',
-						'website',
-						'type',
-						'deadline',
-						'contact_person',
-						'contact_email',
-						'accept_notify',
-						'venue'))
-				->create();
-
-		$conf_id = $conf->pk();
-
-		if($conference['type'] == 1)
-		{
-			$regis = ORM::factory('Registration');
-			$regis->start_date = $this->convert_date($conference['regis_start']);
-			$regis->end_date = $this->convert_date($conference['regis_end']);
-			$regis->conference_id = $conf_id;
-			$regis->save();
-		}
-
-		$categories = $conference['category'];
-
-		foreach ($categories as $category) 
-		{
-			$cat_conf = ORM::factory('CategoryConference');
-			$cat_conf->conference = $conf_id;
-			$cat_conf->category = $category;
-			$cat_conf->save();
-		}
-
-		//TODO: separate type of conference
-		if($conference['type'] == 2)
-		{
-			$this->create_seminar($conf_id, $conference);
-		}
-
-		return $conf_id;
+		$this->_convert_date($data);
+		$this->_init_orm();
+		$new_conference_id = $this->_create_new_conference($data);
+		return $new_conference_id;
+		
 	}
-
-	private function create_seminar($conf_id, $data)
+	Protected function _convert_date($data)
 	{
-		$seminar_dao = new Dao_Seminar();
-		$seminar_dao->create($conf_id, $data['speaker'], $data['abstract']);
+		$data['Conference']['start_date'] = DateTime::createFromFormat('d/m/Y', $data['Conference']['start_date'])->format('Y-m-d');
+
+		if($data['Conference']['type'] == 1)
+		{
+			$data['Conference']['end_date'] = DateTime::createFromFormat('d/m/Y', $data['Conference']['end_date'])->format('Y-m-d');
+			$data['Conference']['deadline'] = DateTime::createFromFormat('d/m/Y', $data['Conference']['deadline'])->format('Y-m-d');
+			$data['Registration']['start_date'] = DateTime::createFromFormat('d/m/Y', $data['Registration']['start_date'])->format('Y-m-d');
+			$data['Registration']['end_date'] = DateTime::createFromFormat('d/m/Y', $data['Registration']['end_date'])->format('Y-m-d');
+			$data['Conference']['accept_notify'] = DateTime::createFromFormat('d/m/Y', $data['Conference']['accept_notify'])->format('Y-m-d');
+		}
+
+		return $data;
+	}
+	Protected function _init_orm()
+	{
+		$this->_conference = ORM::factory('Conference');
+		$this->_venue = ORM::factory('Venue');
+		$this->_organizer = ORM::factory('Organization');
+		$this->_address = ORM::factory('Address');		
+		$this->_registration = ORM::factory('Registration');
+		$this->_seminar = ORM::factory('Seminar');
+	}
+	Protected function _create_new_conference($data)
+	{
+		$db = Database::instance();
+		$db->begin();
+
+		try
+		{
+			//create
+			Log::instance()->add(Log::INFO, 'address data create: :message', array('message', print_r($data['Address'], true)));
+			$address = $this->_address->values($data['Address'])->create();
+			$data['Venue']['address'] = $this->_address->pk();
+			$this->_venue->values($data['Venue'])->save();
+
+			Log::instance()->add(Log::INFO, 'Organization data save: :message', array('message', print_r($data['Organization'], true)));
+			$this->_organizer->values($data['Organization'])->save();
+
+			$data['Conference']['venue'] = $this->_venue->pk();
+			$data['Conference']['organizer'] = $this->_organizer->pk();
+			Log::instance()->add(Log::INFO, 'Conference data save: :message', array('message', print_r($data['Conference'], true)));
+			$conf = $this->_conference->values($data['Conference'])->create();
+
+			$confernce_id = $conf->pk();
+
+			if($data['Conference']['type'] == 1)
+			{
+				$data['Registration']['conference_id'] = $confernce_id;
+				Log::instance()->add(Log::INFO, 'Registration data save: :message', array('message', print_r($data['Registration'], true)));
+				$this->_registration->values($data['Registration'])->save();
+			}
+
+			foreach ($data['Category'] as $category) 
+			{
+				$category_conference = ORM::factory('CategoryConference');
+				$category['conference'] = $confernce_id;
+				Log::instance()->add(Log::INFO, 'Category data create: :message', array('message', print_r($data['Category'], true)));
+				$category_conference->values($category)->create();
+			}
+
+			if($data['Conference']['type'] == 2)
+			{
+				Log::instance()->add(Log::INFO, 'Seminar data save: :message', array('message', print_r($data['Seminar'], true)));
+				$this->_seminar->values($data['Seminar'])->save();
+			}
+			$db->commit();
+		}
+		catch (ORM_Validation_Exception $e)
+		{
+			Log::instance()->add(Log::ERROR, 'orm validation exception: :message', array('message', $e->errors('models')));
+			$db->rollback();
+			throw $e;
+		}
+
+		return $confernce_id;
 	}
 
 	public function get_attendee($conf_id)

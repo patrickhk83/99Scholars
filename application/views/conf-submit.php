@@ -10,13 +10,13 @@
             <div class="col-lg-12">
               <p><h3>Submit your conference</h3></p>
               <p>Enter information about your conference</p>
-              <form id="form-conference" role="form" action="<?php echo URL::site('conference/submit') ?>" method="post">
+              <form id="form-conference" role="form" action="<?php echo URL::site('new/conference') ?>" method="post">
               <div class="panel panel-default">
                   <div class="panel-heading">General Information</div>
 	              <div class="panel-body">
 	              	<div class="form-group">
 	              	  <label>Type</label>
-	              	  <select class="form-control required" name="type" id="conf-type">
+	              	  <select class="form-control required" name="Conference[type]" id="conf-type">
 	              	    <option value="">Choose Conference's Type</option>
 	              	    <option value="1">Conference</option>
 	              	    <option value="2">Seminar</option>
@@ -34,32 +34,32 @@
               	  
               	    <div class="form-group">
               	      <label>Venue Name</label>
-              	      <input type="text" class="form-control required" id="venue-name" placeholder="Name of the venue" name="venue_name"/>
+              	      <input type="text" class="form-control required" id="venue-name" placeholder="Name of the venue" name="Venue[name]"/>
               	    </div>
               	    
 	              	<div class="form-group">
 	              	  <label>Street Address</label>
-	              	  <input type="text" class="form-control" id="address" placeholder="Address of the venue" name="address"/>
+	              	  <input type="text" class="form-control" id="address" placeholder="Address of the venue" name="Address[address]"/>
 	              	</div>
 	              	
 	              	<div class="form-group">
 	              	  <label>City</label>
-	              	  <input type="text" class="form-control required" id="city" placeholder="City" name="city"/>
+	              	  <input type="text" class="form-control required" id="city" placeholder="City" name="Address[city]"/>
 	              	</div>
 	              	
 	              	<div class="form-group">
 	              	  <label>State/Province</label>
-	              	  <input type="text" class="form-control" id="state" placeholder="State/Province" name="state"/>
+	              	  <input type="text" class="form-control" id="state" placeholder="State/Province" name="Address[state]"/>
 	              	</div>
 	              	
 	              	<div class="form-group">
 	              	  <label>Postal Code</label>
-	              	  <input type="text" class="form-control digits" id="postal-code" placeholder="Postal Code" name="postal_code"/>
+	              	  <input type="text" class="form-control digits" id="postal-code" placeholder="Postal Code" name="Address[postal_code]"/>
 	              	</div>
 	              	
 	              	<div class="form-group">
 	              	  <label>Country</label>
-	              	  <select class="form-control required" name="country">
+	              	  <select class="form-control required" name="Address[country]">
 	              	    <option value="">Choose Country</option>
 	              	    <option value="1">United States</option>
 	              	    <option value="2">Brazil</option>

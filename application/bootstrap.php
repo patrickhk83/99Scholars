@@ -110,7 +110,7 @@ Kohana::init(array(
 /**
  * Attach the file write to logging. Multiple writers are supported.
  */
-Kohana::$log->attach(new Log_File(APPPATH.'logs'));
+// Kohana::$log->attach(new Log_File(APPPATH.'logs'));
 
 /**
  * Attach a file reader to config. Multiple readers are supported.
@@ -132,6 +132,7 @@ Kohana::modules(array(
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	'pagination' => MODPATH.'pagination', // Paging of results
 	'kopauth'	=> MODPATH.'kopauth',
+	'firephp'	=> MODPATH.'firephp',
 	));
 
 Cookie::$salt = 'foobar';
@@ -140,6 +141,21 @@ Cookie::$salt = 'foobar';
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
+Route::set('create', 'new/<controller>')
+	->filter(function($route, $params, $request)
+	{
+		if ($request->method() == HTTP_Request::POST)
+		{
+			$params['action'] = 'create';
+			return $params;
+		}
+		else
+		{
+			// This route only matches POST requests
+			return FALSE;
+		}
+	});
+
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
 		'controller' => 'home',
