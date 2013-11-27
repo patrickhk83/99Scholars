@@ -15,6 +15,7 @@ class Controller_Home extends Controller {
 
 		$view->total = $result['total'];
 		$view->conferences = $result['conferences'];
+		$view->countries = Model_Constants_Address::$countries;
 
 		$this->response->body($view);
 	}

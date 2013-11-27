@@ -108,22 +108,15 @@ function delType(typeId)
 var addCountry = function() 
 {
 	countryCount++;
-	var option = '<div id="country-option' + countryCount + '">' +
-		'<div class="form-inline">' +
-			'<select class="form-control criteria-option">' +
-				'<option value="0">Select Country</option>' +
-				'<option value="1">United States</option>' +
-				'<option value="2">Brazil</option>' +
-				'<option value="3">China</option>' +
-				'<option value="4">Hong Kong</option>' +
-				'<option value="5">Singapore</option>' +
-				'<option value="6">Thailand</option>' +
-			'</select> ' +
-			'<span class="glyphicon glyphicon-minus-sign" onclick="delCountry(' + countryCount + ')"></span>' +
-		'</div>' +
-	'</div>';
+	var $option = $('#country-option1').children().clone();
+	$option.attr("id", 'country-option' + countryCount);
+	$option.addClass('form-control criteria-option');
+	var $delete_button = $('<span>', {class: "glyphicon glyphicon-minus-sign"}).click(function(){delCountry(countryCount);});
+
+	var $new_country_option = $('<div/>', {id: 'country-option' + countryCount}).append($('<div/>', {class: 'form-inline'}).append($option).append($delete_button));
+
 	
-	$('#country-criteria').append(option);
+	$('#country-criteria').append($new_country_option);
 	$('#country-option' + countryCount).change(updateSearchResult);
 
 	showClearFilterButton();
@@ -153,7 +146,6 @@ var updateSearchResult = function(page)
 
 	//start at the 1st page
 	url += '&page=' + page;
-
 	$.get(url, function (data){
 
 		$('#conf-list').infinitescroll('destroy');
@@ -235,13 +227,12 @@ function getAllCriteria(appendOther)
 	var countries = new Array();
 
 	$('[id^=country-option] select').filter(function(){
-		return $(this).val() > 0;
+		return $(this).val() != 0;
 	}).each(function(index){
 		countries.push($(this).val());
 	});
 
 	query += '&country=' + countries.join(',');
-
 	return query;
 }
 

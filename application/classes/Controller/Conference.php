@@ -2,19 +2,21 @@
 
 class Controller_Conference extends Controller {
 
-	Protected $_conference;
-	Protected $_venue;
-	Protected $_organizer;
-	Protected $_address;		
-	Protected $_registration;
-	Protected $_seminar;
-
 	public function action_view()
 	{
 		$id = $this->request->param('id');
+		
+		Log::instance()->add(Log::INFO, 'controller conference id: :id', array(
+    		':id' => $id,
+		));
 
 		//mockup page
 		$session_id = $this->request->param('session_id');
+
+		Log::instance()->add(Log::INFO, 'controller conference id: :session_id', array(
+    		':session_id' => $session_id,
+		));
+
 		if(isset($session_id))
 		{
 			$view = View::factory('presentation');
@@ -22,11 +24,13 @@ class Controller_Conference extends Controller {
 		}
 		else
 		{
-			//disable for mockup	
-			//$view = View::factory('conf-view');
-
+		
 			$conf_service = new Service_Conference();
 			$conf = $conf_service->get_for_view($id);
+
+			Log::instance()->add(Log::INFO, 'controller conference data: :data', array(
+    			':data' => print_r($conf, true),
+			));
 
 			//TODO: properly check conference type
 			if($conf['type'] == 'Seminar')
@@ -93,10 +97,9 @@ class Controller_Conference extends Controller {
 	}
 	public function action_submit()
 	{
-
 		$view = View::factory('conf-submit');
+		$view->countries = Model_Constants_Address::$countries;
 		$this->response->body($view);
-		
 	}
 
 	public function action_search()
@@ -117,7 +120,7 @@ class Controller_Conference extends Controller {
 		$user_id = Service_Login::get_user_in_session();
 
 		$conf_service = new Service_Conference();
-		$result = $conf_service->list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $user_id, $page-1);
+		$result = $conf_service->list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $user_id, $page);
 
 		$view = View::factory('conf-search-result');
 		$view->conferences = $result['conferences'];

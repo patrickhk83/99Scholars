@@ -33,8 +33,9 @@ class Dao_ConferenceTopic {
 				.'LEFT OUTER JOIN user u ON c.created_by = u.id '
 				.'WHERE c.id = '.$id;
 
-		return DB::query(Database::SELECT, $sql)
+		$result = DB::query(Database::SELECT, $sql)
 					->execute()
-					->as_array()[0];
+					->as_array(); 
+		return reset($result);
 	}
 }

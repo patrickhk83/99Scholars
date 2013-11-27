@@ -18,7 +18,7 @@ return array
 			 *
 			 * Ports and sockets may be appended to the hostname.
 			 */
-			'hostname'   => 'localhost:8889',
+			'hostname'   => '127.0.0.1',
 			'database'   => '99scholars',
 			'username'   => 'root',
 			'password'   => 'root',

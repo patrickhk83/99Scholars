@@ -45,7 +45,7 @@ var showConfForm = function()
 			break;
 	}
 
-	// $('#form-conference').validate();
+	$('#form-conference').validate();
 	$('#address-form').show();
 	$('#conf-submit-container').show();
 }
