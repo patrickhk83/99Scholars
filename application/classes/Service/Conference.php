@@ -32,7 +32,7 @@ class Service_Conference {
 		return $this->list_by(null, null, null, null, null, null, $user_id);
 	}
 
-	public function list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $user_id = NULL, $page = 0, $limit = 20)
+	public function list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $user_id = NULL, $page = 1, $limit = 20)
 	{
 		$has_condition = false;
 
@@ -131,10 +131,10 @@ class Service_Conference {
 				$has_condition = true;
 			}
 
-			$condition = $condition."(c.venue in (select v.id from venue as v where v.address in (select a.id from address as a where a.country in ('".$country."')))) ";
+			$condition = $condition."(c.venue in (select v.id from venue as v where v.address in (select a.id from address as a where a.country in (".$country.")))) ";
 		}
 
-		if($page == 0)
+		if($page == 1)
 		{
 			$count_sql = $count_sql.$condition;
 
@@ -143,7 +143,8 @@ class Service_Conference {
 			$result['total'] = $count_result->get('total');
 		}
 
-		$sql = $sql.$condition."limit ".($page*$limit).",".$limit;
+		$start_page = $page - 1;
+		$sql = $sql.$condition."limit ".($start_page*$limit).",".$limit;
 		
 		$result['conferences'] = $this->convert_for_listing(
 									DB::query(Database::SELECT, $sql)

@@ -112,10 +112,14 @@ var addCountry = function()
 	$option.attr("id", 'country-option' + countryCount);
 	$option.addClass('form-control criteria-option');
 	var $delete_button = $('<span>', {class: "glyphicon glyphicon-minus-sign"}).click(function(){delCountry(countryCount);});
+	var $new_country_option = $('<div/>', {id: 'country-option' + countryCount}).append(
+		$('<div/>', {class: 'form-inline'}).append(
+			$option
+		).append(' ').append(
+			$delete_button
+		)
+	);
 
-	var $new_country_option = $('<div/>', {id: 'country-option' + countryCount}).append($('<div/>', {class: 'form-inline'}).append($option).append($delete_button));
-
-	
 	$('#country-criteria').append($new_country_option);
 	$('#country-option' + countryCount).change(updateSearchResult);
 
@@ -137,9 +141,11 @@ var updateAcceptAbstract = function()
 
 var updateSearchResult = function(page)
 {
+
+	console.log('typeof page: ' + typeof page);
 	//set optional parameter
 	if(typeof page === 'object' || typeof page === 'undefined') page = 1;
-
+	console.log('init page: ' + page);
 	var url = searchUrl;
 
 	url += getAllCriteria();
@@ -155,7 +161,9 @@ var updateSearchResult = function(page)
 
 		if(page == 1)
 		{
+
 			var total = $('#total-search-result').val();
+			console.log('page: ' + page + ", total:" + total);
 			$('#total-display').html(total);
 		}
 

@@ -112,6 +112,8 @@ class Controller_Conference extends Controller {
 		$country = $this->request->query('country');
 		$page = $this->request->query('page');
 
+		$country = '\''.str_replace(',', '\',\'', $country).'\'';
+
 		if(!isset($page) || $page == '' || $page == 0)
 		{
 			$page = 1;
@@ -120,11 +122,12 @@ class Controller_Conference extends Controller {
 		$user_id = Service_Login::get_user_in_session();
 
 		$conf_service = new Service_Conference();
-		$result = $conf_service->list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $user_id, $page);
 
+		$result = $conf_service->list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $user_id, $page);
+		
 		$view = View::factory('conf-search-result');
 		$view->conferences = $result['conferences'];
-
+		
 		if(array_key_exists('total', $result))
 		{
 			$view->total = $result['total'];
