@@ -38,7 +38,7 @@
               	    </div>
               	    
 	              	<div class="form-group">
-	              	  <label>Street Address</label>
+	              	  <label>Address</label>
 	              	  <input type="text" class="form-control" id="address" placeholder="Address of the venue" name="Address[address]"/>
 	              	</div>
 	              	
@@ -61,12 +61,9 @@
 	              	  <label>Country</label>
 	              	  <select class="form-control required" name="Address[country]">
 	              	    <option value="">Choose Country</option>
-	              	    <option value="1">United States</option>
-	              	    <option value="2">Brazil</option>
-                        <option value="3">China</option>
-                        <option value="4">Hong Kong</option>
-                        <option value="5">Singapore</option>
-                        <option value="6">Thailand</option>
+	              	    <? foreach($countries as $short_name => $full_name){ ?>
+                        <option value="<?= $short_name ?>"><?= $full_name ?></option>
+                      <? } ?>
 	              	  </select>
 	              	</div>
 	              </div>

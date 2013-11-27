@@ -7,6 +7,13 @@ class Service_Conference {
 	 */
 	protected static $instance = array();
 
+	Protected $_conference;
+	Protected $_venue;
+	Protected $_organizer;
+	Protected $_address;		
+	Protected $_registration;
+	Protected $_seminar;
+
 	 /**
 	 * get Service_Conference by singleton
      * @return Service_Conference
@@ -124,7 +131,7 @@ class Service_Conference {
 				$has_condition = true;
 			}
 
-			$condition = $condition."(c.venue in (select v.id from venue as v where v.address in (select a.id from address as a where a.country in (".$country.")))) ";
+			$condition = $condition."(c.venue in (select v.id from venue as v where v.address in (select a.id from address as a where a.country in ('".$country."')))) ";
 		}
 
 		if($page == 0)
@@ -137,7 +144,7 @@ class Service_Conference {
 		}
 
 		$sql = $sql.$condition."limit ".($page*$limit).",".$limit;
-
+		
 		$result['conferences'] = $this->convert_for_listing(
 									DB::query(Database::SELECT, $sql)
 									->execute()->as_array());
