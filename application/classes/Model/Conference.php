@@ -4,6 +4,31 @@ class Model_Conference extends ORM {
 
 	protected $_table_name = 'conference';
 
+	protected $_has_many = array(
+    	'attendee' => array(
+        	'model'   => 'User',
+        	'through' => 'attendee',
+        	'far_key' => 'user',
+        	'foreign_key' => 'conference'
+    	),
+    	'topic' => array(
+        	'model'   => 'ConferenceTopic',
+        	'foreign_key' => 'conference'
+    	),
+	);
+
+	protected $_has_one = array(
+		'seminar' => array(
+        	'model'       => 'Seminar',
+        	'foreign_key' => 'conference',
+    	),
+	);
+	protected $_belongs_to = array(
+    	'conference_type' => array(
+        	'model'       => 'ConferenceType',
+        	'foreign_key' => 'type',
+    	),
+	);
 	public function rules()
 	{
 		return array(

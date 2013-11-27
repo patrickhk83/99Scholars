@@ -1,5 +1,5 @@
 <?php include Kohana::find_file('views', 'header') ?>
-<input type="hidden" id="conf-id" value="<?php echo $id ?>">
+<input type="hidden" id="conf-id" value="<?= $conference->id ?>">
 <div class="row row-offcanvas row-offcanvas-right">
         
         <div class="col-xs-12 col-sm-12">
@@ -10,13 +10,13 @@
             <div class="col-lg-12">
               <div class="row">
                   <div class="col-lg-12">
-                    <p><h2><?php echo $info['name'] ?></h2></p>
-                    <p><strong>Speaker : </strong> <a href="<?php echo URL::site('user') ?>"><?php echo $info['speaker'] ?></a></p>
+                    <p><h2><?= $conference->name ?></h2></p>
+                    <p><strong>Speaker : </strong> <a href="<?= URL::site('user') ?>"><?= $conference->seminar->speaker ?></a></p>
                   </div><!--span-->
               </div><!--/row-->
               <div class="row">
                   <div class="col-lg-8">
-                    <p><strong><?php echo $info['start_date'] ?></strong><br><strong><?php echo $info['location'] ?></strong> <span class="text-muted">(<a href="#">view map</a>)</span></p>
+                    <p><strong><?= $conference->start_date ?></strong><br><strong><?= Util_Date::time_elapsed($conference->created_date).' ago' ?></strong> <span class="text-muted">(<a href="#">view map</a>)</span></p>
                   </div><!--span-->
                   <div class="col-lg-4">
                     <p class="text-right">
@@ -46,9 +46,9 @@
             <div class="tab-content">
               <div class="tab-pane fade active attachment-content" id="info">
               	<p><h4>Description</h4></p>
-              	<p><?php echo $info['description'] ?></p>
+              	<p><?= $conference->description ?></p>
               	<p><h4>Abstract</h4></p>
-              	<p><?php echo $info['abstract'] ?></p>
+              	<p><?= $conference->seminar->abstract ?></p>
               </div>
               <div class="tab-pane fade active attachment-content" id="video">
               	<div class="row">
@@ -70,27 +70,27 @@
                	<br/>
 	          	  <div class="row">
 	          	      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-	          	        <?php echo HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
+	          	        <?= HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
 	          	        <p><a href="#">picture.png</a> <span class="text-muted">(127 kB)</span></p>
 	          	      </div><!--span-->
 	          	      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-	          	        <?php echo HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
+	          	        <?= HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
 	          	        <p><a href="#">picture.png</a> <span class="text-muted">(127 kB)</span></p>
 	          	      </div><!--span-->
 	          	      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-	          	        <?php echo HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
+	          	        <?= HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
 	          	        <p><a href="#">picture.png</a> <span class="text-muted">(127 kB)</span></p>
 	          	      </div><!--span-->
 	          	      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-	          	        <?php echo HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
+	          	        <?= HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
 	          	        <p><a href="#">picture.png</a> <span class="text-muted">(127 kB)</span></p>
 	          	      </div><!--span-->
 	          	      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-	          	        <?php echo HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
+	          	        <?= HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
 	          	        <p><a href="#">picture.png</a> <span class="text-muted">(127 kB)</span></p>
 	          	      </div><!--span-->
 	          	      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-	          	        <?php echo HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
+	          	        <?= HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
 	          	        <p><a href="#">picture.png</a> <span class="text-muted">(127 kB)</span></p>
 	          	      </div><!--span-->
 	          	  </div><!--/row-->
@@ -118,18 +118,17 @@
               <div id="topics-container">
                 <table class="table table-hover">
                   <tbody id="topics">
-                    <?php if(isset($info['topics'])) 
-                      { 
-                        foreach ($info['topics'] as $topic) 
+                    <?
+                        foreach ($conference->topic->find_all() as $topic) 
                         { 
                           echo View::factory('discussion/topic_title')->bind('topic', $topic);
                         }
-                      } 
+                       
                     ?>
                   </tbody>
                 </table>
                 <form role="form" id="topic-form">
-                  <input type="hidden" name="conf_id" value="<?php echo $id ?>">
+                  <input type="hidden" name="conf_id" value="<?= $conference->id ?>">
                   <div class="form-group">
                     <input type="text" class="form-control" placeholder="Post your topic" name="title">
                   </div>
@@ -152,12 +151,12 @@
               <p><h4 class="text-muted">Attendees</h4></p>
               <p>
                 <table class="table" id="attendee-list">
-                  <?php if(isset($info['attendees'])) { ?>
-                    <?php foreach($info['attendees'] as $attendee) { ?>
-                      <tr id="attendee-<?php echo $attendee['id'] ?>">
+                  <?php if($conference->attendee->find_all()->count() != 0) { ?>
+                    <?php foreach($conference->attendee->find_all() as $attendee) { ?>
+                      <tr id="attendee-<?= $attendee->id ?>">
                         <td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
                         <td>
-                          <p><a href="<?php echo URL::site('user/profile/'.$attendee['id']) ?>"><strong><?php echo $attendee['name'] ?></strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>
+                          <p><a href="<?= URL::site('user/profile/'.$attendee->id) ?>"><strong><?= $attendee->get_fullname() ?></strong></a> <br/> <small class="text-muted"><?= $attendee->get_affiliation() ?></small></p>
                           <p></p>
                         </td>
                       </tr>
