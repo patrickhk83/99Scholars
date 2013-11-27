@@ -24,49 +24,29 @@ class Controller_Conference extends Controller {
 		}
 		else
 		{
-		
-			$conf_service = new Service_Conference();
-			$conf = $conf_service->get_for_view($id);
-
-			Log::instance()->add(Log::INFO, 'controller conference data: :data', array(
-    			':data' => print_r($conf, true),
+			$conference = ORM::factory('Conference', $id);
+			
+			Log::instance()->add(Log::INFO, 'controller conference type: :type', array(
+    			':type' => $conference->conference_type->name,
 			));
-
-			//TODO: properly check conference type
-			if($conf['type'] == 'Seminar')
+			
+			if($conference->conference_type->name == 'Seminar')
 			{
+
 				$view = View::factory('seminar');
-				$view->info = $conf;
-
-				//TODO: create seminar service
-				$seminar_dao = new Dao_Seminar();
-				$seminar = $seminar_dao->get_by_conference_id($id);
-				$view->info['speaker'] = $seminar->get('speaker');
-				$view->info['abstract'] = $seminar->get('abstract');
-
-				$attendees = $conf_service->get_attendee($id);
-
-				if(count($attendees) > 0)
-				{
-					$view->info['attendees'] = $attendees;
-				}
-
+				$view->conference = $conference;
+				
 				$view->is_attended = FALSE;
 				$user_id = Service_Login::get_user_in_session();
 
-				foreach ($attendees as $attendee) 
+				foreach ($conference->attendee as $attendee) 
 				{
-					if($attendee['id'] === $user_id)
+					if($attendee->id === $user_id)
 					{
 						$view->is_attended = TRUE;
 					}
 				}
 
-				$topic_service = new Service_ConferenceTopic();
-
-				$view->info['topics'] = $topic_service->get_topic_list($id);
-
-				$view->id = $id;
 				$this->response->body($view);
 			}
 			else
@@ -120,9 +100,7 @@ class Controller_Conference extends Controller {
 		}
 
 		$user_id = Service_Login::get_user_in_session();
-
 		$conf_service = new Service_Conference();
-
 		$result = $conf_service->list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $user_id, $page);
 		
 		$view = View::factory('conf-search-result');
