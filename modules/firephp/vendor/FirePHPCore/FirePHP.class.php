@@ -58,8 +58,6 @@ if (!defined('E_USER_DEPRECATED')) {
     define('E_USER_DEPRECATED', 16384);
 } 
 
-require_once Kohana::find_file('vendor/FirePHPCore','fb');
-
 /**
  * Sends the given data to the FirePHP Firefox Extension.
  * The data can be displayed in the Firebug Console or in the

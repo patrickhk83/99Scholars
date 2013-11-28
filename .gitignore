@@ -1,4 +1,4 @@
 application/logs/
 shopabout/bootstrap.php
 .htaccess
-
+application/cache/

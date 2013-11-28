@@ -5,6 +5,7 @@
 // 	return;
 
 // Find and include the vendor
+require Kohana::find_file('classes/fire','log');
 require_once Kohana::find_file('vendor/FirePHPCore','FirePHP.class');
 
 $fire_logger = new Fire_Log(array(
