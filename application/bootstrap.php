@@ -132,7 +132,7 @@ Kohana::modules(array(
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	'pagination' => MODPATH.'pagination', // Paging of results
 	'kopauth'	=> MODPATH.'kopauth',
-	'firephp'	=> MODPATH.'firephp',
+	// 'firephp'	=> MODPATH.'firephp',
 	));
 
 Cookie::$salt = 'foobar';
