@@ -25,7 +25,6 @@ class Model_User extends ORM {
 	);
 	public function get_fullname()
 	{
-		// echo $this->firstname.' '.$this->lastname;exit;
 		return $this->firstname.' '.$this->lastname;
 	}
 
