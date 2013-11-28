@@ -57,6 +57,7 @@ if (!defined('E_DEPRECATED')) {
 if (!defined('E_USER_DEPRECATED')) {
     define('E_USER_DEPRECATED', 16384);
 } 
+
 require_once Kohana::find_file('vendor/FirePHPCore','fb');
 
 /**
