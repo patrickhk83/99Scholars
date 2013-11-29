@@ -143,8 +143,10 @@ class Service_Conference {
 			$result['total'] = $count_result->get('total');
 		}
 
+		$sql = $sql.$condition." order by c.start_date desc ";
+
 		$start_page = $page - 1;
-		$sql = $sql.$condition."limit ".($start_page*$limit).",".$limit;
+		$sql = $sql."limit ".($start_page*$limit).",".$limit;
 		
 		$result['conferences'] = $this->convert_for_listing(
 									DB::query(Database::SELECT, $sql)
