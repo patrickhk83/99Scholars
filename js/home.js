@@ -182,6 +182,15 @@ var updateSearchResult = function(page)
 			var total = $('#total-search-result').val();
 			console.log('page: ' + page + ", total:" + total);
 			$('#total-display').html(total);
+
+			if(total > 2)
+			{
+				$('#event-text').html('Events found');
+			}
+			else
+			{
+				$('#event-text').html('Event found');
+			}
 		}
 
 		$('#conf-list').infinitescroll({

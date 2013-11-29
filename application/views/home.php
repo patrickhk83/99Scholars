@@ -78,7 +78,7 @@
           <div class="row">
             <div class="col-lg-12">
               <div id="total-conference-display">
-                <h2><span id="total-display"><?php echo $total ?></span> Events found</h2> <span class="category-container"> [ <span id="categories"></span> ]</span> <span class="clear-filter-container"> ( <a href="#" id="clear-filter-btn">clear all filter</a> )</span>
+                <h2><span id="total-display"><?php echo $total ?></span> <spen id="event-text">Events found</span></h2> <span class="category-container"> [ <span id="categories"></span> ]</span> <span class="clear-filter-container"> ( <a href="#" id="clear-filter-btn">clear all filter</a> )</span>
               </div>
             <div class="row">
 	            <div class="col-lg-12">
