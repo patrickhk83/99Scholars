@@ -136,7 +136,7 @@ label.error {
   color:red;
 }
 
-.clear-filter-container {
+.clear-filter-container, .category-container {
     display: none;
 }
 

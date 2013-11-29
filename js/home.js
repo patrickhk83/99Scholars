@@ -32,7 +32,7 @@ $(function(){
 	$('#add-type-link').click(addType);
 	$('#add-country-link').click(addCountry);
 	
-	$('#category-option1').change(updateSearchResult);
+	$('#category-option1').change(updateCategory);
 	$('#type-option1').change(updateSearchResult);
 	$('#country-option1').change(updateSearchResult);
 	$('#accept-abstract').change(updateAcceptAbstract);
@@ -44,6 +44,22 @@ $(function(){
 
 
 });
+
+var updateCategory = function()
+{
+	var categories = new Array();
+
+	$('[id^=category-option] select').filter(function(){
+		return $(this).val() > 0;
+	}).each(function(index){
+		categories.push($(this).children("option").filter(":selected").text());
+	});
+
+	$('.category-container').show();
+	$('#categories').html(categories.join(', '));
+
+	updateSearchResult();
+}
 
 var addCategory = function() 
 {
@@ -61,7 +77,7 @@ var addCategory = function()
 	'</div>';
 	
 	$('#category-criteria').append(option);
-	$('#category-option' + categoryCount).change(updateSearchResult);
+	$('#category-option' + categoryCount).change(updateCategory);
 
 	showClearFilterButton();
 
@@ -71,7 +87,7 @@ var addCategory = function()
 function delCategory(catId) 
 {
 	$('#category-option' + catId).remove();
-	updateSearchResult();
+	updateCategory();
 }
 
 var addType = function() 
@@ -283,6 +299,7 @@ var clearFilter = function()
 
 	updateSearchResult();
 	hideClearFilterButton();
+	$('.category-container').hide();
 
 	return false;
 }

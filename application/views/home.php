@@ -12,7 +12,7 @@
                     <div id="category-option1">
                       <select class="form-control criteria-option">
                         <option value="0">Select Category</option>
-                        <option value="1">Technology</option>
+                        <!--option value="1">Technology</option-->
                         <option value="2">Linguistics</option>
                         <option value="3">Psychology</option>
                       </select>
@@ -21,7 +21,7 @@
                   <div class="add-criteria-link"><a href="#" id="add-category-link">Add more category</a></div>      
                 </li>
                 <li class="criteria-container"><h5>Call for abstract only <input type="checkbox" id="accept-abstract"/></h5></li>
-                <li><h5>Filter by Conference Date</h5></li>
+                <li><h5>Filter by Event Date</h5></li>
                 <li class="criteria-container">
                   <div class="form-group">
                     <input type="text" class="form-control datepicker criteria-option" placeholder="Start Date" id="start-date" data-date-format="dd/mm/yyyy">
@@ -38,9 +38,6 @@
                         <option value="0">Select Type</option>
                         <option value="1">Conference</option>
                         <option value="2">Seminar</option>
-                        <option value="3">Workshop</option>
-                        <option value="4">Webinar</option>
-                        <option value="5">Online Conference</option>
                       </select>
                     </div>
                   </div>
@@ -81,7 +78,7 @@
           <div class="row">
             <div class="col-lg-12">
               <div id="total-conference-display">
-                <h2><span id="total-display"><?php echo $total ?></span> Conferences found</h2> <span class="clear-filter-container">( <a href="#" id="clear-filter-btn">clear all filter</a> )</span>
+                <h2><span id="total-display"><?php echo $total ?></span> Conferences found</h2> <span class="category-container"> [ <span id="categories"></span> ]</span> <span class="clear-filter-container"> ( <a href="#" id="clear-filter-btn">clear all filter</a> )</span>
               </div>
             <div class="row">
 	            <div class="col-lg-12">
@@ -119,7 +116,7 @@
       <hr>
 
       <footer>
-        <p>&copy; Company 2013</p>
+        <p>&copy; 99Scholars 2013</p>
       </footer>
 
     </div><!--/.container-->
