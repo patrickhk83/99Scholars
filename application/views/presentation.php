@@ -8,10 +8,9 @@
           </p>
           <div class="row">
             <div class="col-lg-12">
-              <p><strong>17 September, 10:00AM - 11:00AM</strong></p>
-              <p><h2>Build and deploy your own Big Data distribution with Apache Bigtop</h2></p>
-              <p><strong>Speaker : </strong> <a href="<?php echo URL::site('user') ?>">Bruno Mahé</a></p>
-              <p><strong>Audience level:</strong> Intermediate</p>
+              <p><h2>Comparison of F0 profiles in Hong Kong Cantonese and Hong Kong English</h2></p>
+              <p><strong>Speaker : </strong> <a href="<?php echo URL::site('user') ?>">WEE Lian-Hee</a></p>
+              <p><strong>30 November, 09:00AM - 09:30AM</strong></p>
             </div><!--/span--> 
           </div><!--/row--> 
           <div class="row">
