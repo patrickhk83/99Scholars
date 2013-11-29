@@ -2,3 +2,5 @@ application/logs/
 shopabout/bootstrap.php
 .htaccess
 
+application/config/staging/
+application/config/production/
