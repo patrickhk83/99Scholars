@@ -89,7 +89,7 @@ class Service_Conference {
 				$has_condition = true;
 			}
 
-			$condition = $condition."('".$this->convert_date($start_date)."' >= c.start_date) ";
+			$condition = $condition."('".$this->convert_date($start_date)."' <= c.start_date) ";
 		}
 
 		if($this->has_value($end_date))
@@ -103,7 +103,7 @@ class Service_Conference {
 				$has_condition = true;
 			}
 
-			$condition = $condition."('".$this->convert_date($end_date)."' <= c.end_date) ";
+			$condition = $condition."('".$this->convert_date($end_date)."' >= c.end_date) ";
 		}
 
 		if($this->has_value($type))
