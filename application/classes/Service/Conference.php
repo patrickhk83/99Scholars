@@ -163,7 +163,7 @@ class Service_Conference {
 
 			$conference['id'] = $result['id'];
 			$conference['name'] = $result['name'];
-			$conference['duration'] = $this->to_readable_date($result['start_date'])." - ".$this->to_readable_date($result['end_date']);
+			$conference['duration'] = $this->render_duration($result['start_date'], $result['end_date']);
 			$conference['type'] = $this->get_type($result['type'])->get('name');
 			$conference['type_style'] = $this->get_type_style($conference['type']);
 			$conference['location'] = $this->get_venue_short_location($result['venue']);
@@ -269,7 +269,7 @@ class Service_Conference {
 		$model['city'] = $address->get('city');
 		$model['state'] = $address->get('state');
 		$model['postal_code'] = $address->get('postal_code');
-		$model['country'] = $this->get_country_name($address->get('country'));
+		$model['country'] = Model_Constants_Address::$countries[$address->get('country')];
 
 		return $model;
 	}
@@ -457,6 +457,18 @@ class Service_Conference {
 		//TODO: set data
 
 		$conf->delete();
+	}
+
+	protected function render_duration($start, $end)
+	{
+		$duration = $this->to_readable_date($start);
+
+		if(isset($end))
+		{
+			$duration .= " - ".$this->to_readable_date($end);
+		}
+
+		return $duration;
 	}
 
 	protected function convert_date($input)

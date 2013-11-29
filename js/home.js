@@ -39,7 +39,7 @@ $(function(){
 	$('#start-date').change(updateSearchResult);
 	$('#end-date').change(updateSearchResult);
 
-	hideClearFilterButton();
+	
 	$('#clear-filter-btn').click(clearFilter);
 
 
@@ -141,6 +141,7 @@ var updateAcceptAbstract = function()
 
 var updateSearchResult = function(page)
 {
+	showClearFilterButton();
 
 	console.log('typeof page: ' + typeof page);
 	//set optional parameter
@@ -246,17 +247,16 @@ function getAllCriteria(appendOther)
 
 function showClearFilterButton()
 {
-	$('#clear-filter-container').show();
+	$('.clear-filter-container').show();
 }
 
 function hideClearFilterButton()
 {
-	$('#clear-filter-container').hide();
+	$('.clear-filter-container').hide();
 }
 
 var clearFilter = function()
 {
-	hideClearFilterButton();
 
 	$('#category-criteria div:not(:first-child)').each(function(index){
 		$(this).remove();
@@ -282,6 +282,7 @@ var clearFilter = function()
 	$('#country-criteria select').val(0);
 
 	updateSearchResult();
+	hideClearFilterButton();
 
 	return false;
 }
