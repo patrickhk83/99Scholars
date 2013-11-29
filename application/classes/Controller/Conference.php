@@ -92,7 +92,10 @@ class Controller_Conference extends Controller {
 		$country = $this->request->query('country');
 		$page = $this->request->query('page');
 
-		$country = '\''.str_replace(',', '\',\'', $country).'\'';
+		if(!empty($country))
+		{
+			$country = '\''.str_replace(',', '\',\'', $country).'\'';	
+		}
 
 		if(!isset($page) || $page == '' || $page == 0)
 		{
