@@ -6,42 +6,19 @@
           <div class="well sidebar-nav">
             <form role="form">
               <ul class="nav">
-                <li><h5>Filter by Category</h5></li>
+                <li><h5>Filter by Subject</h5></li>
                 <li class="criteria-container">
                   <div id="category-criteria">
                     <div id="category-option1">
                       <select class="form-control criteria-option">
-                        <option value="0">Select Category</option>
+                        <option value="0">Select Subject</option>
                         <!--option value="1">Technology</option-->
                         <option value="2">Linguistics</option>
                         <option value="3">Psychology</option>
                       </select>
                     </div>
                   </div>
-                  <div class="add-criteria-link"><a href="#" id="add-category-link">Add more category</a></div>      
-                </li>
-                <li class="criteria-container"><h5>Call for abstract only <input type="checkbox" id="accept-abstract"/></h5></li>
-                <li><h5>Filter by Event Date</h5></li>
-                <li class="criteria-container">
-                  <div class="form-group">
-                    <input type="text" class="form-control datepicker criteria-option" placeholder="Start Date" id="start-date" data-date-format="dd/mm/yyyy">
-                  </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control datepicker criteria-option" placeholder="End Date" id="end-date" data-date-format="dd/mm/yyyy"/>
-                  </div>
-                </li>
-                <li><h5>Filter by Type</h5></li>
-                <li class="criteria-container">
-                  <div id="type-criteria">
-                    <div id="type-option1">
-                      <select class="form-control criteria-option">
-                        <option value="0">Select Type</option>
-                        <option value="1">Conference</option>
-                        <option value="2">Seminar</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="add-criteria-link"><a href="#" id="add-type-link">Add more type</a></div>
+                  <div class="add-criteria-link"><a href="#" id="add-category-link">Add more subject</a></div>      
                 </li>
                 <li><h5>Filter by Country</h5></li>
                 <li class="criteria-container">
@@ -56,6 +33,29 @@
                     </div>
                   </div>
                   <div class="add-criteria-link"><a href="#" id="add-country-link">Add more country</a></div>
+                </li>
+                <li><h5>Filter by Event Type</h5></li>
+                <li class="criteria-container">
+                  <div id="type-criteria">
+                    <div id="type-option1">
+                      <select class="form-control criteria-option">
+                        <option value="0">Select Type</option>
+                        <option value="1">Conference</option>
+                        <option value="2">Seminar</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="add-criteria-link"><a href="#" id="add-type-link">Add more event type</a></div>
+                </li>
+                <li class="criteria-container"><h5>Call for abstract only <input type="checkbox" id="accept-abstract"/></h5></li>
+                <li><h5>Filter by Event Date</h5></li>
+                <li class="criteria-container">
+                  <div class="form-group">
+                    <input type="text" class="form-control datepicker criteria-option" placeholder="Start Date" id="start-date" data-date-format="dd/mm/yyyy">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control datepicker criteria-option" placeholder="End Date" id="end-date" data-date-format="dd/mm/yyyy"/>
+                  </div>
                 </li>
               </ul>
             </form>

@@ -67,7 +67,7 @@ var addCategory = function()
 	var option = '<div id="category-option' + categoryCount + '">' +
 		'<div class="form-inline">' +
 			'<select class="form-control criteria-option">' +
-				'<option value="0">Select Category</option>' +
+				'<option value="0">Select Subject</option>' +
 				'<option value="1">Technology</option>' +
 				'<option value="2">Linguistics</option>' +
 				'<option value="3">Psychology</option>' +
