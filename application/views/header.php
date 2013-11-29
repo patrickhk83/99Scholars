@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Conference Submission - 99Scholars</title>
+    <title>Expand your network through conferences - 99Scholars</title>
 
     <!-- Bootstrap core CSS -->
     <?php echo HTML::style('css/bootstrap.min.css') ?>
