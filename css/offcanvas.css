@@ -136,6 +136,10 @@ label.error {
   color:red;
 }
 
+.clear-filter-container {
+    display: none;
+}
+
 /*
  * Off Canvas
  * --------------------------------------------------
