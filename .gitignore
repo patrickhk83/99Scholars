@@ -2,3 +2,4 @@ application/logs/
 shopabout/bootstrap.php
 .htaccess
 application/cache/
+.DS_Store
