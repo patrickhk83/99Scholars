@@ -10,7 +10,8 @@
             <div class="col-lg-12">
               <p><h2>Comparison of F0 profiles in Hong Kong Cantonese and Hong Kong English</h2></p>
               <p><strong>Speaker : </strong> <a href="<?php echo URL::site('user') ?>">WEE Lian-Hee</a></p>
-              <p><strong>30 November, 09:00AM - 09:30AM</strong></p>
+              <p><strong>30 November, 09:00AM - 09:30AM</strong><br>
+              4/F, Lee Shau Kee Building, Hong Kong Polytechnic University<br>Hong Kong, Hong Kong <span class="text-muted">(<a href="http://maps.google.com/maps?q=Hong Kong Polytechnic University" target="_blank">view map</a>)</span></p>
             </div><!--/span--> 
           </div><!--/row--> 
           <div class="row">
