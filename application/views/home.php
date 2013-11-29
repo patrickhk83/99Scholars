@@ -69,16 +69,16 @@
 
           <div class="panel panel-default">
             <div class="panel-body">
-              <h5>Submit your conference today!</h5>
-              <p>Have a conference? With 99Scholars, your conference will be recognized by more people around the world.</p>
-              <p><a href="<?php echo URL::site('conference/submit') ?>"><button type="button" class="btn btn-primary btn-sm">Submit conference</button></a></p>
+              <h5>Submit your academic event today!</h5>
+              <p>Have a conference or seminar? WIth 99Scholars, your academic event will be recognized by more people around the world.</p>
+              <p><a href="<?php echo URL::site('conference/submit') ?>"><button type="button" class="btn btn-primary btn-sm">Submit an academic event</button></a></p>
             </div>
           </div>
 
           <div class="row">
             <div class="col-lg-12">
               <div id="total-conference-display">
-                <h2><span id="total-display"><?php echo $total ?></span> Conferences found</h2> <span class="category-container"> [ <span id="categories"></span> ]</span> <span class="clear-filter-container"> ( <a href="#" id="clear-filter-btn">clear all filter</a> )</span>
+                <h2><span id="total-display"><?php echo $total ?></span> Events found</h2> <span class="category-container"> [ <span id="categories"></span> ]</span> <span class="clear-filter-container"> ( <a href="#" id="clear-filter-btn">clear all filter</a> )</span>
               </div>
             <div class="row">
 	            <div class="col-lg-12">
