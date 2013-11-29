@@ -20,4 +20,11 @@ class Model_CategoryConference extends ORM {
 	        )
 	    );
 	}
+
+	protected $_belongs_to = array(
+    	'conference_category' => array(
+        	'model'       => 'ConferenceCategory',
+        	'foreign_key' => 'category',
+    	),
+	);
 }

@@ -45,8 +45,12 @@
             
             <div class="tab-content">
               <div class="tab-pane fade active attachment-content" id="info">
-              	<p><h4>Description</h4></p>
-              	<p><?= $conference->description ?></p>
+                <h4>Event Type</h4>
+                <p><?= $conference->conference_type->name ?></p>
+                <h4>Cateogry</h4>
+                <p><?= $conference->category->conference_category->name ?></p>
+              	<!--p><h4>Description</h4></p>
+              	<p><?= $conference->description ?></p-->
               	<p><h4>Abstract</h4></p>
               	<p><?= $conference->seminar->abstract ?></p>
               </div>
@@ -175,7 +179,7 @@
       <hr>
 
       <footer>
-        <p>&copy; Company 2013</p>
+        <p>&copy; 99Scholars 2013</p>
       </footer>
 
     </div><!--/.container-->
