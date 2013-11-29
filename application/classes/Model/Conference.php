@@ -28,6 +28,10 @@ class Model_Conference extends ORM {
         	'model'       => 'ConferenceType',
         	'foreign_key' => 'type',
     	),
+    	'conference_venue' => array(
+        	'model'       => 'Venue',
+        	'foreign_key' => 'venue',
+    	),
 	);
 	public function rules()
 	{
@@ -75,5 +79,10 @@ class Model_Conference extends ORM {
 				array('trim')
 			),
 		);
+	}
+
+	public function get_start_date()
+	{
+		return Util_Date::to_readable_date($this->start_date);
 	}
 }

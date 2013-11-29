@@ -16,7 +16,7 @@
               </div><!--/row-->
               <div class="row">
                   <div class="col-lg-8">
-                    <p><strong><?= $conference->start_date ?></strong><br><strong><?= Util_Date::time_elapsed($conference->created_date).' ago' ?></strong> <span class="text-muted">(<a href="#">view map</a>)</span></p>
+                    <p><strong><?= $conference->get_start_date() ?>, <?= $conference->seminar->get_time_duration() ?></strong><br><strong><?= $conference->conference_venue->venue_address->get_short_location() ?></strong> <span class="text-muted">(<a href="#">view map</a>)</span></p>
                   </div><!--span-->
                   <div class="col-lg-4">
                     <p class="text-right">
