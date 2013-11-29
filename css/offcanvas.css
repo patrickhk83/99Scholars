@@ -45,6 +45,7 @@ td.time {
 }
 
 .attachment-content {
+  margin-top: 10px;
 	padding-left: 10px;
 }
 
@@ -136,7 +137,7 @@ label.error {
   color:red;
 }
 
-.clear-filter-container {
+.clear-filter-container, .category-container {
     display: none;
 }
 

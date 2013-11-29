@@ -22,4 +22,23 @@ class Model_Seminar extends ORM {
 	        ),
 	    );
 	}
+
+	protected $_belongs_to = array(
+    	'organizer' => array(
+        	'model'       => 'Organization',
+        	'foreign_key' => 'university',
+    	),
+	);
+
+	public function get_time_duration()
+	{
+		$duration = date("h:i A", $this->start_time);
+
+		if($this->end_time > 0)
+		{
+			$duration .= " - ".date("h:i A", $this->end_time);
+		}
+
+		return $duration;
+	}
 }

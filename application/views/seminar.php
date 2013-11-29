@@ -16,7 +16,9 @@
               </div><!--/row-->
               <div class="row">
                   <div class="col-lg-8">
-                    <p><strong><?= $conference->start_date ?></strong><br><strong><?= Util_Date::time_elapsed($conference->created_date).' ago' ?></strong> <span class="text-muted">(<a href="#">view map</a>)</span></p>
+                    <p><strong><?= $conference->get_start_date() ?>, <?= $conference->seminar->get_time_duration() ?></strong><br>
+                      <?= $conference->conference_venue->venue_address->address ?>, <?= $conference->seminar->organizer->name ?><br>
+                      <?= $conference->conference_venue->venue_address->get_short_location() ?> <span class="text-muted">(<a href="http://maps.google.com/maps?q=<?= $conference->seminar->organizer->name ?>" target="_blank">view map</a>)</span></p>
                   </div><!--span-->
                   <div class="col-lg-4">
                     <p class="text-right">
@@ -45,8 +47,19 @@
             
             <div class="tab-content">
               <div class="tab-pane fade active attachment-content" id="info">
-              	<p><h4>Description</h4></p>
-              	<p><?= $conference->description ?></p>
+                <div class="row">
+                    <div class="col-lg-9">
+                        <h4>Event Type</h4>
+                        <p><?= $conference->conference_type->name ?></p>
+                        <h4>Cateogry</h4>
+                        <p><?= $conference->category->conference_category->name ?></p>
+                    </div><!--span-->
+                    <div class="col-lg-3 share-btn-container">
+                      <div class="well well-sm"><p><strong>share with :</strong> <a href="https://www.facebook.com/sharer/sharer.php?u=<?= URL::site(Request::detect_uri(),true)  ?>" target="_blank">Facebook</a> | <a href="http://twitter.com/intent/tweet?url=<?= URL::site(Request::detect_uri(),true)  ?>" target="_blank">Twitter</a></p>  </div>
+                    </div><!--span-->
+                </div><!--/row-->
+              	<!--p><h4>Description</h4></p>
+              	<p><?= $conference->description ?></p-->
               	<p><h4>Abstract</h4></p>
               	<p><?= $conference->seminar->abstract ?></p>
               </div>
@@ -101,7 +114,7 @@
             </div><!--/span--> 
           </div><!--/row-->
           <div class="row attachment-content">
-              <div class="col-lg-12">
+              <div class="col-lg-2">
               	 <p>
                   <?php if($is_attended) { ?>
                     <a href="#"><button type="button" class="btn btn-info cancel-book-btn">Cancel booking</button></a>
@@ -175,7 +188,7 @@
       <hr>
 
       <footer>
-        <p>&copy; Company 2013</p>
+        <p>&copy; 99Scholars 2013</p>
       </footer>
 
     </div><!--/.container-->

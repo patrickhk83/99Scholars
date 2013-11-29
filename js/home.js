@@ -32,7 +32,7 @@ $(function(){
 	$('#add-type-link').click(addType);
 	$('#add-country-link').click(addCountry);
 	
-	$('#category-option1').change(updateSearchResult);
+	$('#category-option1').change(updateCategory);
 	$('#type-option1').change(updateSearchResult);
 	$('#country-option1').change(updateSearchResult);
 	$('#accept-abstract').change(updateAcceptAbstract);
@@ -45,13 +45,29 @@ $(function(){
 
 });
 
+var updateCategory = function()
+{
+	var categories = new Array();
+
+	$('[id^=category-option] select').filter(function(){
+		return $(this).val() > 0;
+	}).each(function(index){
+		categories.push($(this).children("option").filter(":selected").text());
+	});
+
+	$('.category-container').show();
+	$('#categories').html(categories.join(', '));
+
+	updateSearchResult();
+}
+
 var addCategory = function() 
 {
 	categoryCount++;
 	var option = '<div id="category-option' + categoryCount + '">' +
 		'<div class="form-inline">' +
 			'<select class="form-control criteria-option">' +
-				'<option value="0">Select Category</option>' +
+				'<option value="0">Select Subject</option>' +
 				'<option value="1">Technology</option>' +
 				'<option value="2">Linguistics</option>' +
 				'<option value="3">Psychology</option>' +
@@ -61,7 +77,7 @@ var addCategory = function()
 	'</div>';
 	
 	$('#category-criteria').append(option);
-	$('#category-option' + categoryCount).change(updateSearchResult);
+	$('#category-option' + categoryCount).change(updateCategory);
 
 	showClearFilterButton();
 
@@ -71,7 +87,7 @@ var addCategory = function()
 function delCategory(catId) 
 {
 	$('#category-option' + catId).remove();
-	updateSearchResult();
+	updateCategory();
 }
 
 var addType = function() 
@@ -166,6 +182,15 @@ var updateSearchResult = function(page)
 			var total = $('#total-search-result').val();
 			console.log('page: ' + page + ", total:" + total);
 			$('#total-display').html(total);
+
+			if(total > 2)
+			{
+				$('#event-text').html('Events found');
+			}
+			else
+			{
+				$('#event-text').html('Event found');
+			}
 		}
 
 		$('#conf-list').infinitescroll({
@@ -283,6 +308,7 @@ var clearFilter = function()
 
 	updateSearchResult();
 	hideClearFilterButton();
+	$('.category-container').hide();
 
 	return false;
 }

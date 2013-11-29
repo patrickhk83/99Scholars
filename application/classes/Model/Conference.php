@@ -22,11 +22,19 @@ class Model_Conference extends ORM {
         	'model'       => 'Seminar',
         	'foreign_key' => 'conference',
     	),
+    	'category' => array(
+        	'model'       => 'CategoryConference',
+        	'foreign_key' => 'conference',
+    	),
 	);
 	protected $_belongs_to = array(
     	'conference_type' => array(
         	'model'       => 'ConferenceType',
         	'foreign_key' => 'type',
+    	),
+    	'conference_venue' => array(
+        	'model'       => 'Venue',
+        	'foreign_key' => 'venue',
     	),
 	);
 	public function rules()
@@ -75,5 +83,10 @@ class Model_Conference extends ORM {
 				array('trim')
 			),
 		);
+	}
+
+	public function get_start_date()
+	{
+		return Util_Date::to_readable_date($this->start_date);
 	}
 }

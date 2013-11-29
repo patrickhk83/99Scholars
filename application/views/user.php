@@ -129,7 +129,7 @@
                     	    	      <table class="table table-striped">
                     	    	      	<tbody>
                     	    	      	  <tr>
-                    	    	      	  	<td>Chu, P.  Aspectual Asymmetries in the Mental Representation of Events: Role of Lexical and Grammatical Aspect. <em>Memory and Cognition</em>, 37, 5, 587-595.</td>
+                    	    	      	  	<td>Yap, F. H., Chu, P. C. K., Yiu, S. M. E., Wong, F. S., Kwan, W. M. S., Matthews, S., Tan, L. H., Li, P., &amp; Shirai, Y.  Aspectual Asymmetries in the Mental Representation of Events: Role of Lexical and Grammatical Aspect. <em>Memory and Cognition</em>, 37, 5, 587-595.</td>
                     	    	      	  </tr>
                     	    	      	  
                     	    	      	</tbody>
@@ -403,7 +403,7 @@
       <hr>
 
       <footer>
-        <p>&copy; Company 2013</p>
+        <p>&copy; 99Scholars 2013</p>
       </footer>
 
     </div><!--/.container-->

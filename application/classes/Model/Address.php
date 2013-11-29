@@ -28,4 +28,20 @@ class Model_Address extends ORM {
 	        ),
 	    );
 	}
+
+	public function get_short_location()
+	{
+		$location;
+
+		if(isset($this->state) && trim($this->state) !== '')
+		{
+			$location = $this->state;
+		}
+		else
+		{
+			$location = $this->city;
+		}
+
+		return $location.", ".Model_Constants_Address::$countries[$this->country];
+	}
 }

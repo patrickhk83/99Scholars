@@ -20,4 +20,11 @@ class Model_Venue extends ORM {
 	        )
 	    );
 	}
+
+	protected $_belongs_to = array(
+    	'venue_address' => array(
+        	'model'       => 'Address',
+        	'foreign_key' => 'address',
+    	),
+	);
 }
