@@ -269,7 +269,7 @@ class Service_Conference {
 		$model['city'] = $address->get('city');
 		$model['state'] = $address->get('state');
 		$model['postal_code'] = $address->get('postal_code');
-		$model['country'] = $this->get_country_name($address->get('country'));
+		$model['country'] = Model_Constants_Address::$countries[$address->get('country')];
 
 		return $model;
 	}
