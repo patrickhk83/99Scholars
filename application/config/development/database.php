@@ -21,7 +21,7 @@ return array
 			'hostname'   => '127.0.0.1',
 			'database'   => '99scholars',
 			'username'   => 'root',
-			'password'   => 'rootww',
+			'password'   => 'root',
 			'persistent' => FALSE,
 		),
 		'table_prefix' => '',

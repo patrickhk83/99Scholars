@@ -104,7 +104,7 @@ if (isset($_SERVER['KOHANA_ENV']))
  */
 Kohana::init(array(
 	'index_file' => FALSE,
-		'kopauth'=>'/kopauth/',
+		'kopauth'=>'/',
 ));
 
 /**
@@ -115,8 +115,10 @@ Kohana::init(array(
 /**
  * Attach a file reader to config. Multiple readers are supported.
  */
+// Kohana::$config->attach();
 Kohana::$config->attach(new Config_File);
-
+Kohana::$config->attach(new Config_File('config/'.$_SERVER['KOHANA_ENV']));
+// echo DEBUG::vars(new Config_File('config/'.$_SERVER['KOHANA_ENV']));exit;
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
@@ -136,7 +138,7 @@ Kohana::modules(array(
 	));
 
 Cookie::$salt = 'foobar';
-
+// echo DEBUG::vars(Kohana::$config);exit;
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
