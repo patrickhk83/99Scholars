@@ -18,7 +18,7 @@ return array(
      * eg. if Opauth is reached via http://example.org/auth/, path is '/auth/'
      * if Opauth is reached via http://auth.example.org/, path is '/'
      */
-    'path' => '/kopauth/authenticate/',
+    'path' => '/signup/plugin/',
     
     /**
      * Callback transport, for sending of $auth response
@@ -43,8 +43,8 @@ return array(
      * )
      */
     'Strategy' => array('Facebook' => array(
-            'app_id'     => '634052986634265',
-            'app_secret' => '4f54537cff3430a86627eb1c7860f3af',
+            'app_id'     => '696633580355851',
+            'app_secret' => '07b08ed882e42275a140a27e03ada9be',
         ),
 		'Google' => array(
             'client_id'     => '1038568618403.apps.googleusercontent.com',

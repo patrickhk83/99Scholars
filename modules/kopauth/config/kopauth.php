@@ -18,7 +18,7 @@ return array(
      * eg. if Opauth is reached via http://example.org/auth/, path is '/auth/'
      * if Opauth is reached via http://auth.example.org/, path is '/'
      */
-    'path' => '/kopauth/authenticate/',
+    'path' => '/signup/plugin/',
     
     /**
      * Callback transport, for sending of $auth response

@@ -6,7 +6,7 @@ class Controller_Home extends Controller {
 	{
 
 		$view = View::factory('home');
-
+		
 		$user_id = Service_Login::get_user_in_session();
 
 		//list conference
