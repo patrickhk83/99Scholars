@@ -89,65 +89,7 @@ class Controller_Blogmanager extends Controller {
 		$this->response->body ( $example );
 	}
 	
-	public function action_example3(){
-		$view = View::factory ( 'example3' );
-		
-		$crud = new Crud ();
-		
-		$crud->table ( 'articles' );
-		$crud->tableAlias ( 'Articles manager' );
-		
-		$crud->theme ( 'bootstrap01' );
-		
-		$crud->autoType ( true );
-		$crud->addNoCol ( true );
-		
-		$crud->alias ( 'id', 'Id' )
-			->alias ( 'category_id', 'Category' )
-			->alias ( 'article_title', 'Title' )
-			->alias ( 'article_date', 'date	' )
-			->alias ( 'image', 'Image' )
-			->alias ( 'article_summary', 'Summary' )
-			->alias ( 'article_content', 'Content' );
-		
-		$crud->search ( 'all' );
-		$crud->cols ( array (
-				'article_title',
-				'category_id',
-				'article_date',
-				'article_summary' 
-		) );
-		
-		$crud->colWith ( 'article_title', 200 );
-		$crud->colWith ( 'category_id', 80 );
-		$crud->colWith ( 'article_date', 80 );
-		
-		$crud->colAlign ( 'category_id', 'center' );
-		$crud->colAlign ( 'article_date', 'center' );
-		
-		$crud->type ( 'article_title', 'text', array (
-				'class' => 'span6' 
-		) );
-		$crud->type ( 'image', 'image', DOCROOT . '/media/images', 'large', 500, 700 );
-		$crud->type ( 'article_summary', 'editor' );
-		$crud->type ( 'article_content', 'editor', array (
-				'height' => '400' 
-		) );
-		
-		$options = getCategories ();
-		$crud->type ( 'category_id', 'selectbox', $options );
-		
-		$crud->validate ( 'article_title', 'required' );
-		
-		$crud->order ( 'article_title', 'acs' );
-		
-		$html = $crud->fetch ();
-		
-		$view->bind ( 'html', $html );
-		
-		$example = $view->render ();
-		$this->response->body ( $example );
-	}
+
 }
 
 function getCategories() {
