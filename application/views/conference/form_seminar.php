@@ -1,20 +1,20 @@
 <div class="form-group">
   <label for="conf-name">Seminar's Name</label>
-  <input type="text" class="form-control" id="conf-name" placeholder="Enter name of the conference" name="name"/>	
+  <input type="text" class="form-control required" id="conf-name" placeholder="Enter name of the conference" name="name"/>	
 </div>
 
 <div class="form-group">
   <label>Date</label>
   <div class="form-inline">
     <div class="form-group">
-      <input type="text" class="form-control datepicker" id="start-date" placeholder="22/09/2013" name="start_date" data-date-format="dd/mm/yyyy"/>
+      <input type="text" class="form-control datepicker required" id="start-date" placeholder="22/09/2013" name="start_date" data-date-format="dd/mm/yyyy"/>
     </div>
   </div>
 </div>
 
 <div class="form-group">
   <label>Speaker</label>
-  <input type="text" class="form-control" name="speaker">
+  <input type="text" class="form-control required" name="speaker">
 </div>
 
 <div class="form-group">
@@ -44,7 +44,7 @@
 
 <div class="form-group">
   <label>Organizer</label>
-  <input type="text" class="form-control" id="organizer-name" placeholder="Name of the organizer" name="organizer"/>
+  <input type="text" class="form-control required" id="organizer-name" placeholder="Name of the organizer" name="organizer"/>
 </div>
 
 <div class="form-group">
@@ -58,8 +58,8 @@
       <div id="category1">
         <div class="form-inline">
           <div class="form-group">
-          	<select class="form-control category-option" name="category[option1]">
-          	  <option>Choose Conference's Category</option>
+          	<select class="form-control category-option required" name="category[option1]">
+          	  <option value="">Choose Conference's Category</option>
           	  <option value="1">Technology</option>
           	  <option value="2">Linguistics</option>
           	  <option value="3">Psychology</option>
@@ -76,10 +76,10 @@
 
 <div class="form-group">
   <label>Contact Person</label>
-  <input type="text" class="form-control" id="contact-person" placeholder="Name of contact person" name="contact_person"/>
+  <input type="text" class="form-control required" id="contact-person" placeholder="Name of contact person" name="contact_person"/>
 </div>
 
 <div class="form-group">
   <label>Contact Email</label>
-  <input type="email" class="form-control" id="contact-email" placeholder="Email for contact" name="contact_email"/>
+  <input type="email" class="form-control required" id="contact-email" placeholder="Email for contact" name="contact_email"/>
 </div>

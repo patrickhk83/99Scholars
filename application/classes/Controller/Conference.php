@@ -74,6 +74,11 @@ class Controller_Conference extends Controller {
 			
 			if(Service_Login::is_login())
 			{
+
+				$validation = Validation::factory($this->request->post());
+				$validation->filter(TRUE, 'trim');
+				$validation->rule('name', 'not_empty');
+
 				//save conference data to database
 				$conf_service = new Service_Conference();
 				$id = $conf_service->create($this->request->post());
@@ -177,5 +182,93 @@ class Controller_Conference extends Controller {
 		$view = View::factory('conference/form_'.$conf_type);
 
 		$this->response->body($view);
+	}
+	public function _create_conference($conference)
+	{
+
+		$address = ORM::factory('Address')
+					->values(
+						$conference,
+						array(
+							'address',
+							'city',
+							'state',
+							'postal_code',
+							'country'))
+					->create();
+
+		$address_id = $address->pk();
+
+		$venue = ORM::factory('Venue');
+		$venue->name = $conference['venue_name'];
+		$venue->address = $address_id;
+		$venue->save();
+
+		$venue_id = $venue->pk();
+
+		$conference['venue'] = $venue_id;
+
+		$organizer = ORM::factory('Organization');
+		$organizer->name = $conference['organizer'];
+		$organizer->save();
+
+		$org_id = $organizer->pk();
+		$conference['organizer'] = $org_id;
+
+		$conference['start_date'] = $this->convert_date($conference['start_date']);
+
+		if($conference['type'] == 1)
+		{
+			$conference['end_date'] = $this->convert_date($conference['end_date']);
+			$conference['deadline'] = $this->convert_date($conference['deadline']);
+			$conference['accept_notify'] = $this->convert_date($conference['accept_notify']);
+		}
+
+		$conf = ORM::factory('Conference')
+				->values(
+					$conference, 
+					array(
+						'name',
+						'start_date',
+						'end_date',
+						'description',
+						'organizer',
+						'website',
+						'type',
+						'deadline',
+						'contact_person',
+						'contact_email',
+						'accept_notify',
+						'venue'))
+				->create();
+
+		$conf_id = $conf->pk();
+
+		if($conference['type'] == 1)
+		{
+			$regis = ORM::factory('Registration');
+			$regis->start_date = $this->convert_date($conference['regis_start']);
+			$regis->end_date = $this->convert_date($conference['regis_end']);
+			$regis->conference_id = $conf_id;
+			$regis->save();
+		}
+
+		$categories = $conference['category'];
+
+		foreach ($categories as $category) 
+		{
+			$cat_conf = ORM::factory('CategoryConference');
+			$cat_conf->conference = $conf_id;
+			$cat_conf->category = $category;
+			$cat_conf->save();
+		}
+
+		//TODO: separate type of conference
+		if($conference['type'] == 2)
+		{
+			$this->create_seminar($conf_id, $conference);
+		}
+
+		return $conf_id;
 	}
 }
