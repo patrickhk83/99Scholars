@@ -26,8 +26,8 @@ class Controller_Blogmanager extends Controller {
 		
 		$view->bind ( 'html', $html );
 		
-		$example = $view->render ();
-		$this->response->body ( $example );
+		$category = $view->render ();
+		$this->response->body ( $category );
 	}
 	
 	public function action_articlemanager() {
@@ -85,10 +85,9 @@ class Controller_Blogmanager extends Controller {
 		
 		$view->bind ( 'html', $html );
 		
-		$example = $view->render ();
-		$this->response->body ( $example );
+		$article = $view->render ();
+		$this->response->body ( $article );
 	}
-	
 
 }
 
