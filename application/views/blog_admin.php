@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Kohana CRUD - Data Management System</title>
+<title>99Scholars blog admin</title>
 
  <?php echo HTML::style("media/bootstrap/css/bootstrap.css"); ?>
  <?php echo HTML::style("media/bootstrap/css/bootstrap-responsive.css"); ?>
