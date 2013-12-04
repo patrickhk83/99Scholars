@@ -9,6 +9,7 @@ class Model_Article extends ORM {
 			'model'			=> 'comment',
 			'foreign_key'	=> 'article_id',
 		),
+		protected $has_one = array('categories' => array('model' => 'category_name', 'foreign_key' => 'category_id' ) );
 	);
 	
 	/**

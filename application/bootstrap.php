@@ -106,6 +106,7 @@ Kohana::init(array(
 	'base_url'   => '/99scholars/',
 	'index_file' => FALSE,
 		'kopauth'=>'/kopauth/',
+		
 ));
 
 /**
@@ -133,6 +134,7 @@ Kohana::modules(array(
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	'pagination' => MODPATH.'pagination', // Paging of results
 	'kopauth'	=> MODPATH.'kopauth',
+	'crud'  => MODPATH.'crud',
 	));
 
 Cookie::$salt = 'foobar';
