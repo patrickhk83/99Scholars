@@ -4,7 +4,7 @@
 	    <div class="col-lg-4">
 	      <div class="add-profile-form">
 	      	<form role="form" id="journal-form">
-	      		<input type="hidden" name="has_coauthor" value="0">
+	      		<!--<input type="hidden" name="has_coauthor" value="0">-->
 	      	  	<div class="form-group">
 				    <label for="journal-title">Title</label>
 				    <input type="text" class="form-control" id="journal-title" name="title">
@@ -12,6 +12,11 @@
 				<div class="form-group">
 				    <label for="journal">Journal</label>
 				    <input type="text" class="form-control" id="journal" name="journal">
+				</div>
+				<input type="button" value="Add author" id="add_bttn" style="float: right;position: absolute;right: -80px;margin-top: 28px;">
+				<div class="form-group" id="add-input-box">
+				    <label for="co-author">co-author</label>
+				    <input type="text" class="form-control" name="has_coauthor1">
 				</div>
 				<div class="form-group">
 				    <label for="journal-status">Journal Status</label>
