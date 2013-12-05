@@ -53,8 +53,6 @@ class Dao_Journal {
 
 
 		return $query->execute();
-		
-		//print_r($query);
 	}
 	
 	public function insert_list($id,$value)
