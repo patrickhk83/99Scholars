@@ -66,7 +66,20 @@
               <div class="tab-pane fade active attachment-content" id="video">
               	<div class="row">
               	    <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
-              	      <div class="flex-video"><br/><iframe width="560" height="315" src="http://www.youtube.com/embed/DqekY0Yga4o?rel=0" frameborder="0" allowfullscreen></iframe></div>
+              	      <br>
+			<button type="button" class="btn btn-default" id="add-video-btn">Add video</button>
+			<br><br>
+              	      <div class="" id="flex-video">
+			<?php
+			if(!empty($videos)){
+				foreach($videos as $videoid)
+				{
+					?><div id="<?php echo $videoid?>"><iframe width="560" height="315" src="http://www.youtube.com/embed/<?php echo $videoid?>?rel=0&controls=1" frameborder="0" allowfullscreen></iframe><p class="text-right" onclick="deletevideo('<?php echo $event?>','<?php echo $videoid?>');"><a href="#">delete</a></p></div>
+					<?php
+				}
+			}
+			?>
+					  </div>
               	    </div><!--span-->
               	</div><!--/row-->
               </div>
@@ -203,5 +216,15 @@
     <?php echo HTML::script('js/offcanvas.js') ?>
     <?php echo HTML::script('js/jquery-ui.js') ?>
     <?php echo HTML::script('js/seminar.js') ?>
+	
+	<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-describedby="video-upload-container" style="position: absolute; height: auto; width: 600px; top: 268px; left: 376px; display: none;" aria-labelledby="ui-id-1"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-1" class="ui-dialog-title">Add YouTube's video</span><button class="ui-dialog-titlebar-close"></button></div><div id="video-upload-container" class="ui-dialog-content ui-widget-content" style="display: block; width: auto; min-height: 88px; max-height: none; height: auto;">
+                       <form role="form" class="form-inline" id="form-video">
+                        <div class="form-group">
+                          <input type="text" class="form-control" placeholder="YouTube Video's id" name="videoid"> 
+                        </div>
+                        <div class="form-group"><button type="button" class="btn btn-default" id="add_video">Add</button></div>
+                        <p class="help-block">If video's url is http://www.youtube.com/watch?v=abcd123, the id is "abcd123"</p>
+                       </form>
+                     </div><div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-sw" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90;"></div></div>
   </body>
 </html>
