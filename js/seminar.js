@@ -20,6 +20,8 @@ $(function(){
 	});
 
 	$('#add-topic-btn').on('click', addTopic);
+	
+	$( "#add-video-btn" ).click(opendialog);
 
 	$('#back-topic-link').on('click', function(){
 		$('#topic-detail').empty();
@@ -104,6 +106,39 @@ var cancelBooking = function(e)
 
 
 	return false;
+}
+
+var opendialog = function(e)
+{
+	$("#video-upload-container").dialog({
+			modal: true,
+			width: 600
+		});
+	$( "#add_video" ).click(function( e ) {
+		uploadvideo();
+		e.stopImmediatePropagation();
+	      });
+}
+
+function uploadvideo() {
+	var confId = $('#conf-id').val();
+	var url = baseConfUrl + 'upload/' + confId;
+	var data = $('#form-video').serialize()+"&type=video";
+		$("#video-upload-container").dialog('close');
+	
+	$.post(url, data, function(response){
+		var content = '<div id="'+response.videoid+'"><iframe width="560" height="315" src="http://www.youtube.com/embed/'+response.videoid+'?rel=0" frameborder="0" allowfullscreen></iframe><p class="text-right" onclick="deletevideo(\''+confId+'\',\''+response.videoid+'\');"><a href="#">delete</a></p></div>';
+		$("#flex-video").append(content);
+	});
+}
+
+function deletevideo(confid,videoid) {
+	var url = baseConfUrl + 'delete/' + confid;
+	var data = "videoid="+videoid;
+	
+	$("#"+videoid).remove();
+	$.post(url, data, function(response){
+	});
 }
 
 var addTopic = function()
