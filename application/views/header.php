@@ -45,7 +45,7 @@
 
           <?php if(!Service_Login::is_login()) { ?>
 
-            <form class="navbar-form navbar-right" action="<?php echo URL::site('login') ?>" method="post">
+            <form class="navbar-form navbar-right" action="<?php echo URL::site('login/email') ?>" method="post">
               <div class="form-group">
                 <input type="text" placeholder="Email" class="form-control" name="email">
               </div>

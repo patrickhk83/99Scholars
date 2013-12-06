@@ -83,16 +83,6 @@ class Controller_Signup extends Controller {
             ->set('data', $data)
             ->render());
     }
-
-    public function action_plugin()
-    {
-        $strategy = $this->request->param('strategy');
-        $data = Kopauth::instance()->get_authenticated($strategy);
-
-        echo DEBUG::vars($strategy);
-        echo DEBUG::vars($data);
-        exit;
-    }
     
     /**
      * Destroy session data for a provider
