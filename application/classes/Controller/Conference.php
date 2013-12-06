@@ -46,6 +46,21 @@ class Controller_Conference extends Controller {
 						$view->is_attended = TRUE;
 					}
 				}
+				
+				$Video_dao = new Dao_Video();
+				$Video = $Video_dao->get_video_list($user_id);
+				if($Video){
+				foreach ($Video as $result1)
+				{
+					echo "==".$result1->get('youtube_id')."==";
+					$videoids[] = $result1->get('youtube_id');
+					$eventids[] = $result1->get('event');
+				}
+				if(!empty($videoids)){
+				$view->videos = $videoids;
+				$view->event = $eventids[0];
+				}
+				}
 
 				$this->response->body($view);
 			}
@@ -152,6 +167,44 @@ class Controller_Conference extends Controller {
 		$user_service->cancel_booking($user_id, $conf_id);
 
 		$result['id'] = $user_id;
+
+		//TODO: create super controller to support ajax function
+		$this->response->headers('Content-Type', 'application/json; charset=utf-8');
+		$this->response->body(json_encode($result));
+	}
+	
+	public function action_upload()
+	{
+		$conf_id = $this->request->param('id');
+		$type = $_REQUEST['type'];
+		$videoid = $_REQUEST['videoid'];
+		$user_id = Service_Login::get_user_in_session();
+		
+		$result['id'] = $user_id;
+		$result['confid'] = $conf_id;
+		$result['type'] = $type;
+		$result['videoid'] = $videoid;
+
+		$user_service = new Service_User();
+		$user_service->add_upload($user_id, $conf_id, $videoid, $type);
+
+		//TODO: create super controller to support ajax function
+		$this->response->headers('Content-Type', 'application/json; charset=utf-8');
+		$this->response->body(json_encode($result));
+	}
+	
+	public function action_delete()
+	{
+		$conf_id = $this->request->param('id');
+		$videoid = $_REQUEST['videoid'];
+		$user_id = Service_Login::get_user_in_session();
+		
+		$result['id'] = $user_id;
+		$result['confid'] = $conf_id;
+		$result['videoid'] = $videoid;
+
+		$user_service = new Service_User();
+		$user_service->add_delete($user_id, $conf_id, $videoid);
 
 		//TODO: create super controller to support ajax function
 		$this->response->headers('Content-Type', 'application/json; charset=utf-8');
