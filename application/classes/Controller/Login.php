@@ -39,7 +39,7 @@ class Controller_Login extends Controller {
 	protected function authenticate_by_email($email, $password)
 	{
 		$user = ORM::factory('User')->where('email', '=', $email)->find();
-		if($user->way !== 'email')
+		if($user->provider !== 'email')
 		{
 			return false;
 		}

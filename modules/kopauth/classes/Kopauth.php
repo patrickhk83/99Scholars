@@ -190,6 +190,7 @@ class Kopauth extends Opauth
         }
         else if( ! $strategy_url_name)
         {
+         
             foreach ($auth_session as $session)
             {
                 // Check for an actual user id
@@ -205,9 +206,30 @@ class Kopauth extends Opauth
      */
     public function store_authenticated()
     {
-        $auth_session = $this->session->get($this->session_key);       
-        $auth_session[$this->_response['auth']['provider']] = $this->_response['auth'];
-        $this->session->set($this->session_key, $auth_session);
+        $user = ORM::factory('User')
+                    ->where('email', '=', $this->_response['auth']['info']['email'])
+                    ->find();
+        
+        if(!$user->loaded())
+        {
+            $user->sign_up_oauth($this->_response['auth']);
+        }
+        elseif ($user->loaded() AND $user->provider !== $this->_response['auth']['provider'])
+        {
+            $this->_response = array(
+                    'error' => array(
+                        'provider' => $this->_response['auth']['provider'],
+                        'code'     => 'email_in_use',
+                        'message'  => 'this email "' . $this->_response['auth']['info']['email'] . '"" is already in use'
+                    ),
+                    'timestamp' => date('c')
+                );
+            return false;
+        }
+
+        $session = Session::instance();
+        $session->set('login', 'true');
+        $session->set('user', $user->id);
     }
     
     /**
@@ -237,6 +259,7 @@ class Kopauth extends Opauth
         }
         else if( ! $strategy_url_name)
         {
+            
             if ( ! empty($auth_session))
             {
                 return $auth_session;

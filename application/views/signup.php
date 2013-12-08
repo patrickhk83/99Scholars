@@ -39,7 +39,7 @@
                 {
                     $is_authenticated = $kopauth->is_authenticated($strategy['strategy_url_name']);
                     
-                    $auth_route = URL::site(Route::get('kopauth')->uri(array(
+                    $auth_route = URL::site(Route::get('opauth')->uri(array(
                         'action'   => 'authenticate',
                         'strategy' => $strategy['strategy_url_name']))
                     );
@@ -57,7 +57,7 @@
                     echo '<div class="col-lg-2"><p>';
                     if ($is_authenticated)
                     {
-                        $sessiondata_route = URL::site(Route::get('kopauth')->uri(array(
+                        $sessiondata_route = URL::site(Route::get('opauth')->uri(array(
                             'action'   => 'sessiondata',
                             'strategy' => $strategy['strategy_url_name']))
                         );
@@ -70,7 +70,7 @@
                     echo '<div class="col-lg-2"><p>';
                     if ($is_authenticated)
                     {
-                        $logout_route = URL::site(Route::get('kopauth')->uri(array(
+                        $logout_route = URL::site(Route::get('opauth')->uri(array(
                             'action'   => 'logout',
                             'strategy' => $strategy['strategy_url_name']))
                         );

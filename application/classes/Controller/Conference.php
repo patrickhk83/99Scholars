@@ -46,7 +46,7 @@ class Controller_Conference extends Controller {
 						$view->is_attended = TRUE;
 					}
 				}
-
+				
 				$this->response->body($view);
 			}
 			else

@@ -22,11 +22,16 @@ class Model_User extends ORM {
         	'model'       => 'UserDegree',
         	'foreign_key' => 'user',
     	),
+    	'contact' => array(
+        	'model'       => 'UserContact',
+        	'foreign_key' => 'user',	
+    	),
+    	'oauth' => array(
+        	'model'       => 'UserOauth',
+    	),
 	);
 	public function get_fullname()
 	{
-
-		// echo $this->firstname.' '.$this->lastname;exit;
 		return $this->firstname.' '.$this->lastname;
 	}
 
@@ -40,6 +45,33 @@ class Model_User extends ORM {
 		if(!empty($degree_name)) return $degree_name;
 
 		return '';
+	}
+
+	public function is_oauth_user($email, $provider)
+	{
+		$result = $this
+					->where('email', '=', $email)
+					->find();
+
+		return ($result->loaded()) ? ($result->provider == $provider) : false;
+	}
+
+	public function sign_up_oauth($info)
+	{
+		$user['firstname'] = $info['info']['first_name'];
+		$user['lastname'] = $info['info']['last_name'];
+		$user['email'] = $info['info']['email'];
+		$user['provider'] = $info['provider'];
+		$this->values($user)->create();
+
+		$contact['user'] = $this->pk();
+		$contact['email'] = $info['info']['email'];
+		$this->contact->values($contact)->create();
+
+		$oauth['user_id'] = $this->pk();
+		$oauth['uid'] = $info['uid'];
+		$oauth['token'] = $info['credentials']['token'];
+		$this->oauth->values($oauth)->create();
 	}
 
 }

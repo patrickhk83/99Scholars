@@ -157,6 +157,12 @@ Route::set('create', 'new/<controller>')
 			return FALSE;
 		}
 	});
+	
+Route::set('opauth', 'oauth(/<action>(/<strategy>(/<callback>)))')
+    ->defaults(array(
+        'controller' => 'signup',
+        'action'     => 'authenticate',
+    ));
 
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
@@ -172,3 +178,5 @@ Route::set('conference', '(<controller>(/<action>(/<id>(/<session>(/<session_id>
 	->defaults(array(
 		'action'     => 'index',
 	));
+
+
