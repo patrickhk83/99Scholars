@@ -206,6 +206,7 @@ class Kopauth extends Opauth
      */
     public function store_authenticated()
     {
+        
         $user = ORM::factory('User')
                     ->where('email', '=', $this->_response['auth']['info']['email'])
                     ->find();

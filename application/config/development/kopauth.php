@@ -48,12 +48,13 @@ return array(
             'scope'      => 'email'
         ),
 		'Google' => array(
-            'client_id'     => '1038568618403.apps.googleusercontent.com',
-            'client_secret' => 'R0AzXKi41RXNswdjcWAWhNRE',
+            'client_id'     => '672254205331-hga902e5c0uvr8odb1neec9tsp9528o5.apps.googleusercontent.com',
+            'client_secret' => '1TnFFDMLCjROR2s9UN6_jnU0',
         ),
 		'Linkedin' => array(
-            'api_key'     => 'rwlcp9jpx9lj',
-            'secret_key' => 'CiGy2aaD1y9pnxmD',
+            'api_key'     => '75qcilf8p7fwpq',
+            'secret_key' => 'BNhIMIZI9qdFOUJr',
+            'scope' => 'r_emailaddress',
         ),
         // Define strategies and their respective configs here
     ),
