@@ -1,14 +1,30 @@
-<?php defined('SYSPATH') or die('No direct script access.'); ?>
- <div id="content">   <h2><span>Blog</span></h2>
-    <div class="blog clearfix" >
-        <div id="left-side" class="float-left" >
-		
-		  <?php foreach($art as $article): ?> 
+<?php include Kohana::find_file('views', 'header') ?>
+
+      <div class="row row-offcanvas row-offcanvas-right">
+      
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+          <div class="well sidebar-nav">
+           <div class="blog-categories">
+            <div class="b-title">Categories</div>
+            <ul>
+              <li> <?php foreach($category as $cat): ?> <a href="#">  <?php echo $cat->category_name; ?></a> <?php endforeach; ?></li> </ul>
+          </div>  
+			
+	         </div><!--/.well -->
+        </div><!--/span-->
+        
+        <div class="col-xs-12 col-sm-9">
+            <div class="row">
+            <div class="col-lg-12">
+            
+        <div id="left-side"  >
+              
+			    <?php foreach($art as $article): ?> 
           <div class="blog-post">
  
             <div class="blog-title clearfix"><a href="blog-post.html"><?php echo HTML::anchor("article/view/".$article->id, $article->article_title); ?></a><p class="float-right">Posted by: <span>Admin</span></p></div>
             <div class="blog-prew">
-              <iframe src="<?php echo $article->image; ?>" width="666" height="285"></iframe>
+              <iframe src="<?php echo $article->image; ?>" width="100%" height="285"></iframe>
             </div>
             <div class="blog-prew-shadow"><!-- --></div>
             <div class="blog-options clearfix">
@@ -32,33 +48,27 @@
               
             </div>
           </div>
-             </div>
-				
-
-				
-               
-        <div id="right-side" class="float-left" >
-          
-          <!-- #End // Start blog categories -->
-           <div class="blog-categories">
-            <div class="b-title">Categories</div>
-            <ul>
-              <li> <?php foreach($category as $cat): ?> <a href="#">  <?php echo $cat->category_name; ?></a> <?php endforeach; ?></li> </ul>
-          </div>
-          <!-- #End // Start hot property -->
-         
-          <!-- #End // Archive -->
-      
-          <!-- #End // Stay informed -->
-          <div class="b-stay-informed">
-            <div class="b-title">Stay informed</div>
-            <div class="content">
-              <p>Don't worry, We don't spam ever!</p>
-              <form name="newsletter" enctype="multipart/form-data" class="clearfix">
-                <input type="text" name="email" class="newsletter-input" value="Enter your email here">
-                <input type="submit" name="submit" value="" class="newsletter-submit" />
-              </form>
+			  
+          </div><!--/span-->
             </div>
-          </div>
-        </div></div>   
-     </div> 
+          </div><!--/row-->
+        </div><!--/span-->
+
+      </div><!--/row-->
+
+
+    </div><!--/.container-->
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/offcanvas.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/jquery.infinitescroll.min.js"></script>
+  </body>
+</html>
