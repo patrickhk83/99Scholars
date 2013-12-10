@@ -21,13 +21,13 @@
 	
 			 <div class="blog-post">
             <div class="blog-options clearfix">
-              <div class="b-posted float-left">Posted on: <span>24.11.2012</span></div>
-              <div class="b-category float-left">Category: <a href="#">Selling Apartments</a></div>
-              <div class="b-comments float-left"><a href="#">62 comments</a></div>
-              <div class="b-views float-left"><span>211 views</span></div>
-            </div>
-            <div class="blog-prew"><a href="images/blog/1.jpg" title=""><img src="images/blog/1.jpg" alt="" title="" /></a></div>
-            <div class="blog-prew-shadow"><!-- --></div>
+              <div class="b-posted float-left">Posted on: <span><?php echo $article->article_date; ?></span></div>
+			  <div class="b-category float-left">Category: <a href="#"><?php echo $article->category->category_name; ?> </a></div>
+              <div class="b-comments float-left"><a href="#"><?php echo $article->comments->count_all();?> comments</a></div>
+             </div>
+            <div class="blog-prew">
+              <iframe src="<?php echo $article->image; ?>" width="100%" height="285"></iframe>
+            </div> <div class="blog-prew-shadow"><!-- --></div>
             <div class="blog-desc">
            <?php echo $article->article_content; ?>
 		   </div>
@@ -35,7 +35,7 @@
 
           
             <div class="post-comments">
-              <div class="comments-title">4 comments</div>
+              <div class="comments-title"><?php echo $article->comments->count_all();?>  comments</div>
 			  <?php foreach ($article->comments->find_all() as $comment) : ?>
 		<!-- showing a single comment -->
 		<?php echo View::factory('comment/single', array('comment'=>$comment)); ?>

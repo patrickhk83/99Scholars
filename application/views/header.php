@@ -39,7 +39,7 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="<?php echo URL::site('') ?>">Home</a></li>
             <li><a href="#about">About</a></li>
-			<li><?php echo HTML::anchor("/Article", "Blog"); ?></li>
+			<li><?php echo HTML::anchor("blogarticles", "Blog"); ?></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
 
