@@ -131,39 +131,7 @@ class Service_User {
 		$atten_dao = new Dao_Attendee();
 		$atten_dao->delete($user, $conferemce);
 	}
-
-	public function add_upload($user,$conference,$dataid,$type)
-	{
-		switch($type) {
-			case 'video': 
-				$this->update_video($user,$conference,$dataid);
-				break;
-		}
-	}
 	
-	public function update_video($userid,$conf_id,$video_id)
-	{
-		$video = ORM::factory('Video');
-
-		$video->created_by = $userid;
-		$video->event = $conf_id;
-		$video->youtube_id = $video_id;
-
-		$video->save();
-		return $video->pk();
-	}
-	
-	public function add_delete($user_id, $conf_id, $videoid)
-	{
-		$query = DB::delete('event_video')
-					->where('youtube_id', '=', $videoid)
-					->where('event', '=', $conf_id)
-					->where('created_by', '=', $user_id);
-
-		$query->execute();
-		
-	}
-
 	public function encrypt_password($password)
 	{
 		return md5($password);
