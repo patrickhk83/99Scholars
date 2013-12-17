@@ -110,7 +110,7 @@ class Controller_Conference extends Controller {
 						$view->photos = $photo_name;
 					}
 				}
-
+				
 				$this->response->body($view);
 			}
 			else

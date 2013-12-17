@@ -18,7 +18,7 @@ return array(
      * eg. if Opauth is reached via http://example.org/auth/, path is '/auth/'
      * if Opauth is reached via http://auth.example.org/, path is '/'
      */
-    'path' => '/signup/plugin/',
+    'path' => '/oauth/authenticate/',
     
     /**
      * Callback transport, for sending of $auth response
@@ -45,14 +45,16 @@ return array(
     'Strategy' => array('Facebook' => array(
             'app_id'     => '696633580355851',
             'app_secret' => '07b08ed882e42275a140a27e03ada9be',
+            'scope'      => 'email'
         ),
 		'Google' => array(
-            'client_id'     => '1038568618403.apps.googleusercontent.com',
-            'client_secret' => 'R0AzXKi41RXNswdjcWAWhNRE',
+            'client_id'     => '672254205331-hga902e5c0uvr8odb1neec9tsp9528o5.apps.googleusercontent.com',
+            'client_secret' => '1TnFFDMLCjROR2s9UN6_jnU0',
         ),
 		'Linkedin' => array(
-            'api_key'     => 'rwlcp9jpx9lj',
-            'secret_key' => 'CiGy2aaD1y9pnxmD',
+            'api_key'     => '75qcilf8p7fwpq',
+            'secret_key' => 'BNhIMIZI9qdFOUJr',
+            'scope' => 'r_emailaddress',
         ),
         // Define strategies and their respective configs here
     ),

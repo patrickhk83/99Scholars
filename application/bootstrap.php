@@ -77,6 +77,21 @@ if (isset($_SERVER['SERVER_PROTOCOL']))
 }
 
 /**
+ * Set the environment status by the domain.
+ */
+if (strpos($_SERVER['HTTP_HOST'], '99scholars.net') !== FALSE)
+{
+    $_SERVER['KOHANA_ENV'] = 'production';
+ 
+    // Turn off notices and strict errors
+    error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
+}
+else
+{
+	$_SERVER['KOHANA_ENV'] = 'development';
+}
+
+/**
  * Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.
  *
  * Note: If you supply an invalid environment name, a PHP warning will be thrown
@@ -103,6 +118,7 @@ if (isset($_SERVER['KOHANA_ENV']))
  * - boolean  expose      set the X-Powered-By header                        FALSE
  */
 Kohana::init(array(
+	'base_url' => '/99scholars',
 	'index_file' => FALSE,
 		'kopauth'=>'/',
 ));
@@ -157,6 +173,12 @@ Route::set('create', 'new/<controller>')
 			return FALSE;
 		}
 	});
+	
+Route::set('opauth', 'oauth(/<action>(/<strategy>(/<callback>)))')
+    ->defaults(array(
+        'controller' => 'signup',
+        'action'     => 'authenticate',
+    ));
 
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
@@ -172,3 +194,5 @@ Route::set('conference', '(<controller>(/<action>(/<id>(/<session>(/<session_id>
 	->defaults(array(
 		'action'     => 'index',
 	));
+
+
