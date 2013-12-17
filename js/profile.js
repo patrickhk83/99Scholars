@@ -82,6 +82,34 @@ var bookEnabler = function()
 	}
 }
 
+var projectEnabler = function()
+{
+	var container = $('#project-container');
+	
+	if($('#project-check').is(':checked'))
+	{
+		container.show(400);
+	}
+	else
+	{
+		container.hide(400);
+	}
+}
+
+var presentationEnabler = function()
+{
+	var container = $('#presentation-container');
+	
+	if($('#presentation-check').is(':checked'))
+	{
+		container.show(400);
+	}
+	else
+	{
+		container.hide(400);
+	}
+}
+
 var loadEventTab = function()
 {
 	if(!isEventLoaded)
@@ -122,6 +150,7 @@ var loadProjectTab = function()
 		$.get(url, function(data){
 			$('#project').html(data);
 			isProjectLoaded = true;
+			$('#project-check').change(projectEnabler);
 		});
 	}
 }
@@ -135,6 +164,7 @@ var loadPresentationTab = function()
 		$.get(url, function(data){
 			$('#presentation').html(data);
 			isPresentationLoaded = true;
+			$('#presentation-check').change(presentationEnabler);
 		});
 	}
 }

@@ -47,6 +47,70 @@ class Controller_Conference extends Controller {
 					}
 				}
 				
+				$view->id = $id;
+				$view->userid = $user_id;
+				$Video_dao = new Dao_Video();
+				$Video = $Video_dao->get_video_list($user_id,$id);
+				
+				if($Video){
+					
+					
+					$j = 0;
+					foreach ($Video as $result1)
+					{
+						$Video_name[$j]['videoid'] = $result1->get('youtube_id');
+						$Video_name[$j]['users'] = $result1->get('created_by');
+						$j++;
+					}
+					
+					if(!empty($Video_name)){
+						$view->videos = $Video_name;
+					}
+				}
+				
+				$File_dao = new Dao_File();
+				$File = $File_dao->get_all_file_list($id);
+				
+				if($File){
+					$i = 0;
+					foreach ($File as $result1)
+					{
+						$file_name[$i]['name'] = $result1->get('file_name');
+						$file_name[$i]['desc'] = $result1->get('description');
+						$file_name[$i]['users'] = $result1->get('created_by');
+						if($result1->get('size')/1048576 >1 ){
+							$bytes = number_format($result1->get('size') / 1048576, 2) . ' MB';
+							$file_name[$i]['size'] = $bytes;
+						}else {
+							$bytes = number_format($result1->get('size') / 1024, 2) . ' KB';
+							$file_name[$i]['size'] = $bytes;
+						}
+						$i++;
+					}
+					if(!empty($file_name)){
+						$view->files = $file_name;
+					}
+				}
+				
+				$Photo_dao = new Dao_Photo();
+				$Photo = $Photo_dao->get_all_photo_list($id);
+				
+				if($Photo){
+					$i = 0;
+					foreach ($Photo as $result1)
+					{
+						$photo_name[$i]['name'] = $result1->get('photo_name');
+						$photo_name[$i]['desc'] = $result1->get('caption');
+						$photo_name[$i]['users'] = $result1->get('created_by');
+						$bytes = number_format($result1->get('size') / 1024, 2) . ' KB';
+						$photo_name[$i]['size'] = $bytes;
+						$i++;
+					}
+					if(!empty($photo_name)){
+						$view->photos = $photo_name;
+					}
+				}
+				
 				$this->response->body($view);
 			}
 			else
@@ -156,6 +220,129 @@ class Controller_Conference extends Controller {
 		//TODO: create super controller to support ajax function
 		$this->response->headers('Content-Type', 'application/json; charset=utf-8');
 		$this->response->body(json_encode($result));
+	}
+	
+	public function action_upload()
+	{
+		$conf_id = $this->request->param('id');
+		$type = $_REQUEST['type'];
+		
+		$user_id = Service_Login::get_user_in_session();
+		
+		switch($type) {
+			case 'video': 
+				$videoid = $_REQUEST['videoid'];
+				$result['videoid'] = $videoid;
+				
+				$user_service = new Dao_Video();
+				$user_service->add_upload_video($user_id, $conf_id, $videoid);
+				break;
+			
+			/*case 'file':
+				$filename = $_REQUEST['name'];
+				$filename = rtrim($filename, "|");
+				$filetype = $_REQUEST['filetype'];
+				$filetype = rtrim($filetype, "|");
+				$filesize = $_REQUEST['size'];
+				$filesize = rtrim($filesize, "|");
+				$result['filename'] = $filename;
+				$result['filetype'] = $filetype;
+				$result['filesize'] = $filesize;
+				
+				$user_service = new Dao_File();
+				$user_service->add_upload_file($user_id, $conf_id, $filename, $filetype, $filesize);
+				break;*/
+		}
+		
+		$result['id'] = $user_id;
+		$result['confid'] = $conf_id;
+		$result['type'] = $type;
+
+		//TODO: create super controller to support ajax function
+		$this->response->headers('Content-Type', 'application/json; charset=utf-8');
+		$this->response->body(json_encode($result));
+	}
+	
+	public function action_delete()
+	{
+		$conf_id = $this->request->param('id');
+		$type = $_REQUEST['type'];
+		
+		$user_id = Service_Login::get_user_in_session();
+		
+		switch($type) {
+			case 'video': 
+				$videoid = $_REQUEST['videoid'];
+				$user_service = new Dao_Video();
+				$user_service->add_delete($user_id, $conf_id, $videoid);
+				$result['videoid'] = $videoid;
+				break;
+			
+			case 'file':
+				$filename = $_REQUEST['filename'];
+				$user_service = new Dao_File();
+				$user_service->delete_upload_file($user_id, $conf_id, $filename);
+				$result['filename'] = $filename;
+				break;
+			
+			case 'photo':
+				$photoname = $_REQUEST['photoname'];
+				$user_service = new Dao_Photo();
+				$user_service->delete_upload_photo($user_id, $conf_id, $photoname);
+				$result['filename'] = $photoname;
+				break;
+		}
+		
+		$result['id'] = $user_id;
+		$result['confid'] = $conf_id;
+		
+		//TODO: create super controller to support ajax function
+		$this->response->headers('Content-Type', 'application/json; charset=utf-8');
+		$this->response->body(json_encode($result));
+	}
+	
+	public function action_update()
+	{
+		$conf_id = $this->request->param('id');
+		$type = $_REQUEST['type'];
+		$user_id = Service_Login::get_user_in_session();
+		
+		switch($type) {
+			case 'file':
+				$filename = $_REQUEST['filename'];
+				$desc = $_REQUEST['desc'];
+				$user_service = new Dao_File();
+				$user_service->update_file($user_id, $conf_id, $filename, $desc);
+				break;
+			
+			case 'photo':
+				$photoname = $_REQUEST['photoname'];
+				$desc = $_REQUEST['desc'];
+				$user_service = new Dao_Photo();
+				$user_service->update_photo($user_id, $conf_id, $photoname, $desc);
+				break;
+		}
+		
+	}
+	
+	public function action_uploadfile()
+	{
+		$conf_id = $_POST["hidden"];
+		$desc = $_POST["filedesc"];
+		$user_service = new Service_File();
+		$result = $user_service->upload_multiple_file($_FILES['file'],"$conf_id",$conf_id,$desc);
+			
+		$this->redirect('/conference/view/'.$conf_id, 302);
+	}
+	
+	public function action_uploadphoto()
+	{
+		$conf_id = $_POST["hidden1"];
+		$desc = $_POST["photodesc"];		
+		$user_service1 = new Service_Photo();
+		$result = $user_service1->upload_multiple_photo($_FILES['file'],"conference-$conf_id",$conf_id,$desc);
+		
+		$this->redirect('/conference/view/'.$conf_id, 302);
 	}
 
 	public function action_form()

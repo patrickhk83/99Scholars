@@ -132,4 +132,32 @@ class Controller_Profile extends Controller {
 			echo 'ok';
 		}
 	}
+	
+	public function action_delete()
+	{
+		if(HTTP_Request::POST == $this->request->method())
+		{
+			$update_type = $this->request->param('id');
+
+			$profile_service = new Service_UserProfile();
+			$profile_service->delete($update_type, $this->request->post());
+
+			//TODO: return status in json format
+			echo 'ok';
+		}
+	}
+
+	public function action_select()
+	{
+		if(HTTP_Request::POST == $this->request->method())
+		{
+			$update_type = $this->request->param('id');
+
+			$profile_service = new Service_UserProfile();
+			$profile_service->select($update_type, $this->request->post());
+
+			//TODO: return status in json format
+			echo 'ok';
+		}
+	}
 }
