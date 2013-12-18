@@ -65,9 +65,9 @@
                     	          <div class="col-lg-3 col-md-3">
                     	            <div class="well contact-info">
                     	              <p class="contact-head"><strong>Contact Information</strong></p>
-                    	              <p class="contact-text"><span><img src="/99scholars/img/caller.png"></span>852-51373793 <br>
-                                         <span><img src="/99scholars/img/message.png"></span>patrick@99scholars.net<br>
-                                         <span><img src="/99scholars/img/web.png"></span><a href="http://patrickchu.net/" target="_blank">http://patrickchu.net/</a></p>
+                    	              <p class="contact-text"><span><img src="img/caller.png"></span>852-51373793 <br>
+                                         <span><img src="img/message.png"></span>patrick@99scholars.net<br>
+                                         <span><img src="img/web.png"></span><a href="http://patrickchu.net/" target="_blank">http://patrickchu.net/</a></p>
                     	              <br>
                     	            </div><!--well-->
                     	            <!--div class="well">

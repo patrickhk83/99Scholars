@@ -367,6 +367,7 @@ background: #614bb6;
     transition: background-color 0.3s ease 0s;
     -webkit-transition: background-color 0.3s ease 0s;
 }
+
 .follow-btn:hover,.follow-btn:focus{
     background-color: #5f862b;
     border:none;
@@ -407,15 +408,15 @@ background: #614bb6;
 .follow-section2{
     padding-left: 10px;
 }
-#profile-tab{
+#profile-tab,#attachment-tab{
     border-color: #433288;
     border-width: 2px;
 }
-#profile-tab li a{
+#profile-tab li a,#attachment-tab li a{
     border:none;
     margin-right: 0px;
 }
-#profile-tab li{
+#profile-tab li, #attachment-tab li{
     background-color: rgb(67, 50, 136);
     margin:0px 3px;
     border:2px solid rgb(67, 50, 136);
@@ -426,19 +427,19 @@ background: #614bb6;
     outline: none;
     margin-bottom: -2px;
 }
-#profile-tab li a:active,#profile-tab li a:focus{
+#profile-tab li a:active,#profile-tab li a:focus, #attachment-tab li a:active, #attachment-tab li a:focus{
     border:none;
     color:rgb(67, 50, 136);
     background-color: #fff;
     outline: none;
 }
-#profile-tab li a:hover{
+#profile-tab li a:hover,#attachment-tab li a:hover{
     background-color: #fff;
     color: #1e124e;
     transition: all 0.3s ease 0s;
     -webkit-transition: all 0.3s ease 0s;
 }
-.profile-content h4{
+.profile-content h4, .attachment-content h4{
     color:#434343;
     background-image: url(../img/grey_bg.png);
     border:1px solid #d7d7d7;
@@ -446,7 +447,7 @@ background: #614bb6;
     font-size: 20px;
     padding: 3px 10px;
 }
-.profile-content p{
+.profile-content p, .attachment-content p{
     color:#434343;
     padding: 6px 10px;
 }
@@ -480,4 +481,85 @@ background: #614bb6;
 }
 .conf-date,.conf-book{
     padding-top: 15px;
+}
+/*======================================================================Seminar=================================================*/
+.attend-btn{
+    background-color: #75a535;
+    border:none;
+    font-family: 'futura_light_btmedium';
+    font-size: 20px;
+    transition: background-color 0.3s ease 0s;
+    -webkit-transition: background-color 0.3s ease 0s;
+}
+.attend-btn:hover,.attend-btn:focus{
+    background-color: #5f862b;
+    border:none;
+    transition: background-color 0.3s ease 0s;
+    -webkit-transition: background-color 0.3s ease 0s;
+}
+.seminar p h2{
+    font-family: ;
+}
+.seminar p{
+    font-family: arial;
+    font-size: 16px;
+}
+.seminar p a{
+    color:  #433288;
+}
+.seminardate{
+    background: url("../img/grey_bg.png");
+    border:1px solid #d7d7d7;
+    padding: 2px 4px;
+}
+.locationimg{
+    padding: 5px 5px;
+}
+.seminarloc{
+    font-family: arial;
+    color:#868686;
+}
+.share-btn-container{
+    padding: 10px 35px;
+    margin-bottom: 10px;
+}
+.share-box{
+    background: url("../img/grey_bg.png");
+    border:1px solid #d7d7d7;
+}
+.share-box p{
+    color:#433288;
+    font-size: 24px;
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+}
+.form-group input, .form-group textarea{
+    background: linear-gradient(to bottom, rgb(255, 255, 255) 0%, rgb(246, 246, 246) 100%) repeat scroll 0% 0% transparent;
+}
+.form-group input:focus, .form-group textarea:focus{
+    box-shadow: none;
+    border: 1px solid rgb(204, 204, 204);
+}
+.topic-btn{
+    background-color: #433288;
+    border:none;
+    transition: background-color 0.3s ease 0s;
+    -webkit-transition: background-color 0.3s ease 0s;
+    padding:5px 25px;
+    margin-top:5px;
+}
+.topic-btn:hover,.topic-btn:focus,.topic-btn:active{
+    background-color: rgb(36, 23, 88);
+}
+.attendee-table tr:nth-of-type(even) {
+    background: url(../img/grey_bg.png);
+    margin: 0px;
+    padding: 0px;
+}
+.photos p a{
+    color: #433288;
+}
+#file li a{
+    color: #433288;
 }
