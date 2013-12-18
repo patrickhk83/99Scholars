@@ -26,15 +26,17 @@
   </head>
 
   <body>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
     <input type="hidden" id="base-url" value="<?php echo URL::site('') ?>">
     <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
       <div class="nav-logo">
         <div class="container">
-          <span class="fleft"><img src="img/logo-<?php $imgname=basename($_SERVER['PHP_SELF']); echo preg_replace('/\.php$/', '', $imgname);?>.png"></span>
+          <span class="fleft"><img src="../img/logo-<?php $imgname=basename($_SERVER['PHP_SELF']); echo preg_replace('/\.php$/', '', $imgname);?>.png"></span>
           <ul class="social-icons">
-            <li><a href=""><img src="img/fb.png"></a></li>
-            <li><a href=""><img src="img/twitter.png"></a></li>
-            <li><a href=""><img src="img/linkedin.png"></a></li>
+            <li><a href=""><img src="../img/fb.png"></a></li>
+            <li><a href=""><img src="../img/twitter.png"></a></li>
+            <li><a href=""><img src="../img/linkedin.png"></a></li>
           </ul>   
           <div class="clearfix"></div>
         </div>
@@ -59,17 +61,26 @@
 
           <?php if(!Service_Login::is_login()) { ?>
 
-            <form class="navbar-form navbar-right" action="<?php echo URL::site('login/email') ?>" method="post">
-              <!--<div class="form-group">
+            <!--<form class="navbar-form navbar-right" action="<?php echo URL::site('login/email') ?>" method="post">
+              <div class="form-group">
                 <input type="text" placeholder="Email" class="form-control" name="email">
               </div>
               <div class="form-group">
                 <input type="password" placeholder="Password" class="form-control" name="password">
               </div>-->
+            <div class="header-login">
               <a href="<?php echo URL::site('signup') ?>"><button type="button" class="btn btn-default signup-button">Register</button></a>
-              <button type="submit" class="btn btn-success signin-button">Sign in</button>
-            </form>
-
+              <a class="btn btn-success signin-button dropdown-toggle" href="#" data-toggle="dropdown">Sign In</a>
+              <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+                <form style="margin: 0px" accept-charset="UTF-8" action="<?php echo URL::site('login/email') ?>" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="4L/A2ZMYkhTD3IiNDMTuB/fhPRvyCNGEsaZocUUpw40=" /></div>
+                   <fieldset class='textbox' style="padding:10px">
+                     <input style="margin-top: 8px" type="text" placeholder="Username" />
+                     <input style="margin-top: 8px" type="password" placeholder="Passsword" />
+                     <input class="btn-primary" name="commit" type="submit" value="Log In" />
+                   </fieldset>
+                 </form>
+              </div>  
+            </div>
             <?php } else { ?>
 
             <div class="navbar-form navbar-right">

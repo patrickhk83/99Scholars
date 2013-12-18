@@ -9,16 +9,30 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="row">
-                <div class="col-lg-2 col-md-2"><img src="img/001.jpg" class="img-rounded"/></div><!--span-->
+                <div class="col-lg-2 col-md-2"><img src="../img/001.jpg" class="img-rounded"/></div><!--span-->
                 <div class="col-lg-8 col-md-8">
-                	<h3>Patrick Chu</h3>
-                	<p><span class="text-muted">Ph.D., Psychology, University of New South Wales, 2013</span><br>
-                	<span class="glyphicon glyphicon-envelope"></span> <span class="glyphicon glyphicon-globe"></span> <span class="glyphicon glyphicon-phone"></span></p>
+                	<h3 class="user-name">Patrick Chu</h3>
+                	<p><span class="user-desig">Ph.D., Psychology, University of New South Wales, 2013</span><br>
+                	<span><img class="loc" src="../img/location.png"></span><span class="user-desig">Hongkong, Hongkong SAR</span></p>
                 </div><!--span-->
                 <div class="col-lg-2 col-md-2">
-                	<p><br></p>
-                	<p><button class="btn btn-success btn-block">Follow</button></p>
-                	<p><button class="btn btn-default btn-block">Send Message</button></p>
+                	<!--<p><br></p>-->
+                    <div class="row">
+                        <div class="col-lg-6 follow-section">
+                            <p class="follow-count">15</p>
+                            <p class="follow-name">Publications</p>
+                            <p class="follow-count">4</p>
+                            <p class="follow-name">Presentations</p>
+                        </div>
+                        <div class="col-lg-6 follow-section2">
+                             <p class="follow-count">28</p>
+                            <p class="follow-name">Projects</p>
+                            <p class="follow-count">118</p>
+                            <p class="follow-name">Following</p>
+                        </div>    
+                    </div>    
+                	<p><button class="btn btn-success btn-block follow-btn">Follow</button></p>
+                	<p><button class="btn btn-default btn-block message-btn">Send Message</button></p>
                 </div>
               </div>
               <div class="row">
@@ -38,7 +52,7 @@
                     	<div class="row">
                     	    <div class="col-lg-12">
                     	      <div class="row">
-                    	          <div class="col-lg-8 col-md-8">
+                    	          <div class="col-lg-9 col-md-9">
                     	          	<h4>Qualifications</h4>
                     	          	<p>Ph.D., Psychology, University of New South Wales, 2013 <br>
                     	          	B.A., Linguistics, Chinese University of Hong Kong, 2006<br><br>
@@ -48,14 +62,13 @@
                     	            <h4>Recent Publications</h4>
                     	            <p></p>
                     	          </div><!--span-->
-                    	          <div class="col-lg-4 col-md-4">
-                    	            <div class="well">
-                    	              <p><strong>Contact Information</strong></p>
-                    	              <p>Tel: 852-51373793 <br>
-                                        Fax: <br>
-                                        Email: patrick@99scholars.net<br>
-                                        Website: <a href="http://patrickchu.net/" target="_blank">http://patrickchu.net/</a></p>
-                    	              <br><br><br>
+                    	          <div class="col-lg-3 col-md-3">
+                    	            <div class="well contact-info">
+                    	              <p class="contact-head"><strong>Contact Information</strong></p>
+                    	              <p class="contact-text"><span><img src="/99scholars/img/caller.png"></span>852-51373793 <br>
+                                         <span><img src="/99scholars/img/message.png"></span>patrick@99scholars.net<br>
+                                         <span><img src="/99scholars/img/web.png"></span><a href="http://patrickchu.net/" target="_blank">http://patrickchu.net/</a></p>
+                    	              <br>
                     	            </div><!--well-->
                     	            <!--div class="well">
                     	            	<p><strong>Other Affiliations</strong></p>
@@ -75,31 +88,31 @@
                               
                               <div class="row conf-list">
                                 <div class="col-lg-12">
-                                  <div class="row">
+                                  <div class="row conf-row">
                                     <div class="col-lg-8">
                                       <p><strong><a href="<?php echo URL::site('seminar') ?>">4th Global Conference: Performance: Visual Aspects of Performance Practice</a></strong> <br/> Oxford, United Kingdom</p>
                                     </div>
                                     <!--div class="col-lg-2"><button type="button" class="btn btn-primary btn-xs">Conference</button></div-->
-                                    <div class="col-lg-2">19 Sep 2013</div>
-                                    <div class="col-lg-2"><a class="btn btn-info btn-block" href="#">Book</a></div>
+                                    <div class="col-lg-2 conf-date">19 Sep 2013</div>
+                                    <div class="col-lg-2 conf-book"><a class="btn btn-info btn-block book-btn" href="#">Book</a></div>
                                   </div><!--/row-->
                                   
-                                  <div class="row">
+                                  <div class="row conf-row">
                                     <div class="col-lg-8">
                                       <p><strong><a href="<?php echo URL::site('seminar') ?>">The Best in Heritage 2013</a></strong> <br/> Dubrovnik, Croatia</p>
                                     </div>
                                     <!--div class="col-lg-2"><button type="button" class="btn btn-success btn-xs">Seminar</button></div-->
-                                    <div class="col-lg-2">19 Sep 2013</div>
-                                    <div class="col-lg-2"><a class="btn btn-info btn-block" href="#">Book</a></div>
+                                    <div class="col-lg-2 conf-date">19 Sep 2013</div>
+                                    <div class="col-lg-2 conf-book"><a class="btn btn-info btn-block book-btn" href="#">Book</a></div>
                                   </div><!--/row-->
                                   
-                                  <div class="row">
+                                  <div class="row conf-row">
                                     <div class="col-lg-8">
                                       <p><strong><a href="<?php echo URL::site('seminar') ?>">2nd Global Conference: The Graphic Novel</a></strong> <br/> Oxford, United Kingdom</p>
                                     </div>
                                     <!--div class="col-lg-2"><button type="button" class="btn btn-primary btn-xs">Conference</button></div-->
-                                    <div class="col-lg-2">19 Sep 2013</div>
-                                    <div class="col-lg-2"><a class="btn btn-info btn-block" href="#">Book</a></div>
+                                    <div class="col-lg-2 conf-date">19 Sep 2013</div>
+                                    <div class="col-lg-2 conf-book"><a class="btn btn-info btn-block book-btn" href="#">Book</a></div>
                                   </div><!--/row-->
                                   </div><!--span-->
                               </div><!--row-->

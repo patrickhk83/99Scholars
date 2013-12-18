@@ -65,13 +65,15 @@ var addCategory = function()
 {
 	categoryCount++;
 	var option = '<div id="category-option' + categoryCount + '">' +
-		'<div class="form-inline">' +
-			'<select class="form-control criteria-option">' +
+		'<div class="form-inline select-category">' +
+			'<label>' +
+               '<select class="form-control criteria-option form-box">' +
 				'<option value="0">Select Subject</option>' +
 				'<option value="1">Technology</option>' +
 				'<option value="2">Linguistics</option>' +
 				'<option value="3">Psychology</option>' +
-			'</select> ' +
+			    '</select> ' +
+            '</label>' +
 			'<span class="glyphicon glyphicon-minus-sign" onclick="delCategory(' + categoryCount + ')"></span>' +
 		'</div>' +
 	'</div>';
