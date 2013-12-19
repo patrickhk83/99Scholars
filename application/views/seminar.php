@@ -264,6 +264,7 @@
     <?php echo HTML::script('js/bootstrap.min.js') ?>
     <?php echo HTML::script('js/offcanvas.js') ?>
     <?php echo HTML::script('js/jquery-ui.js') ?>
+    <?php echo HTML::script('js/lightbox-2.6.min.js') ?>
     <?php echo HTML::script('js/seminar.js') ?>
 	
 	<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-describedby="video-upload-container" style="position: absolute; height: auto; width: 600px; top: 268px; left: 376px; display: none;" aria-labelledby="ui-id-1-2"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span class="ui-dialog-title"></span><button class="ui-dialog-titlebar-close"></button></div><div id="video-upload-container" class="ui-dialog-content ui-widget-content" style="display: block; width: auto; min-height: 88px; max-height: none; height: auto;">
