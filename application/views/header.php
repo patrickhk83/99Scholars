@@ -15,6 +15,7 @@
     <?php echo HTML::style('css/offcanvas.css') ?>
 
     <?php echo HTML::style('css/datepicker.css') ?>
+    <?php echo HTML::style('css/lightbox.css') ?>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
