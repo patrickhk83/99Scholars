@@ -30,24 +30,25 @@
     <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
     <input type="hidden" id="base-url" value="<?php echo URL::site('') ?>">
     <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-      <div class="nav-logo">
+      <div class="nav-logo hidden-xs">
         <div class="container">
-          <span class="fleft"><img src="../img/logo-<?php $imgname=basename($_SERVER['PHP_SELF']); echo preg_replace('/\.php$/', '', $imgname);?>.png"></span>
+          <span class="fleft"><img src="img/logo-<?php $imgname=basename($_SERVER['PHP_SELF']); echo preg_replace('/\.php$/', '', $imgname);?>.png"></span>
           <ul class="social-icons">
-            <li><a href=""><img src="../img/fb.png"></a></li>
-            <li><a href=""><img src="../img/twitter.png"></a></li>
-            <li><a href=""><img src="../img/linkedin.png"></a></li>
+            <li><a href=""><img src="img/fb.png"></a></li>
+            <li><a href=""><img src="img/twitter.png"></a></li>
+            <li><a href=""><img src="img/linkedin.png"></a></li>
           </ul>   
           <div class="clearfix"></div>
         </div>
       </div>
       <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <div class="navbar-header" style="background-image: url(img/moblogo-<?php $imgname=basename($_SERVER['PHP_SELF']); echo preg_replace('/\.php$/', '', $imgname);?>.png); background-position: center center; background-repeat: no-repeat; height:100%">
+          <button type="button" class="navbar-toggle fleft toggle-btn" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+          <span class="fright mobsearch visible-xs"><a href=""><img src="img/mobsearch.png"></a></span>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
