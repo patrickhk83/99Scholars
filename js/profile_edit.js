@@ -28,7 +28,7 @@ $(function(){
 	$('#degree-link').click(loadDegreeTab);
 	$('#position-link').click(loadPositionTab);
 	$('#journal-link').click(loadJournalTab);
-	$( "#confproc-link" ).click(function() {
+	$( "#conf-proc-link" ).click(function() {
 		loadconfprocTab();
 	      });
 	$( "#chapter-link" ).click(function() {
@@ -240,7 +240,7 @@ function loadconfprocTab()
 {
 	var url = baseEditUrl + 'edit/confproc';
 	$.get(url, function(data){
-		$('#confproc').html(data);
+		$('#conf-proc').html(data);
 		isconfprocLoaded = true;
 		$('#add-confproc-btn').click(saveconfprocInfo);
 	});
