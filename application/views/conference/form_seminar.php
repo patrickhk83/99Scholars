@@ -1,6 +1,6 @@
 <div class="form-group">
-  <label for="conf-name">Seminar's Name</label>
-  <input type="text" class="form-control required" id="conf-name" placeholder="Enter name of the conference" name="Conference[name]"/>	
+  <label for="conf-name">Title of the talk</label>
+  <input type="text" class="form-control required" id="conf-name" placeholder="Enter the title of the talk" name="Conference[name]"/>	
 </div>
 
 <div class="form-group">
@@ -34,7 +34,7 @@
 
 <div class="form-group">
   <label>Website</label>
-  <input type="text" class="form-control" id="website" placeholder="URL of conference's website" name="Conference[website]"/>
+  <input type="text" class="form-control" id="website" placeholder="URL of the seminar website" name="Conference[website]"/>
 </div>
 
 <div class="form-group">
@@ -44,7 +44,7 @@
         <div class="form-inline">
           <div class="form-group">
           	<select class="form-control category-option required" name="Category[1][category]">
-          	  <option value="">Choose Conference's Category</option>
+          	  <option value="">Choose Seminar's Category </option>
           	  <option value="1">Technology</option>
           	  <option value="2">Linguistics</option>
           	  <option value="3">Psychology</option>
