@@ -41,7 +41,7 @@
                       <p><a href="<?php echo URL::site('profile/edit') ?>"><button class="btn btn-primary btn-block">Edit your profile</button></a></p>
                       <p><button class="btn btn-default btn-block">Share your profile</button></p>
                     <?php } else { ?>
-                      <p><button class="btn btn-success btn-block">Follow</button></p>
+                      <p><button class="btn btn-success btn-block" id="follow-btn" onclick="followUser(<?= $user_id ?>, this)">Follow</button></p>
                       <p><button class="btn btn-default btn-block">Send Message</button></p>
                     <?php } ?>
                 </div>

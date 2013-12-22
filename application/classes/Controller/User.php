@@ -40,6 +40,11 @@ class Controller_User extends Controller {
 
 	public function action_unfollow()
 	{
+		$user_id = $this->request->param('id');
+		$current_user_id = Service_Login::get_user_in_session();
 
+		$follow_service = Service_UserFollow::instance();
+
+		$follow_service->unfollow($current_user_id, $user_id);
 	}
 }

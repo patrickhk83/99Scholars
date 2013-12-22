@@ -168,3 +168,54 @@ var loadPresentationTab = function()
 		});
 	}
 }
+
+function followUserFacade(e)
+{
+	followUser(e.data.id, e.data.element);
+}
+
+function followUser(userId, element)
+{
+	var btn = $(element);
+	displayProgress(btn);
+
+	var url = baseUrl + 'user/follow/' + userId;
+
+	$.get(url, function(data){
+		btn.removeClass('btn-default').addClass('btn-warning');
+		btn.text('Unfollow');
+
+		btn.prop("onclick", null);
+
+		btn.off('click').on('click', {id: userId, element: btn}, unfollowUserFacade);
+	});
+}
+
+function unfollowUserFacade(e)
+{
+	unfollowUser(e.data.id, e.data.element);
+}
+
+function unfollowUser(userId, element)
+{
+	var btn = $(element);
+	displayProgress(btn);
+
+	var url = baseUrl + 'user/unfollow/' + userId;
+
+	$.get(url, function(data){
+		btn.removeClass('btn-default').addClass('btn-success');
+		btn.text('Follow');
+
+		btn.prop("onclick", null);
+
+		btn.off('click').on('click', {id: userId, element: btn}, followUserFacade);
+	});
+}
+
+
+function displayProgress(btn)
+{
+	btn.removeClass('btn-success btn-warning').addClass('btn-default');
+	btn.text('Working ').append('<img src="' + baseUrl + 'img/loader.gif">');
+}

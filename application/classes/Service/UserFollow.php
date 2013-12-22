@@ -27,6 +27,14 @@ class Service_UserFollow {
 
 	public function unfollow($user, $follow_user)
 	{
+		$follow_people = ORM::factory('FollowPeople')
+				->where('user', '=', $user)
+				->and_where('follow_user', '=', $follow_user)
+				->find();
 
+		if($follow_people->loaded())
+		{
+			$follow_people->delete();
+		}
 	}
 }
