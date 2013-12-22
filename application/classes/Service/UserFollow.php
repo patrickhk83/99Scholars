@@ -37,4 +37,26 @@ class Service_UserFollow {
 			$follow_people->delete();
 		}
 	}
+
+	public function is_following($user, $follow_user)
+	{
+		if(!$user)
+		{
+			return FALSE;
+		}
+
+		$follow_people = ORM::factory('FollowPeople')
+				->where('user', '=', $user)
+				->and_where('follow_user', '=', $follow_user)
+				->find();
+
+		if($follow_people->loaded())
+		{
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
 }

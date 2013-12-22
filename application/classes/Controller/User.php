@@ -24,6 +24,10 @@ class Controller_User extends Controller {
 
 			$view->user_id = $user_id;
 
+			$follow_service = Service_UserFollow::instance();
+
+			$view->is_following = $follow_service->is_following(Service_Login::get_user_in_session(), $user_id);
+
 			$this->response->body($view);
 		}
 	}
