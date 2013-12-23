@@ -6,6 +6,8 @@ var isEventLoaded = false;
 var isPublicationLoaded = false;
 var isProjectLoaded = false;
 var isPresentationLoaded = false;
+var isFollowerLoaded = false;
+var isFollowingLoaded = false;
 
 $(function(){
 
@@ -18,6 +20,8 @@ $(function(){
 	$('#publication-link').click(loadPublicationTab);
 	$('#project-link').click(loadProjectTab);
 	$('#presentation-link').click(loadPresentationTab);
+	$('#following-link').click(loadFollowingTab);
+	$('#follower-link').click(loadFollowerTab);
 
 	$('#journal-check').change(journalEnabler);
 	$('#conf-check').change(conferenceEnabler);
@@ -165,6 +169,32 @@ var loadPresentationTab = function()
 			$('#presentation').html(data);
 			isPresentationLoaded = true;
 			$('#presentation-check').change(presentationEnabler);
+		});
+	}
+}
+
+var loadFollowingTab = function()
+{
+	if(!isFollowingLoaded)
+	{
+		var url = baseViewUrl + 'following/' + $('#user-id').val();
+
+		$.get(url, function(data){
+			$('#following').html(data);
+			isPresentationLoaded = true;
+		});
+	}
+}
+
+var loadFollowerTab = function()
+{
+	if(!isFollowerLoaded)
+	{
+		var url = baseViewUrl + 'follower/' + $('#user-id').val();
+
+		$.get(url, function(data){
+			$('#follower').html(data);
+			isPresentationLoaded = true;
 		});
 	}
 }
