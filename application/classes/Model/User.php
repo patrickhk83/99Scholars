@@ -10,7 +10,12 @@ class Model_User extends ORM {
         	'through' => 'attendee',
         	'far_key' => 'conference',
         	'foreign_key' => 'user',
-        	// 'foreign_key' => 'user'
+    	),
+    	'following' => array(
+    		'model' => 'User',
+    		'through' => 'follow_people',
+    		'far_key' => 'follow_user',
+    		'foreign_key' => 'user'
     	),
 	);
 	protected $_has_one = array(
@@ -72,6 +77,28 @@ class Model_User extends ORM {
 		$oauth['uid'] = $info['uid'];
 		$oauth['token'] = $info['credentials']['token'];
 		$this->oauth->values($oauth)->create();
+	}
+
+	public function is_followed_by($user)
+	{
+		if(!$user)
+		{
+			return FALSE;
+		}
+
+		$follow_people = ORM::factory('FollowPeople')
+				->where('user', '=', $user)
+				->and_where('follow_user', '=', $this->id)
+				->find();
+
+		if($follow_people->loaded())
+		{
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 
 }

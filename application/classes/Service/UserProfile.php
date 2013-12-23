@@ -568,6 +568,15 @@ class Service_UserProfile {
 				$presentationcount['count']['presentation'] = count($presentationnew);
 				
 				$view->presentationcount = $presentationcount;
+
+			case 'following':
+				$user = ORM::factory('User', $user_id);
+				$view->following = $user->following->find_all();
+
+				$view->current_user = Service_Login::get_user_in_session();
+
+			case 'follower':
+
 		}
 
 		return $view;

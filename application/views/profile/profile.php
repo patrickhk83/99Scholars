@@ -59,6 +59,8 @@
                     <li><a href="#publication" data-toggle="tab" id="publication-link">Publications (<?php echo $work_count['publication'] ?>)</a></li>
                     <li><a href="#project" data-toggle="tab" id="project-link">Projects (<?php echo $work_count['project'] ?>)</a></li>
                     <li><a href="#presentation" data-toggle="tab" id="presentation-link">Presentations (<?php echo $work_count['presentation'] ?>)</a></li>
+                    <li><a href="#following" data-toggle="tab" id="following-link">Following</a></li>
+                    <li><a href="#follower" data-toggle="tab" id="follower-link">Follower</a></li>
                   </ul>
                   
                   <div class="tab-content">
@@ -158,6 +160,10 @@
                     <div class="tab-pane fade profile-content" id="project">
                     </div>
                     <div class="tab-pane fade active profile-content" id="presentation">
+                    </div>
+                    <div class="tab-pane fade active profile-content" id="follower">
+                    </div>
+                    <div class="tab-pane fade active profile-content" id="following">
                     </div>
                   </div>
                 </div>  

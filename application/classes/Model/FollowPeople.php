@@ -3,4 +3,5 @@
 class Model_FollowPeople extends ORM {
 
 	protected $_table_name = 'follow_people';
+	
 }
