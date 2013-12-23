@@ -576,7 +576,10 @@ class Service_UserProfile {
 				$view->current_user = Service_Login::get_user_in_session();
 
 			case 'follower':
+				$user = ORM::factory('User', $user_id);
+				$view->followers = $user->follower->find_all();
 
+				$view->current_user = Service_Login::get_user_in_session();
 		}
 
 		return $view;

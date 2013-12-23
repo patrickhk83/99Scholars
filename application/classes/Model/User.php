@@ -17,6 +17,12 @@ class Model_User extends ORM {
     		'far_key' => 'follow_user',
     		'foreign_key' => 'user'
     	),
+    	'follower' => array(
+    		'model' => 'User',
+    		'through' => 'follow_people',
+    		'far_key' => 'user',
+    		'foreign_key' => 'follow_user'
+    	),
 	);
 	protected $_has_one = array(
 		'position' => array(
