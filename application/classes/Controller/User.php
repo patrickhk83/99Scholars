@@ -24,7 +24,31 @@ class Controller_User extends Controller {
 
 			$view->user_id = $user_id;
 
+			$follow_service = Service_UserFollow::instance();
+
+			$view->is_following = $follow_service->is_following(Service_Login::get_user_in_session(), $user_id);
+
 			$this->response->body($view);
 		}
+	}
+
+	public function action_follow()
+	{
+		$user_id = $this->request->param('id');
+		$current_user_id = Service_Login::get_user_in_session();
+
+		$follow_service = Service_UserFollow::instance();
+
+		$follow_service->follow($current_user_id, $user_id);
+	}
+
+	public function action_unfollow()
+	{
+		$user_id = $this->request->param('id');
+		$current_user_id = Service_Login::get_user_in_session();
+
+		$follow_service = Service_UserFollow::instance();
+
+		$follow_service->unfollow($current_user_id, $user_id);
 	}
 }

@@ -47,7 +47,6 @@
                   </div>
                   <div class="add-criteria-link"><a href="#" id="add-type-link">Add more event type</a></div>
                 </li>
-                <li class="criteria-container"><h5>Call for abstract only <input type="checkbox" id="accept-abstract"/></h5></li>
                 <li><h5>Filter by Event Date</h5></li>
                 <li class="criteria-container">
                   <div class="form-group">

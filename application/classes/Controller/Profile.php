@@ -67,6 +67,24 @@ class Controller_Profile extends Controller {
 		$this->response->body($view);
 	}
 
+	public function action_following()
+	{
+		$tab_name = 'following';
+		$user_id = $this->request->param('id');
+		$view = $this->render_tab($user_id, $tab_name);
+
+		$this->response->body($view);
+	}
+
+	public function action_follower()
+	{
+		$tab_name = 'follower';
+		$user_id = $this->request->param('id');
+		$view = $this->render_tab($user_id, $tab_name);
+
+		$this->response->body($view);
+	}
+
 	protected function render_tab($user_id, $tab_name)
 	{
 		$profile_service = new Service_UserProfile();

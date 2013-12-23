@@ -6,6 +6,8 @@ var isEventLoaded = false;
 var isPublicationLoaded = false;
 var isProjectLoaded = false;
 var isPresentationLoaded = false;
+var isFollowerLoaded = false;
+var isFollowingLoaded = false;
 
 $(function(){
 
@@ -18,6 +20,8 @@ $(function(){
 	$('#publication-link').click(loadPublicationTab);
 	$('#project-link').click(loadProjectTab);
 	$('#presentation-link').click(loadPresentationTab);
+	$('#following-link').click(loadFollowingTab);
+	$('#follower-link').click(loadFollowerTab);
 
 	$('#journal-check').change(journalEnabler);
 	$('#conf-check').change(conferenceEnabler);
@@ -167,4 +171,81 @@ var loadPresentationTab = function()
 			$('#presentation-check').change(presentationEnabler);
 		});
 	}
+}
+
+var loadFollowingTab = function()
+{
+	if(!isFollowingLoaded)
+	{
+		var url = baseViewUrl + 'following/' + $('#user-id').val();
+
+		$.get(url, function(data){
+			$('#following').html(data);
+			isPresentationLoaded = true;
+		});
+	}
+}
+
+var loadFollowerTab = function()
+{
+	if(!isFollowerLoaded)
+	{
+		var url = baseViewUrl + 'follower/' + $('#user-id').val();
+
+		$.get(url, function(data){
+			$('#follower').html(data);
+			isPresentationLoaded = true;
+		});
+	}
+}
+
+function followUserFacade(e)
+{
+	followUser(e.data.id, e.data.element);
+}
+
+function followUser(userId, element)
+{
+	var btn = $(element);
+	displayProgress(btn);
+
+	var url = baseUrl + 'user/follow/' + userId;
+
+	$.get(url, function(data){
+		btn.removeClass('btn-default').addClass('btn-warning');
+		btn.text('Unfollow');
+
+		btn.prop("onclick", null);
+
+		btn.off('click').on('click', {id: userId, element: btn}, unfollowUserFacade);
+	});
+}
+
+function unfollowUserFacade(e)
+{
+	unfollowUser(e.data.id, e.data.element);
+}
+
+function unfollowUser(userId, element)
+{
+	var btn = $(element);
+	displayProgress(btn);
+
+	var url = baseUrl + 'user/unfollow/' + userId;
+
+	$.get(url, function(data){
+		btn.removeClass('btn-default').addClass('btn-success');
+		btn.text('Follow');
+
+		btn.prop("onclick", null);
+
+		btn.off('click').on('click', {id: userId, element: btn}, followUserFacade);
+	});
+}
+
+
+function displayProgress(btn)
+{
+	btn.removeClass('btn-success btn-warning').addClass('btn-default');
+	btn.text('Working ').append('<img src="' + baseUrl + 'img/loader.gif">');
 }
