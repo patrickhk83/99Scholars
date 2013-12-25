@@ -59,8 +59,8 @@
                     <li><a href="#publication" data-toggle="tab" id="publication-link">Publications (<?php echo $work_count['publication'] ?>)</a></li>
                     <li><a href="#project" data-toggle="tab" id="project-link">Projects (<?php echo $work_count['project'] ?>)</a></li>
                     <li><a href="#presentation" data-toggle="tab" id="presentation-link">Presentations (<?php echo $work_count['presentation'] ?>)</a></li>
-                    <li><a href="#following" data-toggle="tab" id="following-link">Following</a></li>
-                    <li><a href="#follower" data-toggle="tab" id="follower-link">Follower</a></li>
+                    <li><a href="#following" data-toggle="tab" id="following-link">Following (<?= $info['following'] ?>)</a></li>
+                    <li><a href="#follower" data-toggle="tab" id="follower-link">Follower (<?= $info['follower'] ?>)</a></li>
                   </ul>
                   
                   <div class="tab-content">
