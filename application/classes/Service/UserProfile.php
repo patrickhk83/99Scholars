@@ -660,6 +660,13 @@ class Service_UserProfile {
 			$result['position'] = $positions[0];
 		}
 
+		//get following/follower count
+		// TODO: migrate user's info query to User's model
+
+		$user = ORM::factory('User', $user_id);
+		$result['following'] = $user->following->find_all()->count();
+		$result['follower'] = $user->follower->find_all()->count();
+
 		return $result;
 	}
 }
