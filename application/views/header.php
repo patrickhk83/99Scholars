@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,8 @@
     <?php echo HTML::style('css/datepicker.css') ?>
     <!-- New Style -->
     <?php echo HTML::style('css/newstyle.css') ?>
-
+    <?php echo HTML::style('css/socialbutton.css') ?>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
@@ -70,17 +71,58 @@
                 <input type="password" placeholder="Password" class="form-control" name="password">
               </div>-->
             <div class="header-login">
-              <a href="<?php echo URL::site('signup') ?>"><button type="button" class="btn btn-default signup-button">Register</button></a>
-              <a class="btn btn-success signin-button dropdown-toggle" href="#" data-toggle="dropdown">Sign In</a>
-              <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+              <div class="fright">
+              <a class="btn dropdown-toggle signin-button" href="#" data-toggle="dropdown">Sign In</a>
+              <div class="dropdown-menu login-dropdown">
                 <form style="margin: 0px" accept-charset="UTF-8" action="<?php echo URL::site('login/email') ?>" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="4L/A2ZMYkhTD3IiNDMTuB/fhPRvyCNGEsaZocUUpw40=" /></div>
-                   <fieldset class='textbox' style="padding:10px">
-                     <input style="margin-top: 8px" type="text" placeholder="Username" />
-                     <input style="margin-top: 8px" type="password" placeholder="Passsword" />
-                     <input class="btn-primary" name="commit" type="submit" value="Log In" />
+                   <fieldset class='textbox'>
+                     <input type="text" placeholder="Username" />
+                     <input type="password" placeholder="Password" />
+                     <input type="checkbox" class="login-checkbox"><h6>Remember Me</h6>
+                     <input class="btn-primary login" name="commit" type="submit" value="Log In" />
+                     <h6 class="forgot"><a href="">Forgot your password?</a></h6>
+                     <div class="login-border"></div>
+                     <button class="btn btn-facebook"><i class="fa fa-facebook"></i> | Facebook</button>
+                     <button class="btn btn-linkedin"><i class="fa fa-linkedin"></i> | LinkedIn</button>
+                     <button class="btn btn-google-plus"><i class="fa fa-google-plus"></i> | Google Plus</button>
                    </fieldset>
                  </form>
-              </div>  
+              </div>
+              </div>
+                <!--<a href="<?php echo URL::site('signup') ?>"><button type="button" class="btn btn-default signup-button">Register</button></a>-->
+                <div class="fright">
+                    <a class="btn dropdown-toggle signup-button" href="#" data-toggle="dropdown">Register</a>
+                    <div class="dropdown-menu email-dropdown">
+                        <form style="margin: 0px" accept-charset="UTF-8" action="<?php echo URL::site($signup_url) ?>" method="post">
+                            <div class="form-group">
+                                <label for="first-name">First Name</label>
+                                <input type="text" class="form-control" id="first-name" placeholder="Your First Name" name="first_name"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last Name</label>
+                                <input type="text" class="form-control" id="last-name" placeholder="Your Last Name"name="last_name"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email address</label>
+                                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="Password" name="password"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-password">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirm-password" placeholder="Password again" name="confirm_password"/>
+                            </div>
+                            <button type="submit" class="btn btn-success signup-btn">Signup</button>
+                        </form>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                $('.login-dropdown, .email-dropdown').click(function(event){
+                event.stopPropagation();
+                });
+                </script>
             </div>
             <?php } else { ?>
 

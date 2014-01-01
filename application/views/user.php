@@ -2,29 +2,26 @@
 <div class="row row-offcanvas row-offcanvas-right">
         
         <div class="col-lg-12">
-          <p class="pull-right visible-xs">
-            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-          </p>
                     
           <div class="row">
             <div class="col-lg-12">
               <div class="row">
-                <div class="col-lg-2 col-md-2"><img src="../img/001.jpg" class="img-rounded"/></div><!--span-->
-                <div class="col-lg-8 col-md-8">
+                <div class="col-lg-2 col-md-2 col-xs-4"><img src="../img/001.jpg" class="img-rounded user-img"/></div><!--span-->
+                <div class="col-lg-8 col-md-8 col-xs-8 user-info">
                 	<h3 class="user-name">Patrick Chu</h3>
                 	<p><span class="user-desig">Ph.D., Psychology, University of New South Wales, 2013</span><br>
                 	<span><img class="loc" src="../img/location.png"></span><span class="user-desig">Hongkong, Hongkong SAR</span></p>
                 </div><!--span-->
-                <div class="col-lg-2 col-md-2">
+                <div class="col-lg-2 col-md-2 hidden-xs">
                 	<!--<p><br></p>-->
                     <div class="row">
-                        <div class="col-lg-6 follow-section">
+                        <div class="col-md-6 follow-section">
                             <p class="follow-count">15</p>
                             <p class="follow-name">Publications</p>
                             <p class="follow-count">4</p>
                             <p class="follow-name">Presentations</p>
                         </div>
-                        <div class="col-lg-6 follow-section2">
+                        <div class="col-md-6 follow-section2">
                              <p class="follow-count">28</p>
                             <p class="follow-name">Projects</p>
                             <p class="follow-count">118</p>
@@ -35,22 +32,57 @@
                 	<p><button class="btn btn-default btn-block message-btn">Send Message</button></p>
                 </div>
               </div>
+              <div class="row visible-xs follow-section-xs">
+                  <div class="row">
+                  <div class="col-xs-3">
+                    <p class="follow-count">15</p>
+                    <p class="follow-name">Publications</p>
+                  </div>
+                  <div class="col-xs-3">
+                      <p class="follow-count">28</p>
+                      <p class="follow-name">Projects</p>
+                  </div>
+                  <div class="col-xs-3">
+                      <p class="follow-count">4</p>
+                      <p class="follow-name">Presentations</p>
+                  </div>
+                  <div class="col-xs-3">
+                      <p class="follow-count">118</p>
+                      <p class="follow-name">Following</p>
+                  </div>
+                  </div>
+                  <div class="row" style="text-align: center">
+                      <div><button class="btn btn-success follow-btn">Follow</button></div>
+                      <div><button class="btn btn-default message-btn">Send Message</button></div>
+                  </div>
+              </div>
               <div class="row">
-                <div class="col-lg-12">
                   <br>
-                  <ul class="nav nav-tabs" id="profile-tab">
+                  <ul class="nav nav-tabs hidden-xs" id="profile-tab">
                     <li><a href="#info" data-toggle="tab">Overview</a></li>
                     <li><a href="#event" data-toggle="tab">Events</a></li>
                     <li><a href="#publication" data-toggle="tab">Publications (15)</a></li>
                     <li><a href="#project" data-toggle="tab">Projects (4)</a></li>
                     <li><a href="#presentation" data-toggle="tab">Presentations (28)</a></li>
                   </ul>
-                  
+                  <div class="visible-xs btn-group">
+                  <button class="mobuser-dropdown dropdown-toggle" data-target="#" data-backdrop="static" data-toggle="dropdown">
+                    <span class="dropdown-label user-label">Overview</span>
+                    <span class="caret" style="border-top-color: #fff;"></span>
+                  </button>
+                  <ul class="dropdown-menu text-center text-sm mobuser-dropmenu">
+                      <li><a href="#info" data-toggle="tab">Overview</a></li>
+                      <li><a href="#event" data-toggle="tab">Events</a></li>
+                      <li><a href="#publication" data-toggle="tab">Publications (15)</a></li>
+                      <li><a href="#project" data-toggle="tab">Projects (4)</a></li>
+                      <li><a href="#presentation" data-toggle="tab">Presentations (28)</a></li>
+                  </ul>
+                  </div>
                   <div class="tab-content">
                     
                     <div class="tab-pane fade active profile-content" id="info">
                     	<div class="row">
-                    	    <div class="col-lg-12">
+
                     	      <div class="row">
                     	          <div class="col-lg-9 col-md-9">
                     	          	<h4>Qualifications</h4>
@@ -78,14 +110,12 @@
                     	            	 
                     	            </div-->
                     	          </div><!--span-->
-                    	      </div><!--/row-->        
-                    	    </div><!--span-->
+                    	      </div><!--/row-->
                     	</div><!--/row-->
                     </div>
                     <div class="tab-pane fade active profile-content" id="event">
                         <div class="row">
                             <div class="col-lg-12">
-                              
                               <div class="row conf-list">
                                 <div class="col-lg-12">
                                   <div class="row conf-row">
@@ -121,7 +151,6 @@
                     </div>
                     <div class="tab-pane fade profile-content" id="publication">
                     	<div class="row">
-                    	    <div class="col-lg-12">
                     	    	<div class="well">
                     	    		<label class="checkbox-inline publication-criteria">
                     	    			<input type="checkbox" checked="check" id="journal-check"/> Journal <span class="text-muted">(1)</span>
@@ -233,7 +262,7 @@
                     	    	      </table>
                     	    	    </div><!--span-->
                     	    	</div><!--/row-->
-                    	    </div><!--span-->
+
                     	</div><!--/row-->
                     	
                     </div>
@@ -405,7 +434,6 @@
                    		</div><!--/row-->
                     </div>
                   </div>
-                </div>  
               </div><!--row-->
             </div><!--/span-->            
           </div><!--/row-->

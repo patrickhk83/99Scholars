@@ -115,7 +115,90 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#433288', end
 .header-login{
 	float:right;
 	padding: 8px;
+    position: relative;
 }
+.login-dropdown{
+    position: absolute;
+    right: 0px;
+    left: auto;
+    border-top: 3px solid #7c66d3;
+    background-color: #200b5e;
+    padding: 10px 15px 15px;
+    text-align: center;
+    width:120%;
+}
+.login-dropdown input{
+    margin-top: 10px;
+    border:none;
+    border-radius: 4px;
+    padding: 7px;
+    width: 100%;
+}
+.login-dropdown button{
+    margin-top:10px;
+}
+.login-dropdown .login-checkbox{
+    width:auto;
+    float:left;
+}
+.login-dropdown .login-border{
+    background-color: rgb(0, 0, 0);
+    height: 2px;
+    border-bottom: 1px solid #777;
+    margin-top:10px;
+}
+.login-dropdown h6{
+    margin: 0;
+    padding: 11px 0 0 20px;
+    color: #ddd;
+    text-align: left;
+}
+h6.forgot{
+    padding: 8px 0 0;
+    text-align: left;
+}
+.login-dropdown .login{
+    background-color: #7c66d3;
+}
+.email-dropdown{
+    position: absolute;
+    left: -140px;
+    border-top: 3px solid rgb(0, 168, 255);
+    background-color: #200b5e;
+    padding: 10px 15px 15px;
+    width:100%;
+}
+.email-dropdown label{
+    text-align: left;
+    font-family: 'FranklinGothicMediumRegular';
+    color:#eee;
+    font-weight: normal;
+}
+.email-dropdown input{
+    border:none;
+    border-radius: 4px;
+    padding: 7px;
+    width: 100%;
+    background: #fff !important;
+    box-shadow: none !important;
+    height: 28px;
+}
+.email-dropdown input:active,.email-dropdown input:focus{
+    box-shadow: none;
+}
+.signup-btn{
+    padding: 5px;
+    width: 100%;
+    margin: 10px 0 0;
+    background: rgb(0, 168, 255);
+    border:none;
+    transition: background 0.3s ease 0s;
+    -webkit-transition: background 0.3s ease 0s;
+}
+.signup-btn:hover,.signup-btn:active{
+    background: rgb(7, 127, 202);
+}
+
 .toggle-btn{
     margin-left: 10px;
     padding: 9px 7px;
@@ -153,7 +236,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#433288', end
     transition: background 0.3s ease 0s;
 	-webkit-transition: background 0.3s ease 0s;
 }
-.signup-button:hover{
+.signup-button:hover,.signup-button:active,.signup-button:focus{
 	background: #077fca;
     text-shadow: 0px -1px 0px rgb(76, 144, 33);
     color: #fff;
@@ -181,7 +264,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#433288', end
     transition: background 0.3s ease 0s;
 	-webkit-transition: background 0.3s ease 0s;
 }
-.signin-button:hover{
+.signin-button:hover,.open .signin-button:active,.open .signin-button:focus,.signin-button:active,.signin-button:focus{
 background: #614bb6;
 	border-width: 1px;
     border-style: solid;
@@ -368,7 +451,7 @@ a.filter-toggle{
     font-size: 16px;
     color: #433288;
 }
-.event-row p{
+.event-row p, .conf-row p{
     font-family: 'FranklinGothicMediumRegular';
     font-weight: normal;
     font-size: 14px;
@@ -431,7 +514,48 @@ padding: 0px;
 .user-desig{
     font-family: 'futura_md_btmedium';
     color: #434343;
+}
+@media (max-width: 767px){
+    .user-name{
+        font-size: 24px;
+        margin:0px;
+        padding: 0px;
+        line-height: 25px;
+    }
+    .user-desig{
 
+    }
+    .user-info{
+        padding: 0;
+    }
+    .user-img{
+        min-width:85px;
+        width:90%;
+        margin-bottom: 15px;
+    }
+    .mobuser-dropdown{
+        width: 100%;
+        background: #210d5f;
+        border: none;
+        color: #fff;
+        font-family: arial;
+        font-size: 1.4em;
+        padding: 5px 0px;
+    }
+    .mobuser-dropmenu{
+        width: 80%;
+        margin: 5px 10%;
+        background: #2e1b6f;
+        padding: 0 12px;
+    }
+    .mobuser-dropmenu li a{
+        border-bottom: 1px solid #fff;
+        font-size: 16px;
+        color:#fff;
+    }
+    .mobuser-dropmenu li:last-child a{
+        border:none;
+    }
 }
 .loc{
     margin-right: 5px;
@@ -559,6 +683,40 @@ padding: 0px;
 }
 .conf-date,.conf-book{
     padding-top: 15px;
+}
+@media (max-width: 767px){
+    .conf-row{
+        padding: 10px 0;
+    }
+    .conf-row p{
+        padding: 0;
+    }
+    .conf-row a{
+        font-family: 'FranklinGothicMediumRegular';
+        font-weight: normal;
+        font-size: 16px;
+    }
+}
+.follow-section-xs{
+    padding:10px 0;
+    background: url(../img/grey_bg.png);
+    border-top:1px solid #d7d7d7;
+    border-bottom:1px solid #d7d7d7;
+}
+.follow-section-xs p{
+    margin:0px;
+    padding:0px;
+    text-align: center;
+}
+@media (max-width: 767px){
+    .follow-btn{
+        width:60%;
+        margin:10px;
+    }
+    .message-btn{
+        width:60%;
+        margin-bottom:10px;
+    }
 }
 /*======================================================================Seminar=================================================*/
 .attend-btn{
