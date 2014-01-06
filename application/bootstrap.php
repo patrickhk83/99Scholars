@@ -22,7 +22,7 @@ else
  * @link http://kohanaframework.org/guide/using.configuration
  * @link http://www.php.net/manual/timezones
  */
-date_default_timezone_set('Asia/Bangkok');
+date_default_timezone_set('Asia/Shanghai');
 
 /**
  * Set the default locale.
@@ -118,7 +118,7 @@ if (isset($_SERVER['KOHANA_ENV']))
  * - boolean  expose      set the X-Powered-By header                        FALSE
  */
 Kohana::init(array(
-	'base_url' => '/99scholars',
+	'base_url' => '/99scholars/',
 	'index_file' => FALSE,
 		'kopauth'=>'/',
 ));
@@ -194,5 +194,17 @@ Route::set('conference', '(<controller>(/<action>(/<id>(/<session>(/<session_id>
 	->defaults(array(
 		'action'     => 'index',
 	));
+
+Route::set('actionstatistics' , '(<controller>(/<action>(/<page_num>(/<per_page>(/<action_filter>(/<user_filter>(/<start_date>)))))))')
+	->defaults(
+		array(
+			'controller' => 'actionstatistics',
+			'action' => 'index',
+			'page_num' => '1',
+			'per_page' => '20',
+			'action_filter' => 'All',
+	));
+
+	
 
 

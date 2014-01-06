@@ -568,6 +568,18 @@ class Service_UserProfile {
 				$presentationcount['count']['presentation'] = count($presentationnew);
 				
 				$view->presentationcount = $presentationcount;
+
+			case 'following':
+				$user = ORM::factory('User', $user_id);
+				$view->following = $user->following->find_all();
+
+				$view->current_user = Service_Login::get_user_in_session();
+
+			case 'follower':
+				$user = ORM::factory('User', $user_id);
+				$view->followers = $user->follower->find_all();
+
+				$view->current_user = Service_Login::get_user_in_session();
 		}
 
 		return $view;
@@ -647,6 +659,13 @@ class Service_UserProfile {
 		{
 			$result['position'] = $positions[0];
 		}
+
+		//get following/follower count
+		// TODO: migrate user's info query to User's model
+
+		$user = ORM::factory('User', $user_id);
+		$result['following'] = $user->following->find_all()->count();
+		$result['follower'] = $user->follower->find_all()->count();
 
 		return $result;
 	}
