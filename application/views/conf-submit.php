@@ -8,8 +8,8 @@
           </p>          
           <div class="row">
             <div class="col-lg-12">
-              <p><h3>Submit your conference</h3></p>
-              <p>Enter information about your conference</p>
+              <p><h3>Submit your academic event</h3></p>
+              <p>Enter information about your academic event</p>
               <form id="form-conference" role="form" action="<?php echo URL::site('new/conference') ?>" method="post">
               <div class="panel panel-default">
                   <div class="panel-heading">General Information</div>
@@ -17,7 +17,7 @@
 	              	<div class="form-group">
 	              	  <label>Type</label>
 	              	  <select class="form-control required" name="Conference[type]" id="conf-type">
-	              	    <option value="">Choose Conference's Type</option>
+	              	    <option value="">Choose Event Type</option>
 	              	    <option value="1">Conference</option>
 	              	    <option value="2">Seminar</option>
 	              	  </select>
@@ -34,7 +34,7 @@
               	  
               	    <div class="form-group">
               	      <label>Venue Name</label>
-              	      <input type="text" class="form-control required" id="venue-name" placeholder="Name of the venue" name="Venue[name]"/>
+              	      <input type="text" class="form-control required" id="venue-name" placeholder="Name of the venue (e.g., University, Hotel, Convention centre) " name="Venue[name]"/>
               	    </div>
               	    
 	              	<div class="form-group">
@@ -68,7 +68,7 @@
 	              	</div>
 	              </div>
 	            </div>
-              	<p id="conf-submit-container"><button type="submit" class="btn btn-success">Submit Conference</button> or <a href="#">Cancel</a></p>
+              	<p id="conf-submit-container"><button type="submit" class="btn btn-success">Submit Event</button> or <a href="#">Cancel</a></p>
               </form>
             </div><!--/span-->            
           </div><!--/row-->

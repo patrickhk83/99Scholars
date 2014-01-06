@@ -35,7 +35,6 @@ $(function(){
 	$('#category-option1').change(updateCategory);
 	$('#type-option1').change(updateSearchResult);
 	$('#country-option1').change(updateSearchResult);
-	$('#accept-abstract').change(updateAcceptAbstract);
 	$('#start-date').change(updateSearchResult);
 	$('#end-date').change(updateSearchResult);
 
@@ -152,11 +151,6 @@ function delCountry(countryId)
 	updateSearchResult();
 }
 
-var updateAcceptAbstract = function()
-{
-	showClearFilterButton();
-}
-
 var updateSearchResult = function(page)
 {
 	showClearFilterButton();
@@ -236,10 +230,6 @@ function getAllCriteria(appendOther)
 
 	query += 'cat=' + categories.join(',');
 
-	//is conference accepting abstract
-	var isAcceptAbstract = $('#accept-abstract').is(':checked');
-	query += '&abstract=' + isAcceptAbstract;
-
 	//start date
 	var startDate = $('#start-date').val();
 	query += '&start_date=' + startDate;
@@ -290,8 +280,6 @@ var clearFilter = function()
 	});
 
 	$('#category-criteria select').val(0);
-
-	$('#accept-abstract').attr('checked', false);
 
 	$('#start-date').val('');
 	$('#end-date').val('');

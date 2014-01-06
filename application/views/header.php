@@ -19,6 +19,8 @@
     <?php echo HTML::style('css/newstyle.css') ?>
     <?php echo HTML::style('css/socialbutton.css') ?>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <?php echo HTML::style('css/lightbox.css') ?>
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>

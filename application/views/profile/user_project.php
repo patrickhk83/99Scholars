@@ -1,7 +1,22 @@
 <div class="row">
     <div class="col-lg-12">
-      <table class="table table-striped">
-        <tbody>
+        <div class="well">
+            <label class="checkbox-inline publication-criteria">
+                <input type="checkbox" checked="check" id="project-check"/> Project <span class="text-muted">(<?php echo $projectcount['count']['project'] ?>)</span>
+            </label>
+        </div><!--well-->
+      <div class="row" id="project-container">
+            <div class="col-lg-12">
+              <h4>Projects</h4>
+              <table class="table table-striped">
+                <tbody>
+                    <?php foreach($projectcount['projects'] as $project) { ?>
+                    <tr>
+                      <td><?php echo $project['last_name'].', '.$project['first_name'].' '.$project['year'].' '.$project['title'].' '.$project['project_name']?></td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+       <!-- <tbody>
           <tr>
             <td>
               From Lexicon to Syntax in Childhood Bilingualism 2008-2011
@@ -26,7 +41,9 @@
               <ul><li class="text-muted">PI: Stephen Matthews(HKU) Co-I: Elaine Francis (Purdue), Conrad Perry(HKU) and V. Yip (CUHK)</li></ul>
             </td>
           </tr>
-        </tbody>
-      </table>
+        </tbody>-->
+                </table>
+            </div>
+      </div>
     </div><!--span-->
 </div><!--/row-->

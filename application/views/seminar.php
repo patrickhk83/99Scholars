@@ -1,5 +1,6 @@
 <?php include Kohana::find_file('views', 'header') ?>
 <input type="hidden" id="conf-id" value="<?= $conference->id ?>">
+<input type="hidden" id="user-id" value="<?php echo $userid ?>">
 <div class="row row-offcanvas row-offcanvas-right">
         
         <div class="col-xs-12 col-sm-12">
@@ -88,47 +89,108 @@
               <div class="tab-pane fade active attachment-content" id="video">
               	<div class="row">
               	    <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
-              	      <div class="flex-video"><br/><iframe width="560" height="315" src="http://www.youtube.com/embed/DqekY0Yga4o?rel=0" frameborder="0" allowfullscreen></iframe></div>
+			<br>
+			<?php
+			$login = Service_Login::is_login();
+			if(!empty($login)){
+			?>
+			<button type="button" class="btn btn-default" id="add-video-btn">Add video</button>
+			<?php
+			}
+			?>
+			<br><br>
+              	      <div class="" id="flex-video">
+			<?php
+			if(!empty($videos)){
+				foreach($videos as $video)
+				{
+					?><div id="<?php echo $video['videoid']?>"><iframe width="560" height="315" src="http://www.youtube.com/embed/<?php echo $video['videoid']?>?rel=0&controls=1" frameborder="0" allowfullscreen></iframe>
+					<?php
+					if(!empty($userid) && $userid == $video['users']){
+					?>
+					<p class="text-right" onclick="deletevideo('<?php echo $id?>','<?php echo $video['videoid']?>');"><a href="#">delete</a></p>
+					<?php }?> 
+					</div>
+					<?php
+				}
+			}
+			?>
+		      </div>
               	    </div><!--span-->
               	</div><!--/row-->
               </div>
               <div class="tab-pane fade attachment-content" id="file">
-              	<p>
-              	 <ul class="list-unstyled">
-              	   <li><span class="glyphicon glyphicon-file"></span> <a href="#">PresentationSlide.pptx</a> <span class="text-muted">(5.1 MB)</span></li>
-              	   <li><span class="glyphicon glyphicon-file"></span> <a href="#">DataSheet.xlsx</a> <span class="text-muted">(20.8 MB)</span></li>
-              	   <li><span class="glyphicon glyphicon-file"></span> <a href="#">document.docx</a> <span class="text-muted">(752 kB)</span></li>
-              	 </ul>
-              	</p>
+		<p>
+                  <br>
+			<?php
+			$login = Service_Login::is_login();
+			if(!empty($login)){
+			?>
+                  <button type="button" class="btn btn-default" id="add-file-btn">Add file</button>
+			<?php
+			}
+			?>
+                  <br>
+                 </p>
+		<table class="table">
+                  <tbody>
+			<?php
+			if(!empty($files)){
+				$baseurl = URL::base();
+				$upload= $baseurl."file/".$id."/attachment";
+				$i = 1;
+				foreach($files as $file)
+				{
+					$upload1=$upload."/".$file['name'];
+					?><tr id="conf<?php echo $i ?>"><td><span class="glyphicon glyphicon-file"></span></td><td><a href="<?php echo $upload1;?>"><strong><?php echo $file['name']?></strong></a> <span class="text-muted">(<?php echo $file['size']?>)</span><br><span class="text-muted" id="conf_text<?php echo $i ?>"><?php echo $file['desc']?></span></td><td>
+					<?php
+					if(!empty($userid) && $userid == $file['users']){
+					?>
+					<span style="cursor: pointer;" class="glyphicon glyphicon-pencil file-edit-btn" title="edit" onclick="editfile('<?php echo $file['name']?>','<?php echo $id?>','<?php echo $file['desc']?>','conf_text<?php echo $i ?>');"></span>
+					<span title="delete" onclick="deletefile('<?php echo $file['name']?>','<?php echo $id?>','conf<?php echo $i ?>');" class="glyphicon glyphicon-trash" style="cursor: pointer;"></span></td></tr>
+					<?php
+					}
+					$i++;
+				}
+			}
+			?>
+                 </tbody></table>
               </div>
               <div class="tab-pane fade active attachment-content" id="photo">
-               	<br/>
-	          	  <div class="row photos">
-	          	      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-	          	        <?= HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
-	          	        <p><a href="#">picture.png</a> <span class="text-muted">(127 kB)</span></p>
-	          	      </div><!--span-->
-	          	      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-	          	        <?= HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
-	          	        <p><a href="#">picture.png</a> <span class="text-muted">(127 kB)</span></p>
-	          	      </div><!--span-->
-	          	      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-	          	        <?= HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
-	          	        <p><a href="#">picture.png</a> <span class="text-muted">(127 kB)</span></p>
-	          	      </div><!--span-->
-	          	      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-	          	        <?= HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
-	          	        <p><a href="#">picture.png</a> <span class="text-muted">(127 kB)</span></p>
-	          	      </div><!--span-->
-	          	      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-	          	        <?= HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
-	          	        <p><a href="#">picture.png</a> <span class="text-muted">(127 kB)</span></p>
-	          	      </div><!--span-->
-	          	      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-	          	        <?= HTML::image('img/profile.png', array('class' => 'img-thumbnail')) ?>
-	          	        <p><a href="#">picture.png</a> <span class="text-muted">(127 kB)</span></p>
-	          	      </div><!--span-->
-	          	  </div><!--/row-->
+               		<br/>
+		<?php
+		$login = Service_Login::is_login();
+		if(!empty($login)){
+		?>
+		<button type="button" class="btn btn-default" id="add-photo-btn">Add photo</button>
+		<?php
+		}
+		?>
+		<br/>  <br/>
+	          	  <div class="row">
+			<?php
+			if(!empty($photos)){
+				$baseurl = URL::base();
+				$i = 1;
+				foreach($photos as $photo)
+				{
+				?>
+	          	      <div id="photo<?php echo $i ?>" class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+				<a id="photo_text<?php echo $i ?>" href="<?php echo $baseurl?>gallery/<?php echo $id?>/photos/<?php echo $photo['name']?>"  data-lightbox="roadtrip" title="<?php echo $photo['desc']?>">  <img class="img-thumbnail" src="<?php echo $baseurl?>gallery/<?php echo $id?>/thumb/<?php echo $photo['name']?>" /></a>
+				<?php
+				if(!empty($userid) && $userid == $photo['users']){
+				?>
+	          	         <p class="text-center"><span style="cursor: pointer;" class="glyphicon glyphicon-pencil photo-edit-btn" title="edit" onclick="editphoto('<?php echo $photo['name']?>','<?php echo $id?>','<?php echo $photo['desc']?>','photo_text<?php echo $i ?>');"></span><span style="cursor: pointer;margin-left: 5px;" class="glyphicon glyphicon-trash" title="delete" onclick="deletephoto('<?php echo $photo['name']?>','<?php echo $id?>','photo<?php echo $i ?>');"></span></p>
+				<?php
+				}
+				?>
+	          	      </div>
+			      <?php
+			      $i++;
+				}
+			}
+			?>
+	          	</div>
               </div>
             </div>
             
@@ -207,6 +269,62 @@
     <?php echo HTML::script('js/bootstrap.min.js') ?>
     <?php echo HTML::script('js/offcanvas.js') ?>
     <?php echo HTML::script('js/jquery-ui.js') ?>
+    <?php echo HTML::script('js/lightbox-2.6.min.js') ?>
     <?php echo HTML::script('js/seminar.js') ?>
+	
+	<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-describedby="video-upload-container" style="position: absolute; height: auto; width: 600px; top: 268px; left: 376px; display: none;" aria-labelledby="ui-id-1-2"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span class="ui-dialog-title"></span><button class="ui-dialog-titlebar-close"></button></div><div id="video-upload-container" class="ui-dialog-content ui-widget-content" style="display: block; width: auto; min-height: 88px; max-height: none; height: auto;">
+                       <form role="form" class="form-inline" id="form-video">
+                        <div class="form-group">
+                          <input type="text" class="form-control" placeholder="YouTube Video's id" name="videoid"> 
+                        </div>
+                        <div class="form-group"><button type="button" class="btn btn-default" id="add_video">Add</button></div>
+                        <p class="help-block">If video's url is http://www.youtube.com/watch?v=abcd123, the id is "abcd123"</p>
+                       </form>
+                     </div><div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-sw" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90;"></div></div>
+    <div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-describedby="file-upload-container" aria-labelledby="ui-id-2" style="position: absolute; height: auto; width: 600px; top: 163px; left: 376px; display: none;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-2" class="ui-dialog-title"></span><button class="ui-dialog-titlebar-close"></button></div>
+		<div id="file-upload-container" class="ui-dialog-content ui-widget-content" style="display: block; width: auto; min-height: 88px; max-height: none; height: auto;">
+                 <form role="form" action="<?php echo URL::site('conference/uploadfile') ?>" class="form-inline" id="form-file" method="post" enctype="multipart/form-data">
+                  <div class="form-group">
+			<input type="hidden" name="hidden" value="<?php echo $id ?>">
+                    <input type="file" name="file[]" multiple id="filename">
+                    <small class="help-block">- Only these file types are allowed: .doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, .txt and .rtf</small>
+                    <small class="help-block">- Maximum file size is 25 MB</small>
+                    <textarea class="form-control" rows="3" name="filedesc" placeholder="File description (optional)"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-default" id="add_file">Upload</button>
+                 </form>
+               </div>
+		<div id="file-edit-container" style="display: block; width: auto; min-height: 87px; max-height: none; height: auto;" class="ui-dialog-content ui-widget-content">
+                 <form role="form" class="form-inline" id="form-edit">
+                  <div class="form-group">
+                    <label id="filename1"></label>
+                    <textarea rows="3" id="filedesc" class="form-control"></textarea>
+                  </div>
+		  <button type="button" class="btn btn-default" id="edit_file">Edit</button>
+                 </form>
+               </div>
+		<div id="photo-upload-container" style="display: block; width: auto; min-height: 88px; max-height: none; height: auto;" class="ui-dialog-content ui-widget-content">
+                    <form role="form" action="<?php echo URL::site('conference/uploadphoto') ?>" class="form-inline" id="form-photo" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="hidden1" value="<?php echo $id ?>">
+                    <div class="form-group">
+                      <input type="file" name="file[]" multiple id="filename">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control"  name="photodesc"  placeholder="Photo's caption (optional)">
+                    </div>
+                    <button type="submit" class="btn btn-default" >Upload</button>
+                   </form>
+                 </div>
+		<div id="photo-edit-container" class="ui-dialog-content ui-widget-content" style="display: block; width: auto; min-height: 87px; max-height: none; height: auto;">
+                   <form role="form">
+                    <div class="form-group">
+			<input type="hidden" id="hiddenval" value="">
+			<input type="hidden" id="hiddenname" value="">
+                      <input type="text" id="photodesc1" class="form-control" value="">
+                    </div>
+                    <button id="edit_photo" type="button" class="btn btn-default">Edit</button>
+                   </form>
+                 </div>
+	<div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-sw" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90;"></div></div>
   </body>
 </html>
