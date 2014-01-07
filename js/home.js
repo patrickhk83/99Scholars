@@ -32,18 +32,33 @@ $(function(){
 	$('#add-type-link').click(addType);
 	$('#add-country-link').click(addCountry);
 	
-	$('#category-option1').change(updateSearchResult);
+	$('#category-option1').change(updateCategory);
 	$('#type-option1').change(updateSearchResult);
 	$('#country-option1').change(updateSearchResult);
-	$('#accept-abstract').change(updateAcceptAbstract);
 	$('#start-date').change(updateSearchResult);
 	$('#end-date').change(updateSearchResult);
 
-	hideClearFilterButton();
+	
 	$('#clear-filter-btn').click(clearFilter);
 
 
 });
+
+var updateCategory = function()
+{
+	var categories = new Array();
+
+	$('[id^=category-option] select').filter(function(){
+		return $(this).val() > 0;
+	}).each(function(index){
+		categories.push($(this).children("option").filter(":selected").text());
+	});
+
+	$('.category-container').show();
+	$('#categories').html(categories.join(', '));
+
+	updateSearchResult();
+}
 
 var addCategory = function() 
 {
@@ -51,7 +66,7 @@ var addCategory = function()
 	var option = '<div id="category-option' + categoryCount + '">' +
 		'<div class="form-inline">' +
 			'<select class="form-control criteria-option">' +
-				'<option value="0">Select Category</option>' +
+				'<option value="0">Select Subject</option>' +
 				'<option value="1">Technology</option>' +
 				'<option value="2">Linguistics</option>' +
 				'<option value="3">Psychology</option>' +
@@ -61,7 +76,7 @@ var addCategory = function()
 	'</div>';
 	
 	$('#category-criteria').append(option);
-	$('#category-option' + categoryCount).change(updateSearchResult);
+	$('#category-option' + categoryCount).change(updateCategory);
 
 	showClearFilterButton();
 
@@ -71,7 +86,7 @@ var addCategory = function()
 function delCategory(catId) 
 {
 	$('#category-option' + catId).remove();
-	updateSearchResult();
+	updateCategory();
 }
 
 var addType = function() 
@@ -108,22 +123,19 @@ function delType(typeId)
 var addCountry = function() 
 {
 	countryCount++;
-	var option = '<div id="country-option' + countryCount + '">' +
-		'<div class="form-inline">' +
-			'<select class="form-control criteria-option">' +
-				'<option value="0">Select Country</option>' +
-				'<option value="1">United States</option>' +
-				'<option value="2">Brazil</option>' +
-				'<option value="3">China</option>' +
-				'<option value="4">Hong Kong</option>' +
-				'<option value="5">Singapore</option>' +
-				'<option value="6">Thailand</option>' +
-			'</select> ' +
-			'<span class="glyphicon glyphicon-minus-sign" onclick="delCountry(' + countryCount + ')"></span>' +
-		'</div>' +
-	'</div>';
-	
-	$('#country-criteria').append(option);
+	var $option = $('#country-option1').children().clone();
+	$option.attr("id", 'country-option' + countryCount);
+	$option.addClass('form-control criteria-option');
+	var $delete_button = $('<span>', {class: "glyphicon glyphicon-minus-sign"}).click(function(){delCountry(countryCount);});
+	var $new_country_option = $('<div/>', {id: 'country-option' + countryCount}).append(
+		$('<div/>', {class: 'form-inline'}).append(
+			$option
+		).append(' ').append(
+			$delete_button
+		)
+	);
+
+	$('#country-criteria').append($new_country_option);
 	$('#country-option' + countryCount).change(updateSearchResult);
 
 	showClearFilterButton();
@@ -137,23 +149,20 @@ function delCountry(countryId)
 	updateSearchResult();
 }
 
-var updateAcceptAbstract = function()
-{
-	showClearFilterButton();
-}
-
 var updateSearchResult = function(page)
 {
+	showClearFilterButton();
+
+	console.log('typeof page: ' + typeof page);
 	//set optional parameter
 	if(typeof page === 'object' || typeof page === 'undefined') page = 1;
-
+	console.log('init page: ' + page);
 	var url = searchUrl;
 
 	url += getAllCriteria();
 
 	//start at the 1st page
 	url += '&page=' + page;
-
 	$.get(url, function (data){
 
 		$('#conf-list').infinitescroll('destroy');
@@ -163,8 +172,19 @@ var updateSearchResult = function(page)
 
 		if(page == 1)
 		{
+
 			var total = $('#total-search-result').val();
+			console.log('page: ' + page + ", total:" + total);
 			$('#total-display').html(total);
+
+			if(total > 2)
+			{
+				$('#event-text').html('Events found');
+			}
+			else
+			{
+				$('#event-text').html('Event found');
+			}
 		}
 
 		$('#conf-list').infinitescroll({
@@ -208,10 +228,6 @@ function getAllCriteria(appendOther)
 
 	query += 'cat=' + categories.join(',');
 
-	//is conference accepting abstract
-	var isAcceptAbstract = $('#accept-abstract').is(':checked');
-	query += '&abstract=' + isAcceptAbstract;
-
 	//start date
 	var startDate = $('#start-date').val();
 	query += '&start_date=' + startDate;
@@ -235,37 +251,33 @@ function getAllCriteria(appendOther)
 	var countries = new Array();
 
 	$('[id^=country-option] select').filter(function(){
-		return $(this).val() > 0;
+		return $(this).val() != 0;
 	}).each(function(index){
 		countries.push($(this).val());
 	});
 
 	query += '&country=' + countries.join(',');
-
 	return query;
 }
 
 function showClearFilterButton()
 {
-	$('#clear-filter-container').show();
+	$('.clear-filter-container').show();
 }
 
 function hideClearFilterButton()
 {
-	$('#clear-filter-container').hide();
+	$('.clear-filter-container').hide();
 }
 
 var clearFilter = function()
 {
-	hideClearFilterButton();
 
 	$('#category-criteria div:not(:first-child)').each(function(index){
 		$(this).remove();
 	});
 
 	$('#category-criteria select').val(0);
-
-	$('#accept-abstract').attr('checked', false);
 
 	$('#start-date').val('');
 	$('#end-date').val('');
@@ -283,6 +295,8 @@ var clearFilter = function()
 	$('#country-criteria select').val(0);
 
 	updateSearchResult();
+	hideClearFilterButton();
+	$('.category-container').hide();
 
 	return false;
 }

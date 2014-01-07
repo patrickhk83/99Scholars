@@ -1,4 +1,4 @@
- 
+
 <?php if(isset($total)) { ?>
 	<input type="hidden" id="total-search-result" value="<?php echo $total ?>">
 <?php } ?>

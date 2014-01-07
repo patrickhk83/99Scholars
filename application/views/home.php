@@ -6,45 +6,19 @@
           <div class="well sidebar-nav">
             <form role="form">
               <ul class="nav">
-                <li><h5>Filter by Category</h5></li>
+                <li><h5>Filter by Subject</h5></li>
                 <li class="criteria-container">
                   <div id="category-criteria">
                     <div id="category-option1">
                       <select class="form-control criteria-option">
-                        <option value="0">Select Category</option>
-                        <option value="1">Technology</option>
+                        <option value="0">Select Subject</option>
+                        <!--option value="1">Technology</option-->
                         <option value="2">Linguistics</option>
                         <option value="3">Psychology</option>
                       </select>
                     </div>
                   </div>
-                  <div class="add-criteria-link"><a href="#" id="add-category-link">Add more category</a></div>      
-                </li>
-                <li class="criteria-container"><h5>Call for abstract only <input type="checkbox" id="accept-abstract"/></h5></li>
-                <li><h5>Filter by Conference Date</h5></li>
-                <li class="criteria-container">
-                  <div class="form-group">
-                    <input type="text" class="form-control datepicker criteria-option" placeholder="Start Date" id="start-date" data-date-format="dd/mm/yyyy">
-                  </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control datepicker criteria-option" placeholder="End Date" id="end-date" data-date-format="dd/mm/yyyy"/>
-                  </div>
-                </li>
-                <li><h5>Filter by Type</h5></li>
-                <li class="criteria-container">
-                  <div id="type-criteria">
-                    <div id="type-option1">
-                      <select class="form-control criteria-option">
-                        <option value="0">Select Type</option>
-                        <option value="1">Conference</option>
-                        <option value="2">Seminar</option>
-                        <option value="3">Workshop</option>
-                        <option value="4">Webinar</option>
-                        <option value="5">Online Conference</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="add-criteria-link"><a href="#" id="add-type-link">Add more type</a></div>
+                  <div class="add-criteria-link"><a href="#" id="add-category-link">Add more subject</a></div>      
                 </li>
                 <li><h5>Filter by Country</h5></li>
                 <li class="criteria-container">
@@ -52,16 +26,35 @@
                     <div id="country-option1">
                       <select class="form-control criteria-option">
                         <option value="0">Select Country</option>
-                        <option value="1">United States</option>
-                        <option value="2">Brazil</option>
-                        <option value="3">China</option>
-                        <option value="4">Hong Kong</option>
-                        <option value="5">Singapore</option>
-                        <option value="6">Thailand</option>
+                        <? foreach($countries as $short_name => $full_name){ ?>
+                          <option value="<?= $short_name ?>"><?= $full_name ?></option>
+                        <? } ?>
                       </select>
                     </div>
                   </div>
                   <div class="add-criteria-link"><a href="#" id="add-country-link">Add more country</a></div>
+                </li>
+                <li><h5>Filter by Event Type</h5></li>
+                <li class="criteria-container">
+                  <div id="type-criteria">
+                    <div id="type-option1">
+                      <select class="form-control criteria-option">
+                        <option value="0">Select Type</option>
+                        <option value="1">Conference</option>
+                        <option value="2">Seminar</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="add-criteria-link"><a href="#" id="add-type-link">Add more event type</a></div>
+                </li>
+                <li><h5>Filter by Event Date</h5></li>
+                <li class="criteria-container">
+                  <div class="form-group">
+                    <input type="text" class="form-control datepicker criteria-option" placeholder="Start Date" id="start-date" data-date-format="dd/mm/yyyy">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control datepicker criteria-option" placeholder="End Date" id="end-date" data-date-format="dd/mm/yyyy"/>
+                  </div>
                 </li>
               </ul>
             </form>
@@ -75,16 +68,16 @@
 
           <div class="panel panel-default">
             <div class="panel-body">
-              <h5>Submit your conference today!</h5>
-              <p>Have a conference? With 99Scholars, your conference will be recognized by more people around the world.</p>
-              <p><a href="<?php echo URL::site('conference/submit') ?>"><button type="button" class="btn btn-primary btn-sm">Submit conference</button></a></p>
+              <h5>Submit your academic event today!</h5>
+              <p>Have a conference or seminar? WIth 99Scholars, your academic event will be recognized by more people around the world.</p>
+              <p><a href="<?php echo URL::site('conference/submit') ?>"><button type="button" class="btn btn-primary btn-sm">Submit an academic event</button></a></p>
             </div>
           </div>
 
           <div class="row">
             <div class="col-lg-12">
               <div id="total-conference-display">
-                <h2><span id="total-display"><?php echo $total ?></span> Conferences found</h2> <span id="clear-filter-container">( <a href="#" id="clear-filter-btn">clear all filter</a> )</span>
+                <h2><span id="total-display"><?php echo $total ?></span> <spen id="event-text">Events found</span></h2> <span class="category-container"> [ <span id="categories"></span> ]</span> <span class="clear-filter-container"> ( <a href="#" id="clear-filter-btn">clear all filter</a> )</span>
               </div>
             <div class="row">
 	            <div class="col-lg-12">
@@ -122,7 +115,7 @@
       <hr>
 
       <footer>
-        <p>&copy; Company 2013</p>
+        <p>&copy; 99Scholars 2013</p>
       </footer>
 
     </div><!--/.container-->

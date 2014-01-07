@@ -131,7 +131,7 @@ class Service_User {
 		$atten_dao = new Dao_Attendee();
 		$atten_dao->delete($user, $conferemce);
 	}
-
+	
 	public function encrypt_password($password)
 	{
 		return md5($password);

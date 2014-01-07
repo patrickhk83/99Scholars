@@ -41,7 +41,9 @@ class Service_ConferenceTopic {
 		$topic = array();
 
 		$topic_dao = new Dao_ConferenceTopic();
-		$topic_result = $topic_dao->get_with_author($topic_id);
+		$result = $topic_dao->get_with_author($topic_id);
+
+		$topic_result = $result[0];
 
 		$topic['id'] = $topic_result['id'];
 		$topic['title'] = $topic_result['title'];
@@ -53,7 +55,7 @@ class Service_ConferenceTopic {
 		$comment_service = new Service_ConferenceComment();
 		$comments = $comment_service->get_comment_list($topic_id);
 		$topic['comments'] = $comments;
-		
+
 		return $topic;
 	}
 }

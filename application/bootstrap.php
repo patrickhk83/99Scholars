@@ -22,7 +22,7 @@ else
  * @link http://kohanaframework.org/guide/using.configuration
  * @link http://www.php.net/manual/timezones
  */
-date_default_timezone_set('Asia/Bangkok');
+date_default_timezone_set('Asia/Shanghai');
 
 /**
  * Set the default locale.
@@ -77,6 +77,21 @@ if (isset($_SERVER['SERVER_PROTOCOL']))
 }
 
 /**
+ * Set the environment status by the domain.
+ */
+if (strpos($_SERVER['HTTP_HOST'], '99scholars.net') !== FALSE)
+{
+    $_SERVER['KOHANA_ENV'] = 'production';
+ 
+    // Turn off notices and strict errors
+    error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
+}
+else
+{
+	$_SERVER['KOHANA_ENV'] = 'development';
+}
+
+/**
  * Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.
  *
  * Note: If you supply an invalid environment name, a PHP warning will be thrown
@@ -103,21 +118,23 @@ if (isset($_SERVER['KOHANA_ENV']))
  * - boolean  expose      set the X-Powered-By header                        FALSE
  */
 Kohana::init(array(
+	'base_url' => '/99scholars/',
 	'index_file' => FALSE,
-		'kopauth'=>'/kopauth/',
-		
+		'kopauth'=>'/',
 ));
 
 /**
  * Attach the file write to logging. Multiple writers are supported.
  */
-Kohana::$log->attach(new Log_File(APPPATH.'logs'));
+// Kohana::$log->attach(new Log_File(APPPATH.'logs'));
 
 /**
  * Attach a file reader to config. Multiple readers are supported.
  */
+// Kohana::$config->attach();
 Kohana::$config->attach(new Config_File);
-
+Kohana::$config->attach(new Config_File('config/'.$_SERVER['KOHANA_ENV']));
+// echo DEBUG::vars(new Config_File('config/'.$_SERVER['KOHANA_ENV']));exit;
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
@@ -134,14 +151,36 @@ Kohana::modules(array(
 	'pagination' => MODPATH.'pagination', // Paging of results
 	'kopauth'	=> MODPATH.'kopauth',
 	'crud'  => MODPATH.'crud',
+	// 'firephp'	=> MODPATH.'firephp',
 	));
 
 Cookie::$salt = 'foobar';
-
+// echo DEBUG::vars(Kohana::$config);exit;
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
+Route::set('create', 'new/<controller>')
+	->filter(function($route, $params, $request)
+	{
+		if ($request->method() == HTTP_Request::POST)
+		{
+			$params['action'] = 'create';
+			return $params;
+		}
+		else
+		{
+			// This route only matches POST requests
+			return FALSE;
+		}
+	});
+	
+Route::set('opauth', 'oauth(/<action>(/<strategy>(/<callback>)))')
+    ->defaults(array(
+        'controller' => 'signup',
+        'action'     => 'authenticate',
+    ));
+
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
 		'controller' => 'home',
@@ -156,3 +195,17 @@ Route::set('conference', '(<controller>(/<action>(/<id>(/<session>(/<session_id>
 	->defaults(array(
 		'action'     => 'index',
 	));
+
+Route::set('actionstatistics' , '(<controller>(/<action>(/<page_num>(/<per_page>(/<action_filter>(/<user_filter>(/<start_date>)))))))')
+	->defaults(
+		array(
+			'controller' => 'actionstatistics',
+			'action' => 'index',
+			'page_num' => '1',
+			'per_page' => '20',
+			'action_filter' => 'All',
+	));
+
+	
+
+

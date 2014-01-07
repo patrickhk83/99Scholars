@@ -45,7 +45,6 @@ var showConfForm = function()
 			break;
 	}
 
-	
 	$('#form-conference').validate();
 	$('#address-form').show();
 	$('#conf-submit-container').show();
@@ -57,7 +56,7 @@ var addCategory = function()
 	var option = '<div id="category' + categoryCount + '">' +
 	  				'<div class="form-inline">' +
 	    				'<div class="form-group">' +
-	    				'<select class="form-control category-option required" name="category[option' + categoryCount + ']">' +
+	    				'<select class="form-control category-option required" name="Category[' + categoryCount + '][category]">' +
 	    	  			'<option value="">Choose Conference\'s Category</option>' +
 	    	  			'<option value="1">Technology</option>' +
       	          	    '<option value="2">Linguistics</option>' +

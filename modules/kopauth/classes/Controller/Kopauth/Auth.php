@@ -46,6 +46,7 @@ class Controller_Kopauth_Auth extends Controller
      */
     public function action_providers()
     {
+        
         if (Kohana::$environment === Kohana::PRODUCTION)
         {
             // Do not allow this view in production
@@ -63,6 +64,7 @@ class Controller_Kopauth_Auth extends Controller
      */
     public function action_sessiondata()
     {
+        
         if (Kohana::$environment === Kohana::PRODUCTION)
         {
             // Do not allow this view in production

@@ -12,7 +12,7 @@
           <div class="row">
             <div class="col-lg-12">
               <h3>Sign in to 99Scholars</h3>
-              <form role="form" method="post" action="<?php echo URL::site('login') ?>">
+              <form role="form" method="post" action="<?php echo URL::site('login/email') ?>">
                 <div class="form-group">
                   <label for="userEmail">Email address</label>
                   <input type="email" class="form-control" id="userEmail" placeholder="Enter your email" name="email"/>  
@@ -32,7 +32,7 @@
       <hr>
 
       <footer>
-        <p>&copy; Company 2013</p>
+        <p>&copy; 99Scholars 2013</p>
       </footer>
 
     </div><!--/.container-->

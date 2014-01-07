@@ -13,11 +13,20 @@ class Service_Journal {
 		{
 			$journal = array();
 
-			$user_service = new Service_User();
-			$user = $user_service->get_by_id($result->get('author'));
+		//	$user_service = new Service_User();
+		//	$user = $user_service->get_by_id($result->get('author'));
 
-			$journal['first_name'] = $user['first_name'];
-			$journal['last_name'] = $user['last_name'];
+		//	$journal['first_name'] = $user['first_name'];
+		//	$journal['last_name'] = $user['last_name'];
+			$username = new Dao_Journal();
+				$user = $username->get_last_author($result->get('id'));
+				
+				foreach ($user as $val)
+				{
+					$author_names = $val['author_name'];
+				}
+			
+			$journal['first_name'] = $author_names;
 			$journal['year'] = $result->get('title');
 			$journal['journal'] = $result->get('journal');
 			$journal['title'] = $result->get('title');

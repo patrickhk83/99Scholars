@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Conference Submission - 99Scholars</title>
+    <title>Expand your network through conferences - 99Scholars</title>
 
     <!-- Bootstrap core CSS -->
     <?php echo HTML::style('css/bootstrap.min.css') ?>
@@ -15,6 +15,7 @@
     <?php echo HTML::style('css/offcanvas.css') ?>
 
     <?php echo HTML::style('css/datepicker.css') ?>
+    <?php echo HTML::style('css/lightbox.css') ?>
 
     <?php echo HTML::style('css/blog.css') ?>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -46,7 +47,7 @@
 
           <?php if(!Service_Login::is_login()) { ?>
 
-            <form class="navbar-form navbar-right" action="<?php echo URL::site('login') ?>" method="post">
+            <form class="navbar-form navbar-right" action="<?php echo URL::site('login/email') ?>" method="post">
               <div class="form-group">
                 <input type="text" placeholder="Email" class="form-control" name="email">
               </div>

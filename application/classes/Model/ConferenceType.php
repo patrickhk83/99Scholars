@@ -3,4 +3,5 @@
 class Model_ConferenceType extends ORM {
 
 	protected $_table_name = 'conference_type';
+
 }

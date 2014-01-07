@@ -41,7 +41,11 @@
                       <p><a href="<?php echo URL::site('profile/edit') ?>"><button class="btn btn-primary btn-block">Edit your profile</button></a></p>
                       <p><button class="btn btn-default btn-block">Share your profile</button></p>
                     <?php } else { ?>
-                      <p><button class="btn btn-success btn-block">Follow</button></p>
+                      <?php if($is_following) { ?>
+                        <p><button class="btn btn-warning btn-block" id="follow-btn" onclick="unfollowUser(<?= $user_id ?>, this)">Unfollow</button></p>
+                      <?php } else { ?>
+                        <p><button class="btn btn-success btn-block" id="follow-btn" onclick="followUser(<?= $user_id ?>, this)">Follow</button></p>
+                      <?php } ?>
                       <p><button class="btn btn-default btn-block">Send Message</button></p>
                     <?php } ?>
                 </div>
@@ -55,6 +59,8 @@
                     <li><a href="#publication" data-toggle="tab" id="publication-link">Publications (<?php echo $work_count['publication'] ?>)</a></li>
                     <li><a href="#project" data-toggle="tab" id="project-link">Projects (<?php echo $work_count['project'] ?>)</a></li>
                     <li><a href="#presentation" data-toggle="tab" id="presentation-link">Presentations (<?php echo $work_count['presentation'] ?>)</a></li>
+                    <li><a href="#following" data-toggle="tab" id="following-link">Following (<?= $info['following'] ?>)</a></li>
+                    <li><a href="#follower" data-toggle="tab" id="follower-link">Follower (<?= $info['follower'] ?>)</a></li>
                   </ul>
                   
                   <div class="tab-content">
@@ -155,6 +161,10 @@
                     </div>
                     <div class="tab-pane fade active profile-content" id="presentation">
                     </div>
+                    <div class="tab-pane fade active profile-content" id="follower">
+                    </div>
+                    <div class="tab-pane fade active profile-content" id="following">
+                    </div>
                   </div>
                 </div>  
               </div><!--row-->
@@ -167,7 +177,7 @@
       <hr>
 
       <footer>
-        <p>&copy; Company 2013</p>
+        <p>&copy; 99Scholars 2013</p>
       </footer>
 
     </div><!--/.container-->

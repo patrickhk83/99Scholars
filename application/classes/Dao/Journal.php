@@ -22,7 +22,7 @@ class Dao_Journal {
 
 		return $journal->pk();
 	}
-
+	
 	public function get_by_user_id($user_id, $recent_first = FALSE)
 	{
 		$query = ORM::factory('Journal')
@@ -34,5 +34,31 @@ class Dao_Journal {
 		}
 
 		return $query->find_all();
+	}
+	
+	public function get_last_user_id($user_id)
+	{
+		$query = ORM::factory('Journal')
+						->where('author', '=', $user_id);
+
+			$query->order_by('id', 'desc')->limit(1);
+
+		return $query->find_all();
+	}
+	
+	public function get_last_author($user_id)
+	{
+		$query = DB::select('author_name')->from('co_author')
+						->where('journal', '=', $user_id);
+
+
+		return $query->execute();
+	}
+	
+	public function insert_list($id,$value)
+	{
+		$query = DB::insert('co_author', array('journal', 'author_name'))->values(array($id, $value));
+
+		$query->execute();
 	}
 }

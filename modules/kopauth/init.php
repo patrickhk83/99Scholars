@@ -5,12 +5,12 @@
  * @author    Fady Khalife
  * @link      http://opauth.org
  */
-Route::set('kopauth', 'kopauth(/<action>(/<strategy>(/<callback>)))')
-    ->defaults(array(
-        'directory'  => 'Kopauth',
-        'controller' => 'Auth',
-        'action'     => 'providers'
-    ));
+// Route::set('kopauth', 'kopauth(/<action>(/<strategy>(/<callback>)))')
+//     ->defaults(array(
+//         'directory'  => 'Kopauth',
+//         'controller' => 'Auth',
+//         'action'     => 'providers'
+//     ));
 
 require Kohana::find_file('vendor', 'opauth/lib/Opauth/Opauth');
 

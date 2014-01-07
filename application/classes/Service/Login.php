@@ -4,27 +4,37 @@ class Service_Login {
 
 	public function login($email, $password)
 	{
-		$user_service = new Service_User();
-		$user = $user_service->get_by_email($email);
 
-		//TODO: throw exception instead of returning null
-		if(isset($user))
+		$user = ORM::factory('User')->where('email', '=', $email)->find();
+		if($user->loaded() AND $user->password === $user_service->encrypt_password($password))
 		{
-			if($user['password'] === $user_service->encrypt_password($password))
-			{
-				$this->store_login_info($user['id']);
-				return TRUE;
-			}
-			else
-			{
-				return FALSE;
-			}
+			$this->store_login_info($user->id);
+			return true;
+		}else{
+			return false;
+		}
+
+		// $user_service = new Service_User();
+		// $user = $user_service->get_by_email($email);
+
+		// //TODO: throw exception instead of returning null
+		// if(isset($user))
+		// {
+		// 	if($user['password'] === $user_service->encrypt_password($password))
+		// 	{
+		// 		$this->store_login_info($user['id']);
+		// 		return TRUE;
+		// 	}
+		// 	else
+		// 	{
+		// 		return FALSE;
+		// 	}
 			
-		}
-		else
-		{
-			return FALSE;
-		}
+		// }
+		// else
+		// {
+		// 	return FALSE;
+		// }
 		
 	}
 
