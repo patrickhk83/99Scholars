@@ -33,11 +33,11 @@
     <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
       <div class="nav-logo hidden-xs">
         <div class="container">
-          <span class="fleft"><img src="img/logo-<?php $imgname=basename($_SERVER['PHP_SELF']); echo preg_replace('/\.php$/', '', $imgname);?>.png"></span>
+          <span class="fleft"><?= HTML::image('img/logo-index.png') ?></span>
           <ul class="social-icons">
-            <li><a href=""><img src="img/fb.png"></a></li>
-            <li><a href=""><img src="img/twitter.png"></a></li>
-            <li><a href=""><img src="img/linkedin.png"></a></li>
+            <li><a href=""><?= HTML::image('img/fb.png') ?></a></li>
+            <li><a href=""><?= HTML::image('img/twitter.png') ?></li>
+            <li><a href=""><?= HTML::image('img/linkedin.png') ?></a></li>
           </ul>   
           <div class="clearfix"></div>
         </div>
