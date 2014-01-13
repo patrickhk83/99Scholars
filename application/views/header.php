@@ -19,18 +19,16 @@
     <?php echo HTML::style('css/newstyle.css') ?>
     <?php echo HTML::style('css/socialbutton.css') ?>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <?php echo HTML::style('css/lightbox.css') ?>
-
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
     <![endif]-->
+      <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+      <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
   </head>
 
   <body>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-    <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
     <input type="hidden" id="base-url" value="<?php echo URL::site('') ?>">
     <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
       <div class="nav-logo hidden-xs">
@@ -95,7 +93,7 @@
                 <div class="fright">
                     <a class="btn dropdown-toggle signup-button" href="#" data-toggle="dropdown">Register</a>
                     <div class="dropdown-menu email-dropdown">
-                        <form style="margin: 0px" accept-charset="UTF-8" action="<?php echo URL::site($signup_url) ?>" method="post">
+                        <form style="margin: 0px" accept-charset="UTF-8" action="<?php echo URL::site('signup') ?>" method="post">
                             <div class="form-group">
                                 <label for="first-name">First Name</label>
                                 <input type="text" class="form-control" id="first-name" placeholder="Your First Name" name="first_name"/>

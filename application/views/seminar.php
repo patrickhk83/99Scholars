@@ -4,9 +4,6 @@
 <div class="row row-offcanvas row-offcanvas-right">
         
         <div class="col-xs-12 col-sm-12">
-          <p class="pull-right visible-xs">
-            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-          </p>
           <div class="row">
             <div class="col-lg-12">
               <div class="row">
@@ -40,13 +37,24 @@
           <div class="row">
             <div class="col-lg-12">
             
-            <ul class="nav nav-tabs" id="attachment-tab">
+            <ul class="nav nav-tabs hidden-xs" id="attachment-tab">
               <li><a href="#info" data-toggle="tab">Info</a></li>
               <li><a href="#video" data-toggle="tab">Videos</a></li>
               <li><a href="#file" data-toggle="tab">Files</a></li>
               <li><a href="#photo" data-toggle="tab">Photos</a></li>
             </ul>
-            
+            <div class="visible-xs btn-group">
+                <button class="mobuser-dropdown dropdown-toggle" data-target="#" data-backdrop="static" data-toggle="dropdown">
+                    <span class="dropdown-label user-label">Overview</span>
+                    <span class="caret" style="border-top-color: #fff;"></span>
+                </button>
+            <ul class="dropdown-menu text-center text-sm mobuser-dropmenu">
+                <li><a href="#info" data-toggle="tab">Info</a></li>
+                <li><a href="#video" data-toggle="tab">Videos</a></li>
+                <li><a href="#file" data-toggle="tab">Files</a></li>
+                <li><a href="#photo" data-toggle="tab">Photos</a></li>
+            </ul>
+            </div>
             <div class="tab-content">
               <div class="tab-pane fade active attachment-content" id="info">
                 <div class="row">
@@ -55,13 +63,15 @@
                         <p><?= $conference->conference_type->name ?></p>
                         <h4>Cateogry</h4>
                         <p><?= $conference->category->conference_category->name ?></p>
+                        <!--p><h4>Description</h4></p>
+              	        <p><?= $conference->description ?></p-->
                         <h4>Abstract</h4>
                         <p><?= $conference->seminar->abstract ?></p>
                     </div><!--span-->
                     <div class="col-lg-4 share-btn-container">
                     <div class="row">
-                        <div class="well well-sm share-box"><p>share with : <a href="https://www.facebook.com/sharer/sharer.php?u=<?= URL::site(Request::detect_uri(),true)  ?>" target="_blank"><img src="img/fb-share.png"></a>&nbsp;&nbsp;&nbsp;<a href="http://twitter.com/intent/tweet?url=<?= URL::site(Request::detect_uri(),true)  ?>" target="_blank"><img src="img/twitter-share.png"></a></p>  </div>
-                    </div>
+                      <div class="well well-sm share-box"><p><strong>share with :</strong> <a href="https://www.facebook.com/sharer/sharer.php?u=<?= URL::site(Request::detect_uri(),true)  ?>" target="_blank">Facebook</a> | <a href="http://twitter.com/intent/tweet?url=<?= URL::site(Request::detect_uri(),true)  ?>" target="_blank">Twitter</a></p>  </div>
+                    </div><!--span-->
                     <div class="row">
                         <h3 class="text-muted">Attendees</h3>
 
@@ -82,9 +92,8 @@
                         </table>
                         </p>
                     </div>
-                    </div><!--span-->
+                    </div>
                 </div><!--/row-->
-              	<!--p><h4>Description</h4></p>-->
               </div>
               <div class="tab-pane fade active attachment-content" id="video">
               	<div class="row">
@@ -245,7 +254,24 @@
               </div>
             </div><!-- /span -->
             <div class="col-lg-4">
-
+              <p><h4 class="text-muted">Attendees</h4></p>
+              <p>
+                <table class="table" id="attendee-list">
+                  <?php if($conference->attendee->find_all()->count() != 0) { ?>
+                    <?php foreach($conference->attendee->find_all() as $attendee) { ?>
+                      <tr id="attendee-<?= $attendee->id ?>">
+                        <td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
+                        <td>
+                          <p><a href="<?= URL::site('user/profile/'.$attendee->id) ?>"><strong><?= $attendee->get_fullname() ?></strong></a> <br/> <small class="text-muted"><?= $attendee->get_affiliation() ?></small></p>
+                          <p></p>
+                        </td>
+                      </tr>
+                    <?php } ?>
+                  <?php } else { ?>
+                    <tr id="attendee-placeholder"><td>There is no attendee right now</td></tr>
+                  <?php } ?>
+                </table>
+              </p>
             </div><!--/span--> 
           </div><!--/row-->
         </div><!--/span-->

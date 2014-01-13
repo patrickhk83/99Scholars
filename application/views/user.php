@@ -6,22 +6,25 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="row">
-                <div class="col-lg-2 col-md-2 col-xs-4"><img src="../img/001.jpg" class="img-rounded user-img"/></div><!--span-->
-                <div class="col-lg-8 col-md-8 col-xs-8 user-info">
-                	<h3 class="user-name">Patrick Chu</h3>
+                <!--<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3"><img src="../img/001.jpg" class="img-rounded user-img"/></div>-->
+                <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 user-info">
+                    <img src="../img/001.jpg" class="img-rounded user-img"/>
+                	<div class="user-desc">
+                    <h3 class="user-name">Patrick Chu</h3>
                 	<p><span class="user-desig">Ph.D., Psychology, University of New South Wales, 2013</span><br>
                 	<span><img class="loc" src="../img/location.png"></span><span class="user-desig">Hongkong, Hongkong SAR</span></p>
+                    </div>
                 </div><!--span-->
-                <div class="col-lg-2 col-md-2 hidden-xs">
+                <div class="col-lg-2 col-md-3 col-sm-3 hidden-xs">
                 	<!--<p><br></p>-->
                     <div class="row">
-                        <div class="col-md-6 follow-section">
+                        <div class="col-md-6 col-sm-6 follow-section">
                             <p class="follow-count">15</p>
                             <p class="follow-name">Publications</p>
                             <p class="follow-count">4</p>
                             <p class="follow-name">Presentations</p>
                         </div>
-                        <div class="col-md-6 follow-section2">
+                        <div class="col-md-6 col-sm-6 follow-section2">
                              <p class="follow-count">28</p>
                             <p class="follow-name">Projects</p>
                             <p class="follow-count">118</p>
@@ -34,19 +37,19 @@
               </div>
               <div class="row visible-xs follow-section-xs">
                   <div class="row">
-                  <div class="col-xs-3">
+                  <div class="col-xs-3 pad0">
                     <p class="follow-count">15</p>
                     <p class="follow-name">Publications</p>
                   </div>
-                  <div class="col-xs-3">
+                  <div class="col-xs-3 pad0">
                       <p class="follow-count">28</p>
                       <p class="follow-name">Projects</p>
                   </div>
-                  <div class="col-xs-3">
+                  <div class="col-xs-3 pad0">
                       <p class="follow-count">4</p>
                       <p class="follow-name">Presentations</p>
                   </div>
-                  <div class="col-xs-3">
+                  <div class="col-xs-3 pad0">
                       <p class="follow-count">118</p>
                       <p class="follow-name">Following</p>
                   </div>
@@ -80,38 +83,41 @@
                   </div>
                   <div class="tab-content">
                     
-                    <div class="tab-pane fade active profile-content" id="info">
-                    	<div class="row">
-
-                    	      <div class="row">
-                    	          <div class="col-lg-9 col-md-9">
-                    	          	<h4>Qualifications</h4>
-                    	          	<p>Ph.D., Psychology, University of New South Wales, 2013 <br>
-                    	          	B.A., Linguistics, Chinese University of Hong Kong, 2006<br><br>
-                    	          	</p>
-                    	          	<h4>Research Interests</h4>
-                    	          	<p><br><br></p>
-                    	            <h4>Recent Publications</h4>
-                    	            <p></p>
-                    	          </div><!--span-->
-                    	          <div class="col-lg-3 col-md-3">
-                    	            <div class="well contact-info">
-                    	              <p class="contact-head"><strong>Contact Information</strong></p>
-                    	              <p class="contact-text"><span><img src="img/caller.png"></span>852-51373793 <br>
-                                         <span><img src="img/message.png"></span>patrick@99scholars.net<br>
-                                         <span><img src="img/web.png"></span><a href="http://patrickchu.net/" target="_blank">http://patrickchu.net/</a></p>
-                    	              <br>
-                    	            </div><!--well-->
-                    	            <!--div class="well">
-                    	            	<p><strong>Other Affiliations</strong></p>
-                    	            	<p><a href="#"><strong>Harvard University</strong></a>, Computer Science, Faculty Member<br>
-                    	            	  <a href="#"><strong>Harvard University</strong></a>, Harvard Kennedy School of Government, Faculty Member
-                    	            	  </p>
-                    	            	 
-                    	            </div-->
-                    	          </div><!--span-->
-                    	      </div><!--/row-->
+                    <div class="tab-pane fade active profile-content pad0" id="info">
+                        <div class="col-lg-9 col-md-9 pad0">
+                            <h4>Qualifications</h4>
+                            <p>Ph.D., Psychology, University of New South Wales, 2013 <br>
+                                B.A., Linguistics, Chinese University of Hong Kong, 2006<br><br>
+                            </p>
+                            <h4>Research Interests</h4>
+                            <p><br><br></p>
+                            <h4>Recent Publications</h4>
+                            <p></p>
+                        </div><!--span-->
+                        <div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
+                            <div class="well contact-info">
+                                <p class="contact-head"><strong>Contact Information</strong></p>
+                                <p class="contact-text"><span><img src="img/caller.png"></span>852-51373793 <br>
+                                    <span><img src="img/message.png"></span>patrick@99scholars.net<br>
+                                    <span><img src="img/web.png"></span><a href="http://patrickchu.net/" target="_blank">http://patrickchu.net/</a></p>
+                                <br>
+                            </div><!--well-->
+                            <!--div class="well">
+                                <p><strong>Other Affiliations</strong></p>
+                                <p><a href="#"><strong>Harvard University</strong></a>, Computer Science, Faculty Member<br>
+                                  <a href="#"><strong>Harvard University</strong></a>, Harvard Kennedy School of Government, Faculty Member
+                                  </p>
+                            </div-->
                     	</div><!--/row-->
+                        <div class="visible-sm visible-xs">
+                            <div class="well contact-info">
+                                <p class="contact-head"><strong>Contact Information</strong></p>
+                                <p class="contact-text"><span><img src="img/caller.png"></span>852-51373793 <br>
+                                    <span><img src="img/message.png"></span>patrick@99scholars.net<br>
+                                    <span><img src="img/web.png"></span><a href="http://patrickchu.net/" target="_blank">http://patrickchu.net/</a></p>
+                                <br>
+                            </div><!--well-->
+                        </div>
                     </div>
                     <div class="tab-pane fade active profile-content" id="event">
                         <div class="row">
