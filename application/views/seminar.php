@@ -15,7 +15,7 @@
               <div class="row">
                   <div class="col-lg-8">
                     <p><strong class="seminardate"><?= $conference->get_start_date() ?>, <?= $conference->seminar->get_time_duration() ?></strong><br></p>
-                    <img src="img/location2.png" class="fleft locationimg">
+                    <?= HTML::image('img/location2.png', array('class' => 'fleft locationimg')) ?>
                       <p class="seminarloc"><?= $conference->conference_venue->venue_address->address ?>, <?= $conference->seminar->organizer->name ?><br>
                       <?= $conference->conference_venue->venue_address->get_short_location() ?> <span class="text-muted">(<a href="http://maps.google.com/maps?q=<?= $conference->seminar->organizer->name ?>" target="_blank">view map</a>)</span></p>
                   </div><!--span-->
