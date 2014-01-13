@@ -54,11 +54,11 @@
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="<?php echo URL::site('') ?>">Home</a></li>
-            <li><?php echo HTML::anchor("/events", "Events"); ?></li>
-            <li><?php echo HTML::anchor("/people", "People"); ?></li>
-			      <li><?php echo HTML::anchor("/design", "Design"); ?></li>
-            <li><?php echo HTML::anchor("/jobs", "Jobs"); ?></li>
-            <li><?php echo HTML::anchor("/Article", "Blog"); ?></li>
+            <li><?php echo HTML::anchor("/", "Events"); ?></li>
+            <li><?php echo HTML::anchor("#", "People"); ?></li>
+			      <li><?php echo HTML::anchor("#", "Design"); ?></li>
+            <li><?php echo HTML::anchor("#", "Jobs"); ?></li>
+            <li><?php echo HTML::anchor("#", "Blog"); ?></li>
           </ul>
 
           <?php if(!Service_Login::is_login()) { ?>
