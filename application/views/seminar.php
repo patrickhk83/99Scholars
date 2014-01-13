@@ -72,7 +72,7 @@
                     <div class="row">
                       <div class="well well-sm share-box"><p><strong>share with :</strong> <a href="https://www.facebook.com/sharer/sharer.php?u=<?= URL::site(Request::detect_uri(),true)  ?>" target="_blank">Facebook</a> | <a href="http://twitter.com/intent/tweet?url=<?= URL::site(Request::detect_uri(),true)  ?>" target="_blank">Twitter</a></p>  </div>
                     </div><!--span-->
-                    <div class="row">
+                    <!--div class="row">
                         <h3 class="text-muted">Attendees</h3>
 
                         <table class="table attendee-table" id="attendee-list">
@@ -91,7 +91,7 @@
                             <?php } ?>
                         </table>
                         </p>
-                    </div>
+                    </div-->
                     </div>
                 </div><!--/row-->
               </div>
