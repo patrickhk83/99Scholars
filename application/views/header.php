@@ -17,6 +17,7 @@
     <?php echo HTML::style('css/datepicker.css') ?>
     <?php echo HTML::style('css/lightbox.css') ?>
 
+    <?php echo HTML::style('css/blog.css') ?>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
@@ -40,7 +41,7 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="<?php echo URL::site('') ?>">Home</a></li>
             <li><a href="#about">About</a></li>
-			<li><?php echo HTML::anchor("/Article", "Blog"); ?></li>
+			<li><?php echo HTML::anchor("blogarticles", "Blog"); ?></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
 

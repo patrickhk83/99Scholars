@@ -2,6 +2,13 @@
 
 class Model_Article extends ORM {
 	
+		protected $_belongs_to = array (
+		// an article is related to only one category
+		'category' => array (
+			'model'			=> 'categories',
+			'foreign_key'	=> 'category_id'
+		)
+	);
 	// contains many relations
 	protected $_has_many = array(
 		// an article has many comments
@@ -9,8 +16,8 @@ class Model_Article extends ORM {
 			'model'			=> 'comment',
 			'foreign_key'	=> 'article_id',
 		),
+		
 	);
-	
 	/**
 	 * Rule definitions for validation
 	 *

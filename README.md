@@ -7,6 +7,7 @@
 
 Here are some configurations to make it work in your environment.
 
+- Rename example.htaccess to .htaccess
 - Change application path at `base_url` in application/bootstrap.php and, if you enabled mod_rewrite in Apache, `RewriteBase` in .htaccess
 - Change configuration for database in application/config/database.php
 - Change timezone at `date_default_timezone_set()` in in application/bootstrap.php

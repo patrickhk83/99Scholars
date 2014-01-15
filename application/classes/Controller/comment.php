@@ -7,7 +7,7 @@ class Controller_Comment extends Controller {
 		$comment->values($this->request->post());
 		$comment->save();
 		
-		$this->redirect("article/view/".$comment->article_id);
+		$this->redirect("blogarticles/view/".$comment->article_id);
 	}
 	public function action_delete() {
 		$comment_id = $this->request->param('id');

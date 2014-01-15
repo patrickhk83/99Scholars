@@ -7,13 +7,13 @@
 <?php echo Form::open('article/post/'.$article->id); ?>
 	<?php echo Form::label("title", "Title"); ?>
 	<br />
-	<?php echo Form::input("title", $article->title); ?>
+	<?php echo Form::input("title", $article->article_title); ?>
 	<span class="error"><?php echo Arr::get($errors, 'title');?></span>
 	<br />
 	<br />
 	<?php echo Form::label("content", "Content"); ?>
 	<br />
-	<?php echo Form::textarea("content", $article->content); ?>
+	<?php echo Form::textarea("content", $article->article_content); ?>
 	<span class="error"><?php echo Arr::get($errors, 'content');?></span>
 	<br />
 	<br />
