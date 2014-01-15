@@ -35,6 +35,7 @@ $(function(){
 	$('#category-option1').change(updateCategory);
 	$('#type-option1').change(updateSearchResult);
 	$('#country-option1').change(updateSearchResult);
+	$('#accept-abstract').change(updateAcceptAbstract);
 	$('#start-date').change(updateSearchResult);
 	$('#end-date').change(updateSearchResult);
 
@@ -64,13 +65,15 @@ var addCategory = function()
 {
 	categoryCount++;
 	var option = '<div id="category-option' + categoryCount + '">' +
-		'<div class="form-inline">' +
-			'<select class="form-control criteria-option">' +
+		'<div class="form-inline select-category">' +
+			'<label>' +
+               '<select class="form-control criteria-option form-box">' +
 				'<option value="0">Select Subject</option>' +
 				'<option value="1">Technology</option>' +
 				'<option value="2">Linguistics</option>' +
 				'<option value="3">Psychology</option>' +
-			'</select> ' +
+			    '</select> ' +
+            '</label>' +
 			'<span class="glyphicon glyphicon-minus-sign" onclick="delCategory(' + categoryCount + ')"></span>' +
 		'</div>' +
 	'</div>';
@@ -92,9 +95,9 @@ function delCategory(catId)
 var addType = function() 
 {
 	typeCount++;
-	var option = '<div id="type-option' + typeCount + '">' +
-		'<div class="form-inline">' +
-			'<select class="form-control criteria-option">' +
+	var option = '<div id="type-option' + typeCount + '"' +'class="select-category">' +
+		'<label>' +
+			'<select class="form-control criteria-option form-box">' +
 				'<option value="0">Select Type</option>' +
 				'<option value="1">Conference</option>' +
 				'<option value="2">Seminar</option>' +
@@ -102,8 +105,8 @@ var addType = function()
 				'<option value="4">Webinar</option>' +
 				'<option value="5">Online Conference</option>' +
 			'</select> ' +
-			'<span class="glyphicon glyphicon-minus-sign" onclick="delType(' + typeCount + ')"></span>' +
-		'</div>' +
+        '</label>' +
+        '<span class="glyphicon glyphicon-minus-sign" onclick="delType(' + typeCount + ')"></span>' +
 	'</div>';
 	
 	$('#type-criteria').append(option);
@@ -125,7 +128,7 @@ var addCountry = function()
 	countryCount++;
 	var $option = $('#country-option1').children().clone();
 	$option.attr("id", 'country-option' + countryCount);
-	$option.addClass('form-control criteria-option');
+	$('#country-option'+ countryCount +' label' + ' select').addClass('form-control criteria-option form-box');
 	var $delete_button = $('<span>', {class: "glyphicon glyphicon-minus-sign"}).click(function(){delCountry(countryCount);});
 	var $new_country_option = $('<div/>', {id: 'country-option' + countryCount}).append(
 		$('<div/>', {class: 'form-inline'}).append(
@@ -147,6 +150,11 @@ function delCountry(countryId)
 {
 	$('#country-option' + countryId).remove();
 	updateSearchResult();
+}
+
+var updateAcceptAbstract = function()
+{
+	showClearFilterButton();
 }
 
 var updateSearchResult = function(page)
@@ -228,6 +236,10 @@ function getAllCriteria(appendOther)
 
 	query += 'cat=' + categories.join(',');
 
+	//is conference accepting abstract
+	var isAcceptAbstract = $('#accept-abstract').is(':checked');
+	query += '&abstract=' + isAcceptAbstract;
+
 	//start date
 	var startDate = $('#start-date').val();
 	query += '&start_date=' + startDate;
@@ -278,6 +290,8 @@ var clearFilter = function()
 	});
 
 	$('#category-criteria select').val(0);
+
+	$('#accept-abstract').attr('checked', false);
 
 	$('#start-date').val('');
 	$('#end-date').val('');

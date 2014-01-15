@@ -2,104 +2,153 @@
 <div class="row row-offcanvas row-offcanvas-right">
         
         <div class="col-lg-12">
-          <p class="pull-right visible-xs">
-            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-          </p>
                     
           <div class="row">
             <div class="col-lg-12">
               <div class="row">
-                <div class="col-lg-2 col-md-2"><img src="img/001.jpg" class="img-rounded"/></div><!--span-->
-                <div class="col-lg-8 col-md-8">
-                	<h3>Patrick Chu</h3>
-                	<p><span class="text-muted">Ph.D., Psychology, University of New South Wales, 2013</span><br>
-                	<span class="glyphicon glyphicon-envelope"></span> <span class="glyphicon glyphicon-globe"></span> <span class="glyphicon glyphicon-phone"></span></p>
+                <!--<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3"><img src="../img/001.jpg" class="img-rounded user-img"/></div>-->
+                <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 user-info">
+                    <img src="../img/001.jpg" class="img-rounded user-img"/>
+                	<div class="user-desc">
+                    <h3 class="user-name">Patrick Chu</h3>
+                	<p><span class="user-desig">Ph.D., Psychology, University of New South Wales, 2013</span><br>
+                	<span><img class="loc" src="../img/location.png"></span><span class="user-desig">Hongkong, Hongkong SAR</span></p>
+                    </div>
                 </div><!--span-->
-                <div class="col-lg-2 col-md-2">
-                	<p><br></p>
-                	<p><button class="btn btn-success btn-block">Follow</button></p>
-                	<p><button class="btn btn-default btn-block">Send Message</button></p>
+                <div class="col-lg-2 col-md-3 col-sm-3 hidden-xs">
+                	<!--<p><br></p>-->
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 follow-section">
+                            <p class="follow-count">15</p>
+                            <p class="follow-name">Publications</p>
+                            <p class="follow-count">4</p>
+                            <p class="follow-name">Presentations</p>
+                        </div>
+                        <div class="col-md-6 col-sm-6 follow-section2">
+                             <p class="follow-count">28</p>
+                            <p class="follow-name">Projects</p>
+                            <p class="follow-count">118</p>
+                            <p class="follow-name">Following</p>
+                        </div>    
+                    </div>    
+                	<p><button class="btn btn-success btn-block follow-btn">Follow</button></p>
+                	<p><button class="btn btn-default btn-block message-btn">Send Message</button></p>
                 </div>
               </div>
+              <div class="row visible-xs follow-section-xs">
+                  <div class="row">
+                  <div class="col-xs-3 pad0">
+                    <p class="follow-count">15</p>
+                    <p class="follow-name">Publications</p>
+                  </div>
+                  <div class="col-xs-3 pad0">
+                      <p class="follow-count">28</p>
+                      <p class="follow-name">Projects</p>
+                  </div>
+                  <div class="col-xs-3 pad0">
+                      <p class="follow-count">4</p>
+                      <p class="follow-name">Presentations</p>
+                  </div>
+                  <div class="col-xs-3 pad0">
+                      <p class="follow-count">118</p>
+                      <p class="follow-name">Following</p>
+                  </div>
+                  </div>
+                  <div class="row" style="text-align: center">
+                      <div><button class="btn btn-success follow-btn">Follow</button></div>
+                      <div><button class="btn btn-default message-btn">Send Message</button></div>
+                  </div>
+              </div>
               <div class="row">
-                <div class="col-lg-12">
                   <br>
-                  <ul class="nav nav-tabs" id="profile-tab">
+                  <ul class="nav nav-tabs hidden-xs" id="profile-tab">
                     <li><a href="#info" data-toggle="tab">Overview</a></li>
                     <li><a href="#event" data-toggle="tab">Events</a></li>
                     <li><a href="#publication" data-toggle="tab">Publications (15)</a></li>
                     <li><a href="#project" data-toggle="tab">Projects (4)</a></li>
                     <li><a href="#presentation" data-toggle="tab">Presentations (28)</a></li>
                   </ul>
-                  
+                  <div class="visible-xs btn-group">
+                  <button class="mobuser-dropdown dropdown-toggle" data-target="#" data-backdrop="static" data-toggle="dropdown">
+                    <span class="dropdown-label user-label">Overview</span>
+                    <span class="caret" style="border-top-color: #fff;"></span>
+                  </button>
+                  <ul class="dropdown-menu text-center text-sm mobuser-dropmenu">
+                      <li><a href="#info" data-toggle="tab">Overview</a></li>
+                      <li><a href="#event" data-toggle="tab">Events</a></li>
+                      <li><a href="#publication" data-toggle="tab">Publications (15)</a></li>
+                      <li><a href="#project" data-toggle="tab">Projects (4)</a></li>
+                      <li><a href="#presentation" data-toggle="tab">Presentations (28)</a></li>
+                  </ul>
+                  </div>
                   <div class="tab-content">
                     
-                    <div class="tab-pane fade active profile-content" id="info">
-                    	<div class="row">
-                    	    <div class="col-lg-12">
-                    	      <div class="row">
-                    	          <div class="col-lg-8 col-md-8">
-                    	          	<h4>Qualifications</h4>
-                    	          	<p>Ph.D., Psychology, University of New South Wales, 2013 <br>
-                    	          	B.A., Linguistics, Chinese University of Hong Kong, 2006<br><br>
-                    	          	</p>
-                    	          	<h4>Research Interests</h4>
-                    	          	<p><br><br></p>
-                    	            <h4>Recent Publications</h4>
-                    	            <p></p>
-                    	          </div><!--span-->
-                    	          <div class="col-lg-4 col-md-4">
-                    	            <div class="well">
-                    	              <p><strong>Contact Information</strong></p>
-                    	              <p>Tel: 852-51373793 <br>
-                                        Fax: <br>
-                                        Email: patrick@99scholars.net<br>
-                                        Website: <a href="http://patrickchu.net/" target="_blank">http://patrickchu.net/</a></p>
-                    	              <br><br><br>
-                    	            </div><!--well-->
-                    	            <!--div class="well">
-                    	            	<p><strong>Other Affiliations</strong></p>
-                    	            	<p><a href="#"><strong>Harvard University</strong></a>, Computer Science, Faculty Member<br>
-                    	            	  <a href="#"><strong>Harvard University</strong></a>, Harvard Kennedy School of Government, Faculty Member
-                    	            	  </p>
-                    	            	 
-                    	            </div-->
-                    	          </div><!--span-->
-                    	      </div><!--/row-->        
-                    	    </div><!--span-->
+                    <div class="tab-pane fade active profile-content pad0" id="info">
+                        <div class="col-lg-9 col-md-9 pad0">
+                            <h4>Qualifications</h4>
+                            <p>Ph.D., Psychology, University of New South Wales, 2013 <br>
+                                B.A., Linguistics, Chinese University of Hong Kong, 2006<br><br>
+                            </p>
+                            <h4>Research Interests</h4>
+                            <p><br><br></p>
+                            <h4>Recent Publications</h4>
+                            <p></p>
+                        </div><!--span-->
+                        <div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
+                            <div class="well contact-info">
+                                <p class="contact-head"><strong>Contact Information</strong></p>
+                                <p class="contact-text"><span><img src="img/caller.png"></span>852-51373793 <br>
+                                    <span><img src="img/message.png"></span>patrick@99scholars.net<br>
+                                    <span><img src="img/web.png"></span><a href="http://patrickchu.net/" target="_blank">http://patrickchu.net/</a></p>
+                                <br>
+                            </div><!--well-->
+                            <!--div class="well">
+                                <p><strong>Other Affiliations</strong></p>
+                                <p><a href="#"><strong>Harvard University</strong></a>, Computer Science, Faculty Member<br>
+                                  <a href="#"><strong>Harvard University</strong></a>, Harvard Kennedy School of Government, Faculty Member
+                                  </p>
+                            </div-->
                     	</div><!--/row-->
+                        <div class="visible-sm visible-xs">
+                            <div class="well contact-info">
+                                <p class="contact-head"><strong>Contact Information</strong></p>
+                                <p class="contact-text"><span><img src="img/caller.png"></span>852-51373793 <br>
+                                    <span><img src="img/message.png"></span>patrick@99scholars.net<br>
+                                    <span><img src="img/web.png"></span><a href="http://patrickchu.net/" target="_blank">http://patrickchu.net/</a></p>
+                                <br>
+                            </div><!--well-->
+                        </div>
                     </div>
                     <div class="tab-pane fade active profile-content" id="event">
                         <div class="row">
                             <div class="col-lg-12">
-                              
                               <div class="row conf-list">
                                 <div class="col-lg-12">
-                                  <div class="row">
+                                  <div class="row conf-row">
                                     <div class="col-lg-8">
                                       <p><strong><a href="<?php echo URL::site('seminar') ?>">4th Global Conference: Performance: Visual Aspects of Performance Practice</a></strong> <br/> Oxford, United Kingdom</p>
                                     </div>
                                     <!--div class="col-lg-2"><button type="button" class="btn btn-primary btn-xs">Conference</button></div-->
-                                    <div class="col-lg-2">19 Sep 2013</div>
-                                    <div class="col-lg-2"><a class="btn btn-info btn-block" href="#">Book</a></div>
+                                    <div class="col-lg-2 conf-date">19 Sep 2013</div>
+                                    <div class="col-lg-2 conf-book"><a class="btn btn-info btn-block book-btn" href="#">Book</a></div>
                                   </div><!--/row-->
                                   
-                                  <div class="row">
+                                  <div class="row conf-row">
                                     <div class="col-lg-8">
                                       <p><strong><a href="<?php echo URL::site('seminar') ?>">The Best in Heritage 2013</a></strong> <br/> Dubrovnik, Croatia</p>
                                     </div>
                                     <!--div class="col-lg-2"><button type="button" class="btn btn-success btn-xs">Seminar</button></div-->
-                                    <div class="col-lg-2">19 Sep 2013</div>
-                                    <div class="col-lg-2"><a class="btn btn-info btn-block" href="#">Book</a></div>
+                                    <div class="col-lg-2 conf-date">19 Sep 2013</div>
+                                    <div class="col-lg-2 conf-book"><a class="btn btn-info btn-block book-btn" href="#">Book</a></div>
                                   </div><!--/row-->
                                   
-                                  <div class="row">
+                                  <div class="row conf-row">
                                     <div class="col-lg-8">
                                       <p><strong><a href="<?php echo URL::site('seminar') ?>">2nd Global Conference: The Graphic Novel</a></strong> <br/> Oxford, United Kingdom</p>
                                     </div>
                                     <!--div class="col-lg-2"><button type="button" class="btn btn-primary btn-xs">Conference</button></div-->
-                                    <div class="col-lg-2">19 Sep 2013</div>
-                                    <div class="col-lg-2"><a class="btn btn-info btn-block" href="#">Book</a></div>
+                                    <div class="col-lg-2 conf-date">19 Sep 2013</div>
+                                    <div class="col-lg-2 conf-book"><a class="btn btn-info btn-block book-btn" href="#">Book</a></div>
                                   </div><!--/row-->
                                   </div><!--span-->
                               </div><!--row-->
@@ -108,7 +157,6 @@
                     </div>
                     <div class="tab-pane fade profile-content" id="publication">
                     	<div class="row">
-                    	    <div class="col-lg-12">
                     	    	<div class="well">
                     	    		<label class="checkbox-inline publication-criteria">
                     	    			<input type="checkbox" checked="check" id="journal-check"/> Journal <span class="text-muted">(1)</span>
@@ -220,7 +268,7 @@
                     	    	      </table>
                     	    	    </div><!--span-->
                     	    	</div><!--/row-->
-                    	    </div><!--span-->
+
                     	</div><!--/row-->
                     	
                     </div>
@@ -392,7 +440,6 @@
                    		</div><!--/row-->
                     </div>
                   </div>
-                </div>  
               </div><!--row-->
             </div><!--/span-->            
           </div><!--/row-->

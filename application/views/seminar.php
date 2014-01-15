@@ -4,21 +4,19 @@
 <div class="row row-offcanvas row-offcanvas-right">
         
         <div class="col-xs-12 col-sm-12">
-          <p class="pull-right visible-xs">
-            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-          </p>
           <div class="row">
             <div class="col-lg-12">
               <div class="row">
-                  <div class="col-lg-12">
+                  <div class="col-lg-12 seminar">
                     <p><h2><?= $conference->name ?></h2></p>
                     <p><strong>Speaker : </strong> <a href="<?= URL::site('user') ?>"><?= $conference->seminar->speaker ?></a></p>
                   </div><!--span-->
               </div><!--/row-->
               <div class="row">
                   <div class="col-lg-8">
-                    <p><strong><?= $conference->get_start_date() ?>, <?= $conference->seminar->get_time_duration() ?></strong><br>
-                      <?= $conference->conference_venue->venue_address->address ?>, <?= $conference->seminar->organizer->name ?><br>
+                    <p><strong class="seminardate"><?= $conference->get_start_date() ?>, <?= $conference->seminar->get_time_duration() ?></strong><br></p>
+                    <?= HTML::image('img/location2.png', array('class' => 'fleft locationimg')) ?>
+                      <p class="seminarloc"><?= $conference->conference_venue->venue_address->address ?>, <?= $conference->seminar->organizer->name ?><br>
                       <?= $conference->conference_venue->venue_address->get_short_location() ?> <span class="text-muted">(<a href="http://maps.google.com/maps?q=<?= $conference->seminar->organizer->name ?>" target="_blank">view map</a>)</span></p>
                   </div><!--span-->
                   <div class="col-lg-4">
@@ -26,7 +24,7 @@
                       <?php if($is_attended) { ?>
                         <button type="button" class="btn btn-info cancel-book-btn">Cancel booking</button>
                       <?php } else { ?>
-                        <button type="button" class="btn btn-primary book-conf-btn">Attend this seminar</button>
+                        <button type="button" class="btn btn-primary book-conf-btn attend-btn">Attend this seminar</button>
                       <?php } ?>
                       
                     </p>
@@ -39,30 +37,63 @@
           <div class="row">
             <div class="col-lg-12">
             
-            <ul class="nav nav-tabs" id="attachment-tab">
+            <ul class="nav nav-tabs hidden-xs" id="attachment-tab">
               <li><a href="#info" data-toggle="tab">Info</a></li>
               <li><a href="#video" data-toggle="tab">Videos</a></li>
               <li><a href="#file" data-toggle="tab">Files</a></li>
               <li><a href="#photo" data-toggle="tab">Photos</a></li>
             </ul>
-            
+            <div class="visible-xs btn-group">
+                <button class="mobuser-dropdown dropdown-toggle" data-target="#" data-backdrop="static" data-toggle="dropdown">
+                    <span class="dropdown-label user-label">Overview</span>
+                    <span class="caret" style="border-top-color: #fff;"></span>
+                </button>
+            <ul class="dropdown-menu text-center text-sm mobuser-dropmenu">
+                <li><a href="#info" data-toggle="tab">Info</a></li>
+                <li><a href="#video" data-toggle="tab">Videos</a></li>
+                <li><a href="#file" data-toggle="tab">Files</a></li>
+                <li><a href="#photo" data-toggle="tab">Photos</a></li>
+            </ul>
+            </div>
             <div class="tab-content">
               <div class="tab-pane fade active attachment-content" id="info">
                 <div class="row">
-                    <div class="col-lg-9">
+                    <div class="col-lg-8">
                         <h4>Event Type</h4>
                         <p><?= $conference->conference_type->name ?></p>
                         <h4>Cateogry</h4>
                         <p><?= $conference->category->conference_category->name ?></p>
+                        <!--p><h4>Description</h4></p>
+              	        <p><?= $conference->description ?></p-->
+                        <h4>Abstract</h4>
+                        <p><?= $conference->seminar->abstract ?></p>
                     </div><!--span-->
-                    <div class="col-lg-3 share-btn-container">
-                      <div class="well well-sm"><p><strong>share with :</strong> <a href="https://www.facebook.com/sharer/sharer.php?u=<?= URL::site(Request::detect_uri(),true)  ?>" target="_blank">Facebook</a> | <a href="http://twitter.com/intent/tweet?url=<?= URL::site(Request::detect_uri(),true)  ?>" target="_blank">Twitter</a></p>  </div>
+                    <div class="col-lg-4 share-btn-container">
+                    <div class="row">
+                      <div class="well well-sm share-box"><p><strong>share with :</strong> <a href="https://www.facebook.com/sharer/sharer.php?u=<?= URL::site(Request::detect_uri(),true)  ?>" target="_blank">Facebook</a> | <a href="http://twitter.com/intent/tweet?url=<?= URL::site(Request::detect_uri(),true)  ?>" target="_blank">Twitter</a></p>  </div>
                     </div><!--span-->
+                    <!--div class="row">
+                        <h3 class="text-muted">Attendees</h3>
+
+                        <table class="table attendee-table" id="attendee-list">
+                            <?php if($conference->attendee->find_all()->count() != 0) { ?>
+                                <?php foreach($conference->attendee->find_all() as $attendee) { ?>
+                                    <tr id="attendee-<?= $attendee->id ?>">
+                                        <td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
+                                        <td>
+                                            <p><a href="<?= URL::site('user/profile/'.$attendee->id) ?>"><strong><?= $attendee->get_fullname() ?></strong></a> <br/> <small class="text-muted"><?= $attendee->get_affiliation() ?></small></p>
+                                            <p></p>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <tr id="attendee-placeholder"><td>There is no attendee right now</td></tr>
+                            <?php } ?>
+                        </table>
+                        </p>
+                    </div-->
+                    </div>
                 </div><!--/row-->
-              	<!--p><h4>Description</h4></p>
-              	<p><?= $conference->description ?></p-->
-              	<p><h4>Abstract</h4></p>
-              	<p><?= $conference->seminar->abstract ?></p>
               </div>
               <div class="tab-pane fade active attachment-content" id="video">
               	<div class="row">
@@ -181,7 +212,7 @@
                   <?php if($is_attended) { ?>
                     <a href="#"><button type="button" class="btn btn-info cancel-book-btn">Cancel booking</button></a>
                   <?php } else { ?>
-                    <a href="#"><button type="button" class="btn btn-primary book-conf-btn">Attend this seminar</button></a>
+                    <a href="#"><button type="button" class="btn btn-primary book-conf-btn attend-btn">Attend this seminar</button></a>
                   <?php } ?>
                  </p>
               </div><!--span-->
@@ -211,7 +242,7 @@
                     <textarea class="form-control" rows="4" placeholder="And what you'd like to say" name="content"></textarea>
                   </div>
                   <div class="form-group text-right">
-                    <button type="button" class="btn btn-primary" id="add-topic-btn">Submit</button>
+                    <button type="button" class="btn btn-primary topic-btn" id="add-topic-btn">Submit</button>
                   </div>
                 </form>
               </div>
