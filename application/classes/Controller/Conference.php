@@ -10,6 +10,9 @@ class Controller_Conference extends Controller {
     		':id' => $id,
 		));
 
+		$aaa = new Service_UserAction();
+        $aaa->register_user_action($this , 'view' , null , $id);
+
 		//mockup page
 		$session_id = $this->request->param('session_id');
 
