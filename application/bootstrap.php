@@ -120,7 +120,7 @@ if (isset($_SERVER['KOHANA_ENV']))
 Kohana::init(array(
 	'base_url' => '/99scholars/',
 	'index_file' => FALSE,
-		'kopauth'=>'/',
+	'kopauth'=>'/',
 ));
 
 /**
@@ -237,7 +237,12 @@ Route::set('actionstatistics' , '(<controller>(/<action>(/<page_num>(/<per_page>
 			'per_page' => '20',
 			'action_filter' => 'All',
 	));
-
-	
+/*
+Route::set('profile', '<id>' , array('id' => '.*'))
+	->defaults(array(
+		'controller' => 'profile',
+		'action'     => 'index',
+	));	
+*/	
 
 
