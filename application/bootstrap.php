@@ -180,7 +180,40 @@ Route::set('opauth', 'oauth(/<action>(/<strategy>(/<callback>)))')
         'action'     => 'authenticate',
     ));
 
-Route::set('default', '(<controller>(/<action>(/<id>)))')
+Route::set('default', '<id>' , array('id' => '.*'))
+	->filter(function($route , $params , $request)
+	{
+		if(is_null($params['id']) || $params['id'] == '')
+		{
+			$params['controller'] = 'home';
+			$params['action'] = 'index';
+			return $params;
+		}
+		else
+		{
+			if(strpos($params['id'] , 'Seminar-') === false)
+			{
+				if(strpos($params['id'] , 'Conference-') === false)
+				{
+					$params['controller'] = 'profile';
+					$params['action'] = 'index';
+					return $params;
+				}
+				else if(strpos($params['id'] , 'Conference-') == 0)
+				{
+					$params['controller'] = "conference";
+					$params['action'] = "view";
+					return $params;
+				}
+			}
+			else if(strpos($params['id'] , 'Seminar-') == 0)
+			{
+				$params['controller'] = 'seminar';
+				$params['action'] = 'view';
+				return $params;
+			}
+		}
+	})
 	->defaults(array(
 		'controller' => 'home',
 		'action'     => 'index',
