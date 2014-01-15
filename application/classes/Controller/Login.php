@@ -26,6 +26,8 @@ class Controller_Login extends Controller {
 
 		if($validation->check() AND $this->authenticate_by_email($email, $password))
 		{
+			$aaa = new Service_UserAction();
+            $aaa->register_user_action($this , 'login');
 			$this->redirect('/profile', 302);
 		}
 		else

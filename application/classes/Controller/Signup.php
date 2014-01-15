@@ -113,6 +113,9 @@ class Controller_Signup extends Controller {
 		}
 		else
 		{
+            $aaa = new Service_UserAction();
+            $aaa->register_user_action($this , 'signup');
+           
 			$view = View::factory('signup');
             $session = Session::instance();
             $error_message = $session->get('oauth_error');
@@ -123,6 +126,7 @@ class Controller_Signup extends Controller {
             }
 
 			$this->response->body($view);
+
 		}
 		
 	}

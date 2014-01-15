@@ -15,6 +15,9 @@
     <?php echo HTML::style('css/offcanvas.css') ?>
 
     <?php echo HTML::style('css/datepicker.css') ?>
+    <?php echo HTML::style('css/lightbox.css') ?>
+    <?php echo HTML::style('css/blog.css') ?>
+
     <!-- New Style -->
     <?php echo HTML::style('css/newstyle.css') ?>
     <?php echo HTML::style('css/socialbutton.css') ?>
@@ -135,5 +138,4 @@
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->
     </div><!-- /.navbar -->
-
     <div class="container">

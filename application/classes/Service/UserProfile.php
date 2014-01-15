@@ -669,4 +669,23 @@ class Service_UserProfile {
 
 		return $result;
 	}
+
+	public function get_user_id_by_url_name($url_name)
+	{
+		$bNumeric = is_numeric($url_name);
+		if($bNumeric) return $url_name;
+		//$user_profile = ORM::factory('User')->where('url_key' , '=' , $url_name)->find();
+
+		$query_str = "SELECT COUNT(*) AS nCount FROM user WHERE url_key='".$url_name."'";
+		$result = DB::query(Database::SELECT , $query_str)->execute();
+
+		if($result->get('nCount') < 1 || $result->get('nCount') > 1)
+			return false;
+
+		$query_str = "SELECT * FROM user WHERE url_key='".$url_name."'";
+		$result = DB::query(Database::SELECT , $query_str)->execute();
+
+		return $result->get('id');
+	}
+
 }

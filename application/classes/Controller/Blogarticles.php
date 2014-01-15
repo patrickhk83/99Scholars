@@ -1,16 +1,16 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 // extends the Controller_Template
-class Controller_Article extends Controller_Template {
+class Controller_Blogarticles extends Controller_Template {
 	
 	public $template = 'template';
 		
 	const INDEX_PAGE = 'article/index';
 	
 	public function action_index() {
-		$articles = ORM::factory('article')->find_all(); // loads all article object from table
+		$category = ORM::factory('categories')->find_all(); // loads all article object from table
 		$view = new View('article/index'); // load 'article/index.php' view file
-		$view->set("articles", $articles); // set "articles" object to view
+		$view->set("category", $category); // set "articles" object to view
 		$this->template->set('content', $view); // renders a view as a response
 		
 $articley = ORM::factory('article')->count_all();
@@ -18,7 +18,7 @@ $articley = ORM::factory('article')->count_all();
 // set-up the pagination
 $pagination = Pagination::factory(array(
     'total_items' => $articley,
-    'items_per_page' => 10, // this will override the default set in your config
+    'items_per_page' => 5, // this will override the default set in your config
 ));
 
 // get users using the pagination limit/offset
@@ -33,6 +33,11 @@ $view->set('art', $art);
 }
 	
 	public function action_view() {
+		$category = ORM::factory('categories')->find_all(); // loads all article object from table
+		$view = new View('article/single'); // load 'article/index.php' view file
+		$view->set("category", $category); // set "articles" object to view
+		$this->template->set('content', $view); // renders a view as a response
+		
 		$article_id = $this->request->param('id');
 		$article = ORM::factory('article', $article_id);
 		$view = new View('/article/single');

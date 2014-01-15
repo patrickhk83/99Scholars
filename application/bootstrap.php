@@ -120,7 +120,7 @@ if (isset($_SERVER['KOHANA_ENV']))
 Kohana::init(array(
 	'base_url' => '/99scholars/',
 	'index_file' => FALSE,
-		'kopauth'=>'/',
+	'kopauth'=>'/',
 ));
 
 /**
@@ -150,6 +150,7 @@ Kohana::modules(array(
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	'pagination' => MODPATH.'pagination', // Paging of results
 	'kopauth'	=> MODPATH.'kopauth',
+	'crud'  => MODPATH.'crud',
 	// 'firephp'	=> MODPATH.'firephp',
 	));
 
@@ -180,7 +181,40 @@ Route::set('opauth', 'oauth(/<action>(/<strategy>(/<callback>)))')
         'action'     => 'authenticate',
     ));
 
-Route::set('default', '(<controller>(/<action>(/<id>)))')
+Route::set('default', '<id>' , array('id' => '.*'))
+	->filter(function($route , $params , $request)
+	{
+		if(is_null($params['id']) || $params['id'] == '')
+		{
+			$params['controller'] = 'home';
+			$params['action'] = 'index';
+			return $params;
+		}
+		else
+		{
+			if(strpos($params['id'] , 'Seminar-') === false)
+			{
+				if(strpos($params['id'] , 'Conference-') === false)
+				{
+					$params['controller'] = 'profile';
+					$params['action'] = 'index';
+					return $params;
+				}
+				else if(strpos($params['id'] , 'Conference-') == 0)
+				{
+					$params['controller'] = "conference";
+					$params['action'] = "view";
+					return $params;
+				}
+			}
+			else if(strpos($params['id'] , 'Seminar-') == 0)
+			{
+				$params['controller'] = 'seminar';
+				$params['action'] = 'view';
+				return $params;
+			}
+		}
+	})
 	->defaults(array(
 		'controller' => 'home',
 		'action'     => 'index',
@@ -204,7 +238,12 @@ Route::set('actionstatistics' , '(<controller>(/<action>(/<page_num>(/<per_page>
 			'per_page' => '20',
 			'action_filter' => 'All',
 	));
-
-	
+/*
+Route::set('profile', '<id>' , array('id' => '.*'))
+	->defaults(array(
+		'controller' => 'profile',
+		'action'     => 'index',
+	));	
+*/	
 
 
