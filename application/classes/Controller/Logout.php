@@ -7,8 +7,7 @@ class Controller_Logout extends Controller {
 		$aaa = new Service_UserAction();
         $aaa->register_user_action($this , 'logout');
 
-		$login_service = new Service_Login();
-		$login_service->clear_login_info();
+		Auth::instance()->logout();
 
 		$this->redirect('/', 302);
 	}

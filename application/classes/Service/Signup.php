@@ -13,15 +13,12 @@ class Service_Signup {
 		$result = array();
 
 		//check for duplicated email
-		$user_result = DB::select('id')->from('user')
-										->where('email', '=', $email)->execute();
 
-		if($user_result->count() > 0)
+		if(ORM::factory('User')->unique_key_exists($email))
 		{
 			$result['error'] = $this->get_error_message('duplicated_user');
 			return $result; 
 		}
-		
         
        if($password !== $confirm_password)
         {

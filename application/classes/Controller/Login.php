@@ -43,20 +43,16 @@ class Controller_Login extends Controller {
 
 	protected function authenticate_by_email($email, $password)
 	{
-		$user = ORM::factory('User')->where('email', '=', $email)->find();
-		if($user->provider !== 'email')
-		{
-			return false;
-		}
 
-		if($user->loaded() AND $user->password === md5($password))
-		{
-			$session = Session::instance();
-			$session->set('login', 'true');
-			$session->set('user', $user->id);
-			return true;
-		}
-
-		return false;
+		$success = Auth::instance()->login($email, $password);
+        
+        if ($success)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
 	}
 }
