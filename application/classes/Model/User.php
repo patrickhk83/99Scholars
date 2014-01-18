@@ -113,4 +113,9 @@ class Model_User extends Model_Auth_User {
 		}
 	}
 
+	public function is_admin()
+	{
+		return $this->has('roles', ORM::factory('Role', array('name' => 'admin')));
+	}
+
 }
