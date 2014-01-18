@@ -81,7 +81,7 @@
                    <fieldset class='textbox'>
                      <input type="text" placeholder="Username" name="email"/>
                      <input type="password" placeholder="Password" name="password"/>
-                     <input type="checkbox" class="login-checkbox"><h6>Remember Me</h6>
+                     <input type="checkbox" class="login-checkbox" name="remember"><h6>Remember Me</h6>
                      <input class="btn-primary login" name="commit" type="submit" value="Log In" />
                      <h6 class="forgot"><a href="">Forgot your password?</a></h6>
                      <div class="login-border"></div>

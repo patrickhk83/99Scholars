@@ -23,8 +23,9 @@ class Controller_Login extends Controller {
 
 		$email = $this->request->post('email');
 		$password = $this->request->post('password');
+		$remember = $this->request->post('remember');
 
-		if($validation->check() AND $this->authenticate_by_email($email, $password))
+		if($validation->check() AND $this->authenticate_by_email($email, $password, $remember))
 		{
 			//Create instance for Service_UserAction class.
 			$user_action_track = new Service_UserAction();
@@ -41,10 +42,18 @@ class Controller_Login extends Controller {
 		}
 	}
 
-	protected function authenticate_by_email($email, $password)
+	protected function authenticate_by_email($email, $password, $remember)
 	{
+		if(isset($remember) && $remember === 'on')
+		{
+			$remember = TRUE;
+		}
+		else
+		{
+			$remember = FALSE;
+		}
 
-		$success = Auth::instance()->login($email, $password);
+		$success = Auth::instance()->login($email, $password, $remember);
         
         if ($success)
         {

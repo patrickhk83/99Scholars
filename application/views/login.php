@@ -21,6 +21,9 @@
                   <label for="userPassword">Password</label>
                   <input type="password" class="form-control" id="userPassword" placeholder="Enter your password" name="password"/>
                 </div>
+                <div class="form-group">
+                  <input type="checkbox" name="remember"> Remember Me
+                </div>
                 <button type="submit" class="btn btn-success">Sign in</button> or <a href="<?php echo URL::site('signup') ?>">Signup for 99Scholars</a>
               </form>
             </div><!--/span-->            
