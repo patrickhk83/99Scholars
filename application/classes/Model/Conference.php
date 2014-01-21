@@ -46,9 +46,9 @@ class Model_Conference extends ORM {
 			'start_date' => array(
 				array('not_empty')
 			),
-			'end_date' => array(
+			/*'end_date' => array(
 				array('not_empty')
-			),
+			),*/
 			'description' => array(
 				array('not_empty')
 			),
