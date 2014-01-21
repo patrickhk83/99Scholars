@@ -4,23 +4,22 @@
 
 <div class="comment-form clearfix">
 <?php echo Form::open('comment/post/'); ?>
-	 <div class="crow">
-	 <?php echo Form::label("name", "Name"); ?>
-	<div class="input-text">
-	<?php echo Form::input("name", $comment->name); ?></div>
-	 </div>
-	<div class="crow-last">
+
+	<?php if(isset($user)) { ?>
+		<span class="text-muted">Comment as <?= $user->get_fullname() ?></span>
+
+		<div class="crow-text">
+
+		<div class="input-textarea"><?php echo Form::textarea("comment", $comment->comment); ?></div>
+		</div>
+		<?php echo Form::hidden("article_id", $article->pk()); ?>
+		<?php echo Form::hidden("user", $user->pk()); ?><br>
+		 <div class="crow-sub"><div class="submit" value="Submit Comment"><?php echo Form::submit("submit", "Submit"); ?></div></div>
+	<?php } else { ?>
+		Please <a href="<?= URL::site('login/email') ?>">login</a> or <a href="<?= URL::site('signup') ?>">register</a> before posting your comment
+	<?php } ?>
+
+	 
 	
-	<?php echo Form::label("email", "Email"); ?>
-
-	<div class="input-text"><?php echo Form::input("email", $comment->email); ?>
-	</div></div>
-	<div class="crow-text">
-	<?php echo Form::label("comment", "Comment"); ?>
-
-	<div class="input-textarea"><?php echo Form::textarea("comment", $comment->comment); ?></div>
-	</div>
-	<?php echo Form::hidden("article_id", $article->pk()); ?><br>
-	 <div class="crow-sub"><div class="submit" value="Submit Comment"><?php echo Form::submit("submit", "Submit"); ?></div></div>
 <?php echo Form::close(); ?>
 </div>
