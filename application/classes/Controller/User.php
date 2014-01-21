@@ -40,6 +40,12 @@ class Controller_User extends Controller {
 		$follow_service = Service_UserFollow::instance();
 
 		$follow_service->follow($current_user_id, $user_id);
+
+		//Create instance for Service_UserAction class.
+		$user_action_follow_track = new Service_UserAction();
+		//Register Follow Action for User(ControllerName , ActionName , UserID).
+        $user_action_follow_track->register_user_action($this , 'follow' , null , $user_id);
+
 	}
 
 	public function action_unfollow()
@@ -50,5 +56,11 @@ class Controller_User extends Controller {
 		$follow_service = Service_UserFollow::instance();
 
 		$follow_service->unfollow($current_user_id, $user_id);
+
+		//Create instance for Service_UserAction class.
+		$user_action_follow_track = new Service_UserAction();
+		//Register Unfollow Action for User(ControllerName , ActionName , UserID).
+        $user_action_follow_track->register_user_action($this , 'unfollow' , null , $user_id);
+
 	}
 }

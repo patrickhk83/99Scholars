@@ -10,8 +10,10 @@ class Controller_Conference extends Controller {
     		':id' => $id,
 		));
 
-		$aaa = new Service_UserAction();
-        $aaa->register_user_action($this , 'view' , null , $id);
+		//Create instance for Service_UserAction class.
+		$conference_action_view_track = new Service_UserAction();
+		//Register View Action for Conference(id, ControllerName, ActionName).
+        $conference_action_view_track->register_user_action($this , 'view' , null , $id);
 
 		//mockup page
 		$session_id = $this->request->param('session_id');
@@ -385,6 +387,13 @@ class Controller_Conference extends Controller {
 		{
 			$service_conference = Service_Conference::instance();
 			$id = $service_conference->create($this->request->post());
+
+			//Create instance for Service_UserAction class.
+			$conference_action_attend_track = new Service_UserAction();
+			//Register Create Action for Conference(id, ControllerName, ActionName).
+	        $conference_action_attend_track->register_user_action($this , 'create' , null , $id);
+
+
 			$this->redirect('/conference/view/'.$id, 302);
 		}
 		else
@@ -451,6 +460,11 @@ class Controller_Conference extends Controller {
 
 			$user = $user_service->get_by_id($user_id);
 
+			//Create instance for Service_UserAction class.
+			$conference_action_attend_track = new Service_UserAction();
+			//Register Attend Action for Conference(id, ControllerName, ActionName).
+	        $conference_action_attend_track->register_user_action($this , 'attend' , null , $conf_id , $user_id);
+
 			$result['status'] = 'ok';
 			$result['id'] = $user_id;
 			$result['name'] = $user['first_name'].' '.$user['last_name'];
@@ -473,6 +487,11 @@ class Controller_Conference extends Controller {
 		$user_service = new Service_User();
 		$user_service->cancel_booking($user_id, $conf_id);
 
+		//Create instance for Service_UserAction class.
+		$conference_action_attend_track = new Service_UserAction();
+		//Register AttendCancel Action for Conference(id, ControllerName, ActionName).
+        $conference_action_attend_track->register_user_action($this , 'cancel' , null , $conf_id , $user_id);
+
 		$result['id'] = $user_id;
 
 		//TODO: create super controller to support ajax function
@@ -494,6 +513,12 @@ class Controller_Conference extends Controller {
 				
 				$user_service = new Dao_Video();
 				$user_service->add_upload_video($user_id, $conf_id, $videoid);
+
+				//Create instance for Service_UserAction class.
+				$conference_action_upload_video_track = new Service_UserAction();
+				//Register Upload Video Action for Conference(id, ControllerName, ActionName).
+		        $conference_action_upload_video_track->register_user_action($this , 'uploadVideo' , $videoid , $conf_id , $user_id);
+
 				break;
 			
 			/*case 'file':
@@ -534,6 +559,12 @@ class Controller_Conference extends Controller {
 				$user_service = new Dao_Video();
 				$user_service->add_delete($user_id, $conf_id, $videoid);
 				$result['videoid'] = $videoid;
+
+				//Create instance for Service_UserAction class.
+				$conference_action_upload_video_track = new Service_UserAction();
+				//Register Delete Uploaded Video Action for Conference(ConferenceID, ControllerName, ActionName, UserID, VideoID).
+		        $conference_action_upload_video_track->register_user_action($this , 'deleteVideo' , $videoid , $conf_id , $user_id);
+
 				break;
 			
 			case 'file':
@@ -589,6 +620,12 @@ class Controller_Conference extends Controller {
 		$desc = $_POST["filedesc"];
 		$user_service = new Service_File();
 		$result = $user_service->upload_multiple_file($_FILES['file'],"$conf_id",$conf_id,$desc);
+
+		//Create instance for Service_UserAction class.
+		$conference_action_upload_file_track = new Service_UserAction();
+		//Register Upload File Action for Conference(ControllerName, ActionName, ConferenceID).
+        $conference_action_upload_file_track->register_user_action($this , 'uploadFile' , null , $conf_id);
+
 			
 		$this->redirect('/conference/view/'.$conf_id, 302);
 	}
@@ -599,6 +636,11 @@ class Controller_Conference extends Controller {
 		$desc = $_POST["photodesc"];		
 		$user_service1 = new Service_Photo();
 		$result = $user_service1->upload_multiple_photo($_FILES['file'],"conference-$conf_id",$conf_id,$desc);
+
+		//Create instance for Service_UserAction class.
+		$conference_action_upload_photo_track = new Service_UserAction();
+		//Register Upload Photo Action for Conference(ControllerName, ActionName, ConferenceID).
+        $conference_action_upload_photo_track->register_user_action($this , 'uploadPhoto' , null , $conf_id);
 		
 		$this->redirect('/conference/view/'.$conf_id, 302);
 	}
