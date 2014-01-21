@@ -3,7 +3,7 @@
                 <div class="comm-user"><!-- --></div>
                   <div class="comm-cont">
                   <div class="clearfix">
-                    <div class="user"><?php echo $comment->name; ?> said:</div>
+                    <div class="user"><?php echo $comment->author->get_fullname(); ?> said:</div>
                     <div class="reply"><a href="#"><?php echo $comment->time; ?></a></div><br>
                   </div>
                   <div class="continut"><?php echo $comment->comment; ?></div>

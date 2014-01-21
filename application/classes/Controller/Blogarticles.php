@@ -42,6 +42,7 @@ $view->set('art', $art);
 		$article = ORM::factory('article', $article_id);
 		$view = new View('/article/single');
 		$view->set("article", $article);
+		$view->set("user", Auth::instance()->get_user());
 		$this->template->set('content', $view);
 			}
 	

@@ -23,8 +23,9 @@ class Controller_Login extends Controller {
 
 		$email = $this->request->post('email');
 		$password = $this->request->post('password');
+		$remember = $this->request->post('remember');
 
-		if($validation->check() AND $this->authenticate_by_email($email, $password))
+		if($validation->check() AND $this->authenticate_by_email($email, $password, $remember))
 		{
 			//Create instance for Service_UserAction class.
 			$user_action_track = new Service_UserAction();
@@ -41,22 +42,26 @@ class Controller_Login extends Controller {
 		}
 	}
 
-	protected function authenticate_by_email($email, $password)
+	protected function authenticate_by_email($email, $password, $remember)
 	{
-		$user = ORM::factory('User')->where('email', '=', $email)->find();
-		if($user->provider !== 'email')
+		if(isset($remember) && $remember === 'on')
 		{
-			return false;
+			$remember = TRUE;
+		}
+		else
+		{
+			$remember = FALSE;
 		}
 
-		if($user->loaded() AND $user->password === md5($password))
-		{
-			$session = Session::instance();
-			$session->set('login', 'true');
-			$session->set('user', $user->id);
-			return true;
-		}
-
-		return false;
+		$success = Auth::instance()->login($email, $password, $remember);
+        
+        if ($success)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
 	}
 }

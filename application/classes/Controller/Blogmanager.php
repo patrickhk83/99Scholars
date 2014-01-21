@@ -3,6 +3,12 @@
 defined ( 'SYSPATH' ) or die ( 'No direct script access.' );
 class Controller_Blogmanager extends Controller {
 	public function action_index() {
+
+		if(!$this->has_permission())
+		{
+			$this->redirect('/');
+		}
+
 		$view = View::factory ( 'category_manager' );
 		
 		$crud = new Crud ();
@@ -89,6 +95,24 @@ class Controller_Blogmanager extends Controller {
 		$this->response->body ( $article );
 	}
 
+	protected function has_permission()
+	{
+		if(Service_Login::is_login())
+		{
+			if(!Auth::instance()->get_user()->is_admin())
+			{
+				return FALSE;
+			}
+			else
+			{
+				return TRUE;
+			}
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
 }
 
 function getCategories() {
@@ -103,3 +127,4 @@ function getCategories() {
 	
 	return $options;
 }
+

@@ -79,9 +79,9 @@
               <div class="dropdown-menu login-dropdown">
                 <form style="margin: 0px" accept-charset="UTF-8" action="<?php echo URL::site('login/email') ?>" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="4L/A2ZMYkhTD3IiNDMTuB/fhPRvyCNGEsaZocUUpw40=" /></div>
                    <fieldset class='textbox'>
-                     <input type="text" placeholder="Username" />
-                     <input type="password" placeholder="Password" />
-                     <input type="checkbox" class="login-checkbox"><h6>Remember Me</h6>
+                     <input type="text" placeholder="Username" name="email"/>
+                     <input type="password" placeholder="Password" name="password"/>
+                     <input type="checkbox" class="login-checkbox" name="remember"><h6>Remember Me</h6>
                      <input class="btn-primary login" name="commit" type="submit" value="Log In" />
                      <h6 class="forgot"><a href="">Forgot your password?</a></h6>
                      <div class="login-border"></div>
