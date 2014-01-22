@@ -1,3 +1,8 @@
+<script>
+  var suggest_url = "<?php echo URL::site('conference/suggest_tag');?>";
+  var add_tag_url = "<?php echo URL::site('conference/new_tag');?>";
+</script>
+
 <div class="form-group">
   <label for="conf-name">Title of the talk</label>
   <input type="text" class="form-control required" id="conf-name" placeholder="Enter the title of the talk" name="Conference[name]"/>	
@@ -58,6 +63,23 @@
     </div>
     <div><a href="#" id="add-category-btn">Add more category</a></div>
 </div>
+
+<div class="form-group">
+  <label>Tags</label>
+  <div class="row">
+    <div class="col-md-6">
+      <input type="text" class="form-control" placeholder="Input Conference's Tags" id="autocomplete_tags">
+      <div class="well" id="list_suggest_tag" style="overflow:auto; height:130px; padding:0;"></div>  
+    </div> 
+    <div class="col-md-6">
+      <p class="form-control-static" style="margin-bottom: 6px;"><b>Selected Tags</b></p>
+      <div class="well" style="overflow:auto; height:130px; padding:0;">
+        <ul id="list_selected_tag" class="list-group">
+        </ul>  
+      </div>
+    </div>   
+  </div>   
+</div>  
 
 <div class="form-group">
   <label>Contact Person</label>
