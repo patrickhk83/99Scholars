@@ -15,6 +15,10 @@ class Model_Conference extends ORM {
         	'model'   => 'ConferenceTopic',
         	'foreign_key' => 'conference'
     	),
+      	'conference_tag' => array(
+        	'model'   => 'ConferenceTag',
+        	'foreign_key' => 'conference_id'
+    	),  	
 	);
 
 	protected $_has_one = array(
