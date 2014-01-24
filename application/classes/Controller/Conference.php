@@ -121,234 +121,9 @@ class Controller_Conference extends Controller {
 			else //'Conference' type
 			{
 				$view = View::factory('schedule');
+				
 				$view->id = $id;
-				if(!empty($conf['start_date'])){
-					$view->start_date = $conf['start_date'];
-				}else {
-					$view->start_date = date('Y-m-d');
-				}
-				if(!empty($conf['end_date'])){
-					$view->end_date = $conf['end_date'];
-				}else {
-					$view->end_date = $view->start_date;
-				}
-				
-				$session_data = new Service_Schedule();
-				$result_session = $session_data->get_session_data($id);
-				
-				if(!empty($result_session)){
-					$i = 0;
-					foreach($result_session as $value)
-					{
-						$session_name[$i]['name'] = $value->get('title');
-						$session_name[$i]['date'] = $value->get('date');
-						$session_name[$i]['id'] = $value->get('id');
-						$i++;
-					}
-					
-					if(!empty($session_name)){
-						$view->session_names = $session_name;
-					}
-				}
-				
-				$room_data = new Service_Schedule();
-				$result_room = $room_data->get_room_list($id);
-				
-				if(!empty($result_room)){
-					$i = 0;
-					foreach($result_room as $value)
-					{
-						$room_name[$i]['name'] = $value->get('room_name');
-						
-						$session_data = new Service_Schedule();
-						$session_result = $session_data->get_session_list($value->get('conference_session'));
-						$session_date = strtotime($session_result->get('date'));
-						$room_name[$i]['session'] = date('d/m/Y',$session_date).' - '.$session_result->get('title');
-						
-						$i++;
-					}
-					
-					if(!empty($room_name)){
-						$view->room_names = $room_name;
-					}
-				}
-				
-				$time_data = new Service_Schedule();
-				$result_time = $time_data->get_time_list($id);
-				
-				if(!empty($result_time)){
-					$i = 0;
-					foreach($result_time as $value)
-					{
-						$time_name[$i]['start_time'] = date('h:i A',$value->get('start_time'));
-						$time_name[$i]['end_time'] = date('h:i A',$value->get('end_time'));
-						
-						$session_data = new Service_Schedule();
-						$session_result = $session_data->get_session_list($value->get('conference_session'));
-						$session_date = strtotime($session_result->get('date'));
-						$time_name[$i]['session'] = date('d/m/Y',$session_date).' - '.$session_result->get('title');
-						
-						$i++;
-					}
-					
-					if(!empty($time_name)){
-						$view->time_names = $time_name;
-					}
-				}
-				
-				$presentation_data = new Service_Schedule();
-				$result = $presentation_data->get_presentation_list($id);
-				
-				if(!empty($result)){
-					$i = 0;
-					foreach($result as $value)
-					{
-						if(is_null($value->get('end_time_table'))){
-							$starttime = $value->get('time_table');
-							$time_data = new Service_Schedule();
-							$result_time = $time_data->get_time($starttime);
-							$first_time_slot = date('h:i A',$result_time->get('start_time'));
-							$last_time_slot = date('h:i A',$result_time->get('end_time'));
-							
-							$timeslot = $first_time_slot." - ".$last_time_slot;
-						}else {
-							$starttime = $value->get('time_table');
-							$time_data = new Service_Schedule();
-							$result_time = $time_data->get_time($starttime);
-							$first_time_slot = date('h:i A',$result_time->get('start_time'));
-							
-							$endtime = $value->get('end_time_table');
-							$end_time_data = new Service_Schedule();
-							$result_end_time = $time_data->get_time($endtime);
-							$last_time_slot = date('h:i A',$result_end_time->get('end_time'));
-							
-							$timeslot = $first_time_slot." - ".$last_time_slot;
-						}
-						
-						$roomid = $value->get('conference_room');
-						$room_data = new Service_Schedule();
-						$result_room = $room_data->get_room($roomid);
-						
-						$roomname = $result_room->get('room_name');
-						$sessionid = $result_room->get('conference_session');
-						
-						$session_data = new Service_Schedule();
-						$session_result = $session_data->get_session_list($sessionid);
-						$session_date = strtotime($session_result->get('date'));
-						$session_name = date('d/m/Y',$session_date).' - '.$session_result->get('title');
-						
-						$presentationid = $value->get('presentation');
-						$presentation_data = new Service_Schedule();
-						$result_presentation = $room_data->get_presentation($presentationid);
-						
-						$presentationtitle = $result_presentation->get('title');
-						
-						$presentation_final[$i]['session'] = $session_name;
-						$presentation_final[$i]['timeslot'] = $timeslot;
-						$presentation_final[$i]['title'] = $presentationtitle;
-						$presentation_final[$i]['room'] = $roomname;
-						$i++;
-					}
-					
-					if(!empty($presentation_final)){
-						$view->presentation_final = $presentation_final;
-					}
-				}
-				
-				/*final display*/
-				
-				$session_all_data = new Service_Schedule();
-				$resultfinal = $session_all_data->get_all_session_list($id);
-				
-				$i = 0;
-				if(!empty($resultfinal)){
-					foreach($resultfinal as $result2)
-					{
-						$finaldates[] = $result2['date'];
-						$i++;
-					}
-				}
-				
-				$j = 0;
-				if(!empty($finaldates)){
-
-					$rooms = array();
-					$start_times = array();
-					$presentations = array();
-
-					foreach($finaldates as $value)
-					{
-						$session_all_ids = new Service_Schedule();
-						$result = $session_all_ids->get_all_ids_session($id, $value);
-						
-						$session_date = strtotime($value);
-						
-						if(!empty($result)){
-							foreach($result as $value1)
-							{
-								$display_data = new Service_Schedule();
-								$display_result = $display_data->get_display_data($value1['id']);
-								//print_r($display_result);die;
-								if(!empty($display_result)){
-
-									foreach($display_result as $result)
-									{
-										//add room
-										if(!in_array($result['room_name'], $rooms))
-										{
-											array_push($rooms, $result['room_name']);	
-										}
-										
-										if(!in_array($result['start_time'], $start_times))
-										{
-											array_push($start_times, $result['start_time']);
-											$presentations[$result['start_time']] = array();
-										}
-
-										array_push($presentations[$result['start_time']], $result['title']);
-
-										$session_date = strtotime($result['date']);
-										$presentation_view[$j]['id'] = $result['id'];
-										$presentation_view[$j]['date'] = date('d/m/Y',$session_date);
-										$presentation_view[$j]['room_name'] = $result['room_name'];
-										$presentation_view[$j]['title'] = $result['title'];
-										
-										
-										
-										if(is_null($result['end_time_table'])){
-										$presentation_view[$j]['start_time'] = date('h:i A',$result['start_time']);
-										$presentation_view[$j]['end_time'] = date('h:i A',$result['end_time']);
-										}else {
-										$starttime = $result['time_table'];
-										$time_data = new Service_Schedule();
-										$result_time = $time_data->get_time($starttime);
-										$first_time_slot = date('h:i A',$result_time->get('start_time'));
-										$presentation_view[$j]['start_time'] = $first_time_slot;
-										
-										$endtime = $result['end_time_table'];
-										$end_time_data = new Service_Schedule();
-										$result_end_time = $time_data->get_time($endtime);
-										$last_time_slot = date('h:i A',$result_end_time->get('end_time'));
-										$presentation_view[$j]['end_time'] = $last_time_slot;
-										}
-										
-										
-										$j++;
-									}
-								}
-							}
-						}
-					}
-
-					$presentation_view['rooms'] = $rooms;
-					$presentation_view['start_times'] = $start_times;
-					$presentation_view['presentations'] = $presentations;
-				}
-				
-				if(!empty($presentation_view)){
-					$view->presentation_front = $presentation_view;
-					$view->conference = $conference;
-				}
+				$view->conference = $conference;
 				
 				$this->response->body($view);
 			}
@@ -769,5 +544,145 @@ public function action_insert()
 		echo json_encode($tag_id);
 	}
 
-	
+	public function action_edit()
+	{
+		$id = $this->request->param('id');
+
+		$view = View::factory('schedule-edit');
+		$view->id = $id;
+		if(!empty($conf['start_date'])){
+			$view->start_date = $conf['start_date'];
+		}else {
+			$view->start_date = date('Y-m-d');
+		}
+		if(!empty($conf['end_date'])){
+			$view->end_date = $conf['end_date'];
+		}else {
+			$view->end_date = $view->start_date;
+		}
+		
+		$session_data = new Service_Schedule();
+		$result_session = $session_data->get_session_data($id);
+		
+		if(!empty($result_session)){
+			$i = 0;
+			foreach($result_session as $value)
+			{
+				$session_name[$i]['name'] = $value->get('title');
+				$session_name[$i]['date'] = $value->get('date');
+				$session_name[$i]['id'] = $value->get('id');
+				$i++;
+			}
+			
+			if(!empty($session_name)){
+				$view->session_names = $session_name;
+			}
+		}
+		
+		$room_data = new Service_Schedule();
+		$result_room = $room_data->get_room_list($id);
+		
+		if(!empty($result_room)){
+			$i = 0;
+			foreach($result_room as $value)
+			{
+				$room_name[$i]['name'] = $value->get('room_name');
+				
+				$session_data = new Service_Schedule();
+				$session_result = $session_data->get_session_list($value->get('conference_session'));
+				$session_date = strtotime($session_result->get('date'));
+				$room_name[$i]['session'] = date('d/m/Y',$session_date).' - '.$session_result->get('title');
+				
+				$i++;
+			}
+			
+			if(!empty($room_name)){
+				$view->room_names = $room_name;
+			}
+		}
+		
+		$time_data = new Service_Schedule();
+		$result_time = $time_data->get_time_list($id);
+		
+		if(!empty($result_time)){
+			$i = 0;
+			foreach($result_time as $value)
+			{
+				$time_name[$i]['start_time'] = date('h:i A',$value->get('start_time'));
+				$time_name[$i]['end_time'] = date('h:i A',$value->get('end_time'));
+				
+				$session_data = new Service_Schedule();
+				$session_result = $session_data->get_session_list($value->get('conference_session'));
+				$session_date = strtotime($session_result->get('date'));
+				$time_name[$i]['session'] = date('d/m/Y',$session_date).' - '.$session_result->get('title');
+				
+				$i++;
+			}
+			
+			if(!empty($time_name)){
+				$view->time_names = $time_name;
+			}
+		}
+		
+		$presentation_data = new Service_Schedule();
+		$result = $presentation_data->get_presentation_list($id);
+		
+		if(!empty($result)){
+			$i = 0;
+			foreach($result as $value)
+			{
+				if(is_null($value->get('end_time_table'))){
+					$starttime = $value->get('time_table');
+					$time_data = new Service_Schedule();
+					$result_time = $time_data->get_time($starttime);
+					$first_time_slot = date('h:i A',$result_time->get('start_time'));
+					$last_time_slot = date('h:i A',$result_time->get('end_time'));
+					
+					$timeslot = $first_time_slot." - ".$last_time_slot;
+				}else {
+					$starttime = $value->get('time_table');
+					$time_data = new Service_Schedule();
+					$result_time = $time_data->get_time($starttime);
+					$first_time_slot = date('h:i A',$result_time->get('start_time'));
+					
+					$endtime = $value->get('end_time_table');
+					$end_time_data = new Service_Schedule();
+					$result_end_time = $time_data->get_time($endtime);
+					$last_time_slot = date('h:i A',$result_end_time->get('end_time'));
+					
+					$timeslot = $first_time_slot." - ".$last_time_slot;
+				}
+				
+				$roomid = $value->get('conference_room');
+				$room_data = new Service_Schedule();
+				$result_room = $room_data->get_room($roomid);
+				
+				$roomname = $result_room->get('room_name');
+				$sessionid = $result_room->get('conference_session');
+				
+				$session_data = new Service_Schedule();
+				$session_result = $session_data->get_session_list($sessionid);
+				$session_date = strtotime($session_result->get('date'));
+				$session_name = date('d/m/Y',$session_date).' - '.$session_result->get('title');
+				
+				$presentationid = $value->get('presentation');
+				$presentation_data = new Service_Schedule();
+				$result_presentation = $room_data->get_presentation($presentationid);
+				
+				$presentationtitle = $result_presentation->get('title');
+				
+				$presentation_final[$i]['session'] = $session_name;
+				$presentation_final[$i]['timeslot'] = $timeslot;
+				$presentation_final[$i]['title'] = $presentationtitle;
+				$presentation_final[$i]['room'] = $roomname;
+				$i++;
+			}
+			
+			if(!empty($presentation_final)){
+				$view->presentation_final = $presentation_final;
+			}
+		}
+
+		$this->response->body($view);
+	}
 }

@@ -136,23 +136,4 @@ class Service_Schedule {
 			
 		return $presentations;
 	}
-	
-	public function get_display_data($session_id)
-	{
-		$final_data = DB::select('conference_session.id','conference_session.date','conference_room.room_name', 'conference_presentation.title', 'conference_time_table.start_time', 'conference_time_table.end_time', 'conference_time_slot.time_table', 'conference_time_slot.end_time_table')
-		->from('conference_session')
-		->join('conference_room')
-		->on('conference_session.id','=','conference_room.conference_session')
-		->join('conference_time_table')
-		->on('conference_session.id','=','conference_time_table.conference_session')
-		->join('conference_time_slot')
-		->on('conference_room.id','=','conference_time_slot.conference_room')
-		->on('conference_time_table.id','=','conference_time_slot.time_table')
-		//->on('conference_time_table.id','=','conference_time_slot.end_time_table')
-		->join('conference_presentation')
-		->on('conference_time_slot.presentation','=','conference_presentation.id')
-		->where('conference_session.id','=',DB::expr($session_id));
-		
-		return $final_data->execute();
-	}
 }

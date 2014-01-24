@@ -8,13 +8,6 @@ $(function(){
 	baseConfUrl = baseUrl + moduleName + "/";
 	
 	$('#schedule-tab a:first').tab('show');
-	
-	$('#schedule-id').on('click', function(){
-		$('#jumbotronid').hide();
-		$('#schedule-table').hide();
-		$('#schedule-main').show();
-		$('#schedule-content').show();
-	});
 
 	$("#schedule_session" ).click(function( e ) {
 		session_add();
