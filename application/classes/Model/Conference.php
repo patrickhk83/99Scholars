@@ -18,6 +18,10 @@ class Model_Conference extends ORM {
       	'conference_tag' => array(
         	'model'   => 'ConferenceTag',
         	'foreign_key' => 'conference_id'
+    	),
+    	'conference_session' => array(
+    		'model' => 'Session',
+    		'foreign_key' => 'event'
     	),  	
 	);
 

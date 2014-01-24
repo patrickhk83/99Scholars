@@ -91,7 +91,7 @@ class Service_Schedule {
 	
 	public function get_presentation($id)
 	{
-		$room = ORM::factory('Presentation')
+		$room = ORM::factory('ConfPresentation')
 			->where('id', '=', $id)
 			->find();
 			     
@@ -128,7 +128,7 @@ class Service_Schedule {
 	
 	public function get_presentation_title_room($roomid)
 	{
-		$presentations = ORM::factory('Presentation')
+		$presentations = ORM::factory('ConfPresentation')
 			->join('conference_time_slot', 'LEFT')
 			->on('presentation.id', '=', 'conference_time_slot.presentation')
 			->where('conference_time_slot.presentation', '=', DB::expr($roomid))

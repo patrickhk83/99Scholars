@@ -35,7 +35,7 @@ class Controller_Conference extends Controller {
     			':type' => $conference->conference_type->name,
 			));
 			
-			if($conference->conference_type->name == 'Seminar')
+			if($conference->conference_type->name == 'Seminar') //'Seminar' type
 			{
 
 				$view = View::factory('seminar');
@@ -118,7 +118,7 @@ class Controller_Conference extends Controller {
 				
 				$this->response->body($view);
 			}
-			else
+			else //'Conference' type
 			{
 				$view = View::factory('schedule');
 				$view->id = $id;
@@ -271,6 +271,11 @@ class Controller_Conference extends Controller {
 				
 				$j = 0;
 				if(!empty($finaldates)){
+
+					$rooms = array();
+					$start_times = array();
+					$presentations = array();
+
 					foreach($finaldates as $value)
 					{
 						$session_all_ids = new Service_Schedule();
@@ -285,8 +290,23 @@ class Controller_Conference extends Controller {
 								$display_result = $display_data->get_display_data($value1['id']);
 								//print_r($display_result);die;
 								if(!empty($display_result)){
+
 									foreach($display_result as $result)
 									{
+										//add room
+										if(!in_array($result['room_name'], $rooms))
+										{
+											array_push($rooms, $result['room_name']);	
+										}
+										
+										if(!in_array($result['start_time'], $start_times))
+										{
+											array_push($start_times, $result['start_time']);
+											$presentations[$result['start_time']] = array();
+										}
+
+										array_push($presentations[$result['start_time']], $result['title']);
+
 										$session_date = strtotime($result['date']);
 										$presentation_view[$j]['id'] = $result['id'];
 										$presentation_view[$j]['date'] = date('d/m/Y',$session_date);
@@ -319,64 +339,17 @@ class Controller_Conference extends Controller {
 							}
 						}
 					}
+
+					$presentation_view['rooms'] = $rooms;
+					$presentation_view['start_times'] = $start_times;
+					$presentation_view['presentations'] = $presentations;
 				}
 				
 				if(!empty($presentation_view)){
 					$view->presentation_front = $presentation_view;
+					$view->conference = $conference;
 				}
 				
-				
-					/*
-					$j = 0;
-					$finalids = '';
-					$finalrooms = '';
-					$finaltimes = '';
-					
-					foreach($result as $value1)
-					{
-						$finalids .= $value1['id'].', ';
-						$in_room_list = new Service_Schedule();
-						$room_data = $in_room_list->get_all_room_list($value1['id']);
-						
-						foreach($room_data as $value2)
-						{
-							$finalrooms .= $value2['room_name'].', ';
-							
-							$roomids[] = $value2['id'];
-							
-							//$roomtitle =  new Service_Schedule();
-							//$roomtitleval = $roomtitle->get_presentation_title_room($value2['id']);
-							//print_r($roomtitleval);
-							//die;
-						}
-						
-						$in_time_list = new Service_Schedule();
-						$time_data = $in_room_list->get_all_time_list($value1['id']);
-						
-						foreach($time_data as $value3)
-						{
-							$finaltimes .= date('h:i A',$value3['start_time']).' - '.date('h:i A',$value3['end_time']).', ';
-							$timeids = $value3['id'];
-						}
-						
-						print_r($roomids);
-						die;
-					}
-					
-					$dates[$j]['id'] = $finalids;
-					$dates[$j]['room'] = $finalrooms;
-					$dates[$j]['time'] = $finaltimes;
-					$j++;
-				}
-				if(!empty($dates)){
-					$view->presentation_dates = $dates;
-				}
-				
-				echo "<pre>";
-				print_r($dates);
-				die;
-				*/
-				/*end final display*/
 				$this->response->body($view);
 			}
 		}
