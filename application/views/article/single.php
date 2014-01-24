@@ -42,7 +42,7 @@
 	<?php endforeach; ?>
               
 <!-- this practice should be preferable, instead of cluttering a single article page with everything -->
-<?php echo View::factory('comment/edit', array('comment'=>new Model_Comment(),'article'=>$article )); ?>
+<?php echo View::factory('comment/edit', array('comment'=>new Model_Comment(),'article'=>$article, 'user'=>$user )); ?>
               
            
             </div>

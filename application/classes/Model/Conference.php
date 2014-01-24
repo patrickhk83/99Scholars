@@ -15,6 +15,14 @@ class Model_Conference extends ORM {
         	'model'   => 'ConferenceTopic',
         	'foreign_key' => 'conference'
     	),
+      	'conference_tag' => array(
+        	'model'   => 'ConferenceTag',
+        	'foreign_key' => 'conference_id'
+    	),
+    	'conference_session' => array(
+    		'model' => 'Session',
+    		'foreign_key' => 'event'
+    	),  	
 	);
 
 	protected $_has_one = array(
@@ -46,9 +54,9 @@ class Model_Conference extends ORM {
 			'start_date' => array(
 				array('not_empty')
 			),
-			'end_date' => array(
+			/*'end_date' => array(
 				array('not_empty')
-			),
+			),*/
 			'description' => array(
 				array('not_empty')
 			),

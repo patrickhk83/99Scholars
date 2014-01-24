@@ -10,8 +10,10 @@ class Controller_Conference extends Controller {
     		':id' => $id,
 		));
 
-		$aaa = new Service_UserAction();
-        $aaa->register_user_action($this , 'view' , null , $id);
+		//Create instance for Service_UserAction class.
+		$conference_action_view_track = new Service_UserAction();
+		//Register View Action for Conference(id, ControllerName, ActionName).
+        $conference_action_view_track->register_user_action($this , 'view' , null , $id);
 
 		//mockup page
 		$session_id = $this->request->param('session_id');
@@ -33,7 +35,7 @@ class Controller_Conference extends Controller {
     			':type' => $conference->conference_type->name,
 			));
 			
-			if($conference->conference_type->name == 'Seminar')
+			if($conference->conference_type->name == 'Seminar') //'Seminar' type
 			{
 
 				$view = View::factory('seminar');
@@ -116,7 +118,7 @@ class Controller_Conference extends Controller {
 				
 				$this->response->body($view);
 			}
-			else
+			else //'Conference' type
 			{
 				$view = View::factory('schedule');
 				$view->id = $id;
@@ -269,6 +271,11 @@ class Controller_Conference extends Controller {
 				
 				$j = 0;
 				if(!empty($finaldates)){
+
+					$rooms = array();
+					$start_times = array();
+					$presentations = array();
+
 					foreach($finaldates as $value)
 					{
 						$session_all_ids = new Service_Schedule();
@@ -283,8 +290,23 @@ class Controller_Conference extends Controller {
 								$display_result = $display_data->get_display_data($value1['id']);
 								//print_r($display_result);die;
 								if(!empty($display_result)){
+
 									foreach($display_result as $result)
 									{
+										//add room
+										if(!in_array($result['room_name'], $rooms))
+										{
+											array_push($rooms, $result['room_name']);	
+										}
+										
+										if(!in_array($result['start_time'], $start_times))
+										{
+											array_push($start_times, $result['start_time']);
+											$presentations[$result['start_time']] = array();
+										}
+
+										array_push($presentations[$result['start_time']], $result['title']);
+
 										$session_date = strtotime($result['date']);
 										$presentation_view[$j]['id'] = $result['id'];
 										$presentation_view[$j]['date'] = date('d/m/Y',$session_date);
@@ -317,64 +339,17 @@ class Controller_Conference extends Controller {
 							}
 						}
 					}
+
+					$presentation_view['rooms'] = $rooms;
+					$presentation_view['start_times'] = $start_times;
+					$presentation_view['presentations'] = $presentations;
 				}
 				
 				if(!empty($presentation_view)){
 					$view->presentation_front = $presentation_view;
+					$view->conference = $conference;
 				}
 				
-				
-					/*
-					$j = 0;
-					$finalids = '';
-					$finalrooms = '';
-					$finaltimes = '';
-					
-					foreach($result as $value1)
-					{
-						$finalids .= $value1['id'].', ';
-						$in_room_list = new Service_Schedule();
-						$room_data = $in_room_list->get_all_room_list($value1['id']);
-						
-						foreach($room_data as $value2)
-						{
-							$finalrooms .= $value2['room_name'].', ';
-							
-							$roomids[] = $value2['id'];
-							
-							//$roomtitle =  new Service_Schedule();
-							//$roomtitleval = $roomtitle->get_presentation_title_room($value2['id']);
-							//print_r($roomtitleval);
-							//die;
-						}
-						
-						$in_time_list = new Service_Schedule();
-						$time_data = $in_room_list->get_all_time_list($value1['id']);
-						
-						foreach($time_data as $value3)
-						{
-							$finaltimes .= date('h:i A',$value3['start_time']).' - '.date('h:i A',$value3['end_time']).', ';
-							$timeids = $value3['id'];
-						}
-						
-						print_r($roomids);
-						die;
-					}
-					
-					$dates[$j]['id'] = $finalids;
-					$dates[$j]['room'] = $finalrooms;
-					$dates[$j]['time'] = $finaltimes;
-					$j++;
-				}
-				if(!empty($dates)){
-					$view->presentation_dates = $dates;
-				}
-				
-				echo "<pre>";
-				print_r($dates);
-				die;
-				*/
-				/*end final display*/
 				$this->response->body($view);
 			}
 		}
@@ -385,6 +360,13 @@ class Controller_Conference extends Controller {
 		{
 			$service_conference = Service_Conference::instance();
 			$id = $service_conference->create($this->request->post());
+
+			//Create instance for Service_UserAction class.
+			$conference_action_attend_track = new Service_UserAction();
+			//Register Create Action for Conference(id, ControllerName, ActionName).
+	        $conference_action_attend_track->register_user_action($this , 'create' , null , $id);
+
+
 			$this->redirect('/conference/view/'.$id, 302);
 		}
 		else
@@ -451,6 +433,11 @@ class Controller_Conference extends Controller {
 
 			$user = $user_service->get_by_id($user_id);
 
+			//Create instance for Service_UserAction class.
+			$conference_action_attend_track = new Service_UserAction();
+			//Register Attend Action for Conference(id, ControllerName, ActionName).
+	        $conference_action_attend_track->register_user_action($this , 'attend' , null , $conf_id , $user_id);
+
 			$result['status'] = 'ok';
 			$result['id'] = $user_id;
 			$result['name'] = $user['first_name'].' '.$user['last_name'];
@@ -473,6 +460,11 @@ class Controller_Conference extends Controller {
 		$user_service = new Service_User();
 		$user_service->cancel_booking($user_id, $conf_id);
 
+		//Create instance for Service_UserAction class.
+		$conference_action_attend_track = new Service_UserAction();
+		//Register AttendCancel Action for Conference(id, ControllerName, ActionName).
+        $conference_action_attend_track->register_user_action($this , 'cancel' , null , $conf_id , $user_id);
+
 		$result['id'] = $user_id;
 
 		//TODO: create super controller to support ajax function
@@ -494,6 +486,12 @@ class Controller_Conference extends Controller {
 				
 				$user_service = new Dao_Video();
 				$user_service->add_upload_video($user_id, $conf_id, $videoid);
+
+				//Create instance for Service_UserAction class.
+				$conference_action_upload_video_track = new Service_UserAction();
+				//Register Upload Video Action for Conference(id, ControllerName, ActionName).
+		        $conference_action_upload_video_track->register_user_action($this , 'uploadVideo' , $videoid , $conf_id , $user_id);
+
 				break;
 			
 			/*case 'file':
@@ -534,6 +532,12 @@ class Controller_Conference extends Controller {
 				$user_service = new Dao_Video();
 				$user_service->add_delete($user_id, $conf_id, $videoid);
 				$result['videoid'] = $videoid;
+
+				//Create instance for Service_UserAction class.
+				$conference_action_upload_video_track = new Service_UserAction();
+				//Register Delete Uploaded Video Action for Conference(ConferenceID, ControllerName, ActionName, UserID, VideoID).
+		        $conference_action_upload_video_track->register_user_action($this , 'deleteVideo' , $videoid , $conf_id , $user_id);
+
 				break;
 			
 			case 'file':
@@ -589,6 +593,12 @@ class Controller_Conference extends Controller {
 		$desc = $_POST["filedesc"];
 		$user_service = new Service_File();
 		$result = $user_service->upload_multiple_file($_FILES['file'],"$conf_id",$conf_id,$desc);
+
+		//Create instance for Service_UserAction class.
+		$conference_action_upload_file_track = new Service_UserAction();
+		//Register Upload File Action for Conference(ControllerName, ActionName, ConferenceID).
+        $conference_action_upload_file_track->register_user_action($this , 'uploadFile' , null , $conf_id);
+
 			
 		$this->redirect('/conference/view/'.$conf_id, 302);
 	}
@@ -599,6 +609,11 @@ class Controller_Conference extends Controller {
 		$desc = $_POST["photodesc"];		
 		$user_service1 = new Service_Photo();
 		$result = $user_service1->upload_multiple_photo($_FILES['file'],"conference-$conf_id",$conf_id,$desc);
+
+		//Create instance for Service_UserAction class.
+		$conference_action_upload_photo_track = new Service_UserAction();
+		//Register Upload Photo Action for Conference(ControllerName, ActionName, ConferenceID).
+        $conference_action_upload_photo_track->register_user_action($this , 'uploadPhoto' , null , $conf_id);
 		
 		$this->redirect('/conference/view/'.$conf_id, 302);
 	}
@@ -720,6 +735,38 @@ public function action_insert()
 		}
 		$this->response->headers('Content-Type', 'application/json; charset=utf-8');
 		$this->response->body(json_encode($result));
+	}
+
+	public function action_suggest_tag()
+	{
+		$conf_service = new Service_Conference();
+		$suggests = $conf_service->get_suggest_tag_list($this->request->post('term'));
+		$nCount = 0;
+		$suggested_list = "<div class='list-group'>";
+		foreach ($suggests as $suggest) {
+			$nCount ++;
+			$suggested_list .= "<a class='list-group-item' onclick=\"addSelectedTag(".$suggest->get('id')." , '".$suggest->get('tag_name')."');\">".$suggest->get('tag_name')."</a>";
+
+			//$suggested_list[] = $suggest->get('tag_name');	
+		}
+
+		if($nCount == 0)
+		{
+			$suggested_list .= "<a class='list-group-item' onclick=\"addNewTag('";
+			$suggested_list	.= $this->request->post('term')."');\">Add \"";
+			$suggested_list .= $this->request->post('term')."\" as a tag you need</a>";
+		}
+
+		$suggested_list .= "</div>";
+		echo json_encode($suggested_list);
+	}
+
+	public function action_new_tag()
+	{
+		$tag_name = $this->request->post('term');
+		$conf_service = new Service_Conference();
+		$tag_id = $conf_service->set_new_tag($tag_name);
+		echo json_encode($tag_id);
 	}
 
 	

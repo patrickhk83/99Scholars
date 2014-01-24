@@ -70,7 +70,7 @@ class Dao_Schedule {
 	
 	public function create_presentation($user_id, $session_id, $time_table, $end_time_table, $presentation_room, $presentation_slot, $presentation_name)
 	{
-		$presentation = ORM::factory('Presentation');
+		$presentation = ORM::factory('ConfPresentation');
 		$presentation->title = $presentation_name;
 		$presentation->save();
 

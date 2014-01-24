@@ -17,9 +17,6 @@ class Model_Seminar extends ORM {
 			'speaker' => array(
 	            array('trim'),
 	        ),
-	        'speaker' => array(
-	            array('abstract'),
-	        ),
 	    );
 	}
 

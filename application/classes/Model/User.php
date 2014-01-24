@@ -1,8 +1,8 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Model_User extends ORM {
+class Model_User extends Model_Auth_User {
 
-	protected $_table_name = 'user';
+	protected $_table_name = 'users';
 
 	protected $_has_many = array(
     	'attendee' => array(
@@ -23,6 +23,12 @@ class Model_User extends ORM {
     		'far_key' => 'user',
     		'foreign_key' => 'follow_user'
     	),
+    	//for Kohana's Auth model
+    	'user_tokens' => array('model' => 'User_Token'),
+		'roles'       => array(
+			'model' => 'Role', 
+			'through' => 'roles_users'
+		),
 	);
 	protected $_has_one = array(
 		'position' => array(
@@ -105,6 +111,11 @@ class Model_User extends ORM {
 		{
 			return FALSE;
 		}
+	}
+
+	public function is_admin()
+	{
+		return $this->has('roles', ORM::factory('Role', array('name' => 'admin')));
 	}
 
 }

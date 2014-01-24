@@ -225,194 +225,44 @@
               </form>
             </div>
           </div>
-			  
-			  
-			  
-             <?php echo "<table class='table table-bordered schedule-table' id='schedule-table'>";
-		
-		if(!empty($presentation_front))
-		{
-	
-		$l=0;
-			 	foreach($presentation_front as $result_new)
-	{				  
-  $room[]=$result_new['room_name'];
-  $title[]=$result_new['title']; 
-  $start_time[]= $result_new['start_time'];
-  $end_time[]= $result_new['end_time'];
-   $l++;
-	}		
-	
-			echo "  <thead>
-		            <tr>
-		              <th></th>";
-		  
-
-
-for($i=0;$i<$l; $i++)
-{
-echo "<th>".$room[$i]."</th>";
-}
-
-
- echo "</tr></thead><tbody>";
- 
-for($j=0;$j<count($start_time); $j++)
-{
- 
- echo "<tr><td class='time'>"; echo $start_time[$j]; 
- 
- echo"</td>";
- 
-if($j==0)
-{ 
- echo "<td colspan='$l' class='slot event'>Opening Session</td>";
-}
-
-	            
-else 
-{
-echo "<td colspan='$l'></td>";
-
-}					
-					echo "</tr>
-		            <tr >
-		              <td class='time'>"; 
-echo $end_time[$j]; "</td>";
 			
-				
-
-			  for($k=0;$k<count($title);$k++)
-			  {
-			
-	if($end_time[$j]==$end_time[$k])
-	{
-	
-					  echo "<td class='slot'>". $title[$k]."</td>";
-	}
-	else
-	{
-	
-	 echo "<td class='slot'></td>";
-	}			
-				
-				}
-					  
-			
-       }
-					  
-
-echo "</tr>";
-
-
-}
-
-echo "</tbody></table>";
-			 ?>
-		
-	<?php /*?>	<?php
-		if(!empty($presentation_front)){
+			<?php foreach($conference->conference_session->find_all() as $conf_session) { 
+				$room_count = 0;
 			?>
-			<thead>
-				<tr>
-				<th></th>
-			<?php
-			foreach($presentation_front as $presentation)
-			{
-				?>
-				<th><?php echo $presentation['room_name']?></th>
-				<?php
-			}
-			?>
-				</tr>
-			</thead>
-			<tbody>
-		            <tr>
-				<?php
-				foreach($presentation_front as $presentation)
-				{
-				?>
-		              <td class="time"><?php echo $presentation['start_time']?></td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1"><?php echo $presentation['title']?></a></strong><br/>Speaker Name</td>
-				<?php
-				}
-				?>
-			    </tr>
-			</tbody>
-			<?php
-		}
-		
-		
-		?><?php */?>
-		
-		          <!--<thead>
-		            <tr>
-		              <th></th>
-		              <th>Section 1</th>
-		              <th>Section 2</th>
-		              <th>Section 3</th>
-		            </tr>
-		          </thead>
-		          <tbody>
-		            <tr>
-		              <td class="time">09:00AM</td>
-		              <td colspan="3" class="slot event">Opening Session</td>
-		            </tr>
-		            <tr>
-		              <td class="time">10:00AM</td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		            </tr>
-		            <tr>
-		              <td class="time">11:00AM</td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		            </tr>
-		            <tr>
-		              <td class="time">12:00PM</td>
-		              <td colspan="3" class="slot event">Lunch Break</td>
-		            </tr>
-		            <tr>
-		              <td class="time">01:00PM</td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		            </tr>
-		            <tr>
-		              <td class="time">02:00PM</td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		            </tr>
-		            <tr>
-		              <td class="time">03:00PM</td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		            </tr>
-		            <tr>
-		              <td class="time">04:00PM</td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		              <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		            </tr>
-		            <tr>
-		              <td class="time">05:00PM</td>
-		             <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		             <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		             <td class="slot"><strong><a href="<?php echo $id ?>/session/1">Presentation Title</a></strong><br/>Speaker Name</td>
-		            </tr>
-		            <tr>
-		              <td class="time">06:00PM</td>
-		              <td colspan="3" class="slot event">Closing Session</td>
-			    </tr>
-		            
-		          </tbody>-->
-				  
-				  
-		     <!--   </table>-->
+				<h4><?= $conf_session->get_readable_date() ?></h4>
+				<table class='table table-bordered schedule-table' id='schedule-table'>
+					<tr>
+						<td></td>
+						<?php foreach ($conf_session->rooms->find_all() as $room) { ?>
+							<th><?= $room->room_name ?></th>
+						<?php $room_count++; } ?>
+					</tr>
+
+					<?php foreach($conf_session->timetables->order_by('start_time', 'ASC')->find_all() as $timetable) { ?>
+						<tr>
+							<td class="time"><?= $timetable->get_readable_starttime() ?></td>
+							<?php foreach($timetable->timeslots->find_all() as $timeslot) { ?>
+								<?php if($timeslot->is_single_slot()) { ?>
+									<td class="slot">
+										<?= $timeslot->slot_presentation->title ?>
+									</td>
+								<?php } else if($timeslot->is_whole_slot()) { ?>
+									<td class="slot event" colspan="<?= $room_count ?>">
+										<?= $timeslot->slot_presentation->title ?>
+									</td>
+								<?php } else if($timeslot->is_expand_slot()) { ?>
+									<td class="slot" rowspan="<?= $timeslot->get_row_span() ?>">
+										<?= $timeslot->slot_presentation->title ?>
+									</td>
+								<?php } ?>
+								
+							<?php } ?>
+						</tr>
+					<?php } ?>
+
+				</table>
+
+			<?php } ?>
             
 			
 			</div><!--/span-->            

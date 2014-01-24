@@ -5,12 +5,16 @@ class Service_User {
 	public function create($email, $password, $first_name, $last_name)
 	{
 		$user = ORM::factory('User');
+        $user->username = $email;
+        $user->email = $email;
+        $user->firstname = $first_name;
+        $user->lastname = $last_name;
+        $user->password = $password;
 
-		$user->email = $email;
-		$user->password = $this->encrypt_password($password);
-		$user->firstname = $first_name;
-		$user->lastname = $last_name;
-		$user->save();
+        $user->save();
+
+        //Add right to login
+        $user->add('roles', ORM::factory('role', array('name' => 'login')));
 
 		$user_id = $user->pk();
 
@@ -130,10 +134,5 @@ class Service_User {
 	{
 		$atten_dao = new Dao_Attendee();
 		$atten_dao->delete($user, $conferemce);
-	}
-	
-	public function encrypt_password($password)
-	{
-		return md5($password);
 	}
 }

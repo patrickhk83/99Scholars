@@ -8,16 +8,14 @@ class Model_Comment extends ORM {
 		'article' => array (
 			'model'			=> 'article',
 			'foreign_key'	=> 'article_id'
+		),
+		'author' => array (
+			'model'			=> 'User',
+			'foreign_key'	=> 'user'
 		)
 	);
 	public function rules()	{
 		return array (
-			'name' => array (
-				array('not_empty'),
-			),
-			'email' => array (
-				array('not_empty'),
-			),
 			'comment' => array (		// property name to validate
 				array('not_empty'),		// validation type
 				),

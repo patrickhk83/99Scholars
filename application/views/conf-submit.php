@@ -87,6 +87,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <?php echo HTML::script('js/jquery.js') ?>
+    <?php echo HTML::script('js/jquery-ui.js') ?>
     <?php echo HTML::script('js/bootstrap.min.js') ?>
     <?php echo HTML::script('js/offcanvas.js') ?>
     <?php echo HTML::script('js/bootstrap-datepicker.js') ?>
