@@ -9,21 +9,25 @@ $(function(){
 	
 	$('#schedule-tab a:first').tab('show');
 
+	$('#presentation-tab-title').click(function(){
+		session_display_data_1();
+	});
+
 	$("#schedule_session" ).click(function( e ) {
 		session_add();
-		e.stopImmediatePropagation();
+		//e.stopImmediatePropagation();
 	});
 	$("#schedule_room" ).click(function( e ) {
 		room_add();
-		e.stopImmediatePropagation();
+		//e.stopImmediatePropagation();
 	});
 	$("#schedule_time" ).click(function( e ) {
 		time_add();
-		e.stopImmediatePropagation();
+		//e.stopImmediatePropagation();
 	});
 	$("#schedule_presentation" ).click(function( e ) {
 		presentation_add();
-		e.stopImmediatePropagation();
+		//e.stopImmediatePropagation();
 	});
 	
 	$("#session_room3" ).click(function(  ) {
@@ -41,6 +45,7 @@ $(function(){
 	$("#presentation_slot" ).change(function(  ) {
 		session_display_data_2();
 	});
+	
 });
 
 	
@@ -55,7 +60,7 @@ function session_add() {
 		myDate=myDate.split("-");
 		var content = '<tr><td>'+myDate[0]+'</td><td>'+response.name+'</td></tr>';
 		$('#session_body').append(content);
-		location.reload();
+		//location.reload();
 	});
 }
 
@@ -67,7 +72,7 @@ function room_add() {
 	$.post(url, data, function(response){
 		var content = '<tr><td>'+response.name+'</td><td>'+response.session+'</td></tr>';
 		$('#room_body').append(content);
-		location.reload();
+		//location.reload();
 	});
 }
 
@@ -79,7 +84,7 @@ function time_add() {
 	$.post(url, data, function(response){
 		var content = '<tr><td>'+response.session+'</td><td>'+response.start_time+'</td><td>'+response.end_time+'</td></tr>';
 		$('#time_body').append(content);
-		location.reload();
+		//location.reload();
 	});
 }
 

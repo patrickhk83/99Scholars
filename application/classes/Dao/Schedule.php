@@ -78,17 +78,6 @@ class Dao_Schedule {
 		
 		$time_slot = ORM::factory('Timeslot');
 		
-		/*$session_data = new Service_Schedule();
-		$session_result = $session_data->get_session_list($session_id);
-		
-		$session_date = strtotime($session_result->get('date'));
-		$starttime = explode(" - ",$time_table);
-		$session_value1 = date('Y-m-d',$session_date)." ".$starttime[0];
-		$session_value2 = date('Y-m-d',$session_date)." ".$starttime[1];
-		$start_unix_timestamp1 = strtotime($session_value1);
-		$start_unix_timestamp2 = strtotime($session_value2);
-		$start_unix_timestamp = $start_unix_timestamp1."-".$start_unix_timestamp2;*/
-		
 		$time_slot->time_table = $time_table;
 		$time_slot->conference_room = $presentation_room;
 		$time_slot->presentation = $presentation_id;
@@ -96,18 +85,14 @@ class Dao_Schedule {
 		
 		if($presentation_slot == 3){
 			
-			/*$session_data = new Service_Schedule();
-			$session_result = $session_data->get_session_list($session_id);
-			
-			$session_date = strtotime($session_result->get('date'));
-			$endtime = explode(" - ",$end_time_table);
-			$session_value4 = date('Y-m-d',$session_date)." ".$endtime[1];
-			$end_unix_timestamp2 = strtotime($session_value4);*/
 			$slot_span = 1;
 			
 			$time_slot->slot_span = $slot_span;
 			$time_slot->end_time_table = $end_time_table;
 			$time_slot->slot_type = $presentation_slot;
+		}
+		else {
+			$time_slot->slot_type = $presentation_slot;	
 		}
 		
 		$time_slot->save();

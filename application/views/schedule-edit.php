@@ -5,10 +5,10 @@
             <div class="col-lg-12">
 		<h2>4th Global Conference: Performance: Visual Aspects of Performance Practice</h2>
 		<ul class="nav nav-tabs" id="schedule-tab">
-			<li><a href="#session" data-toggle="tab">Session</a></li>
-			<li><a href="#room" data-toggle="tab">Room</a></li>
-			<li><a href="#time" data-toggle="tab">Time Table</a></li>
-			<li><a href="#presentation" data-toggle="tab">Presentation</a></li>
+			<li><a href="#session" data-toggle="tab" style="color:#428bca;">Session</a></li>
+			<li><a href="#room" data-toggle="tab" style="color:#428bca;">Room</a></li>
+			<li><a href="#time" data-toggle="tab" style="color:#428bca;">Time Table</a></li>
+			<li><a href="#presentation" data-toggle="tab" style="color:#428bca;" id="presentation-tab-title">Presentation</a></li>
 		</ul>
 	    </div>
 	  </div>
