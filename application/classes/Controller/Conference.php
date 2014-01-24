@@ -764,5 +764,37 @@ public function action_insert()
 		$this->response->body(json_encode($result));
 	}
 
+	public function action_suggest_tag()
+	{
+		$conf_service = new Service_Conference();
+		$suggests = $conf_service->get_suggest_tag_list($this->request->post('term'));
+		$nCount = 0;
+		$suggested_list = "<div class='list-group'>";
+		foreach ($suggests as $suggest) {
+			$nCount ++;
+			$suggested_list .= "<a class='list-group-item' onclick=\"addSelectedTag(".$suggest->get('id')." , '".$suggest->get('tag_name')."');\">".$suggest->get('tag_name')."</a>";
+
+			//$suggested_list[] = $suggest->get('tag_name');	
+		}
+
+		if($nCount == 0)
+		{
+			$suggested_list .= "<a class='list-group-item' onclick=\"addNewTag('";
+			$suggested_list	.= $this->request->post('term')."');\">Add \"";
+			$suggested_list .= $this->request->post('term')."\" as a tag you need</a>";
+		}
+
+		$suggested_list .= "</div>";
+		echo json_encode($suggested_list);
+	}
+
+	public function action_new_tag()
+	{
+		$tag_name = $this->request->post('term');
+		$conf_service = new Service_Conference();
+		$tag_id = $conf_service->set_new_tag($tag_name);
+		echo json_encode($tag_id);
+	}
+
 	
 }

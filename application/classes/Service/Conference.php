@@ -390,6 +390,13 @@ class Service_Conference {
 				$category_conference->values($category)->create();
 			}
 
+			foreach($data['selectedTag'] as $selectedTag)
+			{
+				$tag_conference = ORM::factory('ConferenceTag');
+				$selectedTag['conference_id'] = $confernce_id;
+				$tag_conference->values($selectedTag)->create();
+			}
+
 			if($data['Conference']['type'] == 2)
 			{
 				Log::instance()->add(Log::INFO, 'Seminar data save: :message', array('message', print_r($data['Seminar'], true)));
@@ -507,5 +514,28 @@ class Service_Conference {
 		}
 
 		return 'default';
+	}
+
+	public function get_suggest_tag_list($term)
+	{
+		$tag_orm = ORM::factory('Tag');
+		$tag_orm->where('tag_name' , 'LIKE' , '%'.$term.'%');
+		$limit = 20;
+		$offset = 0;
+		return $tag_orm->find_all($limit , $offset);			
+	}
+
+	public function set_new_tag($term)
+	{
+		$tag_orm = ORM::factory('Tag')->where('tag_name' , '=' , $term)->find();
+		if(is_null($tag_orm->tag_name) || $tag_orm->tag_name == '')
+		{
+			$new_tag_orm = ORM::factory('Tag');
+			$new_tag_orm->tag_name = $term;
+			$new_tag_orm->save();
+			return $new_tag_orm->id;			
+		}
+		else
+			return $tag_orm->id;
 	}
 }
