@@ -22,8 +22,15 @@ class Controller_Profile extends Controller {
 			$view->is_owner = TRUE;
 
 			//TODO: query work count
-			$view->work_count = array('publication' => 0, 'project' => 0, 'presentation' => 0);
+//2014-1-24 Added David Ming Start
+			$publication_count = $profile_service->get_publication_count($user_id);
+			$project_count = $profile_service->get_project_count($user_id);
+			$presentation_count = $profile_service->get_presentation_count($user_id);
 
+			$view->work_count = array('publication' => $publication_count, 
+										'project' => $project_count, 
+										'presentation' => $presentation_count);
+//2014-1-24 Added David Ming End
 			$view->user_id = $user_id;
 
 
@@ -45,7 +52,7 @@ class Controller_Profile extends Controller {
 		$tab_name = 'publication';
 		$user_id = $this->request->param('id');
 		$view = $this->render_tab($user_id, $tab_name);
-
+		
 		$this->response->body($view);
 	}
 
@@ -126,14 +133,26 @@ class Controller_Profile extends Controller {
 		if(HTTP_Request::POST == $this->request->method())
 		{
 			$create_type = $this->request->param('id');
-
-			$user_id = Service_Login::get_user_in_session();
-
+//2014-1-25 Modified by David Ming Start
 			$profile_service = new Service_UserProfile();
-			$result = $profile_service->create($create_type, $user_id, $this->request->post());
-
-			$this->response->headers('Content-Type', 'application/json; charset=utf-8');
-			$this->response->body(json_encode($result));
+			
+			if(!$profile_service->validation_check($create_type , $this->request->post()))
+			{
+				//Validation error response
+				$result = "<div class='alert alert-danger'>Fields in <span class='required'><b>red</b></span> are required.</div>";
+				$message = "You must input required fields.";
+				$view = array('status' => 'error' , 
+								'result_to_display' => $result , 
+								'message' => $message);
+			}
+			else
+			{	
+				//Validation success response
+				$user_id = Service_Login::get_user_in_session();
+				$view = $profile_service->create($create_type, $user_id, $this->request->post());
+			}
+			echo json_encode($view);
+//2014-1-25 Modified by David Ming End				
 		}
 	}
 
@@ -178,4 +197,80 @@ class Controller_Profile extends Controller {
 			echo 'ok';
 		}
 	}
+
+//2014-1-25 Created by David Ming Start
+	public function action_edit_journal()
+	{
+		$journal_id = $this->request->post('term');
+		$journal_dao = new Dao_Journal();
+		$view = $journal_dao->get_journal_by_id($journal_id);
+		echo json_encode($view);
+	}
+
+	public function action_delete_journal()
+	{
+		$journal_id = $this->request->post('term');
+		$journal_dao = new Dao_Journal();
+		$journal_dao->delete_journal_by_id($journal_id);
+		
+		$journal_service = new Service_Journal();
+		$user_id = Service_Login::get_user_in_session();
+		$result_to_display = $journal_service->get_journal_list($user_id , FALSE , TRUE);
+		echo json_encode($result_to_display);
+	}
+
+	public function action_delete_confproc()
+	{
+		$confproc_id = $this->request->post('term');
+		$confproc_service = new Service_ConfProc();
+		$confproc_service->delete_confproc_by_id($confproc_id);
+		$user_id = Service_Login::get_user_in_session();
+		$result_to_display = $confproc_service->get_conference_proceeding_list($user_id , FALSE , TRUE);
+		echo json_encode($result_to_display);
+	}
+
+	public function action_edit_confproc()
+	{
+		$confproc_id = $this->request->post('term');
+		$confproc_service = new Service_ConfProc();
+		$view = $confproc_service->get_confproc_by_id($confproc_id);
+		echo json_encode($view);
+	}
+
+	public function action_delete_book_chapter()
+	{
+		$chapter_id = $this->request->post('term');
+		$chapter_service = new Service_BookChapter();
+		$chapter_service->delete_book_chapter_by_id($chapter_id);
+		$user_id = Service_Login::get_user_in_session();
+		$result_to_display = $chapter_service->get_book_chapter_list($user_id , FALSE , TRUE);
+		echo json_encode($result_to_display);
+	}
+
+	public function action_edit_book_chapter()
+	{
+		$chapter_id = $this->request->post('term');
+		$chapter_service = new Service_BookChapter();
+		$view = $chapter_service->get_book_chapter_by_id($chapter_id);
+		echo json_encode($view);
+	}
+
+	public function action_delete_book()
+	{
+		$book_id = $this->request->post('term');
+		$book_service = new Service_Book();
+		$book_service->delete_book_by_id($book_id);
+		$user_id = Service_Login::get_user_in_session();
+		$result_to_display = $book_service->get_book_list($user_id , FALSE , TRUE);
+		echo json_encode($result_to_display);
+	}
+
+	public function action_edit_book()
+	{
+		$book_id = $this->request->post('term');
+		$book_service = new Service_Book();
+		$view = $book_service->get_book_by_id($book_id);
+		echo json_encode($view);
+	}
+//2014-1-24 Created by David Ming End	
 }
