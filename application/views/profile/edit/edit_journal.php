@@ -1,26 +1,18 @@
 <div class="row">
   <div class="col-lg-12">
-  	<div class="row" id="message_box">
-    	<?php 
-    		if (isset($errors)) 
-    			echo "<div class='alert alert-danger'>";
-    		else
-    			echo "<div class='alert alert-info'>";
-    		echo "Fields in <span class='required'><b>red</b></span> are required.";
-    		echo "</div>";
-    	?>
-  	</div>	
+  	<div class="row" id="message_box_journal">
+   	</div>	
   	<div class="row">
 	    <div class="col-lg-4">
 	      <div class="add-profile-form">
 	      	<form role="form" id="journal-form">
 	      		<!--<input type="hidden" name="has_coauthor" value="0">-->
 	      	  	<div class="form-group">
-				    <label for="journal-title" class="required">Title</label>
+				    <label for="journal-title" id="label_journal_title">Title</label>
 				    <input type="text" class="form-control" id="title" name="title">
 				</div>
 				<div class="form-group">
-				    <label for="journal" class="required">Journal</label>
+				    <label for="journal" id="label_journal_name">Journal</label>
 				    <input type="text" class="form-control" id="journal_name" name="journal_name">
 				</div>
 				<input type="button" value="Add author" id="add_bttn" style="float: right;position: absolute;right: -80px;margin-top: 28px;">
@@ -29,7 +21,7 @@
 				    <input type="text" class="form-control" name="has_coauthor1">
 				</div>
 				<div class="form-group">
-				    <label for="journal-status" class="required">Journal Status</label>
+				    <label for="journal-status">Journal Status</label>
 				    <select class="form-control" id="status" name="status">
 				    	<option value="p">Published</option>
 				    	<option value="s">Submitted</option>
@@ -47,19 +39,19 @@
                     </select>
 				</div>
 				<div class="form-group">
-				    <label for="journal-volume" class="required">Volume</label>
+				    <label for="journal-volume" id="label_journal_volume">Volume</label>
 				    <input type="text" class="form-control" id="volume" name="volume">
 				</div>
 				<div class="form-group">
-				    <label for="journal-issue">Issue</label>
+				    <label for="journal-issue" id="label_journal_issue">Issue</label>
 				    <input type="text" class="form-control" id="issue" name="issue">
 				</div>
 				<div class="form-group">
-				    <label for="journal-start" class="required">Start Page</label>
+				    <label for="journal-start" id="label_journal_start">Start Page</label>
 				    <input type="text" class="form-control" id="start" name="start">
 				</div>
 				<div class="form-group">
-				    <label for="journal-end" class="required">End Page</label>
+				    <label for="journal-end" id="label_journal_end">End Page</label>
 				    <input type="text" class="form-control" id="end" name="end">
 				</div>
 				<div class="form-group">

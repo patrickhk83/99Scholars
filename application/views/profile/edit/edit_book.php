@@ -1,14 +1,6 @@
 <div class="row">
   <div class="col-lg-12">
-  	<div class="row" id="message_box">
-    	<?php 
-    		if (isset($errors)) 
-    			echo "<div class='alert alert-danger'>";
-    		else
-    			echo "<div class='alert alert-info'>";
-    		echo "Fields in <span class='required'><b>red</b></span> are required.";
-    		echo "</div>";
-    	?>
+  	<div class="row" id="message_box_book">
   	</div>	  	  
   	<div class="row">
 	    <div class="col-lg-4">
@@ -16,13 +8,13 @@
 	      	<form role="form" id="book-form">
 	      		<input type="hidden" name="has_coauthor" value="0">
 	      	  	<div class="form-group">
-				    <label for="book_title" class="required">Title</label>
+				    <label for="book_title" id="label_book_title">Title</label>
 				    <input type="text" class="form-control" id="book_title" name="book_title">
 				</div>
-				<input type="button" value="Add author" id="add_bttn" style="float: right;position: absolute;right: -80px;margin-top: 28px;">
-				<div class="form-group" id="add-input-box">
+				<input type="button" value="Add author" id="add_book_author_bttn" style="float: right;position: absolute;right: -80px;margin-top: 28px;">
+				<div class="form-group" id="add-book-box">
 				    <label for="co_author">Co-Author</label>
-				    <input type="text" class="form-control" name="has_coauthor1">
+				    <input type="text" class="form-control" name="has_book_coauthor1">
 				</div>
 				<div class="form-group">
 				    <label for="book_year">Year</label>
@@ -33,11 +25,11 @@
                     </select>
 				</div>
 				<div class="form-group">
-				    <label for="chapter_publisher_city" class="required">Publisher City</label>
+				    <label for="chapter_publisher_city" id="label_book_publisher_city">Publisher City</label>
 				    <input type="text" class="form-control" id="book_publisher_city" name="book_publisher_city">
 				</div>
 				<div class="form-group">
-				    <label for="chapter_publisher" class="required">Publisher</label>
+				    <label for="chapter_publisher" id="label_book_publisher">Publisher</label>
 				    <input type="text" class="form-control" id="book_publisher" name="book_publisher">
 				</div>
 				<button type="button" class="btn btn-success" id="add-book-btn">Add Book</button>

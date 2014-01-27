@@ -132,7 +132,7 @@ var loadPublicationTab = function()
 	if(!isPublicationLoaded)
 	{
 		var url = baseViewUrl + 'publication/' + $('#user-id').val();
-
+		
 		$.get(url, function(data){
 			$('#publication').html(data);
 			isPublicationLoaded = true;

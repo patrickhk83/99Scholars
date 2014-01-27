@@ -310,7 +310,7 @@ class Service_UserProfile {
 	protected function create_confproc($user_id, $data)
 	{
 //2014-1-25 Modified by David Ming Start		
-		$nCoAuthorCount = count(preg_grep("/^has_coauthor(\d)+$/",array_keys($_POST)));
+		$nCoAuthorCount = count(preg_grep("/^has_confproc_coauthor(\d)+$/",array_keys($_POST)));
 
 		if($data['confproc_id'] != -1)
 			$confproc_orm = ORM::factory('ConfProc' , $data['confproc_id']);
@@ -339,14 +339,14 @@ class Service_UserProfile {
 	
 		while($nCount1 < $nCoAuthorCount)
 		{
-			if(!isset($data['has_coauthor'.$nCount]) || $data['has_coauthor'.$nCount] == "") 
+			if(!isset($data['has_confproc_coauthor'.$nCount]) || $data['has_confproc_coauthor'.$nCount] == "") 
 			{
 				$nCount ++;
 				continue;
 			}
 			$co_author_orm = ORM::factory('CoAuthor');
 			$co_author_orm->journal = $confproc_id;
-			$co_author_orm->author_name = $data['has_coauthor'.$nCount];
+			$co_author_orm->author_name = $data['has_confproc_coauthor'.$nCount];
 			$co_author_orm->author_id = 2;
 			$co_author_orm->save();
 			$nCount ++;
@@ -367,7 +367,7 @@ class Service_UserProfile {
 	protected function create_chapter($user_id, $data)
 	{
 //2014-1-25 Modified by David Ming Start	
-		$nCoAuthorCount = count(preg_grep("/^has_coauthor(\d)+$/",array_keys($_POST)));
+		$nCoAuthorCount = count(preg_grep("/^has_chapter_coauthor(\d)+$/",array_keys($_POST)));
 
 		if($data['book_chapter_id'] != -1)
 			$chapter_orm = ORM::factory('BookChapter' , $data['book_chapter_id']);
@@ -395,14 +395,14 @@ class Service_UserProfile {
 	
 		while($nCount1 < $nCoAuthorCount)
 		{
-			if(!isset($data['has_coauthor'.$nCount]) || $data['has_coauthor'.$nCount] == "") 
+			if(!isset($data['has_chapter_coauthor'.$nCount]) || $data['has_chapter_coauthor'.$nCount] == "") 
 			{
 				$nCount ++;
 				continue;
 			}
 			$co_author_orm = ORM::factory('CoAuthor');
 			$co_author_orm->journal = $chapter_id;
-			$co_author_orm->author_name = $data['has_coauthor'.$nCount];
+			$co_author_orm->author_name = $data['has_chapter_coauthor'.$nCount];
 			$co_author_orm->author_id = 3;
 			$co_author_orm->save();
 			$nCount ++;
@@ -506,7 +506,7 @@ class Service_UserProfile {
 	protected function create_book($user_id, $data)
 	{
 //2014-1-25 Modified by David Ming Start	
-		$nCoAuthorCount = count(preg_grep("/^has_coauthor(\d)+$/",array_keys($_POST)));
+		$nCoAuthorCount = count(preg_grep("/^has_book_coauthor(\d)+$/",array_keys($_POST)));
 
 		if($data['book_id'] != -1)
 			$book_orm = ORM::factory('Book' , $data['book_id']);
@@ -531,14 +531,14 @@ class Service_UserProfile {
 	
 		while($nCount1 < $nCoAuthorCount)
 		{
-			if(!isset($data['has_coauthor'.$nCount]) || $data['has_coauthor'.$nCount] == "") 
+			if(!isset($data['has_book_coauthor'.$nCount]) || $data['has_book_coauthor'.$nCount] == "") 
 			{
 				$nCount ++;
 				continue;
 			}
 			$co_author_orm = ORM::factory('CoAuthor');
 			$co_author_orm->journal = $book_id;
-			$co_author_orm->author_name = $data['has_coauthor'.$nCount];
+			$co_author_orm->author_name = $data['has_book_coauthor'.$nCount];
 			$co_author_orm->author_id = 4;
 			$co_author_orm->save();
 			$nCount ++;
@@ -654,7 +654,7 @@ class Service_UserProfile {
 				break;
 			
 			case 'book':
-				$book_service = new Service_book();
+				$book_service = new Service_Book();
 				$view->books = $book_service->get_book_list($user_id , FALSE , TRUE);
 				break;
 			

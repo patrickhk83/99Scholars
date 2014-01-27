@@ -1,14 +1,6 @@
 <div class="row">
   <div class="col-lg-12">
-  	<div class="row" id="message_box">
-    	<?php 
-    		if (isset($errors)) 
-    			echo "<div class='alert alert-danger'>";
-    		else
-    			echo "<div class='alert alert-info'>";
-    		echo "Fields in <span class='required'><b>red</b></span> are required.";
-    		echo "</div>";
-    	?>
+  	<div class="row" id="message_box_confproc">
   	</div>	  	
   	<div class="row">
 	    <div class="col-lg-4">
@@ -16,17 +8,17 @@
 	      	<form role="form" id="confproc-form">
 	      		<input type="hidden" name="has_coauthor" value="0">
 	      	  	<div class="form-group">
-				    <label for="confproc_title" class="required">Title</label>
+				    <label for="confproc_title" id="label_confproc_title">Title</label>
 				    <input type="text" class="form-control" id="confproc_title" name="confproc_title">
 				</div>
 				<div class="form-group">
-				    <label for="conference" class="required">Conference Prodceedings</label>
+				    <label for="conference" id="label_confproc_name">Conference Prodceedings</label>
 				    <input type="text" class="form-control" id="confproc_name" name="confproc_name" required="true">
 				</div>
-				<input type="button" value="Add author" id="add_bttn" style="float: right;position: absolute;right: -80px;margin-top: 28px;">
-				<div class="form-group" id="add-input-box">
+				<input type="button" value="Add author" id="add_confproc_author_bttn" style="float: right;position: absolute;right: -80px;margin-top: 28px;">
+				<div class="form-group" id="add-confproc-box">
 				    <label for="co_author">Co-Author</label>
-				    <input type="text" class="form-control" name="has_coauthor1">
+				    <input type="text" class="form-control" name="has_confproc_coauthor1">
 				</div>
 				<div class="form-group">
 				    <label for="confproc-status">Conference Proceedings Status</label>
@@ -47,19 +39,19 @@
                     </select>
 				</div>
 				<div class="form-group">
-				    <label for="confproc_country" class="required">Country</label>
+				    <label for="confproc_country">Country</label>
 				    <?php echo $conference_proceeding_country; ?>
 				</div>
 				<div class="form-group">
-				    <label for="confproc_city" class="required">Conference City</label>
+				    <label for="confproc_city" id="label_confproc_city">Conference City</label>
 				    <input type="text" class="form-control" id="confproc_city" name="confproc_city">
 				</div>
 				<div class="form-group">
-				    <label for="confproc-start" class="required">Start Page</label>
+				    <label for="confproc-start" id="label_confproc_start">Start Page</label>
 				    <input type="text" class="form-control" id="confproc_start" name="confproc_start">
 				</div>
 				<div class="form-group">
-				    <label for="confproc-end" class="required">End Page</label>
+				    <label for="confproc-end" id="label_confproc_end">End Page</label>
 				    <input type="text" class="form-control" id="confproc_end" name="confproc_end">
 				</div>
 				<button type="button" class="btn btn-success" id="add-confproc-btn">Add Conference Proceedings</button>
