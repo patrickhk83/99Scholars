@@ -1,26 +1,36 @@
 <div class="row">
   <div class="col-lg-12">
+  	<div class="row" id="message_box">
+    	<?php 
+    		if (isset($errors)) 
+    			echo "<div class='alert alert-danger'>";
+    		else
+    			echo "<div class='alert alert-info'>";
+    		echo "Fields in <span class='required'><b>red</b></span> are required.";
+    		echo "</div>";
+    	?>
+  	</div>	
   	<div class="row">
 	    <div class="col-lg-4">
 	      <div class="add-profile-form">
 	      	<form role="form" id="journal-form">
 	      		<!--<input type="hidden" name="has_coauthor" value="0">-->
 	      	  	<div class="form-group">
-				    <label for="journal-title">Title</label>
-				    <input type="text" class="form-control" id="journal-title" name="title">
+				    <label for="journal-title" class="required">Title</label>
+				    <input type="text" class="form-control" id="title" name="title">
 				</div>
 				<div class="form-group">
-				    <label for="journal">Journal</label>
-				    <input type="text" class="form-control" id="journal" name="journal">
+				    <label for="journal" class="required">Journal</label>
+				    <input type="text" class="form-control" id="journal_name" name="journal_name">
 				</div>
 				<input type="button" value="Add author" id="add_bttn" style="float: right;position: absolute;right: -80px;margin-top: 28px;">
 				<div class="form-group" id="add-input-box">
-				    <label for="co-author">co-author</label>
+				    <label for="co-author">Co-Author</label>
 				    <input type="text" class="form-control" name="has_coauthor1">
 				</div>
 				<div class="form-group">
-				    <label for="journal-status">Journal Status</label>
-				    <select class="form-control" id="journal-status" name="status">
+				    <label for="journal-status" class="required">Journal Status</label>
+				    <select class="form-control" id="status" name="status">
 				    	<option value="p">Published</option>
 				    	<option value="s">Submitted</option>
 				    	<option value="r">Revising</option>
@@ -30,49 +40,40 @@
 				</div>
 				<div class="form-group">
 				    <label for="journal-year">Year</label>
-				    <select class="form-control" id="journal-year" name="year">
-                      <?php for($i=1970; $i<2014; $i++) { ?>
+				    <select class="form-control" id="year" name="year">
+                      <?php for($i=1970; $i<2015; $i++) { ?>
                         <option value="<?php echo $i ?>"><?php echo $i ?></option>
                       <?php } ?>
                     </select>
 				</div>
 				<div class="form-group">
-				    <label for="journal-volume">Volume</label>
-				    <input type="text" class="form-control" id="journal-volume" name="volume">
+				    <label for="journal-volume" class="required">Volume</label>
+				    <input type="text" class="form-control" id="volume" name="volume">
 				</div>
 				<div class="form-group">
 				    <label for="journal-issue">Issue</label>
-				    <input type="text" class="form-control" id="journal-issue" name="issue">
+				    <input type="text" class="form-control" id="issue" name="issue">
 				</div>
 				<div class="form-group">
-				    <label for="journal-start">Start Page</label>
-				    <input type="text" class="form-control" id="journal-start" name="start">
+				    <label for="journal-start" class="required">Start Page</label>
+				    <input type="text" class="form-control" id="start" name="start">
 				</div>
 				<div class="form-group">
-				    <label for="journal-end">End Page</label>
-				    <input type="text" class="form-control" id="journal-end" name="end">
+				    <label for="journal-end" class="required">End Page</label>
+				    <input type="text" class="form-control" id="end" name="end">
 				</div>
 				<div class="form-group">
 				    <label for="journal-link">Link</label>
-				    <input type="text" class="form-control" id="journal-link" name="link">
+				    <input type="text" class="form-control" id="link" name="link">
 				</div>
 				<button type="button" class="btn btn-success" id="add-journal-btn">Add journal</button>
+				<input type="hidden" value="" name="journal_id" id="journal_id" value="-1">
 	      	</form>
 	      </div>
 	    </div><!--span-->
 	</div><!--/row-->
-  	<table class="table table-striped">
-            <tbody id="journal-container">
-              <?php if(isset($journals)) { ?>
-              	<?php foreach($journals as $journal) { ?>
-              	  <tr>
-              	  	<td><?php echo $journal ?></td>
-              	  	<td><span class="glyphicon glyphicon-pencil"></span></td>
-                	<td><span class="glyphicon glyphicon-trash"></span></td>
-              	  </tr>
-              	<?php } ?>
-              <?php } ?>
-            </tbody>
-          </table>
+	<div class="row" id="journal_container">
+    	<?php echo $journals; ?>
+	</div>
   </div><!--span-->
 </div><!--/row-->

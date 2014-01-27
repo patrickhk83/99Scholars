@@ -63,6 +63,9 @@
                         <p><?= $conference->conference_type->name ?></p>
                         <h4>Cateogry</h4>
                         <p><?= $conference->category->conference_category->name ?></p>
+
+                        <h4>Tags</h4>
+                        <p><? echo $tags; ?></p>
                         <!--p><h4>Description</h4></p>
               	        <p><?= $conference->description ?></p-->
                         <h4>Abstract</h4>

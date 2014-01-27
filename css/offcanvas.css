@@ -146,6 +146,12 @@ label.error {
     display: none;
 }
 
+
+.required {
+  color:red;
+}
+
+
 /*
  * Off Canvas
  * --------------------------------------------------

@@ -1,21 +1,33 @@
 <div class="row">
   <div class="col-lg-12">
+  	<div class="row" id="message_box">
+    	<?php 
+    		if (isset($errors)) 
+    			echo "<div class='alert alert-danger'>";
+    		else
+    			echo "<div class='alert alert-info'>";
+    		echo "Fields in <span class='required'><b>red</b></span> are required.";
+    		echo "</div>";
+    	?>
+  	</div>	  	  	
   	<div class="row">
 	    <div class="col-lg-4">
 	      <div class="add-profile-form">
 	      	<form role="form" id="chapter-form">
 	      		<input type="hidden" name="has_coauthor" value="0">
 	      	  	<div class="form-group">
-				    <label for="chapter-title">Title</label>
-				    <input type="text" class="form-control" id="chapter-title" name="title">
+				    <label for="chapter_title" class="required">Chapter Title</label>
+				    <input type="text" class="form-control" id="chapter_title" name="chapter_title">
 				</div>
-				<div class="form-group">
-				    <label for="chapter">Book Chapter</label>
-				    <input type="text" class="form-control" id="chapter" name="book_chapter" required="true">
+				<input type="button" value="Add author" id="add_bttn" style="float: right;position: absolute;right: -80px;margin-top: 28px;">
+				<div class="form-group" id="add-input-box">
+				    <label for="co_author">Co-Author</label>
+				    <input type="text" class="form-control" name="has_coauthor1">
 				</div>
+<!--				
 				<div class="form-group">
-				    <label for="chapter-status">Book Status</label>
-				    <select class="form-control" id="chapter-status" name="status">
+				    <label for="chapter_status">Book Status</label>
+				    <select class="form-control" id="chapter_status" name="chapter_status">
 				    	<option value="p">Published</option>
 				    	<option value="s">Submitted</option>
 				    	<option value="r">Revising</option>
@@ -23,51 +35,47 @@
 				    	<option value="t">To Appear</option>
 				    </select>
 				</div>
+-->				
 				<div class="form-group">
-				    <label for="chapter-year">Year</label>
-				    <select class="form-control" id="chapter-year" name="year">
-                      <?php for($i=1970; $i<2014; $i++) { ?>
+				    <label for="chapter_year">Year</label>
+				    <select class="form-control" id="chapter_year" name="chapter_year">
+                      <?php for($i=1970; $i<2015; $i++) { ?>
                         <option value="<?php echo $i ?>"><?php echo $i ?></option>
                       <?php } ?>
                     </select>
 				</div>
-				<!--<div class="form-group">
-				    <label for="chapter-volume">Volume</label>
-				    <input type="text" class="form-control" id="chapter-volume" name="volume">
-				</div>-->
-				<!--<div class="form-group">
-				    <label for="chapter-issue">Conference City</label>
-				    <input type="text" class="form-control" id="chapter-city" name="conference_city">
-				</div>-->
 				<div class="form-group">
-				    <label for="chapter-start">Start Page</label>
-				    <input type="text" class="form-control" id="chapter-start" name="start">
+				    <label for="chapter_editors" class="required">Editors</label>
+				    <input type="text" class="form-control" id="chapter_editors" name="chapter_editors" required="true">
 				</div>
 				<div class="form-group">
-				    <label for="chapter-end">End Page</label>
-				    <input type="text" class="form-control" id="chapter-end" name="end">
+				    <label for="chapter_book_name" class="required">Book Title</label>
+				    <input type="text" class="form-control" id="chapter_book_name" name="chapter_book_name">
 				</div>
-				<!--<div class="form-group">
-				    <label for="chapter-link">Link</label>
-				    <input type="text" class="form-control" id="chapter-link" name="link">
-				</div>-->
+				<div class="form-group">
+				    <label for="chapter_publisher_city" class="required">Publisher City</label>
+				    <input type="text" class="form-control" id="chapter_publisher_city" name="chapter_publisher_city">
+				</div>
+				<div class="form-group">
+				    <label for="chapter_publisher" class="required">Publisher</label>
+				    <input type="text" class="form-control" id="chapter_publisher" name="chapter_publisher">
+				</div>
+				<div class="form-group">
+				    <label for="chapter_start" class="required">Start Page</label>
+				    <input type="text" class="form-control" id="chapter_start" name="chapter_start">
+				</div>
+				<div class="form-group">
+				    <label for="chapter_end" class="required">End Page</label>
+				    <input type="text" class="form-control" id="chapter_end" name="chapter_end">
+				</div>
 				<button type="button" class="btn btn-success" id="add-chapter-btn">Add Chapter</button>
+				<input type="hidden" value="" name="book_chapter_id" id="book_chapter_id" value="-1">
 	      	</form>
 	      </div>
 	    </div><!--span-->
 	</div><!--/row-->
-  	<table class="table table-striped">
-            <tbody id="chapter-container">
-              <?php if(isset($chapters)) { ?>
-              	<?php foreach($chapters as $chapter) { ?>
-              	  <tr>
-              	  	<td><?php echo $chapter['last_name'].', '.$chapter['first_name'].' '.$chapter['year'].' '.$chapter['title'].' '.$chapter['book_chapter']?></td>
-              	  	<td><span id="<?php echo $chapter['id'] ?>" title="edit" onclick="editchapterform('<?php echo $chapter['first_name'] ?>','<?php echo $chapter['last_name'] ?>','<?php echo $chapter['year'] ?>','<?php echo $chapter['title'] ?>','<?php echo $chapter['book_chapter'] ?>','<?php echo $chapter['status'] ?>','<?php echo $chapter['start'] ?>','<?php echo $chapter['end'] ?>','<?php echo $chapter['id'] ?>');" class="glyphicon glyphicon-pencil"></span></td>
-                	<td><span class="glyphicon glyphicon-trash" title="delete" onclick="deletechapterform('<?php echo $chapter['id'] ?>');"></span></td>
-              	  </tr>
-              	<?php } ?>
-              <?php } ?>
-            </tbody>
-          </table>
+	<div class="row" id="book_chapter_container">
+    	<?php echo $chapters; ?>
+	</div>
   </div><!--span-->
 </div><!--/row-->

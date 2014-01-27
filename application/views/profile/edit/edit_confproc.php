@@ -1,21 +1,36 @@
 <div class="row">
   <div class="col-lg-12">
+  	<div class="row" id="message_box">
+    	<?php 
+    		if (isset($errors)) 
+    			echo "<div class='alert alert-danger'>";
+    		else
+    			echo "<div class='alert alert-info'>";
+    		echo "Fields in <span class='required'><b>red</b></span> are required.";
+    		echo "</div>";
+    	?>
+  	</div>	  	
   	<div class="row">
 	    <div class="col-lg-4">
 	      <div class="add-profile-form">
 	      	<form role="form" id="confproc-form">
 	      		<input type="hidden" name="has_coauthor" value="0">
 	      	  	<div class="form-group">
-				    <label for="confproc-title">Title</label>
-				    <input type="text" class="form-control" id="confproc-title" name="title">
+				    <label for="confproc_title" class="required">Title</label>
+				    <input type="text" class="form-control" id="confproc_title" name="confproc_title">
 				</div>
 				<div class="form-group">
-				    <label for="conference">Conference Prodceedings</label>
-				    <input type="text" class="form-control" id="confproc" name="conference" required="true">
+				    <label for="conference" class="required">Conference Prodceedings</label>
+				    <input type="text" class="form-control" id="confproc_name" name="confproc_name" required="true">
+				</div>
+				<input type="button" value="Add author" id="add_bttn" style="float: right;position: absolute;right: -80px;margin-top: 28px;">
+				<div class="form-group" id="add-input-box">
+				    <label for="co_author">Co-Author</label>
+				    <input type="text" class="form-control" name="has_coauthor1">
 				</div>
 				<div class="form-group">
 				    <label for="confproc-status">Conference Proceedings Status</label>
-				    <select class="form-control" id="confproc-status" name="status">
+				    <select class="form-control" id="confproc_status" name="confproc_status">
 				    	<option value="p">Published</option>
 				    	<option value="s">Submitted</option>
 				    	<option value="r">Revising</option>
@@ -25,49 +40,36 @@
 				</div>
 				<div class="form-group">
 				    <label for="confproc-year">Year</label>
-				    <select class="form-control" id="confproc-year" name="year">
-                      <?php for($i=1970; $i<2014; $i++) { ?>
+				    <select class="form-control" id="confproc_year" name="confproc_year">
+                      <?php for($i=1970; $i<2015; $i++) { ?>
                         <option value="<?php echo $i ?>"><?php echo $i ?></option>
                       <?php } ?>
                     </select>
 				</div>
-				<!--<div class="form-group">
-				    <label for="confproc-volume">Volume</label>
-				    <input type="text" class="form-control" id="confproc-volume" name="volume">
-				</div>-->
-				<!--<div class="form-group">
-				    <label for="confproc-issue">Conference City</label>
-				    <input type="text" class="form-control" id="confproc-city" name="conference_city">
-				</div>-->
 				<div class="form-group">
-				    <label for="confproc-start">Start Page</label>
-				    <input type="text" class="form-control" id="confproc-start" name="start">
+				    <label for="confproc_country" class="required">Country</label>
+				    <?php echo $conference_proceeding_country; ?>
 				</div>
 				<div class="form-group">
-				    <label for="confproc-end">End Page</label>
-				    <input type="text" class="form-control" id="confproc-end" name="end">
+				    <label for="confproc_city" class="required">Conference City</label>
+				    <input type="text" class="form-control" id="confproc_city" name="confproc_city">
 				</div>
-				<!--<div class="form-group">
-				    <label for="confproc-link">Link</label>
-				    <input type="text" class="form-control" id="confproc-link" name="link">
-				</div>-->
+				<div class="form-group">
+				    <label for="confproc-start" class="required">Start Page</label>
+				    <input type="text" class="form-control" id="confproc_start" name="confproc_start">
+				</div>
+				<div class="form-group">
+				    <label for="confproc-end" class="required">End Page</label>
+				    <input type="text" class="form-control" id="confproc_end" name="confproc_end">
+				</div>
 				<button type="button" class="btn btn-success" id="add-confproc-btn">Add Conference Proceedings</button>
+				<input type="hidden" value="" name="confproc_id" id="confproc_id" value="-1">
 	      	</form>
 	      </div>
 	    </div><!--span-->
 	</div><!--/row-->
-  	<table class="table table-striped">
-            <tbody id="confproc-container">
-              <?php if(isset($confprocs)) { ?>
-              	<?php foreach($confprocs as $confproc) { ?>
-              	  <tr>
-              	  	<td><?php echo $confproc['last_name'].', '.$confproc['first_name'].' '.$confproc['year'].' '.$confproc['title'].' '.$confproc['conference']?></td>
-              	  	<td><span id="<?php echo $confproc['id'] ?>" title="edit" onclick="editconfprocform('<?php echo $confproc['first_name'] ?>','<?php echo $confproc['last_name'] ?>','<?php echo $confproc['year'] ?>','<?php echo $confproc['title'] ?>','<?php echo $confproc['conference'] ?>','<?php echo $confproc['status'] ?>','<?php echo $confproc['start'] ?>','<?php echo $confproc['end'] ?>','<?php echo $confproc['id'] ?>');" class="glyphicon glyphicon-pencil"></span></td>
-                	<td><span class="glyphicon glyphicon-trash" title="delete" onclick="deleteconfprocform('<?php echo $confproc['id'] ?>');"></span></td>
-              	  </tr>
-              	<?php } ?>
-              <?php } ?>
-            </tbody>
-          </table>
+	<div class="row" id="confproc_container">
+    	<?php echo $confprocs; ?>
+	</div>
   </div><!--span-->
 </div><!--/row-->
