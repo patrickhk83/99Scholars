@@ -624,7 +624,7 @@ function loadconfprocTab()
 		$('#conf-proc').html(data);
 		isconfprocLoaded = true;
 		$('#add-confproc-btn').click(saveconfprocInfo);
-		$('#add_bttn').click(addmoreinputs);
+		$('#add_bttn').click(addmoreinputs_confproc);
 	});
 }
 
@@ -634,7 +634,7 @@ function loadchapterTab() {
 		$('#chapter').html(data);
 		ischapterLoaded = true;
 		$('#add-chapter-btn').click(savechapterInfo);
-		$('#add_bttn').click(addmoreinputs);
+		$('#add_bttn').click(addmoreinputs_chapter);
 	});
 }
 
@@ -662,13 +662,28 @@ function loadbookTab() {
 		$('#book').html(data);
 		isbookLoaded = true;
 		$('#add-book-btn').click(savebookInfo);
-		$('#add_bttn').click(addmoreinputs);
+		$('#add_bttn').click(addmoreinputs_book);
 	});
 }
 
 function addmoreinputs() {
 	$("#add-input-box").append('<input type="text" class="form-control" name="has_coauthor'+counter+'" style="margin-top: 5px;">');
 	counter++;
+}
+
+function addmoreinputs_confproc() {
+    $("#add-input-box").append('<input type="text" class="form-control" name="has_coauthor'+counter+'" style="margin-top: 5px;">');
+    nConfProcAuthorCounter ++;
+}
+
+function addmoreinputs_chapter() {
+    $("#add-input-box").append('<input type="text" class="form-control" name="has_coauthor'+counter+'" style="margin-top: 5px;">');
+    nBookChapterAuthorCounter ++;
+}
+
+function addmoreinputs_book() {
+    $("#add-input-box").append('<input type="text" class="form-control" name="has_coauthor'+counter+'" style="margin-top: 5px;">');
+    nBookAuthorCounter ++;
 }
 
 function editconfprocform(first_name,last_name,year,title,conference,status,start,end,id)
