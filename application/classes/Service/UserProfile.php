@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 class Service_UserProfile {
-
+	public $errors = array();
 	public function update($type, $data)
 	{
 		switch($type) {
@@ -247,148 +247,184 @@ class Service_UserProfile {
 
 	protected function create_journal($user_id, $data)
 	{
-		$journal_dao = new Dao_Journal();
-		$productKeyCount = count(preg_grep("/^has_coauthor(\d)+$/",array_keys($_POST)));
-		$has_coauthor = '';
-		for($i = 1; $i<=$productKeyCount; $i++)
+//2014-1-25 Modified by David Ming Start
+		$nCoAuthorCount = count(preg_grep("/^has_coauthor(\d)+$/",array_keys($_POST)));
+
+		//Insert journal data to Journal table of DB
+		if($data['journal_id'] != -1)
+			$journal_orm = ORM::factory('Journal' , $data['journal_id']);
+		else 
+			$journal_orm = ORM::factory('Journal');
+
+		$journal_orm->author = $user_id;
+		$journal_orm->status = $data['status'];
+		$journal_orm->publish_year = $data['year'];
+		$journal_orm->title = $data['title'];
+		$journal_orm->journal = $data['journal_name'];
+		$journal_orm->volume = $data['volume'];
+		$journal_orm->issue = $data['issue'];
+		$journal_orm->start_page = $data['start'];
+		$journal_orm->end_page = $data['end'];
+		$journal_orm->link = $data['link'];
+
+		$journal_orm->save();
+		$journal_id = $journal_orm->id;
+		
+		//Delete all Co-author for related current journal.
+		$query = "DELETE FROM co_author WHERE journal='".$journal_id."' AND author_id='1'";
+		$results = DB::query(Database::DELETE , $query)->execute();
+		
+		$nCount1 = 0;
+		$nCount = 1;
+
+		while($nCount1 < $nCoAuthorCount)
 		{
-			if(!empty($data['has_coauthor'.$i])){
-				$has_coauthor .= $data['has_coauthor'.$i]."^^^^";
+			if(!isset($data['has_coauthor'.$nCount]) || $data['has_coauthor'.$nCount] == "") 
+			{
+				$nCount ++;
+				continue;
 			}
+			$co_author_orm = ORM::factory('CoAuthor');
+			$co_author_orm->journal = $journal_id;
+			$co_author_orm->author_name = $data['has_coauthor'.$nCount];
+			$co_author_orm->author_id = 1;
+			$co_author_orm->save();
+			$nCount ++;
+			$nCount1 ++;
 		}
-		
-		$journal_dao->create($user_id,
-								$has_coauthor,
-								$data['status'],
-								$data['year'],
-								$data['title'],
-								$data['journal'],
-								$data['volume'],
-								$data['issue'],
-								$data['start'],
-								$data['end'],
-								$data['link']);
-		
-		$author_dao = new Dao_Journal();
-		$results = $author_dao->get_last_user_id($user_id);
-		
-		
-		foreach ($results as $result1)
-		{
-			$author_dao1 = new Dao_Journal();
-			$author_dao1->insert_list($result1->get('id'),$has_coauthor);
-		}
-		
-		
 
 		//TODO: check if there is co-author
-		$result = array();
-		$result['status'] = 'ok';
-
-		$user_service = new Service_User();
-		$user = $user_service->get_by_id($user_id);
 		
-		$journaldetail = new Dao_Journal();
-		$journal = $journaldetail->get_last_user_id($user_id);
-		
-		foreach ($journal as $dataval)
-		{
-			$author_detail = new Dao_Journal();
-			$usernames = $author_detail->get_last_author($dataval->get('id'));
-			foreach ($usernames as $val)
-			{
-				$user_names = $val['author_name'];
-			}
-		}
-
-		$result['result_to_display'] = Util_Journal::format($user_names,
-															$user['first_name'],
-															$user['last_name'],
-															$data['year'],
-															$data['title'],
-															$data['journal'],
-															$data['volume'],
-															$data['issue'],
-															$data['start'],
-															$data['end']);
-
+		$status = 'success';
+		$journal_service = new Service_Journal();
+		//$result_to_display = $journal_service->get_journal_by_id($journal_id);
+		$result_to_display = $journal_service->get_journal_list($user_id , FALSE , TRUE);
+		$message = "Journal has been registered successfully.";
+		$result = array('status' => $status , 
+						'result_to_display' => $result_to_display , 
+						'message' => $message);
 		return $result;
+//2014-1-25 Modified by David Ming End		
 	}
 	
 	protected function create_confproc($user_id, $data)
 	{
-		$confproc_dao = new Dao_confproc();
-		$confproc_dao->create($user_id,
-								$data['has_coauthor'],
-								$data['status'],
-								$data['year'],
-								$data['title'],
-								$data['conference'],
-								$data['start'],
-								$data['end']);
+//2014-1-25 Modified by David Ming Start		
+		$nCoAuthorCount = count(preg_grep("/^has_coauthor(\d)+$/",array_keys($_POST)));
 
-		//TODO: check if there is co-author
+		if($data['confproc_id'] != -1)
+			$confproc_orm = ORM::factory('ConfProc' , $data['confproc_id']);
+		else 
+			$confproc_orm = ORM::factory('ConfProc');
 
-		$result = array();
-		$result['status'] = 'ok';
+		$confproc_orm->author = $user_id;
+		$confproc_orm->status = $data['confproc_status'];
+		$confproc_orm->publish_year = $data['confproc_year'];
+		$confproc_orm->title = $data['confproc_title'];
+		$confproc_orm->conference = $data['confproc_name'];
+		$confproc_orm->conference_city = $data['confproc_city'];
+		$confproc_orm->conference_country = $data['confproc_country'];
+		$confproc_orm->start_page = $data['confproc_start'];
+		$confproc_orm->end_page = $data['confproc_end'];
 
-		$user_service = new Service_User();
-		$user = $user_service->get_by_id($user_id);
-		
-		$confproc_dao = new Dao_confproc();
-		$results = $confproc_dao->get_last_user_id($user_id);
-		
-		foreach ($results as $result1) 
+		$confproc_orm->save();
+		$confproc_id = $confproc_orm->id;
+
+		//Delete all Co-author for related current ConfProc.
+		$query = "DELETE FROM co_author WHERE journal='".$confproc_id."' AND author_id='2'";
+		$results = DB::query(Database::DELETE , $query)->execute();
+
+		$nCount1 = 0;
+		$nCount = 1;
+	
+		while($nCount1 < $nCoAuthorCount)
 		{
-		$result['result_to_display'] = Util_confproc::formatnew($user['last_name'],
-															$user['first_name'],
-															$data['year'],
-															$data['title'],
-															$data['conference'],
-															$data['status'],
-															$data['start'],
-															$data['end'],
-															$result1->get('id'));
-		return $result;
+			if(!isset($data['has_coauthor'.$nCount]) || $data['has_coauthor'.$nCount] == "") 
+			{
+				$nCount ++;
+				continue;
+			}
+			$co_author_orm = ORM::factory('CoAuthor');
+			$co_author_orm->journal = $confproc_id;
+			$co_author_orm->author_name = $data['has_coauthor'.$nCount];
+			$co_author_orm->author_id = 2;
+			$co_author_orm->save();
+			$nCount ++;
+			$nCount1 ++;
 		}
+	
+		$status = 'success';
+		$confproc_service = new Service_ConfProc();
+		$result_to_display = $confproc_service->get_conference_proceeding_list($user_id , FALSE , TRUE);
+		$message = "Conference Proceeding has been registered successfully.";
+		$result = array('status' => $status , 
+						'result_to_display' => $result_to_display , 
+						'message' => $message);
+		return $result;
+//2014-1-25 Modified by David Ming End		
 	}
 	
 	protected function create_chapter($user_id, $data)
 	{
-		$chapter_dao = new Dao_chapter();
-		$chapter_dao->create($user_id,
-								$data['has_coauthor'],
-								$data['status'],
-								$data['year'],
-								$data['title'],
-								$data['book_chapter'],
-								$data['start'],
-								$data['end']);
+//2014-1-25 Modified by David Ming Start	
+		$nCoAuthorCount = count(preg_grep("/^has_coauthor(\d)+$/",array_keys($_POST)));
 
-		//TODO: check if there is co-author
+		if($data['book_chapter_id'] != -1)
+			$chapter_orm = ORM::factory('BookChapter' , $data['book_chapter_id']);
+		else 
+			$chapter_orm = ORM::factory('BookChapter');
 
-		$result = array();
-		$result['status'] = 'ok';
+		$chapter_orm->author = $user_id;
+		$chapter_orm->publish_year = $data['chapter_year'];
+		$chapter_orm->chapter_title = $data['chapter_title'];
+		$chapter_orm->book_title = $data['chapter_book_name'];
+		$chapter_orm->publisher_city = $data['chapter_publisher_city'];
+		$chapter_orm->publisher_name = $data['chapter_publisher'];
+		$chapter_orm->start_page = $data['chapter_start'];
+		$chapter_orm->end_page = $data['chapter_end'];
 
-		$user_service = new Service_User();
-		$user = $user_service->get_by_id($user_id);
-		
-		$chapter_dao = new Dao_chapter();
-		$results = $chapter_dao->get_last_user_id($user_id);
-		
-		foreach ($results as $result1) 
+		$chapter_orm->save();
+		$chapter_id = $chapter_orm->id;
+
+		//Delete all Co-author for related current BookChapter.
+		$query = "DELETE FROM co_author WHERE journal='".$chapter_id."' AND author_id='3'";
+		$results = DB::query(Database::DELETE , $query)->execute();
+
+		$nCount1 = 0;
+		$nCount = 1;
+	
+		while($nCount1 < $nCoAuthorCount)
 		{
-		$result['result_to_display'] = Util_chapter::formatnew($user['last_name'],
-															$user['first_name'],
-															$data['year'],
-															$data['title'],
-															$data['book_chapter'],
-															$data['status'],
-															$data['start'],
-															$data['end'],
-															$result1->get('id'));
-		return $result;
+			if(!isset($data['has_coauthor'.$nCount]) || $data['has_coauthor'.$nCount] == "") 
+			{
+				$nCount ++;
+				continue;
+			}
+			$co_author_orm = ORM::factory('CoAuthor');
+			$co_author_orm->journal = $chapter_id;
+			$co_author_orm->author_name = $data['has_coauthor'.$nCount];
+			$co_author_orm->author_id = 3;
+			$co_author_orm->save();
+			$nCount ++;
+			$nCount1 ++;
 		}
+
+		$query = "DELETE FROM editor WHERE book_chapter_id='".$chapter_id."'";
+		$results = DB::query(Database::DELETE , $query)->execute();
+		$editor_orm = ORM::factory('Editor');
+		$editor_orm->editor_name = $data['chapter_editors'];
+		$editor_orm->book_chapter_id = $chapter_id;
+		$editor_orm->save();
+
+		$status = 'success';
+		$chapter_service = new Service_BookChapter();
+		$result_to_display = $chapter_service->get_book_chapter_list($user_id , FALSE , TRUE);
+		$message = "Book Chapter has been registered successfully.";
+		$result = array('status' => $status , 
+						'result_to_display' => $result_to_display , 
+						'message' => $message);
+		return $result;		
+//2014-1-25 Modified by David Ming End					
 	}
 	
 	protected function create_project($user_id, $data)
@@ -469,40 +505,55 @@ class Service_UserProfile {
 	
 	protected function create_book($user_id, $data)
 	{
-		$book_dao = new Dao_book();
-		$book_dao->create($user_id,
-								$data['has_coauthor'],
-								$data['status'],
-								$data['year'],
-								$data['title'],
-								$data['book_name'],
-								$data['start'],
-								$data['end']);
+//2014-1-25 Modified by David Ming Start	
+		$nCoAuthorCount = count(preg_grep("/^has_coauthor(\d)+$/",array_keys($_POST)));
 
-		//TODO: check if there is co-author
+		if($data['book_id'] != -1)
+			$book_orm = ORM::factory('Book' , $data['book_id']);
+		else 
+			$book_orm = ORM::factory('Book');
 
-		$result = array();
-		$result['status'] = 'ok';
+		$book_orm->author = $user_id;
+		$book_orm->publish_year = $data['book_year'];
+		$book_orm->book_title = $data['book_title'];
+		$book_orm->publisher_city = $data['book_publisher_city'];
+		$book_orm->publisher_name = $data['book_publisher'];
 
-		$user_service = new Service_User();
-		$user = $user_service->get_by_id($user_id);
-		
-		$book_dao = new Dao_book();
-		$results = $book_dao->get_last_user_id($user_id);
-		
-		foreach ($results as $result1) 
+		$book_orm->save();
+		$book_id = $book_orm->id;
+
+		//Delete all Co-author for related current BookChapter.
+		$query = "DELETE FROM co_author WHERE journal='".$book_id."' AND author_id='4'";
+		$results = DB::query(Database::DELETE , $query)->execute();
+
+		$nCount1 = 0;
+		$nCount = 1;
+	
+		while($nCount1 < $nCoAuthorCount)
 		{
-		$result['result_to_display'] = Util_book::formatnew($user['last_name'],
-															$user['first_name'],
-															$data['year'],
-															$data['title'],
-															$data['book_name'],
-															$data['status'],
-															$data['start'],
-															$data['end'],
-															$result1->get('id'));
-		return $result;
+			if(!isset($data['has_coauthor'.$nCount]) || $data['has_coauthor'.$nCount] == "") 
+			{
+				$nCount ++;
+				continue;
+			}
+			$co_author_orm = ORM::factory('CoAuthor');
+			$co_author_orm->journal = $book_id;
+			$co_author_orm->author_name = $data['has_coauthor'.$nCount];
+			$co_author_orm->author_id = 4;
+			$co_author_orm->save();
+			$nCount ++;
+			$nCount1 ++;
 		}
+
+		$status = 'success';
+		$book_service = new Service_Book();
+		$result_to_display = $book_service->get_book_list($user_id , FALSE , TRUE);
+		$message = "Book Chapter has been registered successfully.";
+		$result = array('status' => $status , 
+						'result_to_display' => $result_to_display , 
+						'message' => $message);
+		return $result;		
+//2014-1-25 Modified by David Ming End	
 	}
 
 	private function create_organization($name)
@@ -517,34 +568,20 @@ class Service_UserProfile {
 
 		switch ($tab_name) {
 			case 'publication':
-				$publications = array();
-
+//2014-1-24 Modified by David Ming Start			
 				$journal_service = new Service_Journal();
-				$journals = $journal_service->get_journal_list_for_display($user_id);
-
-				$publications['journals'] = $journals;
-				$publications['count']['journal'] = count($journals);
-				
-				$confproc_service = new Service_confproc();
-				$confprocs = $confproc_service->get_confproc_list_for_display($user_id);
-
-				$publications['confprocs'] = $confprocs;
-				$publications['count']['confproc'] = count($confprocs);
-				
-				$chapter_service = new Service_chapter();
-				$chapters = $chapter_service->get_chapter_list_for_display($user_id);
-
-				$publications['chapters'] = $chapters;
-				$publications['count']['chapter'] = count($chapters);
-				
-				$book_service = new Service_book();
-				$books = $book_service->get_book_list_for_display($user_id);
-
-				$publications['books'] = $books;
-				$publications['count']['book'] = count($books);
-
-				$view->publications = $publications;
-				
+				$view->journal_count = $journal_service->get_journal_count($user_id);
+				$view->journals = $journal_service->get_journal_list($user_id);
+				$conference_proceeding_service = new Service_ConfProc();
+				$view->confproc_count = $conference_proceeding_service->get_conference_proceeding_count($user_id);
+				$view->confproc_list = $conference_proceeding_service->get_conference_proceeding_list($user_id);
+				$book_chapter_service = new Service_BookChapter();
+				$view->book_chapter_count = $book_chapter_service->get_book_chapter_count($user_id);
+				$view->book_chapter_list = $book_chapter_service->get_book_chapter_list($user_id);
+				$book_service = new Service_Book();
+				$view->book_count = $book_service->get_book_count($user_id);
+				$view->book_list = $book_service->get_book_list($user_id);
+//2014-1-24 Modified by David Ming End
 				break;
 
 			case 'event':
@@ -602,22 +639,23 @@ class Service_UserProfile {
 
 			case 'journal':
 				$journal_service = new Service_Journal();
-				$view->journals = $journal_service->get_journal_list_for_display($user_id);
+				$view->journals = $journal_service->get_journal_list($user_id , FALSE , TRUE);
 				break;
 			
 			case 'confproc':
-				$confproc_service = new Service_confproc();
-				$view->confprocs = $confproc_service->get_confproc_list_for_display($user_id);
+				$confproc_service = new Service_ConfProc();
+				$view->confprocs = $confproc_service->get_conference_proceeding_list($user_id , FALSE , TRUE);
+				$view->conference_proceeding_country = $confproc_service->get_conference_proceeding_country_list();
 				break;
 			
 			case 'chapter':
-				$chapter_service = new Service_chapter();
-				$view->chapters = $chapter_service->get_chapter_list_for_display($user_id);
+				$chapter_service = new Service_BookChapter();
+				$view->chapters = $chapter_service->get_book_chapter_list($user_id , FALSE , TRUE);
 				break;
 			
 			case 'book':
 				$book_service = new Service_book();
-				$view->books = $book_service->get_book_list_for_display($user_id);
+				$view->books = $book_service->get_book_list($user_id , FALSE , TRUE);
 				break;
 			
 			case 'project':
@@ -670,6 +708,7 @@ class Service_UserProfile {
 		return $result;
 	}
 
+//2014-1-24 Added by David Ming Start
 	public function get_user_id_by_url_name($url_name)
 	{
 		$bNumeric = is_numeric($url_name);
@@ -687,5 +726,96 @@ class Service_UserProfile {
 
 		return $result->get('id');
 	}
+
+	public function get_publication_count($user_id)
+	{
+		$nCount = 0;
+		$query = "SELECT COUNT(*) as nCount FROM journal WHERE author='".$user_id."'";
+		$result = DB::query(Database::SELECT , $query)->execute();		
+		$nCount += $result->get('nCount');
+		$query = "SELECT COUNT(*) as nCount FROM conference_proceeding WHERE author='".$user_id."'";
+		$result = DB::query(Database::SELECT , $query)->execute();		
+		$nCount += $result->get('nCount');
+		$query = "SELECT COUNT(*) as nCount FROM book_chapter WHERE author='".$user_id."'";
+		$result = DB::query(Database::SELECT , $query)->execute();		
+		$nCount += $result->get('nCount');
+		$query = "SELECT COUNT(*) as nCount FROM book WHERE author='".$user_id."'";
+		$result = DB::query(Database::SELECT , $query)->execute();		
+		$nCount += $result->get('nCount');
+		return $nCount;
+	}
+
+	public function get_project_count($user_id)
+	{
+		$query = "SELECT COUNT(*) as nCount FROM project WHERE author='".$user_id."'";
+		$result = DB::query(Database::SELECT , $query)->execute();		
+		return $result->get('nCount');
+
+	}
+
+	public function get_presentation_count($user_id)
+	{
+		$query = "SELECT COUNT(*) as nCount FROM presentation WHERE author='".$user_id."'";
+		$result = DB::query(Database::SELECT , $query)->execute();		
+		return $result->get('nCount');
+
+	}
+//2014-1-24 Added by David Ming End
+
+//2014-1-25 Created by David Ming Start
+	public function validation_check($type , $data)
+	{
+		$validation = Validation::factory($data);
+		switch($type)
+		{
+		case 'journal':
+			$validation->rule('title' , 'not_empty')
+			->rule('journal_name' , 'not_empty')
+			->rule('status' , 'not_empty')
+			->rule('volume' , 'not_empty')
+			->rule('start' , 'not_empty')
+			->rule('end' , 'not_empty');
+
+			break;
+		case 'confproc':
+			$validation->rule('confproc_title' , 'not_empty')
+			->rule('confproc_name' , 'not_empty')
+			->rule('confproc_status' , 'not_empty')
+			->rule('confproc_year' , 'not_empty')
+			->rule('confproc_country' , 'not_empty')
+			->rule('confproc_city' , 'not_empty')
+			->rule('confproc_start' , 'not_empty')
+			->rule('confproc_end' , 'not_empty');		
+			
+			break;
+		case 'chapter':
+			$validation->rule('chapter_title' , 'not_empty')
+			->rule('chapter_editors' , 'not_empty')
+			->rule('chapter_book_name' , 'not_empty')
+			->rule('chapter_publisher_city' , 'not_empty')
+			->rule('chapter_publisher' , 'not_empty')
+			->rule('chapter_start' , 'not_empty')
+			->rule('chapter_end' , 'not_empty');
+
+			break;
+		case 'book':
+			$validation->rule('book_title' , 'not_empty')
+			->rule('book_publisher_city' , 'not_empty')
+			->rule('book_publisher' , 'not_empty');
+
+			break;
+		case 'project':
+			break;
+		case 'presentation':
+			break;
+
+		}
+
+		if($validation->check())
+			return true;
+		else
+			return false;
+	}
+//2014-1-25 Created by David Ming End
 
 }
