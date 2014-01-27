@@ -1,64 +1,63 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 class Dao_Journal {
-
-	public function create($author_id, $has_coauthor, $status, $year, $title, $journal_title, $volume, $issue, $start, $end, $link)
-	{
-		$journal = ORM::factory('Journal');
-
-		$journal->author = $author_id;
-		$journal->has_coauthor = $has_coauthor;
-		$journal->status = $status;
-		$journal->publish_year = $year;
-		$journal->title = $title;
-		$journal->journal = $journal_title;
-		$journal->volume = $volume;
-		$journal->issue = $issue;
-		$journal->start_page = $start;
-		$journal->end_page = $end;
-		$journal->link = $link;
-
-		$journal->save();
-
-		return $journal->pk();
-	}
-	
-	public function get_by_user_id($user_id, $recent_first = FALSE)
-	{
-		$query = ORM::factory('Journal')
-						->where('author', '=', $user_id);
-
-		if($recent_first)
-		{
-			$query->order_by('publish_year', 'desc');
-		}
-
-		return $query->find_all();
-	}
-	
-	public function get_last_user_id($user_id)
-	{
-		$query = ORM::factory('Journal')
-						->where('author', '=', $user_id);
-
-			$query->order_by('id', 'desc')->limit(1);
-
-		return $query->find_all();
-	}
-	
-	public function get_last_author($user_id)
+	public function get_last_author($journal_id)
 	{
 		$query = DB::select('author_name')->from('co_author')
-						->where('journal', '=', $user_id);
+						->where('journal', '=', $journal_id)->and_where('author_id' , '=' , '1');
 
 
 		return $query->execute();
 	}
 	
-	public function insert_list($id,$value)
+	public function get_journal_by_id($journal_id)
 	{
-		$query = DB::insert('co_author', array('journal', 'author_name'))->values(array($id, $value));
+		$query = "SELECT * FROM journal WHERE id='".$journal_id."'";
+		$results = DB::query(Database::SELECT , $query)->execute();
 
-		$query->execute();
+		$view = array();
+		foreach($results as $result)
+		{
+			$view['journal_id'] = $result['id'];
+			$view['title'] = $result['title'];
+			$view['journal'] = $result['journal'];
+			$view['status'] = $result['status'];
+			$view['year'] = $result['publish_year'];
+			$view['volume'] = $result['volume'];
+			$view['issue'] = $result['issue'];
+			$view['start'] = $result['start_page'];
+			$view['end'] = $result['end_page'];
+			$view['link'] = $result['link'];
+			break;
+		}
+
+		$query = "SELECT * FROM co_author WHERE journal='".$result['id']."' ORDER BY id ASC";
+		$co_author_results = DB::query(Database::SELECT , $query)->execute();
+
+		$nCount = 0;
+		$authors = "";
+		foreach($co_author_results as $author)
+		{
+			if($nCount > 0)
+				$authors .= "^^^^^";
+			$authors .= $author['author_name'];
+			$nCount ++;
+		}
+		
+		$view['has_coauthor'] = $authors;
+		
+
+		return $view;
+	}
+
+	public function delete_journal_by_id($journal_id)
+	{
+		
+		$query = "DELETE FROM journal WHERE id='".$journal_id."'";
+		$result = DB::query(Database::DELETE , $query)->execute();
+
+		$query = "DELETE FROM co_author WHERE journal='".$journal_id."' AND author_id='1'";
+		$result = DB::query(Database::DELETE , $query)->execute();		
+
 	}
 }

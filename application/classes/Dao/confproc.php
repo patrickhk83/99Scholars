@@ -1,25 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 class Dao_confproc {
-
-	public function create($author_id, $has_coauthor, $status, $year, $title, $conference, $start, $end)
-	{
-		$confproc = ORM::factory('confproc');
-
-		$confproc->author = $author_id;
-		$confproc->has_coauthor = $has_coauthor;
-		$confproc->status = $status;
-		$confproc->publish_year = $year;
-		$confproc->title = $title;
-		$confproc->conference = $conference;
-		$confproc->start_page = $start;
-		$confproc->end_page = $end;
-
-		$confproc->save();
-
-		return $confproc->pk();
-	}
-
 	public function get_by_user_id($user_id, $recent_first = FALSE)
 	{
 		$query = ORM::factory('confproc')
