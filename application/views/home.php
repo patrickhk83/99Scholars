@@ -171,8 +171,8 @@
                 <div class="row hidden-xs">
                     <div class="search-box">
                         <label>
-                            <input type="search" name="googlesearch" placeholder="Search">
-                            <button type="button" class="btn btn-primary btn-block search-btn">Search</button>
+                            <input type="search" name="search_text" id="search_text" placeholder="Search">
+                            <button type="button" class="btn btn-primary btn-block search-btn" onclick="updateSearchResult();">Search</button>
                         </label>
                     </div>
                 </div>

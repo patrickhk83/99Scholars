@@ -1,7 +1,7 @@
-
 <?php if(isset($total)) { ?>
 	<input type="hidden" id="total-search-result" value="<?php echo $total ?>">
 <?php } ?>
+
 <?php foreach ($conferences as $conf): ?>
 	<div class="row event-row">
 		<div class="col-md-6">
