@@ -14,6 +14,7 @@ class Service_Conference {
 	Protected $_registration;
 	Protected $_seminar;
 
+	public $_nSubTotal;
 	 /**
 	 * get Service_Conference by singleton
      * @return Service_Conference
@@ -29,10 +30,19 @@ class Service_Conference {
 
 	public function list_all($user_id = NULL)
 	{
-		return $this->list_by(null, null, null, null, null, null, $user_id);
+		return $this->list_by(null, null, null, null, null, null, null , $user_id);
 	}
 
-	public function list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $user_id = NULL, $page = 1, $limit = 20)
+	public function list_by($category, 
+							$accept_abstract, 
+							$start_date, 
+							$end_date, 
+							$type, 
+							$country, 
+							$search_text , 
+							$user_id = NULL, 
+							$page = 1, 
+							$limit = 20)
 	{
 		$has_condition = false;
 
@@ -136,50 +146,112 @@ class Service_Conference {
 
 		if($page == 1)
 		{
-			$count_sql = $count_sql.$condition;
-
-			$count_result = DB::query(Database::SELECT, $count_sql)->execute();
-
-			$result['total'] = $count_result->get('total');
+			$count_sql = $sql.$condition;
+			$count_result = $this->count_all_conference(
+										DB::query(Database::SELECT, $count_sql)
+										->execute()->as_array() , $search_text);
+			$result['total'] = $count_result;
+			
 		}
 
 		$sql = $sql.$condition." order by c.start_date desc ";
 
 		$start_page = $page - 1;
-		$sql = $sql."limit ".($start_page*$limit).",".$limit;
-		
-		$result['conferences'] = $this->convert_for_listing(
-									DB::query(Database::SELECT, $sql)
-									->execute()->as_array());
+		$sql = $sql;//."limit ".($start_page*$limit).",".$limit;
 
+			$result['conferences'] = $this->convert_for_listing(
+									DB::query(Database::SELECT, $sql)
+									->execute()->as_array() , $search_text);
 		return $result;
 	}
+//2014-1-28 Created by David Ming Start
 
-	protected function convert_for_listing($results)
+	private function count_all_conference($results , $search_text)
+	{
+		$nTotal = 0;
+		
+		foreach ($results as $result) 
+		{
+			$bSearch = $this->validate_search_text($result['id'] , $search_text);
+
+			if($bSearch === FALSE)
+				continue;
+			else $nTotal ++;
+
+		}
+		return $nTotal;
+	}
+
+	private function validate_search_text($conf_id , $search_text)
+	{
+		if($search_text == "1234567890qwertyuiopasdfghjklzxcvbnm") return TRUE;
+		$nCount = 0;
+		$query = "SELECT COUNT(*) AS nCount FROM conference WHERE id='".$conf_id."' ";
+		$query .= "AND (name LIKE '%".$search_text."%' OR ";
+		$query .= "description LIKE '%".$search_text."%' OR ";
+		$query .= "website LIKE '%".$search_text."%' OR ";	
+		$query .= "contact_person LIKE '%".$search_text."%' OR ";
+		$query .= "contact_email LIKE '%".$search_text."%' OR ";
+		$query .= "contact_phone LIKE '%".$search_text."%')";
+		
+		$result = DB::query(Database::SELECT, $query)->execute();
+		$nCount = $result->get('nCount');
+		if($nCount > 0) return TRUE;
+
+		$query = "SELECT COUNT(*) AS nCount FROM conference, venue WHERE ";
+		$query .= "conference.id='".$conf_id."' AND venue.id=conference.venue ";
+		$query .= "AND venue.name LIKE '%".$search_text."%'";
+		$result = DB::query(Database::SELECT, $query)->execute();
+		$nCount = $result->get('nCount');
+		if($nCount > 0) return TRUE;
+
+		$query = "SELECT COUNT(*) AS nCount FROM conference, venue, address WHERE ";
+		$query .= "conference.id='".$conf_id."' AND venue.id=conference.venue AND address.id=venue.address ";
+		$query .= "AND (address.address LIKE '%".$search_text."%' OR ";
+		$query .= "address.city LIKE '%".$search_text."%' OR ";
+		$query .= "address.state LIKE '%".$search_text."%' OR ";
+		$query .= "address.postal_code LIKE '%".$search_text."%')";
+		$result = DB::query(Database::SELECT, $query)->execute();
+		$nCount = $result->get('nCount');
+		if($nCount > 0) return TRUE;
+
+		return FALSE;
+	}
+
+
+	protected function convert_for_listing($results , $search_text)
 	{
 		$conferences = array();
-
 		foreach ($results as $result) 
 		{
 			$conference = array();
+			
+			$bSearch = $this->validate_search_text($result['id'] , $search_text);
 
-			$conference['id'] = $result['id'];
-			$conference['name'] = $result['name'];
-			$conference['duration'] = $this->render_duration($result['start_date'], $result['end_date']);
-			$conference['type'] = $this->get_type($result['type'])->get('name');
-			$conference['type_style'] = $this->get_type_style($conference['type']);
-			$conference['location'] = $this->get_venue_short_location($result['venue']);
-
-			if(isset($result['booked']))
+			if($bSearch === FALSE) 
 			{
-				$conference['is_booked'] = TRUE;
+				continue;
 			}
 			else
 			{
-				$conference['is_booked'] = FALSE;
-			}
+				$conference['id'] = $result['id'];
+				$conference['name'] = $result['name'];
+				$conference['duration'] = $this->render_duration($result['start_date'], $result['end_date']);
+				$conference['type'] = $this->get_type($result['type'])->get('name');
+				$conference['type_style'] = $this->get_type_style($conference['type']);
+				$conference['location'] = $this->get_venue_short_location($result['venue']);
 
-			array_push($conferences, $conference);
+				if(isset($result['booked']))
+				{
+					$conference['is_booked'] = TRUE;
+				}
+				else
+				{
+					$conference['is_booked'] = FALSE;
+				}
+
+				array_push($conferences, $conference);
+			}
 		}
 
 		return $conferences;

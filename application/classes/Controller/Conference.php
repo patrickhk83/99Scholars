@@ -169,7 +169,10 @@ class Controller_Conference extends Controller {
 		$end_date = $this->request->query('end_date');
 		$type = $this->request->query('type');
 		$country = $this->request->query('country');
+		$search_text = $this->request->query('search_text');
 		$page = $this->request->query('page');
+
+
 
 		if(!empty($country))
 		{
@@ -182,10 +185,21 @@ class Controller_Conference extends Controller {
 		}
 
 		$user_id = Service_Login::get_user_in_session();
+		
+		if($search_text != "1234567890qwertyuiopasdfghjklzxcvbnm")
+		{
+			//Create instance for Service_UserAction class.
+			$conference_action_search_track = new Service_UserAction();
+			//Register Search Action for Conference(id, ControllerName, ActionName).
+       		$conference_action_search_track->register_user_action($this , 'search' , $search_text);
+        }
+
 		$conf_service = new Service_Conference();
-		$result = $conf_service->list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $user_id, $page);
+		
+		$result = $conf_service->list_by($category, $accept_abstract, $start_date, $end_date, $type, $country, $search_text , $user_id, $page);
 		
 		$view = View::factory('conf-search-result');
+
 		$view->conferences = $result['conferences'];
 		
 		if(array_key_exists('total', $result))
