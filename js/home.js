@@ -14,7 +14,7 @@ $(function(){
 	$('.datepicker').datepicker({
 		autoclose: true
 	});
-
+/*
 	$('#conf-list').infinitescroll({
 		navSelector: 'div.paging',
 		nextSelector: '#next-paging',
@@ -27,7 +27,7 @@ $(function(){
         },
 		debug: true
 	});
-
+*/
 	$('#add-category-link').click(addCategory);
 	$('#add-type-link').click(addType);
 	$('#add-country-link').click(addCountry);
@@ -39,7 +39,14 @@ $(function(){
 	$('#start-date').change(updateSearchResult);
 	$('#end-date').change(updateSearchResult);
 
+	$('#search_text').click(function(){
+		$(this).val('');
+	});
 	
+	$('#search_text').keyup(function(event){
+		if(event.keyCode == 13)
+			updateSearchResult();
+	});
 	$('#clear-filter-btn').click(clearFilter);
 
 
@@ -157,6 +164,8 @@ var updateAcceptAbstract = function()
 	showClearFilterButton();
 }
 
+
+
 var updateSearchResult = function(page)
 {
 	showClearFilterButton();
@@ -169,12 +178,14 @@ var updateSearchResult = function(page)
 
 	url += getAllCriteria();
 
+//	url += setSearchURI();
+
 	//start at the 1st page
 	url += '&page=' + page;
-	$.get(url, function (data){
 
-		$('#conf-list').infinitescroll('destroy');
-		$('#conf-list').data('infinitescroll', null);
+	$.get(url, function (data){
+		//$('#conf-list').infinitescroll('destroy');
+		//$('#conf-list').data('infinitescroll', null);
 
 		$('#conf-list').html(data);
 
@@ -194,7 +205,7 @@ var updateSearchResult = function(page)
 				$('#event-text').html('Event found');
 			}
 		}
-
+/*
 		$('#conf-list').infinitescroll({
 			navSelector: 'div.paging',
 			nextSelector: '#next-paging',
@@ -207,6 +218,7 @@ var updateSearchResult = function(page)
         	},
 			debug: true
 		});
+*/		
 	});
 }
 
@@ -269,6 +281,8 @@ function getAllCriteria(appendOther)
 	});
 
 	query += '&country=' + countries.join(',');
+
+	query += setSearchURI();
 	return query;
 }
 
@@ -307,6 +321,8 @@ var clearFilter = function()
 	});
 
 	$('#country-criteria select').val(0);
+
+	$('#search_text').val('');
 
 	updateSearchResult();
 	hideClearFilterButton();
@@ -374,4 +390,12 @@ function displayProgress(btn)
 {
 	btn.removeClass('btn-primary btn-info').addClass('btn-default');
 	btn.text('Working ').append('<img src="' + baseUrl + 'img/loader.gif">');
+}
+
+function setSearchURI()
+{
+	var search_text = $("#search_text").val();
+	if(search_text == "") return "&search_text=1234567890qwertyuiopasdfghjklzxcvbnm";
+	var uri_text = "&search_text=" + search_text;
+	return uri_text;
 }
