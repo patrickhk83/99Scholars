@@ -185,6 +185,10 @@ class Service_Conference {
 	private function validate_search_text($conf_id , $search_text)
 	{
 		if($search_text == "1234567890qwertyuiopasdfghjklzxcvbnm") return TRUE;
+
+		$search_text_array = array();
+		$search_text_array = explode(' ', $search_text);
+
 		$nCount = 0;
 		$query = "SELECT COUNT(*) AS nCount FROM conference WHERE id='".$conf_id."' ";
 		$query .= "AND (name LIKE '%".$search_text."%' OR ";
@@ -215,6 +219,101 @@ class Service_Conference {
 		$nCount = $result->get('nCount');
 		if($nCount > 0) return TRUE;
 
+		$query = "SELECT COUNT(*) AS nCount FROM conference WHERE id='".$conf_id."' ";
+		$query .= "AND (";
+		$nCount1 = 0;
+			
+		foreach($search_text_array as $element)
+		{
+			if($nCount1 > 0)
+				$query .= "AND ";
+			$query .= "(name LIKE '%".$element."%' OR ";
+			$query .= "description LIKE '%".$element."%' OR ";
+			$query .= "website LIKE '%".$element."%' OR ";
+			$query .= "contact_person LIKE '%".$element."%' OR ";
+			$query .= "contact_email LIKE '%".$element."%' OR ";
+			$query .= "contact_phone LIKE '%".$element."%') ";
+			$nCount1 ++;
+
+		}	
+
+		$query .= ")";
+		$result = DB::query(Database::SELECT, $query)->execute();
+		$nCount = $result->get('nCount');
+		if($nCount > 0) return TRUE;
+
+		$query = "SELECT COUNT(*) AS nCount FROM conference, venue WHERE ";
+		$query .= "conference.id='".$conf_id."' AND venue.id=conference.venue ";
+		$query .= "AND (";
+		$nCount1 = 0;	
+		foreach($search_text_array as $element)
+		{
+			if($nCount1 > 0)
+				$query .= "OR ";
+			$query .= "venue.name LIKE '%".$element."%' ";
+			$nCount1 ++;
+		}
+		$query .= ")";
+		$result = DB::query(Database::SELECT, $query)->execute();
+		$nCount = $result->get('nCount');
+		if($nCount > 0) return TRUE;
+
+		$query = "SELECT COUNT(*) AS nCount FROM conference, venue, address WHERE ";
+		$query .= "conference.id='".$conf_id."' AND venue.id=conference.venue AND address.id=venue.address ";
+		$query .= "AND (";
+
+		$nCount1 = 0;
+		foreach($search_text_array as $element)
+		{
+			if($nCount1 > 0)
+				$query .= "AND ";
+			$query .= "(address.address LIKE '%".$element."%' OR ";
+			$query .= "address.city LIKE '%".$element."%' OR ";
+			$query .= "address.state LIKE '%".$element."%' OR ";
+			$query .= "address.postal_code LIKE '%".$element."%') ";
+			$nCount1 ++;
+		}	
+		$query .= ")";
+		$result = DB::query(Database::SELECT, $query)->execute();
+		$nCount = $result->get('nCount');
+		if($nCount > 0) return TRUE;
+
+		$query = "SELECT COUNT(*) AS nCount FROM conference AS c, venue AS v, address AS a ";
+		$query .= "WHERE c.id='".$conf_id."' AND v.id=c.venue AND a.id=v.address AND (";
+
+		$nCount1 = 0;	
+		foreach($search_text_array as $element)
+		{
+			if($nCount1 > 0)
+				$query .= "OR ";
+			
+			$query .= "((c.name LIKE '%".$element."%' OR ";
+			$query .= "c.description LIKE '%".$element."%' OR ";
+			$query .= "c.website LIKE '%".$element."%' OR ";
+			$query .= "c.contact_person LIKE '%".$element."%' OR ";
+			$query .= "c.contact_email LIKE '%".$element."%' OR ";
+			$query .= "c.contact_phone LIKE '%".$element."%') AND (";			
+			$nCount2 = 0;
+			foreach($search_text_array as $element2)
+			{
+				if($nCount2 > 0)
+					$query .= "OR ";
+				$query .= "(a.address LIKE '%".$element2."%' OR ";
+				$query .= "a.city LIKE '%".$element2."%' OR ";
+				$query .= "a.state LIKE '%".$element2."%' OR ";
+				$query .= "a.postal_code LIKE '%".$element2."%') ";
+				$nCount2 ++;
+			}
+			$query .= "))";
+			$nCount1 ++;
+		}
+
+		$query .= ")";
+		$result = DB::query(Database::SELECT, $query)->execute();
+		$nCount = $result->get('nCount');
+		if($nCount > 0) return TRUE;
+		
+//echo Debug::vars($query);		
 		return FALSE;
 	}
 
