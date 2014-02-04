@@ -279,11 +279,14 @@ class Service_UserProfile {
 
 		while($nCount1 < $nCoAuthorCount)
 		{
-			if(!isset($data['has_coauthor'.$nCount]) || $data['has_coauthor'.$nCount] == "") 
+			if(!isset($data['has_coauthor'.$nCount])) 
+				break;
+			if(empty($data['has_coauthor'.$nCount]))
 			{
 				$nCount ++;
 				continue;
-			}
+			}			
+
 			$co_author_orm = ORM::factory('CoAuthor');
 			$co_author_orm->journal = $journal_id;
 			$co_author_orm->author_name = $data['has_coauthor'.$nCount];
@@ -336,10 +339,12 @@ class Service_UserProfile {
 
 		$nCount1 = 0;
 		$nCount = 1;
-	
+		
 		while($nCount1 < $nCoAuthorCount)
 		{
-			if(!isset($data['has_confproc_coauthor'.$nCount]) || $data['has_confproc_coauthor'.$nCount] == "") 
+			if(!isset($data['has_confproc_coauthor'.$nCount])) 
+				break;
+			if(empty($data['has_confproc_coauthor'.$nCount]))
 			{
 				$nCount ++;
 				continue;
@@ -352,10 +357,11 @@ class Service_UserProfile {
 			$nCount ++;
 			$nCount1 ++;
 		}
-	
+
 		$status = 'success';
 		$confproc_service = new Service_ConfProc();
 		$result_to_display = $confproc_service->get_conference_proceeding_list($user_id , FALSE , TRUE);
+		
 		$message = "Conference Proceeding has been registered successfully.";
 		$result = array('status' => $status , 
 						'result_to_display' => $result_to_display , 
@@ -395,11 +401,14 @@ class Service_UserProfile {
 	
 		while($nCount1 < $nCoAuthorCount)
 		{
-			if(!isset($data['has_chapter_coauthor'.$nCount]) || $data['has_chapter_coauthor'.$nCount] == "") 
+			if(!isset($data['has_chapter_coauthor'.$nCount])) 
+				break;
+			if(empty($data['has_chapter_coauthor'.$nCount]))
 			{
 				$nCount ++;
 				continue;
-			}
+			}			
+
 			$co_author_orm = ORM::factory('CoAuthor');
 			$co_author_orm->journal = $chapter_id;
 			$co_author_orm->author_name = $data['has_chapter_coauthor'.$nCount];
@@ -531,11 +540,14 @@ class Service_UserProfile {
 	
 		while($nCount1 < $nCoAuthorCount)
 		{
-			if(!isset($data['has_book_coauthor'.$nCount]) || $data['has_book_coauthor'.$nCount] == "") 
+			if(!isset($data['has_book_coauthor'.$nCount])) 
+				break;
+			if(empty($data['has_book_coauthor'.$nCount]))
 			{
 				$nCount ++;
 				continue;
-			}
+			}						
+
 			$co_author_orm = ORM::factory('CoAuthor');
 			$co_author_orm->journal = $book_id;
 			$co_author_orm->author_name = $data['has_book_coauthor'.$nCount];

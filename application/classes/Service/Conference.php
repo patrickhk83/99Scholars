@@ -157,7 +157,8 @@ class Service_Conference {
 		$sql = $sql.$condition." order by c.start_date desc ";
 
 		$start_page = $page - 1;
-		$sql = $sql;//."limit ".($start_page*$limit).",".$limit;
+		//$sql = $sql;//."limit ".($start_page*$limit).",".$limit;
+		//
 
 			$result['conferences'] = $this->convert_for_listing(
 									DB::query(Database::SELECT, $sql)
@@ -279,36 +280,19 @@ class Service_Conference {
 		if($nCount > 0) return TRUE;
 
 		$query = "SELECT COUNT(*) AS nCount FROM conference AS c, venue AS v, address AS a ";
-		$query .= "WHERE c.id='".$conf_id."' AND v.id=c.venue AND a.id=v.address AND (";
+		$query .= "WHERE c.id='".$conf_id."' AND v.id=c.venue AND a.id=v.address AND ";
 
 		$nCount1 = 0;	
 		foreach($search_text_array as $element)
 		{
-			if($nCount1 > 0)
-				$query .= "OR ";
-			
-			$query .= "((c.name LIKE '%".$element."%' OR ";
-			$query .= "c.description LIKE '%".$element."%' OR ";
-			$query .= "c.website LIKE '%".$element."%' OR ";
-			$query .= "c.contact_person LIKE '%".$element."%' OR ";
-			$query .= "c.contact_email LIKE '%".$element."%' OR ";
-			$query .= "c.contact_phone LIKE '%".$element."%') AND (";			
-			$nCount2 = 0;
-			foreach($search_text_array as $element2)
-			{
-				if($nCount2 > 0)
-					$query .= "OR ";
-				$query .= "(a.address LIKE '%".$element2."%' OR ";
-				$query .= "a.city LIKE '%".$element2."%' OR ";
-				$query .= "a.state LIKE '%".$element2."%' OR ";
-				$query .= "a.postal_code LIKE '%".$element2."%') ";
-				$nCount2 ++;
-			}
-			$query .= "))";
+			if($nCount1 > 0) $query .= "AND ";
+			$query .= "CONCAT(IFNULL(c.name, ''), IFNULL(c.description, ''),
+			IFNULL(c.website, ''), IFNULL(c.contact_person, ''), IFNULL(c.contact_email, ''),
+			IFNULL(c.contact_phone, ''), IFNULL(v.name, ''), IFNULL(a.address, ''),
+			IFNULL(a.city, ''), IFNULL(a.state, ''), IFNULL(a.postal_code, '')) LIKE '%".$element."%' ";
 			$nCount1 ++;
 		}
 
-		$query .= ")";
 		$result = DB::query(Database::SELECT, $query)->execute();
 		$nCount = $result->get('nCount');
 		if($nCount > 0) return TRUE;
