@@ -8,7 +8,7 @@
             <div class="col-lg-12">
               <div class="row">
                   <div class="col-lg-12 seminar">
-                    <p><h2><?= $conference->name ?></h2></p>
+                    <p><h3><?= $conference->name ?></h3></p>
                     <p><strong>Speaker : </strong> <a href="<?= URL::site('user') ?>"><?= $conference->seminar->speaker ?></a></p>
                   </div><!--span-->
               </div><!--/row-->
@@ -55,6 +55,8 @@
                 <li><a href="#video" data-toggle="tab">Videos</a></li>
                 <li><a href="#file" data-toggle="tab">Files</a></li>
                 <li><a href="#photo" data-toggle="tab">Photos</a></li>
+                <li><a href="#attendee" data-toggle="tab">Attendees</a></li>
+                <li><a href="#discussion" data-toggle="tab">Discussions</a></li>
             </ul>
             </div>
             <div class="tab-content">
