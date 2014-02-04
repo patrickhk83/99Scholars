@@ -17,19 +17,24 @@ class Controller_Topic extends Controller {
 				$user_service = new Service_User();
 				$user = $user_service->get_by_id($user_id);
 
-				$topic = array(
-							'id' => $topic_id,
-							'title' => $this->request->post('title'),
-							'author_id' => $user_id,
-							'author_name' => $user['first_name'].' '.$user['last_name'],
-							'last_update' => 'just now');
+//2014-02-04 Modified by David Ming Start				
+				$topic = ORM::factory('ConferenceTopic' , $topic_id);
 
-				$topic_view = View::factory('discussion/topic_title');
-				$topic_view->topic = $topic;
+				$topic_view = "<tr><td><p><strong><a href='#' class='topic-title' onclick='showTopic(";
+				$topic_view .= $topic_id.")'>";
+      			$topic_view .= $topic->get('title')."</a></strong><br /><small>";
+      			$topic_view .= "<a href='";
+      			$topic_view .= URL::site('user/profile/'.$topic->get('created_by'));
+      			$topic_view .= "'>".$topic->get('author')->get_fullname();
+      			$topic_view .= "</a><span class='text-muted'>";
+      			$topic_view .= $topic->get('author')->get_affiliation();
+      			$topic_view .= "</span></small><br/><small class='text-muted'>";
+      			$topic_view .= Util_Date::time_elapsed($topic->get('created_date')).' ago';
+      			$topic_view .= "</small></p></td></tr>";
 
 				$result['status'] = 'ok';
 				$result['id'] = $topic_id;
-				$result['html'] = $topic_view->render();
+				$result['html'] = $topic_view;
 			}
 			else
 			{
@@ -37,14 +42,15 @@ class Controller_Topic extends Controller {
 				$result['message'] = 'Please login before posting discussion';
 			}
 
-			$this->response->headers('Content-Type', 'application/json; charset=utf-8');
-			$this->response->body(json_encode($result));
+			echo json_encode($result);
+//2014-02-04 Modified by David Ming End			
 		}
 	}
 
 	public function action_view()
 	{
-		$id = $this->request->param('id');
+		//$id = $this->request->param('id');
+		$id = $this->request->post('term');
 
 		if(isset($id) && $id !== NULL)
 		{

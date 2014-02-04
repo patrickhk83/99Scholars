@@ -41,16 +41,16 @@ class Service_ConferenceTopic {
 		$topic = array();
 
 		$topic_dao = new Dao_ConferenceTopic();
-		$result = $topic_dao->get_with_author($topic_id);
+		$topic_result = $topic_dao->get_with_author($topic_id);
 
-		$topic_result = $result[0];
+		
 
-		$topic['id'] = $topic_result['id'];
-		$topic['title'] = $topic_result['title'];
-		$topic['content'] = $topic_result['content'];
-		$topic['author_id'] = $topic_result['user_id'];
-		$topic['author_name'] = $topic_result['firstname'].' '.$topic_result['lastname'];
-		$topic['last_update'] = Util_Date::time_elapsed($topic_result['created_date']).' ago';
+		$topic['id'] = $topic_result->get('id');
+		$topic['title'] = $topic_result->get('title');
+		$topic['content'] = $topic_result->get('content');
+		$topic['author_id'] = $topic_result->get('user_id');
+		$topic['author_name'] = $topic_result->get('firstname').' '.$topic_result->get('lastname');
+		$topic['last_update'] = Util_Date::time_elapsed($topic_result->get('created_date')).' ago';
 
 		$comment_service = new Service_ConferenceComment();
 		$comments = $comment_service->get_comment_list($topic_id);

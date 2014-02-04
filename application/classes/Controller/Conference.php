@@ -37,6 +37,7 @@ class Controller_Conference extends Controller {
 			
 			if($conference->conference_type->name == 'Seminar') //'Seminar' type
 			{
+			
 
 				$view = View::factory('seminar');
 				$view->conference = $conference;
@@ -54,6 +55,18 @@ class Controller_Conference extends Controller {
 				
 				$view->id = $id;
 				$view->userid = $user_id;
+
+//2014-2-4 Added by David Ming Start				
+				$service_conference = new Service_Conference;
+				$records = $service_conference->get_conference_tag($id);
+
+				$tags = "";
+				foreach($records as $record)
+					$tags .= $record['tag_name'];
+
+				$view->tags = $tags;
+//2014-2-4 Added by David Ming End
+
 				$Video_dao = new Dao_Video();
 				$Video = $Video_dao->get_video_list($user_id,$id);
 				
@@ -129,12 +142,34 @@ class Controller_Conference extends Controller {
 			}
 		}
 	}
+
+
+	private function get_converted_date($str)
+	{
+		$data = explode("/", $str);
+		$result = $data[2]."-".$data[1]."-".$data[0];
+		return $result;
+	}
+
+
 	public function action_create()
 	{
+		$data = $this->request->post();
+		$data['Conference']['start_date'] = $this->get_converted_date($data['Conference']['start_date']);
+		if($data['Conference']['type'] == 1)
+		{
+			$data['Conference']['end_date'] = $this->get_converted_date($data['Conference']['end_date']);
+			$data['Conference']['deadline'] = $this->get_converted_date($data['Conference']['deadline']);
+			$data['Registration']['start_date'] = $this->get_converted_date($data['Registration']['start_date']);
+			$data['Registration']['end_date'] = $this->get_converted_date($data['Registration']['end_date']);
+			$data['Conference']['accept_notify'] = $this->get_converted_date($data['Conference']['accept_notify']);
+		}		
+		//echo Debug::vars($data);
+		
 		if(Service_Login::is_login())
 		{
 			$service_conference = Service_Conference::instance();
-			$id = $service_conference->create($this->request->post());
+			$id = $service_conference->create($data);
 
 			//Create instance for Service_UserAction class.
 			$conference_action_attend_track = new Service_UserAction();

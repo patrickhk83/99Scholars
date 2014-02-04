@@ -17,12 +17,11 @@ class Dao_ConferenceComment {
 
 	public function get_comment_list_with_author($topic_id)
 	{
-		$sql = 'SELECT c.id, c.content, c.created_date, u.id AS user_id, u.firstname, u.lastname FROM conference_topic_discussion c '
-				.'LEFT OUTER JOIN user u ON c.created_by = u.id '
-				.'WHERE c.topic = '.$topic_id;
+		$query = "SELECT c.id, c.content, c.created_date, ";
+		$query .= "u.id AS user_id, u.firstname, u.lastname ";
+		$query .= "FROM conference_topic_discussion AS c, users AS u ";
+		$query .= "WHERE c.topic='".$topic_id."' AND c.created_by=u.id";
 
-		return DB::query(Database::SELECT, $sql)
-					->execute()
-					->as_array();
+		return DB::query(Database::SELECT, $query)->execute();
 	}
 }

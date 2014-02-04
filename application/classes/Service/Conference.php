@@ -476,28 +476,13 @@ class Service_Conference {
 		Log::instance()->add(Log::INFO, '_create_conference data: :data', array(
     		':data' => print_r($data, true),
 		));
-
-		$this->_convert_date($data);
+		
 		$this->_init_orm();
 		$new_conference_id = $this->_create_new_conference($data);
 		return $new_conference_id;
 		
 	}
-	Protected function _convert_date($data)
-	{
-		$data['Conference']['start_date'] = DateTime::createFromFormat('d/m/Y', $data['Conference']['start_date'])->format('Y-m-d');
 
-		if($data['Conference']['type'] == 1)
-		{
-			$data['Conference']['end_date'] = DateTime::createFromFormat('d/m/Y', $data['Conference']['end_date'])->format('Y-m-d');
-			$data['Conference']['deadline'] = DateTime::createFromFormat('d/m/Y', $data['Conference']['deadline'])->format('Y-m-d');
-			$data['Registration']['start_date'] = DateTime::createFromFormat('d/m/Y', $data['Registration']['start_date'])->format('Y-m-d');
-			$data['Registration']['end_date'] = DateTime::createFromFormat('d/m/Y', $data['Registration']['end_date'])->format('Y-m-d');
-			$data['Conference']['accept_notify'] = DateTime::createFromFormat('d/m/Y', $data['Conference']['accept_notify'])->format('Y-m-d');
-		}
-
-		return $data;
-	}
 	Protected function _init_orm()
 	{
 		$this->_conference = ORM::factory('Conference');
@@ -545,11 +530,14 @@ class Service_Conference {
 				$category_conference->values($category)->create();
 			}
 
-			foreach($data['selectedTag'] as $selectedTag)
+			if(isset($data['selectedTag']))
 			{
-				$tag_conference = ORM::factory('ConferenceTag');
-				$selectedTag['conference_id'] = $confernce_id;
-				$tag_conference->values($selectedTag)->create();
+				foreach($data['selectedTag'] as $selectedTag)
+				{
+					$tag_conference = ORM::factory('ConferenceTag');
+					$selectedTag['conference_id'] = $confernce_id;
+					$tag_conference->values($selectedTag)->create();
+				}
 			}
 
 			if($data['Conference']['type'] == 2)
@@ -692,5 +680,12 @@ class Service_Conference {
 		}
 		else
 			return $tag_orm->id;
+	}
+
+	public function get_conference_tag($conference_id)
+	{
+		$query = "SELECT tags.tag_name as tag_name FROM tags, conference_tag WHERE conference_tag.conference_id='".$conference_id."' AND conference_tag.tag_id=tags.id";
+		$result = DB::query(Database::SELECT , $query)->execute();
+		return $result;
 	}
 }

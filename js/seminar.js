@@ -58,7 +58,7 @@ var joinSeminar = function(e)
 
 			alert('Thanks for joining this seminar');
 			
-			var html = '<tr style="display:none" id="attendee-"' + data.id + '>' + 
+			var html = '<tr style="display:none" id="attendee-' + data.id + '">' + 
 				'<td width="40px"><img src="' + baseUrl + '/img/avatar.jpg" width="40"/></td>' +
 			  '<td>' +
 			    '<p><a href="' + baseProfileUrl + data.id + '"><strong>' + data.name + '</strong></a> <br/> <small class="text-muted">Massachusetts Institute of Technology</small></p>' +
@@ -300,59 +300,96 @@ function deletevideo(confid,videoid) {
 var addTopic = function()
 {
 	var url = baseUrl + 'topic/create';
-	var data = $('#topic-form').serialize();
 
-	$.post(url, data, function(response){
-		if(response.status == 'ok')
-		{
-			var html = $(response.html);
+	var form_data = $('#topic-form').serialize();
 
-			$('#topics').append(html);
-			html.effect('highlight');
-		}
-		else
-		{
-			alert(response.message);
-		}
-	});
-}
+	$.ajax({
+	    type : "POST", 
+	    async : true, 
+	    url : url, 
+	    dataType : "json", 
+	    timeout : 30000, 
+	    cache : false, 
+	    data : form_data, 
+	    error : function(request, status, error) {
 
-var addComment = function()
-{
-	var url = baseUrl + 'discuss/create';
-	var data = $('#comment-form').serialize();
-
-	$.post(url, data, function(response){
-		if(response.status == 'ok')
-		{
-			var html = $(response.html);
-			$('#comments').append(html);
-			html.effect('highlight');
-		}
-		else
-		{
-			alert(response.message);
-		}
-	});
-
-}
-
-var showTopic = function(topic_id)
-{
-	var url = baseUrl + 'topic/view/' + topic_id;
-	$('#topics-container').effect('drop', function(){
-		$.get(url, function(response){
+	    }, 
+	    success : function(response) {
 			if(response.status == 'ok')
 			{
-				$('#topic-detail').html(response.html);
-				$('#topic-detail-container').show();
-				$('#add-comment-btn').on('click', addComment);
+				var html = $(response.html);
+
+				$('#topics').append(html);
+				html.effect('highlight');
 			}
 			else
 			{
 				alert(response.message);
 			}
-		});
+	    }
+	});			
+}
+
+var addComment = function()
+{
+	var url = baseUrl + 'discuss/create';
+	var form_data = $('#comment-form').serialize();
+	$.ajax({
+	    type : "POST", 
+	    async : true, 
+	    url : url, 
+	    dataType : "json", 
+	    timeout : 30000, 
+	    cache : false, 
+	    data : form_data, 
+	    error : function(request, status, error) {
+
+	    }, 
+	    success : function(response) {
+			if(response.status == 'ok')
+			{
+				var html = $(response.html);
+				$('#comments').append(html);
+				html.effect('highlight');
+			}
+			else
+			{
+				alert(response.message);
+			}
+
+	    }
+	});		
+}
+
+var showTopic = function(topic_id)
+{
+	var url = baseUrl + 'topic/view/';// + topic_id;
+	$('#topics-container').effect('drop', function(){
+
+		$.ajax({
+		    type : "POST", 
+		    async : true, 
+		    url : url, 
+		    dataType : "json", 
+		    timeout : 30000, 
+		    cache : false, 
+		    data : {term:topic_id}, 
+		    error : function(request, status, error) {
+
+		    }, 
+		    success : function(response) {
+				if(response.status == 'ok')
+				{
+					$('#topic-detail').html(response.html);
+					$('#topic-detail-container').show();
+					$('#add-comment-btn').on('click', addComment);
+				}
+				else
+				{
+					alert(response.message);
+				}
+		    }
+		});			
 	});
 
 	return false;

@@ -42,6 +42,8 @@
               <li><a href="#video" data-toggle="tab">Videos</a></li>
               <li><a href="#file" data-toggle="tab">Files</a></li>
               <li><a href="#photo" data-toggle="tab">Photos</a></li>
+              <li><a href="#attendee" data-toggle="tab">Attendees</a></li>
+              <li><a href="#discussion" data-toggle="tab">Discussions</a></li>
             </ul>
             <div class="visible-xs btn-group">
                 <button class="mobuser-dropdown dropdown-toggle" data-target="#" data-backdrop="static" data-toggle="dropdown">
@@ -132,78 +134,161 @@
               	</div><!--/row-->
               </div>
               <div class="tab-pane fade attachment-content" id="file">
-		<p>
+		            <p>
                   <br>
-			<?php
-			$login = Service_Login::is_login();
-			if(!empty($login)){
-			?>
-                  <button type="button" class="btn btn-default" id="add-file-btn">Add file</button>
-			<?php
-			}
-			?>
+                    <?php
+                			$login = Service_Login::is_login();
+                			if(!empty($login))
+                      {
+                        echo "<button type='button' class='btn btn-default' id='add-file-btn'>Add file</button>";
+                			}
+              			?>
                   <br>
-                 </p>
-		<table class="table">
+                </p>
+            		<table class="table">
                   <tbody>
-			<?php
-			if(!empty($files)){
-				$baseurl = URL::base();
-				$upload= $baseurl."file/".$id."/attachment";
-				$i = 1;
-				foreach($files as $file)
-				{
-					$upload1=$upload."/".$file['name'];
-					?><tr id="conf<?php echo $i ?>"><td><span class="glyphicon glyphicon-file"></span></td><td><a href="<?php echo $upload1;?>"><strong><?php echo $file['name']?></strong></a> <span class="text-muted">(<?php echo $file['size']?>)</span><br><span class="text-muted" id="conf_text<?php echo $i ?>"><?php echo $file['desc']?></span></td><td>
-					<?php
-					if(!empty($userid) && $userid == $file['users']){
-					?>
-					<span style="cursor: pointer;" class="glyphicon glyphicon-pencil file-edit-btn" title="edit" onclick="editfile('<?php echo $file['name']?>','<?php echo $id?>','<?php echo $file['desc']?>','conf_text<?php echo $i ?>');"></span>
-					<span title="delete" onclick="deletefile('<?php echo $file['name']?>','<?php echo $id?>','conf<?php echo $i ?>');" class="glyphicon glyphicon-trash" style="cursor: pointer;"></span></td></tr>
-					<?php
-					}
-					$i++;
-				}
-			}
-			?>
-                 </tbody></table>
+              			<?php
+                			if(!empty($files))
+                      {
+                				$baseurl = URL::base();
+                				$upload= $baseurl."file/".$id."/attachment";
+                				$i = 1;
+                				foreach($files as $file)
+                				{
+                					$upload1=$upload."/".$file['name'];
+                					?><tr id="conf<?php echo $i ?>"><td><span class="glyphicon glyphicon-file"></span></td><td><a href="<?php echo $upload1;?>"><strong><?php echo $file['name']?></strong></a> <span class="text-muted">(<?php echo $file['size']?>)</span><br><span class="text-muted" id="conf_text<?php echo $i ?>"><?php echo $file['desc']?></span></td><td>
+                					<?php
+                					if(!empty($userid) && $userid == $file['users']){
+                					?>
+                					<span style="cursor: pointer;" class="glyphicon glyphicon-pencil file-edit-btn" title="edit" onclick="editfile('<?php echo $file['name']?>','<?php echo $id?>','<?php echo $file['desc']?>','conf_text<?php echo $i ?>');"></span>
+                					<span title="delete" onclick="deletefile('<?php echo $file['name']?>','<?php echo $id?>','conf<?php echo $i ?>');" class="glyphicon glyphicon-trash" style="cursor: pointer;"></span></td></tr>
+                					<?php
+                					}
+                					$i++;
+                				}
+                			}
+              			?>
+                  </tbody>
+                </table>
               </div>
               <div class="tab-pane fade active attachment-content" id="photo">
-               		<br/>
-		<?php
-		$login = Service_Login::is_login();
-		if(!empty($login)){
-		?>
-		<button type="button" class="btn btn-default" id="add-photo-btn">Add photo</button>
-		<?php
-		}
-		?>
-		<br/>  <br/>
+                <br/>
+            		<?php
+              		$login = Service_Login::is_login();
+              		if(!empty($login))
+                  {
+                    echo "<button type='button' class='btn btn-default' id='add-photo-btn'>Add photo</button>";
+              		}
+            		?>
+            		<br/><br/>
 	          	  <div class="row">
-			<?php
-			if(!empty($photos)){
-				$baseurl = URL::base();
-				$i = 1;
-				foreach($photos as $photo)
-				{
-				?>
-	          	      <div id="photo<?php echo $i ?>" class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-				<a id="photo_text<?php echo $i ?>" href="<?php echo $baseurl?>gallery/<?php echo $id?>/photos/<?php echo $photo['name']?>"  data-lightbox="roadtrip" title="<?php echo $photo['desc']?>">  <img class="img-thumbnail" src="<?php echo $baseurl?>gallery/<?php echo $id?>/thumb/<?php echo $photo['name']?>" /></a>
-				<?php
-				if(!empty($userid) && $userid == $photo['users']){
-				?>
-	          	         <p class="text-center"><span style="cursor: pointer;" class="glyphicon glyphicon-pencil photo-edit-btn" title="edit" onclick="editphoto('<?php echo $photo['name']?>','<?php echo $id?>','<?php echo $photo['desc']?>','photo_text<?php echo $i ?>');"></span><span style="cursor: pointer;margin-left: 5px;" class="glyphicon glyphicon-trash" title="delete" onclick="deletephoto('<?php echo $photo['name']?>','<?php echo $id?>','photo<?php echo $i ?>');"></span></p>
-				<?php
-				}
-				?>
-	          	      </div>
-			      <?php
-			      $i++;
-				}
-			}
-			?>
-	          	</div>
+            			<?php
+              			if(!empty($photos))
+                    {
+              				$baseurl = URL::base();
+              				$i = 1;
+              				foreach($photos as $photo)
+              				{
+              		?>
+                        <div id="photo<?php echo $i ?>" class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+                          <a id="photo_text<?php echo $i ?>" href="<?php echo $baseurl?>gallery/<?php echo $id?>/photos/<?php echo $photo['name']?>"  data-lightbox="roadtrip" title="<?php echo $photo['desc']?>">
+                            <img class="img-thumbnail" src="<?php echo $baseurl?>gallery/<?php echo $id?>/thumb/<?php echo $photo['name']?>" />
+                          </a>
+              		<?php
+              		  		if(!empty($userid) && $userid == $photo['users'])
+                        {
+              		?>
+                	        <p class="text-center">
+                            <span style="cursor: pointer;" class="glyphicon glyphicon-pencil photo-edit-btn" title="edit" onclick="editphoto('<?php echo $photo['name']?>','<?php echo $id?>','<?php echo $photo['desc']?>','photo_text<?php echo $i ?>');"></span><span style="cursor: pointer;margin-left: 5px;" class="glyphicon glyphicon-trash" title="delete" onclick="deletephoto('<?php echo $photo['name']?>','<?php echo $id?>','photo<?php echo $i ?>');"></span>
+                          </p>
+                	<?php
+              		  		}
+              		?>
+              	        </div>
+              		<?php
+              		      $i++;
+              				}
+              			}
+            			?>
+	          	  </div>
               </div>
+              <div class="tab-pane fade active attachment-content" id="attendee">
+                <p>
+                  <table class="table" id="attendee-list">
+                    <?php 
+                      if($conference->attendee->find_all()->count() != 0) 
+                      { 
+                        foreach($conference->attendee->find_all() as $attendee) 
+                        { 
+                    ?>
+                          <tr id="attendee-<?= $attendee->id ?>">
+                            <td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
+                            <td>
+                              <p>
+                                <a href="<?= URL::site('user/profile/'.$attendee->id) ?>">
+                                  <strong><?= $attendee->get_fullname() ?></strong>
+                                </a> 
+                                <br/> 
+                                <small class="text-muted"><?= $attendee->get_affiliation() ?></small>
+                              </p>
+                              <p></p>
+                            </td>
+                          </tr>
+                    <?php 
+                        }
+                      } 
+                      else 
+                      { 
+                    ?>
+                          <tr id="attendee-placeholder">
+                            <td>There is no attendee right now</td>
+                          </tr>
+                    <?php 
+                      } 
+                    ?>
+                  </table>
+                </p>
+              </div>
+              <div class="tab-pane fade active attachment-content" id="discussion"> 
+                <hr style="margin-bottom: 0px; margin-top: 5px;">
+                <div id="topics-container">
+                  <table class="table table-hover">
+                    <tbody id="topics">
+                    <?
+                      foreach ($conference->topic->find_all() as $topic) 
+                      { 
+                        echo View::factory('discussion/topic_title')->bind('topic', $topic);
+                      }
+                    ?>
+                    </tbody>
+                  </table>
+                  <form role="form" id="topic-form">
+                    <input type="hidden" name="conf_id" value="<?= $conference->id ?>">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Post your topic" name="title">
+                    </div>
+                    <div class="form-group">
+                      <textarea class="form-control" rows="4" placeholder="And what you'd like to say" name="content"></textarea>
+                    </div>
+                    <div class="form-group text-right">
+                      <button type="button" class="btn btn-primary topic-btn" id="add-topic-btn">Submit</button>
+                    </div>
+                  </form>
+                </div>
+                <div id="topic-detail-container">
+                  <p>
+                    <small>
+                      <a href="#" id="back-topic-link">
+                        <span class="glyphicon glyphicon-chevron-left"></span> 
+                        Back to topics
+                      </a>
+                    </small>
+                  </p>
+                  <div id="topic-detail">
+                  
+                  </div>
+                </div>                
+              </div> 
             </div>
             
               
@@ -220,65 +305,7 @@
                  </p>
               </div><!--span-->
           </div><!--/row-->
-          <div class="row">
-            <div class="col-lg-8">
-              <h4 class="text-muted">Discussion</h4>
-              <hr style="margin-bottom: 0px; margin-top: 5px;">
-              <div id="topics-container">
-                <table class="table table-hover">
-                  <tbody id="topics">
-                    <?
-                        foreach ($conference->topic->find_all() as $topic) 
-                        { 
-                          echo View::factory('discussion/topic_title')->bind('topic', $topic);
-                        }
-                       
-                    ?>
-                  </tbody>
-                </table>
-                <form role="form" id="topic-form">
-                  <input type="hidden" name="conf_id" value="<?= $conference->id ?>">
-                  <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Post your topic" name="title">
-                  </div>
-                  <div class="form-group">
-                    <textarea class="form-control" rows="4" placeholder="And what you'd like to say" name="content"></textarea>
-                  </div>
-                  <div class="form-group text-right">
-                    <button type="button" class="btn btn-primary topic-btn" id="add-topic-btn">Submit</button>
-                  </div>
-                </form>
-              </div>
-              <div id="topic-detail-container">
-                <p><small><a href="#" id="back-topic-link"><span class="glyphicon glyphicon-chevron-left"></span> Back to topics</a></small></p>
-                <div id="topic-detail">
-                  
-                </div>
-              </div>
-            </div><!-- /span -->
-            <div class="col-lg-4">
-              <p><h4 class="text-muted">Attendees</h4></p>
-              <p>
-                <table class="table" id="attendee-list">
-                  <?php if($conference->attendee->find_all()->count() != 0) { ?>
-                    <?php foreach($conference->attendee->find_all() as $attendee) { ?>
-                      <tr id="attendee-<?= $attendee->id ?>">
-                        <td width="40px"><?php echo HTML::image('img/avatar.jpg', array('width'  => '40')) ?></td>
-                        <td>
-                          <p><a href="<?= URL::site('user/profile/'.$attendee->id) ?>"><strong><?= $attendee->get_fullname() ?></strong></a> <br/> <small class="text-muted"><?= $attendee->get_affiliation() ?></small></p>
-                          <p></p>
-                        </td>
-                      </tr>
-                    <?php } ?>
-                  <?php } else { ?>
-                    <tr id="attendee-placeholder"><td>There is no attendee right now</td></tr>
-                  <?php } ?>
-                </table>
-              </p>
-            </div><!--/span--> 
-          </div><!--/row-->
         </div><!--/span-->
-
       </div><!--/row-->
 
       <hr>
