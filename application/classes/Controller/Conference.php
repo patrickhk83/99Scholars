@@ -133,11 +133,25 @@ class Controller_Conference extends Controller {
 			}
 			else //'Conference' type
 			{
-				$view = View::factory('schedule');
-				
+				$view = View::factory('conf-view');
 				$view->id = $id;
+				$view->user_id = Service_Login::get_user_in_session();
 				$view->conference = $conference;
-				
+
+				$query = "SELECT * FROM organization WHERE id='".$conference->organizer."'";
+				$result = DB::query(Database::SELECT , $query)->execute();
+				$view->organization = $result->get('name');
+
+				$service_conference = new Service_Conference;
+				$records = $service_conference->get_conference_tag($id);
+
+				$tags = "";
+				foreach($records as $record)
+					$tags .= $record['tag_name'];
+
+				$view->tags = $tags;
+
+
 				$this->response->body($view);
 			}
 		}

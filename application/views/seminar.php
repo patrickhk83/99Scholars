@@ -332,59 +332,89 @@
     <?php echo HTML::script('js/lightbox-2.6.min.js') ?>
     <?php echo HTML::script('js/seminar.js') ?>
 	
-	<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-describedby="video-upload-container" style="position: absolute; height: auto; width: 600px; top: 268px; left: 376px; display: none;" aria-labelledby="ui-id-1-2"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span class="ui-dialog-title"></span><button class="ui-dialog-titlebar-close"></button></div><div id="video-upload-container" class="ui-dialog-content ui-widget-content" style="display: block; width: auto; min-height: 88px; max-height: none; height: auto;">
-                       <form role="form" class="form-inline" id="form-video">
-                        <div class="form-group">
-                          <input type="text" class="form-control" placeholder="YouTube Video's id" name="videoid"> 
-                        </div>
-                        <div class="form-group"><button type="button" class="btn btn-default" id="add_video">Add</button></div>
-                        <p class="help-block">If video's url is http://www.youtube.com/watch?v=abcd123, the id is "abcd123"</p>
-                       </form>
-                     </div><div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-sw" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90;"></div></div>
-    <div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-describedby="file-upload-container" aria-labelledby="ui-id-2" style="position: absolute; height: auto; width: 600px; top: 163px; left: 376px; display: none;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-2" class="ui-dialog-title"></span><button class="ui-dialog-titlebar-close"></button></div>
+	<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-describedby="video-upload-container" style="position: absolute; height: auto; width: 600px; top: 268px; left: 376px; display: none;" aria-labelledby="ui-id-1-2">
+    <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span class="ui-dialog-title"></span><button class="ui-dialog-titlebar-close"></button></div><div id="video-upload-container" class="ui-dialog-content ui-widget-content" style="display: block; width: auto; min-height: 88px; max-height: none; height: auto;">
+      <form role="form" class="form-inline" id="form-video">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="YouTube Video's id" name="videoid"> 
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-default" id="add_video">Add</button>
+        </div>
+        <p class="help-block">If video's url is http://www.youtube.com/watch?v=abcd123, the id is "abcd123"</p>
+      </form>
+    </div>
+    <div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-sw" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90;"></div>
+  </div>
+  
+  <div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-describedby="file-upload-container" aria-labelledby="ui-id-2" style="position: absolute; height: auto; width: 600px; top: 163px; left: 376px; display: none;">
+    <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+      <span id="ui-id-2" class="ui-dialog-title"></span>
+      <button class="ui-dialog-titlebar-close"></button>
+    </div>
 		<div id="file-upload-container" class="ui-dialog-content ui-widget-content" style="display: block; width: auto; min-height: 88px; max-height: none; height: auto;">
-                 <form role="form" action="<?php echo URL::site('conference/uploadfile') ?>" class="form-inline" id="form-file" method="post" enctype="multipart/form-data">
-                  <div class="form-group">
-			<input type="hidden" name="hidden" value="<?php echo $id ?>">
-                    <input type="file" name="file[]" multiple id="filename">
-                    <small class="help-block">- Only these file types are allowed: .doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, .txt and .rtf</small>
-                    <small class="help-block">- Maximum file size is 25 MB</small>
-                    <textarea class="form-control" rows="3" name="filedesc" placeholder="File description (optional)"></textarea>
-                  </div>
-                  <button type="submit" class="btn btn-default" id="add_file">Upload</button>
-                 </form>
-               </div>
+      <form role="form" action="<?php echo URL::site('conference/uploadfile') ?>" class="form-inline" id="form-file" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+		      <input type="hidden" name="hidden" value="<?php echo $id ?>">
+          <input type="file" name="file[]" multiple id="filename">
+          <small class="help-block">
+            - Only these file types are allowed: .doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, .txt and .rtf
+          </small>
+          <small class="help-block">
+            - Maximum file size is 25 MB
+          </small>
+          <textarea class="form-control" rows="3" name="filedesc" placeholder="File description (optional)"></textarea>
+        </div>
+        <button type="submit" class="btn btn-default" id="add_file">Upload</button>
+      </form>
+    </div>
 		<div id="file-edit-container" style="display: block; width: auto; min-height: 87px; max-height: none; height: auto;" class="ui-dialog-content ui-widget-content">
-                 <form role="form" class="form-inline" id="form-edit">
-                  <div class="form-group">
-                    <label id="filename1"></label>
-                    <textarea rows="3" id="filedesc" class="form-control"></textarea>
-                  </div>
-		  <button type="button" class="btn btn-default" id="edit_file">Edit</button>
-                 </form>
-               </div>
-		<div id="photo-upload-container" style="display: block; width: auto; min-height: 88px; max-height: none; height: auto;" class="ui-dialog-content ui-widget-content">
-                    <form role="form" action="<?php echo URL::site('conference/uploadphoto') ?>" class="form-inline" id="form-photo" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="hidden1" value="<?php echo $id ?>">
-                    <div class="form-group">
-                      <input type="file" name="file[]" multiple id="filename">
-                    </div>
-                    <div class="form-group">
-                      <input type="text" class="form-control"  name="photodesc"  placeholder="Photo's caption (optional)">
-                    </div>
-                    <button type="submit" class="btn btn-default" >Upload</button>
-                   </form>
-                 </div>
-		<div id="photo-edit-container" class="ui-dialog-content ui-widget-content" style="display: block; width: auto; min-height: 87px; max-height: none; height: auto;">
-                   <form role="form">
-                    <div class="form-group">
-			<input type="hidden" id="hiddenval" value="">
-			<input type="hidden" id="hiddenname" value="">
-                      <input type="text" id="photodesc1" class="form-control" value="">
-                    </div>
-                    <button id="edit_photo" type="button" class="btn btn-default">Edit</button>
-                   </form>
-                 </div>
-	<div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-sw" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90;"></div></div>
+      <form role="form" class="form-inline" id="form-edit">
+        <div class="form-group">
+          <label id="filename1"></label>
+          <textarea rows="3" id="filedesc" class="form-control"></textarea>
+        </div>
+		    <button type="button" class="btn btn-default" id="edit_file">Edit</button>
+      </form>
+    </div>
+		
+    <div id="photo-upload-container" style="display: block; width: auto; min-height: 88px; max-height: none; height: auto;" class="ui-dialog-content ui-widget-content">
+      <form role="form" action="<?php echo URL::site('conference/uploadphoto') ?>" class="form-inline" id="form-photo" method="post" enctype="multipart/form-data">
+		    <input type="hidden" name="hidden1" value="<?php echo $id ?>">
+        <div class="form-group">
+          <input type="file" name="file[]" multiple id="filename">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control"  name="photodesc"  placeholder="Photo's caption (optional)">
+        </div>
+        <button type="submit" class="btn btn-default" >Upload</button>
+      </form>
+    </div>
+		
+    <div id="photo-edit-container" class="ui-dialog-content ui-widget-content" style="display: block; width: auto; min-height: 87px; max-height: none; height: auto;">
+      <form role="form">
+        <div class="form-group">
+		      <input type="hidden" id="hiddenval" value="">
+		      <input type="hidden" id="hiddenname" value="">
+          <input type="text" id="photodesc1" class="form-control" value="">
+        </div>
+        <button id="edit_photo" type="button" class="btn btn-default">Edit</button>
+      </form>
+    </div>
+    <div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-sw" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90;"></div>
+  </div>
   </body>
 </html>

@@ -34,6 +34,10 @@ class Model_Conference extends ORM {
         	'model'       => 'CategoryConference',
         	'foreign_key' => 'conference',
     	),
+    	'registration' => array(
+    		'model' => 'Registration',
+    		'foreign_key' => 'conference_id',
+    	),
 	);
 	protected $_belongs_to = array(
     	'conference_type' => array(
@@ -97,4 +101,5 @@ class Model_Conference extends ORM {
 	{
 		return Util_Date::to_readable_date($this->start_date);
 	}
+
 }
