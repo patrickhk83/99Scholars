@@ -68,10 +68,18 @@ class Dao_Schedule {
 		//echo date('Y-m-d h:i A',$start_unix_timestamp);
 	}
 	
-	public function create_presentation($user_id, $session_id, $time_table, $end_time_table, $presentation_room, $presentation_slot, $presentation_name)
+	public function create_presentation($user_id, 
+										$session_id, 
+										$time_table, 
+										$end_time_table, 
+										$presentation_room, 
+										$presentation_slot, 
+										$presentation_name,
+										$selected_seminar)
 	{
 		$presentation = ORM::factory('ConfPresentation');
 		$presentation->title = $presentation_name;
+		$presentation->seminar_id = $selected_seminar;
 		$presentation->save();
 
 		$presentation_id = $presentation->pk();

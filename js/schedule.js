@@ -45,6 +45,26 @@ $(function(){
 	$("#presentation_slot" ).change(function(  ) {
 		session_display_data_2();
 	});
+
+	$('#autocomplete_tags').autocomplete({
+		minLength: 1,
+		source:function( request, response ) {
+			
+			$.ajax({
+				type : "POST",
+				url:  suggest_url,
+				dataType: "json" ,
+				data: {term:request.term} ,
+				error : function(request, status, error) {
+			    alert(error);
+			  },
+				success: function(data) {
+					//response(data);
+					$('#list_suggest_seminar').html(data);
+				}
+			});
+		}
+	});
 	
 });
 
@@ -91,8 +111,9 @@ function time_add() {
 function presentation_add() {
 	var confId = $('#conf-id').val();
 	var url = baseConfUrl + 'insert/' + confId;
+
 	var data = $('#form-presentation').serialize()+"&session_id="+$('#session_room3').val()+"&room_id="+$('#presentation_room').val()+"&time_id="+$('#presentation_time').val()+"&end_time_id="+$('#presentation_endtime').val()+"&type=presentation";
-	
+
 	$.post(url, data, function(response){
 		location.reload();
 	});
@@ -131,4 +152,41 @@ function session_display_data_2() {
 	}else {
 		$('#presentation_endtime').html('');
 	}
+}
+
+function addSelectedSeminar(seminar_id , seminar_name)
+{
+	var list_id = "li_seminar" + seminar_id;
+	var b_is = false;
+	$("#list_selected_seminar li").each(function(index){
+		if($(this).attr("id") == list_id)
+		{
+			b_is = true;
+			return false;
+		}
+		
+	});
+
+	if(b_is == true) return false;
+
+	var inner = "<li class='list-group-item' id='li_seminar" + seminar_id + "'>" + 
+					"<div class='row'>" + 
+						"<input type='hidden' name='selectedSeminar' value='" + seminar_id + "'>" + 
+						"<div class='col-lg-10'><p>" + seminar_name + "</p></div>" + 
+						"<div class='col-lg-2'>" + 
+							"<span class='glyphicon glyphicon-minus-sign del-category-btn' onclick='deleteSelectedSeminar(" + seminar_id + ")'></span>" + 
+						"</div>" + 
+					"</div>" +
+				"</li>";
+	$("#list_selected_seminar").append(inner);
+
+	$('#autocomplete_tags').val('');
+	$('#autocomplete_tags').prop('readonly' , 'true');
+	$('#list_suggest_seminar').html('');
+}
+
+function deleteSelectedSeminar(seminar_id)
+{
+	$("#li_seminar" + seminar_id).remove(); 
+	$('#autocomplete_tags').prop('readonly' , '');
 }

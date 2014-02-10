@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 class Service_Conference {
-
+ 
 	/**
 	 * @var   Kohana_Cache instances
 	 */
@@ -14,6 +14,8 @@ class Service_Conference {
 	Protected $_registration;
 	Protected $_seminar;
 
+	private $_current_page;
+	private $_per_page = 10;
 	public $_nSubTotal;
 	 /**
 	 * get Service_Conference by singleton
@@ -159,7 +161,7 @@ class Service_Conference {
 		$start_page = $page - 1;
 		//$sql = $sql;//."limit ".($start_page*$limit).",".$limit;
 		//
-
+		$this->_current_page = $start_page;
 			$result['conferences'] = $this->convert_for_listing(
 									DB::query(Database::SELECT, $sql)
 									->execute()->as_array() , $search_text);
@@ -305,6 +307,9 @@ class Service_Conference {
 	protected function convert_for_listing($results , $search_text)
 	{
 		$conferences = array();
+		$start_segment = $this->_current_page * $this->_per_page;
+		$end_segment = ($this->_current_page + 1) * $this->_per_page;
+		$nCount = 0;
 		foreach ($results as $result) 
 		{
 			$conference = array();
@@ -317,6 +322,14 @@ class Service_Conference {
 			}
 			else
 			{
+				if($nCount < $start_segment)
+				{
+					$nCount ++;
+					continue;
+				}
+
+				if($nCount > $end_segment)
+					break;
 				$conference['id'] = $result['id'];
 				$conference['name'] = $result['name'];
 				$conference['duration'] = $this->render_duration($result['start_date'], $result['end_date']);
@@ -335,6 +348,8 @@ class Service_Conference {
 
 				array_push($conferences, $conference);
 			}
+
+			$nCount ++;
 		}
 
 		return $conferences;
@@ -687,5 +702,32 @@ class Service_Conference {
 		$query = "SELECT tags.tag_name as tag_name FROM tags, conference_tag WHERE conference_tag.conference_id='".$conference_id."' AND conference_tag.tag_id=tags.id";
 		$result = DB::query(Database::SELECT , $query)->execute();
 		return $result;
+	}
+
+	public function get_suggest_seminar_list($term)
+	{
+		$search_text_array = array();
+		$search_text_array = explode(' ', $term);
+
+		$query = "SELECT c.id AS seminar_id, c.name AS seminar_name FROM conference AS c, venue AS v, address AS a ";
+
+		$query .= "WHERE c.type='2' AND v.id=c.venue AND a.id=v.address AND ";
+
+		$nCount = 0;
+		foreach($search_text_array as $element)
+		{
+//			if($element == '' || $element == NULL) 
+//				continue;
+			if($nCount > 0) $query .= " AND ";
+			$query .= "CONCAT(IFNULL(c.name, ''), IFNULL(c.description, ''),
+				IFNULL(c.website, ''), IFNULL(c.contact_person, ''), IFNULL(c.contact_email, ''),
+				IFNULL(c.contact_phone, ''), IFNULL(v.name, ''), IFNULL(a.address, ''),
+				IFNULL(a.city, ''), IFNULL(a.state, ''), IFNULL(a.postal_code, '')) LIKE '%".$element."%'";
+			$nCount ++;
+		}
+		$query .= " LIMIT 0, 20";
+		$result = DB::query(Database::SELECT, $query)->execute();
+		return $result;
+		
 	}
 }

@@ -14,7 +14,7 @@ $(function(){
 	$('.datepicker').datepicker({
 		autoclose: true
 	});
-/*
+//2014-2-10 start
 	$('#conf-list').infinitescroll({
 		navSelector: 'div.paging',
 		nextSelector: '#next-paging',
@@ -27,7 +27,7 @@ $(function(){
         },
 		debug: true
 	});
-*/
+//2014-2-10 end
 	$('#add-category-link').click(addCategory);
 	$('#add-type-link').click(addType);
 	$('#add-country-link').click(addCountry);
@@ -184,8 +184,8 @@ var updateSearchResult = function(page)
 	url += '&page=' + page;
 
 	$.get(url, function (data){
-		//$('#conf-list').infinitescroll('destroy');
-		//$('#conf-list').data('infinitescroll', null);
+		$('#conf-list').infinitescroll('destroy');
+		$('#conf-list').data('infinitescroll', null);
 
 		$('#conf-list').html(data);
 
@@ -205,7 +205,7 @@ var updateSearchResult = function(page)
 				$('#event-text').html('Event found');
 			}
 		}
-/*
+//2014-2-10 start
 		$('#conf-list').infinitescroll({
 			navSelector: 'div.paging',
 			nextSelector: '#next-paging',
@@ -218,7 +218,8 @@ var updateSearchResult = function(page)
         	},
 			debug: true
 		});
-*/		
+//2014-2-10 end		
+		
 	});
 }
 

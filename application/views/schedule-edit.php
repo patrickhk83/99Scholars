@@ -1,5 +1,8 @@
 <?php include Kohana::find_file('views', 'header') ?>
-
+<script>
+  var suggest_url = "<?php echo URL::site('conference/suggest_seminar_info');?>";
+  var add_relate_seminar_info_url = "<?php echo URL::site('conference/new_relate_seminar_info');?>";
+</script>
 <input type="hidden" id="conf-id" value="<?php echo $id ?>">
 <div class="row" id="schedule-main">
             <div class="col-lg-12">
@@ -155,58 +158,74 @@
 		?>	
 		</tbody></table>
 
-              <form role="form" id="form-presentation">
-                <div class="form-group">
-                  <label>Session</label>
-                  <?php
-		if(!empty($session_names)){ ?>
-			<select class="form-control" id="session_room3" value="">
-			<?php foreach($session_names as $session)
-			{
-				$time = strtotime($session['date']);
+        <form role="form" id="form-presentation">
+        	<div class="form-group">
+            	<label>Session</label>
+            	<?php
+				if(!empty($session_names)) { ?>
+				<select class="form-control" id="session_room3" value="">
+				<?php 
+				foreach($session_names as $session)
+				{
+					$time = strtotime($session['date']);
 				?>
-				<option value="<?php echo $session['id']?>"><?php echo date('d/m/Y',$time)?> - <?php echo $session['name']?></option>
-				<?php				
-			}?>
-			</select>
-		<?php }
-		?>  
-                </div>
-                <div class="form-group">
-                  <label>Time Table</label>
-			<select class="form-control" name="presentation_time" id="presentation_time">
+					<option value="<?php echo $session['id']?>"><?php echo date('d/m/Y',$time)?> - <?php echo $session['name']?></option>
+				<?php } ?>
+				</select>
+				<?php } ?>  
+            </div>
+            <div class="form-group">
+            	<label>Time Table</label>
+				<select class="form-control" name="presentation_time" id="presentation_time">
 				<!--<option></option>-->
-			</select>
-                </div>
-                <div class="form-group">
-                  <label>Room</label>
-			<select class="form-control" name="presentation_room" id="presentation_room">
+				</select>
+            </div>
+            <div class="form-group">
+            	<label>Room</label>
+				<select class="form-control" name="presentation_room" id="presentation_room">
 				<!--<option></option>-->
-			</select>
-                </div>
-                <div class="form-group">
-                  <label>Slot Type</label>
-                  <select class="form-control" name="presentation_slot" id="presentation_slot">
-                    <option value="1">One room</option>
+				</select>
+            </div>
+            <div class="form-group">
+            	<label>Slot Type</label>
+            	<select class="form-control" name="presentation_slot" id="presentation_slot">
+                	<option value="1">One room</option>
                     <option value="2">Take all room</option>
                     <option value="3">One room, more than 1 time table</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>End Time Table</label>
-			<select class="form-control" name="presentation_endtime" id="presentation_endtime">
-				<option></option>
-			</select>
-                </div>
-                <div class="form-group">
-                  <label>Presentation Title</label>
-                  <input type="text" class="form-control" name="presentation_name">
-                </div>
-                
-                <button type="button" class="btn btn-default" id="schedule_presentation">Submit</button>
-              </form>
+                </select>
             </div>
-          </div>
+            <div class="form-group">
+            	<label>End Time Table</label>
+				<select class="form-control" name="presentation_endtime" id="presentation_endtime">
+					<option></option>
+				</select>
+            </div>
+            <div class="form-group">
+            	<label>Presentation Title</label>
+            	<input type="text" class="form-control" name="presentation_name">
+            </div>
+
+			<div class="form-group">
+				<label>Seminar Info</label>
+				<div class="row">
+					<div class="col-md-6">
+						<input type="text" class="form-control" placeholder="Input Seminar's Info" id="autocomplete_tags">
+						<div class="well" id="list_suggest_seminar" style="overflow:auto; height:130px; padding:0;"></div>  
+					</div> 
+					<div class="col-md-6">
+						<p class="form-control-static" style="margin-bottom: 6px;"><b>Selected Seminar</b></p>
+						<div class="well" style="overflow:auto; height:130px; padding:0;">
+							<ul id="list_selected_seminar" class="list-group">
+							</ul>  
+						</div>
+					</div>   
+				</div>   
+			</div>                  
+
+            <button type="button" class="btn btn-default" id="schedule_presentation">Submit</button>
+        </form>
+    </div>
+</div>
 
 
 <hr>

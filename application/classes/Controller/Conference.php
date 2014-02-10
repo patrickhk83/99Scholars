@@ -38,7 +38,7 @@ class Controller_Conference extends Controller {
 			if($conference->conference_type->name == 'Seminar') //'Seminar' type
 			{
 			
-
+ 
 				$view = View::factory('seminar');
 				$view->conference = $conference;
 				
@@ -221,8 +221,6 @@ class Controller_Conference extends Controller {
 		$search_text = $this->request->query('search_text');
 		$page = $this->request->query('page');
 
-
-
 		if(!empty($country))
 		{
 			$country = '\''.str_replace(',', '\',\'', $country).'\'';	
@@ -256,6 +254,7 @@ class Controller_Conference extends Controller {
 			$view->total = $result['total'];
 		}
 
+		$view->page = $page;
 		$this->response->body($view);
 	}
 
@@ -520,8 +519,9 @@ public function action_insert()
 				$presentation_slot = $_REQUEST['presentation_slot'];
 				$presentation_name = $_REQUEST['presentation_name'];
 				$session_id = $_REQUEST['session_id'];
+				$selected_seminar = $_REQUEST['selectedSeminar'];
 				$presentation_insert = new Dao_Schedule();
-				$result = $presentation_insert->create_presentation($user_id, $session_id, $time_table, $end_time_table, $presentation_room, $presentation_slot, $presentation_name);
+				$result = $presentation_insert->create_presentation($user_id, $session_id, $time_table, $end_time_table, $presentation_room, $presentation_slot, $presentation_name , $selected_seminar);
 				
 				$session_data = new Service_Schedule();
 				$session_result = $session_data->get_session_list($session_id);
@@ -748,4 +748,28 @@ public function action_insert()
 
 		$this->response->body($view);
 	}
+
+//2014-2-10 Added by David Ming Start
+	public function action_suggest_seminar_info()
+	{
+
+		$conf_service = new Service_Conference();
+		$suggests = $conf_service->get_suggest_seminar_list($this->request->post('term'));
+		$nCount = 0;
+		$suggested_list = "<div class='list-group'>";
+		
+		foreach ($suggests as $suggest) {
+			$nCount ++;
+			$seminar_name = $suggest['seminar_name'];
+			$seminar_name = str_replace("'", "&#39;" , $seminar_name);
+
+			$suggested_list .= "<a class='list-group-item' onclick='addSelectedSeminar(".$suggest['seminar_id']." , \"".$seminar_name."\");'>".$seminar_name."</a>";
+		}
+		
+		$suggested_list .= "</div>";
+		
+		echo json_encode($suggested_list);
+	}
+
+//2014-2-10 Added by David Ming End	
 }
