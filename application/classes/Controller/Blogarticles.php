@@ -42,7 +42,7 @@ $view->set('art', $art);
 		$article_id = $this->request->param('id');
 
 
-		$article = ORM::factory('Article', $article_id);
+		$article = ORM::factory('article', $article_id);
 //echo Debug::vars($article);		
 		$view = new View('/article/single');
 		$view->set("article", $article);
