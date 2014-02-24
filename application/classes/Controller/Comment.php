@@ -3,8 +3,9 @@
 class Controller_Comment extends Controller {
 	
 	public function action_post() {
-		$comment = new Model_Comment();
+		//$comment = new Model_Comment();
 		//$user_id = Service_Login::get_user_in_session();
+		$comment = ORM::factory('comment');
 		$comment->values($this->request->post());
 		$comment->save();
 		
