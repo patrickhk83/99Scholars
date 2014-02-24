@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Comment extends Controller {
+class Controller_comment extends Controller {
 	
 	public function action_post() {
 		$comment = new Model_Comment();
