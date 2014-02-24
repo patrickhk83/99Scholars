@@ -36,14 +36,14 @@
           
             <div class="post-comments">
               <div class="comments-title"><?php echo $article->comments->count_all();?>  comments</div>
-			  <?php foreach ($article->comments->find_all() as $comment) : ?>
-		<!-- showing a single comment -->
-		<?php echo View::factory('comment/single', array('comment'=>$comment)); ?>
-	<?php endforeach; ?>
               
-<!-- this practice should be preferable, instead of cluttering a single article page with everything -->
-<?php echo View::factory('comment/edit', array('comment'=>new Model_Comment(),'article'=>$article, 'user'=>$user )); ?>
-              
+                <?php foreach ($article->comments->find_all() as $comment) : ?>
+              		
+		              <?php echo View::factory('comment/single', array('comment'=>$comment)); ?> 
+                <?php endforeach; ?>
+
+                <?php echo View::factory('comment/edit', array('comment'=>new Model_Comment(),'article'=>$article, 'user'=>$user )); ?>
+             
            
             </div>
        
@@ -54,25 +54,17 @@
             </div>
           </div><!--/row-->
         </div><!--/span-->
-
       </div><!--/row-->
-
-     
-     
-
     </div><!--/.container-->
-
-
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
+    <?php echo HTML::script('js/jquery.js') ?>
+    <?php echo HTML::script('js/bootstrap.min.js') ?>
+    <?php echo HTML::script('js/offcanvas.js') ?>
+    <?php echo HTML::script('js/jquery-ui.js') ?>
+    <?php echo HTML::script('js/lightbox-2.6.min.js') ?>
+    <?php echo HTML::script('js/blog_articles.js') ?>
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/offcanvas.js"></script>
-    <script src="js/bootstrap-datepicker.js"></script>
-    <script src="js/home.js"></script>
-    <script src="js/jquery.infinitescroll.min.js"></script>
   </body>
 </html>
 

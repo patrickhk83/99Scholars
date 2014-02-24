@@ -32,19 +32,24 @@ $view->set('art', $art);
 		$this->template->set('content', $view); // renders a view as a response
 }
 	
-	public function action_view() {
+	public function action_view() 
+	{
 		$category = ORM::factory('categories')->find_all(); // loads all article object from table
 		$view = new View('article/single'); // load 'article/index.php' view file
 		$view->set("category", $category); // set "articles" object to view
 		$this->template->set('content', $view); // renders a view as a response
 		
 		$article_id = $this->request->param('id');
-		$article = ORM::factory('article', $article_id);
+
+
+		$article = ORM::factory('Article', $article_id);
+//echo Debug::vars($article);		
 		$view = new View('/article/single');
 		$view->set("article", $article);
 		$view->set("user", Auth::instance()->get_user());
+
 		$this->template->set('content', $view);
-			}
+	}
 	
 	// edit the article
 	public function action_edit() {

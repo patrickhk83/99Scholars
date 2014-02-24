@@ -55,24 +55,47 @@ class Dao_Photo {
 	
 	public function delete_upload_photo($user_id, $conf_id, $photoname)
 	{
-		$query = DB::delete('event_photo')
-					->where('photo_name', '=', $photoname)
-					->where('event', '=', $conf_id)
-					->where('created_by', '=', $user_id);
+		if(Service_Login::is_login() && Auth::instance()->get_user()->is_admin())
+        {
+			$query = DB::delete('event_photo')
+						->where('photo_name', '=', $photoname)
+						->where('event', '=', $conf_id);
+						
 
+        }
+        else
+        {
+			$query = DB::delete('event_photo')
+						->where('photo_name', '=', $photoname)
+						->where('event', '=', $conf_id)
+						->where('created_by', '=', $user_id);
+		}				
 		$query->execute();
 	}
 	
 	public function update_photo($user_id, $conf_id, $photoname, $desc)
 	{
-		$query = DB::update('event_photo')
-					->set(array(
-						'caption' => $desc,
-					))
-					->where('photo_name', '=', $photoname)
-					->where('event', '=', $conf_id)
-					->where('created_by', '=', $user_id);
+		if(Service_Login::is_login() && Auth::instance()->get_user()->is_admin())
+        {
+			$query = DB::update('event_photo')
+						->set(array(
+							'caption' => $desc,
+						))
+						->where('photo_name', '=', $photoname)
+						->where('event', '=', $conf_id);
 
+
+		}
+		else
+		{
+			$query = DB::update('event_photo')
+						->set(array(
+							'caption' => $desc,
+						))
+						->where('photo_name', '=', $photoname)
+						->where('event', '=', $conf_id)
+						->where('created_by', '=', $user_id);
+		}
 		$query->execute();
 	}
 }

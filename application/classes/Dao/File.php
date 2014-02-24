@@ -80,23 +80,44 @@ class Dao_File {
 	
 	public function delete_upload_file($user_id, $conf_id, $filename)
 	{
-		$query = DB::delete('event_file')
-					->where('file_name', '=', $filename)
-					->where('event', '=', $conf_id)
-					->where('created_by', '=', $user_id);
+		if(Service_Login::is_login() && Auth::instance()->get_user()->is_admin())
+        {
+	 		$query = DB::delete('event_file')
+						->where('file_name', '=', $filename)
+						->where('event', '=', $conf_id);
+        }
+        else
+        {
+	 		$query = DB::delete('event_file')
+						->where('file_name', '=', $filename)
+						->where('event', '=', $conf_id)
+						->where('created_by', '=', $user_id);
+		}
 
 		$query->execute();
 	}
 	
 	public function update_file($user_id, $conf_id, $filename, $desc)
 	{
-		$query = DB::update('event_file')
+		if(Service_Login::is_login() && Auth::instance()->get_user()->is_admin())
+		{
+			$query = DB::update('event_file')
 					->set(array(
 						'description' => $desc,
 					))
 					->where('file_name', '=', $filename)
-					->where('event', '=', $conf_id)
-					->where('created_by', '=', $user_id);
+					->where('event', '=', $conf_id);
+		}
+		else
+		{
+			$query = DB::update('event_file')
+						->set(array(
+							'description' => $desc,
+						))
+						->where('file_name', '=', $filename)
+						->where('event', '=', $conf_id)
+						->where('created_by', '=', $user_id);
+		}
 
 		$query->execute();
 	}

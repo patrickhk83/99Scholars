@@ -13,7 +13,7 @@
 		<div class="input-textarea"><?php echo Form::textarea("comment", $comment->comment); ?></div>
 		</div>
 		<?php echo Form::hidden("article_id", $article->pk()); ?>
-		<?php echo Form::hidden("user", $user->pk()); ?><br>
+		<?php echo Form::hidden("name", $user->pk()); ?><br>
 		 <div class="crow-sub"><div class="submit" value="Submit Comment"><?php echo Form::submit("submit", "Submit"); ?></div></div>
 	<?php } else { ?>
 		Please <a href="<?= URL::site('login/email') ?>">login</a> or <a href="<?= URL::site('signup') ?>">register</a> before posting your comment

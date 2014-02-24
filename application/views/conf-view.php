@@ -35,10 +35,22 @@
               </span>
             </p>  
           </div>
+          <div class="col-lg-6">
+            <p class="text-right">
+              <?php if($is_editable) { ?>
+                <button type="button" id="edit_conference" name="edit_conference" class="btn btn-primary" style="width:200px;">Edit this conference</button>
+              <?php } ?>
+            </p>
+            <p class="text-right">
+              <?php if($is_editable) { ?>
+                <button type="button" id="delete_conference" name="delete_conference" class="btn btn-danger" style="width:200px;">Delete this conference</button>
+              <?php } ?>
+            </p>              
+          </div>
         </div> 
       </div>
     </div>
-
+ 
     <div class="row">
       <div class="col-lg-12">
         <ul class="nav nav-tabs hidden-xs" id="attachment-tab">

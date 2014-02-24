@@ -558,6 +558,7 @@ class Service_Conference {
 			if($data['Conference']['type'] == 2)
 			{
 				Log::instance()->add(Log::INFO, 'Seminar data save: :message', array('message', print_r($data['Seminar'], true)));
+				$data['Seminar']['conference'] = $confernce_id;
 				$this->_seminar->values($data['Seminar'])->save();
 			}
 			$db->commit();

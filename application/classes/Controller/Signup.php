@@ -159,9 +159,27 @@ class Controller_Signup extends Controller {
         else
         {
             $view = View::factory('signup');
+            $session = Session::instance();
+            $conference_entry = $session->get('tmp_conf');
+            $speaker = $conference_entry['Seminar']['speaker'];
+            $name_array = explode(" ", $speaker);
+            if(isset($name_array[0]) && !empty($name_array[0]))
+                $view->first_name = $name_array[0];
 
+            if(isset($name_array[1]) && !empty($name_array[1]))
+                $view->last_name = $name_array[1];
+
+            $contact_email = $conference_entry['Conference']['contact_email'];
+
+            if(isset($contact_email) && !empty($contact_email))
+                $view->email = $contact_email;
+
+            //echo Debug::vars($contact_email);
+            
             $view->after_submit = TRUE;
+            
             $this->response->body($view);
+            
         }
 	}
 

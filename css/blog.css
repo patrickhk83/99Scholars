@@ -512,7 +512,7 @@
   box-shadow: 0 0 3px rgba(149,149,149,0.5);
   padding: 10px;
   margin: 2px 0 0 10px;
-  width: 360px;
+  width: 75%;
   color: #666666;
 }
 
@@ -545,6 +545,7 @@
 }
 
 .post-comments .comm .comm-cont .continut {
+  word-wrap: break-word;
   line-height: 1.4em;
 }
 .comment-form {

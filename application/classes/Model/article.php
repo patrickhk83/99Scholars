@@ -1,8 +1,10 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 class Model_Article extends ORM {
+
+	protected $_table_name = 'articles';
 	
-		protected $_belongs_to = array (
+	protected $_belongs_to = array (
 		// an article is related to only one category
 		'category' => array (
 			'model'			=> 'categories',

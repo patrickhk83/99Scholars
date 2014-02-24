@@ -4,7 +4,7 @@ var baseConfUrl = '';
 var baseProfileUrl = '';
 
 $(function(){
-
+ 
 	baseUrl = $('#base-url').val();
 	baseConfUrl = baseUrl + moduleName + "/";
 	baseProfileUrl = baseUrl + 'user/profile/';
@@ -16,6 +16,10 @@ $(function(){
 	$( "#add-file-btn" ).click(opendialog2);
 	
 	$( "#add-photo-btn" ).click(opendialog3);
+
+	$("#edit_seminar").click(edit_seminar);
+
+	$("#delete_seminar").click(delete_seminar);
 	
 	$('.book-conf-btn').each(function(index){
 		$(this).on('click', joinSeminar);
@@ -34,6 +38,26 @@ $(function(){
 		return false;
 	});
 });
+
+
+var edit_seminar = function()
+{
+	var confId = $('#conf-id').val();
+	var url = baseConfUrl + "edit_seminar/" + confId;
+	location.replace(url);
+	
+}
+
+var delete_seminar = function()
+{
+	var confId = $('#conf-id').val();
+	if(confirm("Are you sure?"))
+	{
+		var url = baseConfUrl + "delete_seminar/" + confId;
+		location.replace(url);
+	}
+	
+}
 
 var joinSeminar = function(e)
 {

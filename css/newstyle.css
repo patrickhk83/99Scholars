@@ -769,6 +769,21 @@ padding: 0px;
     transition: background-color 0.3s ease 0s;
     -webkit-transition: background-color 0.3s ease 0s;
 }
+
+.custom-btn{
+    border:none;
+    font-family: 'futura_light_btmedium';
+    font-size: 20px;
+    transition: background-color 0.3s ease 0s;
+    -webkit-transition: background-color 0.3s ease 0s;
+}
+.custom-btn:hover,.attend-btn:focus{
+    border:none;
+    transition: background-color 0.3s ease 0s;
+    -webkit-transition: background-color 0.3s ease 0s;
+}
+
+
 .seminar p h2{
     font-family: ;
 }

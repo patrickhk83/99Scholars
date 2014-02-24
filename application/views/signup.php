@@ -90,15 +90,15 @@
               <form role="form" action="<?php echo URL::site($signup_url) ?>" method="post">
                 <div class="form-group">
                   <label for="first-name">First Name</label>
-                  <input type="text" class="form-control" id="first-name" placeholder="Your First Name" name="first_name"/> 
+                  <input type="text" class="form-control" id="first-name" placeholder="Your First Name" name="first_name" value="<?php if(isset($first_name) && !empty($first_name)) echo $first_name; else echo ''; ?>" /> 
                 </div>
                 <div class="form-group">
                   <label for="last-name">Last Name</label>
-                  <input type="text" class="form-control" id="last-name" placeholder="Your Last Name"name="last_name"/>  
+                  <input type="text" class="form-control" id="last-name" placeholder="Your Last Name"name="last_name" value="<?php if(isset($last_name) && !empty($last_name)) echo $last_name; else echo ''; ?>" />  
                 </div>
               	<div class="form-group">
               	  <label for="email">Email address</label>
-              	  <input type="email" class="form-control" id="email" placeholder="Enter email" name="email"/>	
+              	  <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" value="<?php if(isset($email) && !empty($email)) echo $email; else echo ''; ?>" />	
               	</div>
               	<div class="form-group">
               	  <label for="password">Password</label>

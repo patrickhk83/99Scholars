@@ -23,13 +23,23 @@
                   </div><!--span-->
                   <div class="col-lg-4">
                     <p class="text-right">
+                      <?php if($is_editable) { ?>
+                        <button type="button" id="edit_seminar" name="edit_seminar" class="btn btn-primary" style="width:200px;">Edit this seminar</button>
+                      <?php } ?>
+                    </p>
+                    <p class="text-right">
+                      <?php if($is_editable) { ?>
+                        <button type="button" id="delete_seminar" name="delete_seminar" class="btn btn-danger" style="width:200px;">Delete this seminar</button>
+                      <?php } ?>
+                    </p>
+                    <p class="text-right">
                       <?php if($is_attended) { ?>
                         <button type="button" class="btn btn-info cancel-book-btn">Cancel booking</button>
                       <?php } else { ?>
-                        <button type="button" class="btn btn-primary book-conf-btn attend-btn">Attend this seminar</button>
+                        <button type="button" class="btn btn-primary book-conf-btn attend-btn" style="width:200px;">Attend this seminar</button>
                       <?php } ?>
-                      
                     </p>
+
                   </div>
               </div><!--/row-->
               
@@ -124,9 +134,15 @@
 				{
 					?><div id="<?php echo $video['videoid']?>"><iframe width="560" height="315" src="http://www.youtube.com/embed/<?php echo $video['videoid']?>?rel=0&controls=1" frameborder="0" allowfullscreen></iframe>
 					<?php
-					if(!empty($userid) && $userid == $video['users']){
+            if(Service_Login::is_login() && Auth::instance()->get_user()->is_admin())
+            {
+          ?>
+            <p class="text-right" onclick="deletevideo('<?php echo $id?>','<?php echo $video['videoid']?>');"><a href="#">delete</a></p>
+          <?php              
+            }
+  					else if(!empty($userid) && $userid == $video['users']){
 					?>
-					<p class="text-right" onclick="deletevideo('<?php echo $id?>','<?php echo $video['videoid']?>');"><a href="#">delete</a></p>
+					   <p class="text-right" onclick="deletevideo('<?php echo $id?>','<?php echo $video['videoid']?>');"><a href="#">delete</a></p>
 					<?php }?> 
 					</div>
 					<?php
@@ -162,10 +178,18 @@
                 					$upload1=$upload."/".$file['name'];
                 					?><tr id="conf<?php echo $i ?>"><td><span class="glyphicon glyphicon-file"></span></td><td><a href="<?php echo $upload1;?>"><strong><?php echo $file['name']?></strong></a> <span class="text-muted">(<?php echo $file['size']?>)</span><br><span class="text-muted" id="conf_text<?php echo $i ?>"><?php echo $file['desc']?></span></td><td>
                 					<?php
-                					if(!empty($userid) && $userid == $file['users']){
+                            if(Service_Login::is_login() && Auth::instance()->get_user()->is_admin())
+                            {
+                          ?>
+                              <span style="cursor: pointer;" class="glyphicon glyphicon-pencil file-edit-btn" title="edit" onclick="editfile('<?php echo $file['name']?>','<?php echo $id?>','<?php echo $file['desc']?>','conf_text<?php echo $i ?>');"></span>
+                              <span title="delete" onclick="deletefile('<?php echo $file['name']?>','<?php echo $id?>','conf<?php echo $i ?>');" class="glyphicon glyphicon-trash" style="cursor: pointer;"></span></td></tr>
+                          <?php   
+                            }
+                            else if(!empty($userid) && $userid == $file['users'])
+                            {
                 					?>
-                					<span style="cursor: pointer;" class="glyphicon glyphicon-pencil file-edit-btn" title="edit" onclick="editfile('<?php echo $file['name']?>','<?php echo $id?>','<?php echo $file['desc']?>','conf_text<?php echo $i ?>');"></span>
-                					<span title="delete" onclick="deletefile('<?php echo $file['name']?>','<?php echo $id?>','conf<?php echo $i ?>');" class="glyphicon glyphicon-trash" style="cursor: pointer;"></span></td></tr>
+                					   <span style="cursor: pointer;" class="glyphicon glyphicon-pencil file-edit-btn" title="edit" onclick="editfile('<?php echo $file['name']?>','<?php echo $id?>','<?php echo $file['desc']?>','conf_text<?php echo $i ?>');"></span>
+                					   <span title="delete" onclick="deletefile('<?php echo $file['name']?>','<?php echo $id?>','conf<?php echo $i ?>');" class="glyphicon glyphicon-trash" style="cursor: pointer;"></span></td></tr>
                 					<?php
                 					}
                 					$i++;
@@ -199,7 +223,15 @@
                             <img class="img-thumbnail" src="<?php echo $baseurl?>gallery/<?php echo $id?>/thumb/<?php echo $photo['name']?>" />
                           </a>
               		<?php
-              		  		if(!empty($userid) && $userid == $photo['users'])
+                        if(Service_Login::is_login() && Auth::instance()->get_user()->is_admin())
+                        {
+                  ?>
+                          <p class="text-center">
+                            <span style="cursor: pointer;" class="glyphicon glyphicon-pencil photo-edit-btn" title="edit" onclick="editphoto('<?php echo $photo['name']?>','<?php echo $id?>','<?php echo $photo['desc']?>','photo_text<?php echo $i ?>');"></span><span style="cursor: pointer;margin-left: 5px;" class="glyphicon glyphicon-trash" title="delete" onclick="deletephoto('<?php echo $photo['name']?>','<?php echo $id?>','photo<?php echo $i ?>');"></span>
+                          </p>
+                  <?php        
+                        }
+              		  		else if(!empty($userid) && $userid == $photo['users'])
                         {
               		?>
                 	        <p class="text-center">

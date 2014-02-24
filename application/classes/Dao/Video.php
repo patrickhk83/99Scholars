@@ -16,10 +16,21 @@ class Dao_Video {
 	
 	public function add_delete($user_id, $conf_id, $videoid)
 	{
-		$query = DB::delete('event_video')
-					->where('youtube_id', '=', $videoid)
-					->where('event', '=', $conf_id)
-					->where('created_by', '=', $user_id);
+		if(Service_Login::is_login() && Auth::instance()->get_user()->is_admin())
+        {
+			$query = DB::delete('event_video')
+						->where('youtube_id', '=', $videoid)
+						->where('event', '=', $conf_id);
+						
+        }
+        else
+        {
+			$query = DB::delete('event_video')
+						->where('youtube_id', '=', $videoid)
+						->where('event', '=', $conf_id)
+						->where('created_by', '=', $user_id);
+        }
+
 
 		$query->execute();
 		

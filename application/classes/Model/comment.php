@@ -2,6 +2,8 @@
 
 class Model_Comment extends ORM {
 	
+	protected $_table_name = 'comments';
+
 	// contains many to one relation mainly
 	protected $_belongs_to = array (
 		// a comment is related to only one article
@@ -11,7 +13,7 @@ class Model_Comment extends ORM {
 		),
 		'author' => array (
 			'model'			=> 'User',
-			'foreign_key'	=> 'user'
+			'foreign_key'	=> 'name'
 		)
 	);
 	public function rules()	{

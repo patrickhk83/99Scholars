@@ -37,12 +37,12 @@ class Controller_Conference extends Controller {
 			
 			if($conference->conference_type->name == 'Seminar') //'Seminar' type
 			{
-			
- 
 				$view = View::factory('seminar');
 				$view->conference = $conference;
 				
 				$view->is_attended = FALSE;
+
+
 				$user_id = Service_Login::get_user_in_session();
 
 				foreach ($conference->attendee as $attendee) 
@@ -62,9 +62,23 @@ class Controller_Conference extends Controller {
 
 				$tags = "";
 				foreach($records as $record)
-					$tags .= $record['tag_name'];
+					$tags .= $record['tag_name'].", ";
 
 				$view->tags = $tags;
+
+				if($conference->created_by == $user_id)
+					$view->is_editable = TRUE;
+				else
+				{
+					if(Service_Login::is_login())
+					{
+						if(!Auth::instance()->get_user()->is_admin())
+							$view->is_editable = FALSE;
+						else
+							$view->is_editable = TRUE;
+					}
+					else $view->is_editable = FALSE;
+				}
 //2014-2-4 Added by David Ming End
 
 				$Video_dao = new Dao_Video();
@@ -133,6 +147,7 @@ class Controller_Conference extends Controller {
 			}
 			else //'Conference' type
 			{
+				$user_id = Service_Login::get_user_in_session();
 				$view = View::factory('conf-view');
 				$view->id = $id;
 				$view->user_id = Service_Login::get_user_in_session();
@@ -147,10 +162,23 @@ class Controller_Conference extends Controller {
 
 				$tags = "";
 				foreach($records as $record)
-					$tags .= $record['tag_name'];
+					$tags .= $record['tag_name'].", ";
 
 				$view->tags = $tags;
 
+				if($conference->created_by == $user_id)
+					$view->is_editable = TRUE;
+				else
+				{
+					if(Service_Login::is_login())
+					{
+						if(!Auth::instance()->get_user()->is_admin())
+							$view->is_editable = FALSE;
+						else
+							$view->is_editable = TRUE;
+					}
+					else $view->is_editable = FALSE;
+				}
 
 				$this->response->body($view);
 			}
@@ -182,6 +210,10 @@ class Controller_Conference extends Controller {
 		
 		if(Service_Login::is_login())
 		{
+			$user_id = Service_Login::get_user_in_session();
+
+			$data['Conference']['created_by'] = $user_id;
+
 			$service_conference = Service_Conference::instance();
 			$id = $service_conference->create($data);
 
@@ -202,6 +234,7 @@ class Controller_Conference extends Controller {
 			//redirect to signup page
 			$this->redirect('/signup/after_submit', 302);
 		}
+		
 	}
 	public function action_submit()
 	{
@@ -380,8 +413,15 @@ class Controller_Conference extends Controller {
 			case 'file':
 				$filename = $_REQUEST['filename'];
 				$user_service = new Dao_File();
+				//echo Debug::vars($user_id);
 				$user_service->delete_upload_file($user_id, $conf_id, $filename);
 				$result['filename'] = $filename;
+
+				//Create instance for Service_UserAction class.
+				$conference_action_upload_video_track = new Service_UserAction();
+				//Register Delete Uploaded Video Action for Conference(ConferenceID, ControllerName, ActionName, UserID, VideoID).
+		        $conference_action_upload_video_track->register_user_action($this , 'deleteFile' , $filename , $conf_id , $user_id);
+
 				break;
 			
 			case 'photo':
@@ -389,6 +429,12 @@ class Controller_Conference extends Controller {
 				$user_service = new Dao_Photo();
 				$user_service->delete_upload_photo($user_id, $conf_id, $photoname);
 				$result['filename'] = $photoname;
+
+				//Create instance for Service_UserAction class.
+				$conference_action_upload_video_track = new Service_UserAction();
+				//Register Delete Uploaded Video Action for Conference(ConferenceID, ControllerName, ActionName, UserID, VideoID).
+		        $conference_action_upload_video_track->register_user_action($this , 'deletePhoto' , $photoname , $conf_id , $user_id);
+
 				break;
 		}
 		
@@ -463,7 +509,8 @@ class Controller_Conference extends Controller {
 
 		$this->response->body($view);
 	}
-public function action_insert()
+
+	public function action_insert()
 	{
 		$conf_id = $this->request->param('id');
 		$type = $_REQUEST['type'];
@@ -634,7 +681,7 @@ public function action_insert()
 				$session_name[$i]['name'] = $value->get('title');
 				$session_name[$i]['date'] = $value->get('date');
 				$session_name[$i]['id'] = $value->get('id');
-				$i++;
+				$i ++;
 			}
 			
 			if(!empty($session_name)){
@@ -752,7 +799,6 @@ public function action_insert()
 //2014-2-10 Added by David Ming Start
 	public function action_suggest_seminar_info()
 	{
-
 		$conf_service = new Service_Conference();
 		$suggests = $conf_service->get_suggest_seminar_list($this->request->post('term'));
 		$nCount = 0;
@@ -770,6 +816,421 @@ public function action_insert()
 		
 		echo json_encode($suggested_list);
 	}
+
+	public function action_delete_seminar()
+	{
+		$id = $this->request->param('id');
+
+		$query = "SELECT * FROM conference WHERE id='".$id."'";
+		$result = DB::query(Database::SELECT , $query)->execute();
+		$venue = $result->get('venue');
+
+		if(isset($venue) && !empty($venue))
+		{
+			$query = "SELECT * FROM venue WHERE id='".$venue."'";
+			$result = DB::query(Database::SELECT , $query)->execute();
+			$address_id = $result->get('address');	
+
+			if(isset($address_id) && !empty($address_id))
+			{
+				$query = "DELETE FROM address WHERE id='".$address_id."'";
+				$result = DB::query(Database::DELETE , $query)->execute();
+			}
+
+			$query = "DELETE FROM venue WHERE id='".$venue."'";
+			$result = DB::query(Database::DELETE , $query)->execute();
+
+		}
+		
+		$query = "DELETE FROM seminar WHERE conference='".$id."'";
+		$result = DB::query(Database::DELETE , $query)->execute();		
+
+		$query = "DELETE FROM event_file WHERE event='".$id."'";
+		$result = DB::query(Database::DELETE , $query)->execute();				
+
+		$query = "DELETE FROM event_photo WHERE event='".$id."'";
+		$result = DB::query(Database::DELETE , $query)->execute();				
+
+		$query = "DELETE FROM event_video WHERE event='".$id."'";
+		$result = DB::query(Database::DELETE , $query)->execute();				
+
+		$query = "DELETE FROM conference WHERE id='".$id."'";
+		$result = DB::query(Database::DELETE , $query)->execute();
+
+		$query = "DELETE FROM attendee WHERE conference='".$id."'";
+		$result = DB::query(Database::DELETE , $query)->execute();
+
+		$query = "DELETE FROM attendee WHERE conference='".$id."'";
+		$result = DB::query(Database::DELETE , $query)->execute();
+
+		$query = "SELECT * FROM conference_topic WHERE conference='".$id."'";
+		$result = DB::query(Database::SELECT , $query)->execute();	
+
+		$topic_id = $result->get('id');
+		
+		if(isset($topic_id) && !empty($topic_id))
+		{
+			$query = "DELETE FROM conference_topic_discussion WHERE topic='".$topic_id."'";
+			$result = DB::query(Database::DELETE , $query)->execute();			
+
+			$query = "DELETE FROM conference_topic WHERE conference='".$id."'";
+			$result = DB::query(Database::DELETE , $query)->execute();
+		}
+
+		$query = "DELETE FROM conference_tag WHERE conference_id='".$id."'";
+		$result = DB::query(Database::DELETE , $query)->execute();
+
+		//Create instance for Service_UserAction class.
+		$conference_action_attend_track = new Service_UserAction();
+		//Register Create Action for Conference(id, ControllerName, ActionName).
+        $conference_action_attend_track->register_user_action($this , 'delete' , null , $id);
+
+		$this->redirect('/');
+
+	}
+
+	public function action_edit_seminar()
+	{
+		$id = $this->request->param('id');	
+			
+		$conference_orm = ORM::factory('Conference' , $id);
+
+		$organization_orm = ORM::factory('Organization' , $conference_orm->get('organizer'));
+
+		$seminar_orm = ORM::factory('Seminar')->where('conference' , '=' , $id)->find();
+
+		$category_orm = ORM::factory('CategoryConference')->where('conference' , '=' , $id)->find();
+
+		$query = "SELECT tags.* FROM tags, conference_tag WHERE conference_tag.conference_id='".$id."' AND conference_tag.tag_id=tags.id";
+		$result = DB::query(Database::SELECT , $query)->execute();
+
+		$venue_orm = ORM::factory('Venue' , $conference_orm->get('venue'));
+
+		$address_orm = ORM::factory('Address' , $venue_orm->get('address'));
+
+		$country_orm = ORM::factory('Country')->where('code' , '=' , $address_orm->get('country'))->find();
+			
+		$view = View::factory('conference/edit_seminar');
+
+		$start_date = $conference_orm->get('start_date');
+
+		$array_date = explode("-", $start_date);
+
+		$start_date = $array_date[2]."/".$array_date[1]."/".$array_date[0];
+
+		$view->conference_name = $conference_orm->get('name');
+		$view->start_date = $start_date;
+		$view->speaker = $seminar_orm->get('speaker');
+		$view->abstract = $seminar_orm->get('abstract');
+		$view->description = $conference_orm->get('description');
+		$view->organizer = $organization_orm->get('name');
+		$view->website = $conference_orm->get('website');
+		$view->category = $category_orm->get('category');
+		$view->tags = $result;
+		$view->contact_person = $conference_orm->get('contact_person');
+		$view->contact_email = $conference_orm->get('contact_email');
+		$view->venue = $venue_orm->get('name');
+		$view->address = $address_orm->get('address');
+		$view->city = $address_orm->get('city');
+		$view->state = $address_orm->get('state');
+		$view->postal_code = $address_orm->get('postal_code');
+		$view->country = $country_orm;
+		$view->countries = Model_Constants_Address::$countries;
+		$view->seminar_id = $conference_orm->get('id');
+
+		
+		
+		$this->response->body($view);
+
+
+/*
+		if(Service_Login::is_login())
+		{
+			if(!Auth::instance()->get_user()->is_admin())
+			{
+				return FALSE;
+			}
+			else
+			{
+				return TRUE;
+			}
+		}
+		else
+		{
+			return FALSE;
+		}		
+*/		
+	}
+
+	public function action_update_seminar()
+	{
+		$data = $this->request->post();
+		$data['Conference']['start_date'] = $this->get_converted_date($data['Conference']['start_date']);
+
+		//echo Debug::vars($data);
+		
+		if(Service_Login::is_login())
+		{
+			$conference_id = $data['Conference']['id'];
+			
+			$conference_orm = ORM::factory('Conference' , $conference_id);
+			$venue_orm = ORM::factory('Venue' , $conference_orm->get('venue'));
+			$address_orm = ORM::factory('Address' , $venue_orm->get('address'));
+			$seminar_orm = ORM::factory('Seminar')->where('conference' , '=' , $conference_id)->find();
+			$organization_orm = ORM::factory('Organization' , $conference_orm->get('organizer'));
+			
+
+			$address_orm->values($data['Address'])->save();
+			$venue_orm->values($data['Venue'])->save();
+			$organization_orm->values($data['Organization'])->save();
+			$conference_orm->values($data['Conference'])->save();
+
+			$query = "DELETE FROM category_conference WHERE conference='".$conference_id."'";
+			$result = DB::query(Database::DELETE , $query)->execute();
+
+			foreach ($data['Category'] as $category) 
+			{
+				$category_conference = ORM::factory('CategoryConference');
+				$category['conference'] = $conference_id;
+				Log::instance()->add(Log::INFO, 'Category data create: :message', array('message', print_r($data['Category'], true)));
+				$category_conference->values($category)->create();
+			}
+
+			$query = "DELETE FROM conference_tag WHERE conference_id='".$conference_id."'";
+			$result = DB::query(Database::DELETE , $query)->execute();
+
+			if(isset($data['selectedTag']))
+			{
+				foreach($data['selectedTag'] as $selectedTag)
+				{
+					$tag_conference = ORM::factory('ConferenceTag');
+					$selectedTag['conference_id'] = $conference_id;
+					$tag_conference->values($selectedTag)->create();
+				}
+			}
+
+			$seminar_orm->values($data['Seminar'])->save();
+
+			//Create instance for Service_UserAction class.
+			$conference_action_attend_track = new Service_UserAction();
+			//Register Create Action for Conference(id, ControllerName, ActionName).
+	        $conference_action_attend_track->register_user_action($this , 'update' , null , $conference_id);
+
+
+			$this->redirect('/conference/view/'.$conference_id, 302);
+
+		}
+		else
+			$this->redirect('home');
+
+	}
+
+
+	public function action_delete_conference()
+	{
+		$id = $this->request->param('id');
+
+		$query = "SELECT * FROM conference WHERE id='".$id."'";
+		$result = DB::query(Database::SELECT , $query)->execute();
+		$venue = $result->get('venue');
+
+		if(isset($venue) && !empty($venue))
+		{
+			$query = "SELECT * FROM venue WHERE id='".$venue."'";
+			$result = DB::query(Database::SELECT , $query)->execute();
+			$address_id = $result->get('address');	
+
+			if(isset($address_id) && !empty($address_id))
+			{
+				$query = "DELETE FROM address WHERE id='".$address_id."'";
+				$result = DB::query(Database::DELETE , $query)->execute();
+			}
+
+			$query = "DELETE FROM venue WHERE id='".$venue."'";
+			$result = DB::query(Database::DELETE , $query)->execute();
+
+		}
+		
+		$query = "DELETE FROM registration WHERE conference_id='".$id."'";
+		$result = DB::query(Database::DELETE , $query)->execute();		
+
+
+		$query = "DELETE FROM conference WHERE id='".$id."'";
+		$result = DB::query(Database::DELETE , $query)->execute();
+
+		$query = "DELETE FROM conference_tag WHERE conference_id='".$id."'";
+		$result = DB::query(Database::DELETE , $query)->execute();
+
+		//Create instance for Service_UserAction class.
+		$conference_action_attend_track = new Service_UserAction();
+		//Register Create Action for Conference(id, ControllerName, ActionName).
+        $conference_action_attend_track->register_user_action($this , 'delete' , null , $id);
+
+		$this->redirect('/');
+
+	}
+
+	public function action_edit_conference()
+	{
+		$id = $this->request->param('id');	
+			
+		$conference_orm = ORM::factory('Conference' , $id);
+
+		$organization_orm = ORM::factory('Organization' , $conference_orm->get('organizer'));
+
+		$registration_orm = ORM::factory('Registration')->where('conference_id' , '=' , $id)->find();
+
+		$category_orm = ORM::factory('CategoryConference')->where('conference' , '=' , $id)->find();
+
+		$query = "SELECT tags.* FROM tags, conference_tag WHERE conference_tag.conference_id='".$id."' AND conference_tag.tag_id=tags.id";
+		$result = DB::query(Database::SELECT , $query)->execute();
+
+		$venue_orm = ORM::factory('Venue' , $conference_orm->get('venue'));
+
+		$address_orm = ORM::factory('Address' , $venue_orm->get('address'));
+
+		$country_orm = ORM::factory('Country')->where('code' , '=' , $address_orm->get('country'))->find();
+			
+		$view = View::factory('conference/edit_conference');
+
+		$start_date = $conference_orm->get('start_date');
+		$array_date = explode("-", $start_date);
+		$start_date = $array_date[2]."/".$array_date[1]."/".$array_date[0];
+
+		$end_date = $conference_orm->get('end_date');
+		$array_date = explode("-", $end_date);
+		$end_date = $array_date[2]."/".$array_date[1]."/".$array_date[0];
+
+		$reg_start_date = $registration_orm->get('start_date');
+		$array_date = explode("-", $reg_start_date);
+		$reg_start_date = $array_date[2]."/".$array_date[1]."/".$array_date[0];
+
+		$reg_end_date = $registration_orm->get('end_date');
+		$array_date = explode("-", $reg_end_date);
+		$reg_end_date = $array_date[2]."/".$array_date[1]."/".$array_date[0];
+
+		$deadline = $conference_orm->get('deadline');
+		$array_date = explode("-", $deadline);
+		$deadline = $array_date[2]."/".$array_date[1]."/".$array_date[0];
+
+		$accept_notify = $conference_orm->get('accept_notify');
+		$array_date = explode("-", $accept_notify);
+		$accept_notify = $array_date[2]."/".$array_date[1]."/".$array_date[0];
+
+		
+		$view->conference_name = $conference_orm->get('name');
+		$view->start_date = $start_date;
+		$view->end_date = $end_date;
+		$view->description = $conference_orm->get('description');
+		$view->reg_start_date = $reg_start_date;
+		$view->reg_end_date = $reg_end_date;
+		$view->organizer = $organization_orm->get('name');
+		$view->website = $conference_orm->get('website');
+		$view->category = $category_orm->get('category');
+		$view->tags = $result;
+		$view->deadline = $deadline;
+		$view->accept_notify = $accept_notify;
+		$view->contact_person = $conference_orm->get('contact_person');
+		$view->contact_email = $conference_orm->get('contact_email');
+		$view->venue = $venue_orm->get('name');
+		$view->address = $address_orm->get('address');
+		$view->city = $address_orm->get('city');
+		$view->state = $address_orm->get('state');
+		$view->postal_code = $address_orm->get('postal_code');
+		$view->country = $country_orm;
+		$view->countries = Model_Constants_Address::$countries;
+		$view->conference_id = $conference_orm->get('id');
+		
+		$this->response->body($view);
+
+
+/*
+		if(Service_Login::is_login())
+		{
+			if(!Auth::instance()->get_user()->is_admin())
+			{
+				return FALSE;
+			}
+			else
+			{
+				return TRUE;
+			}
+		}
+		else
+		{
+			return FALSE;
+		}		
+*/		
+	}
+
+
+	public function action_update_conference()
+	{
+		$data = $this->request->post();
+		$conference_id = $data['Conference']['id'];
+		if($conference_id == -1) $this->redirect('home');
+		$data['Conference']['start_date'] = $this->get_converted_date($data['Conference']['start_date']);
+		$data['Conference']['end_date'] = $this->get_converted_date($data['Conference']['end_date']);
+		$data['Conference']['deadline'] = $this->get_converted_date($data['Conference']['deadline']);
+		$data['Conference']['accept_notify'] = $this->get_converted_date($data['Conference']['accept_notify']);
+		$data['Registration']['start_date'] = $this->get_converted_date($data['Registration']['start_date']);
+		$data['Registration']['end_date'] = $this->get_converted_date($data['Registration']['end_date']);
+		//echo Debug::vars($data);
+	
+		if(Service_Login::is_login())
+		{
+			$conference_id = $data['Conference']['id'];
+			
+			$conference_orm = ORM::factory('Conference' , $conference_id);
+			$venue_orm = ORM::factory('Venue' , $conference_orm->get('venue'));
+			$address_orm = ORM::factory('Address' , $venue_orm->get('address'));
+			$registration_orm = ORM::factory('Registration')->where('conference_id' , '=' , $conference_id)->find();
+			$organization_orm = ORM::factory('Organization' , $conference_orm->get('organizer'));
+
+			$address_orm->values($data['Address'])->save();
+			$venue_orm->values($data['Venue'])->save();
+			$organization_orm->values($data['Organization'])->save();
+			$conference_orm->values($data['Conference'])->save();
+
+			$query = "DELETE FROM category_conference WHERE conference='".$conference_id."'";
+			$result = DB::query(Database::DELETE , $query)->execute();
+
+			foreach ($data['Category'] as $category) 
+			{
+				$category_conference = ORM::factory('CategoryConference');
+				$category['conference'] = $conference_id;
+				Log::instance()->add(Log::INFO, 'Category data create: :message', array('message', print_r($data['Category'], true)));
+				$category_conference->values($category)->create();
+			}
+
+			$query = "DELETE FROM conference_tag WHERE conference_id='".$conference_id."'";
+			$result = DB::query(Database::DELETE , $query)->execute();
+
+			if(isset($data['selectedTag']))
+			{
+				foreach($data['selectedTag'] as $selectedTag)
+				{
+					$tag_conference = ORM::factory('ConferenceTag');
+					$selectedTag['conference_id'] = $conference_id;
+					$tag_conference->values($selectedTag)->create();
+				}
+			}
+
+			$registration_orm->values($data['Registration'])->save();
+
+			//Create instance for Service_UserAction class.
+			$conference_action_attend_track = new Service_UserAction();
+			//Register Create Action for Conference(id, ControllerName, ActionName).
+	        $conference_action_attend_track->register_user_action($this , 'update' , null , $conference_id);
+
+
+			$this->redirect('/conference/view/'.$conference_id, 302);
+
+		}
+		else
+			$this->redirect('home');
+
+	}	
 
 //2014-2-10 Added by David Ming End	
 }
