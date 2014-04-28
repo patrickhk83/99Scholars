@@ -8,12 +8,12 @@ class Model_Conference extends ORM {
     	'attendee' => array(
         	'model'   => 'User',
         	'through' => 'attendee',
-        	'far_key' => 'user',
-        	'foreign_key' => 'conference'
+        	'far_key' => 'user_id',
+        	'foreign_key' => 'conference_id'
     	),
     	'topic' => array(
         	'model'   => 'ConferenceTopic',
-        	'foreign_key' => 'conference'
+        	'foreign_key' => 'conference_id'
     	),
       	'conference_tag' => array(
         	'model'   => 'ConferenceTag',
@@ -21,18 +21,18 @@ class Model_Conference extends ORM {
     	),
     	'conference_session' => array(
     		'model' => 'Session',
-    		'foreign_key' => 'event'
+    		'foreign_key' => 'conference_id'
     	),  	
 	);
 
 	protected $_has_one = array(
 		'seminar' => array(
         	'model'       => 'Seminar',
-        	'foreign_key' => 'conference',
+        	'foreign_key' => 'conference_id',
     	),
     	'category' => array(
         	'model'       => 'CategoryConference',
-        	'foreign_key' => 'conference',
+        	'foreign_key' => 'conference_id',
     	),
     	'registration' => array(
     		'model' => 'Registration',

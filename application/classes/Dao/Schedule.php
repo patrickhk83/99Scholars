@@ -16,7 +16,7 @@ class Dao_Schedule {
 		
 		$session = ORM::factory('Session');
 		
-		$session->event = $conf_id;
+		$session->conference_id = $conf_id;
 		$session->date = $finaldate;
 		$session->title = $text;
 		$session->created_by = $user_id;
@@ -32,7 +32,7 @@ class Dao_Schedule {
 		$room = ORM::factory('Room');
 		
 		$room->room_name = $roomname;
-		$room->conference_session = $session_id;
+		$room->conference_session_id = $session_id;
 		$room->created_by = $user_id;
 		
 		$room->save();
@@ -54,7 +54,7 @@ class Dao_Schedule {
 		
 		$time = ORM::factory('Time');
 		
-		$time->conference_session = $session_id;
+		$time->conference_session_id = $session_id;
 		$time->start_time = $start_unix_timestamp;
 		$time->end_time = $end_unix_timestamp;
 		$time->created_by = $user_id;

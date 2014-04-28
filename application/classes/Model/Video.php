@@ -2,5 +2,5 @@
 
 class Model_Video extends ORM {
 
-	protected $_table_name = 'event_video';
+	protected $_table_name = 'conference_video';
 }

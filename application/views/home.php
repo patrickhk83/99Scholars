@@ -30,9 +30,9 @@
                       <label>
                       <select class="form-control criteria-option form-box">
                         <option value="0">Select Country</option>
-                        <? foreach($countries as $short_name => $full_name){ ?>
-                          <option value="<?= $short_name ?>"><?= $full_name ?></option>
-                        <? } ?>
+                        <?php foreach($countries as $short_name => $full_name){ ?>
+                          <option value="<?php echo $short_name ?>"><?php echo $full_name ?></option>
+                        <?php } ?>
                       </select>
                       </label>
                     </div>

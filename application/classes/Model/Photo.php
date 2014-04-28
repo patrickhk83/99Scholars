@@ -2,6 +2,6 @@
 
 class Model_Photo extends ORM {
 
-	protected $_table_name = 'event_photo';
+	protected $_table_name = 'conference_photo';
 	
 }

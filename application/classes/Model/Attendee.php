@@ -7,7 +7,7 @@ class Model_Attendee extends ORM {
 	protected $_has_many = array(
     	'User' => array(
         	'model'       => 'User',
-        	'foreign_key' => 'conference',
+        	'foreign_key' => 'conference_id',
     	)
 	);
 }

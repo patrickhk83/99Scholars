@@ -181,6 +181,16 @@ Route::set('opauth', 'oauth(/<action>(/<strategy>(/<callback>)))')
         'action'     => 'authenticate',
     ));
 
+
+Route::set('default', '(<controller>(/<action>(/<id>)))')
+->defaults(array(
+    'cate'		=> '',
+    'controller' => 'home',
+    'action'     => 'index',
+    
+));
+
+/*
 Route::set('default', '<id>' , array('id' => '.*'))
 	->filter(function($route , $params , $request)
 	{
@@ -219,6 +229,9 @@ Route::set('default', '<id>' , array('id' => '.*'))
 		'controller' => 'home',
 		'action'     => 'index',
 	));
+*/
+
+
 
 Route::set('conference', '(<controller>(/<action>(/<id>(/<session>(/<session_id>)))))',
 	array(
@@ -238,12 +251,10 @@ Route::set('actionstatistics' , '(<controller>(/<action>(/<page_num>(/<per_page>
 			'per_page' => '20',
 			'action_filter' => 'All',
 	));
-/*
-Route::set('profile', '<id>' , array('id' => '.*'))
+
+Route::set('profile', '(<controller>(/<action>(/<id>)))' , array('id' => '.*'))
 	->defaults(array(
 		'controller' => 'profile',
 		'action'     => 'index',
 	));	
-*/	
-
 

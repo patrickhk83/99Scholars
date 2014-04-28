@@ -18,7 +18,7 @@ class Service_Message {
 		$msgs = ORM::factory('Subscriber')
 			->join('pm_conversation')
 			->on('subscriber.conversation','=','pm_conversation.id')
-			->where('pm_conversation.owner', '=', $user_id)
+			->where('pm_conversation.owner_id', '=', $user_id)
 			->find_all();
 		
 		if (count($msgs)>0) {	     

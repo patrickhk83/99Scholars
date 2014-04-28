@@ -2,5 +2,5 @@
 
 class Model_UserAction extends ORM {
 
-	protected $_table_name = 'users_actions';
+	protected $_table_name = 'user_action';
 }

@@ -47,7 +47,7 @@ class Dao_File {
 		$file = ORM::factory('File');
 		
 		$file->file_name = $filename;
-		$file->event = $conf_id;
+		$file->conference_id = $conf_id;
 		$file->created_by = $user_id;
 		$file->file_type = $filetype;
 		$file->size = $filesize;
@@ -63,7 +63,7 @@ class Dao_File {
 	{
 		$Files = ORM::factory('File')
 						->where('created_by', '=', $user_id)
-						->where('event', '=', $conference_id)
+						->where('conference_id', '=', $conference_id)
 						->find_all();
 
 		return $Files;
@@ -72,7 +72,7 @@ class Dao_File {
 	public function get_all_file_list($conference_id)
 	{
 		$Files = ORM::factory('File')
-						->where('event', '=', $conference_id)
+						->where('conference_id', '=', $conference_id)
 						->find_all();
 
 		return $Files;
@@ -82,15 +82,15 @@ class Dao_File {
 	{
 		if(Service_Login::is_login() && Auth::instance()->get_user()->is_admin())
         {
-	 		$query = DB::delete('event_file')
+	 		$query = DB::delete('conference_file')
 						->where('file_name', '=', $filename)
-						->where('event', '=', $conf_id);
+						->where('conference_id', '=', $conf_id);
         }
         else
         {
-	 		$query = DB::delete('event_file')
+	 		$query = DB::delete('conference_file')
 						->where('file_name', '=', $filename)
-						->where('event', '=', $conf_id)
+						->where('conference_id', '=', $conf_id)
 						->where('created_by', '=', $user_id);
 		}
 
@@ -101,21 +101,21 @@ class Dao_File {
 	{
 		if(Service_Login::is_login() && Auth::instance()->get_user()->is_admin())
 		{
-			$query = DB::update('event_file')
+			$query = DB::update('conference_file')
 					->set(array(
 						'description' => $desc,
 					))
 					->where('file_name', '=', $filename)
-					->where('event', '=', $conf_id);
+					->where('conference_id', '=', $conf_id);
 		}
 		else
 		{
-			$query = DB::update('event_file')
+			$query = DB::update('conference_file')
 						->set(array(
 							'description' => $desc,
 						))
 						->where('file_name', '=', $filename)
-						->where('event', '=', $conf_id)
+						->where('conference_id', '=', $conf_id)
 						->where('created_by', '=', $user_id);
 		}
 

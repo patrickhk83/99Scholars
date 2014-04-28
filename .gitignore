@@ -5,3 +5,4 @@ application/cache/
 application/config/staging/
 application/config/production/
 .DS_Store
+.svn

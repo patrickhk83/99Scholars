@@ -6,7 +6,7 @@ class Dao_ConferenceComment {
 	{
 		$comment = ORM::factory('ConferenceComment');
 
-		$comment->topic = $topic_id;
+		$comment->conference_topic_id = $topic_id;
 		$comment->content = $content;
 		$comment->created_by = $user_id;
 		$comment->created_date = time();
@@ -20,7 +20,7 @@ class Dao_ConferenceComment {
 		$query = "SELECT c.id, c.content, c.created_date, ";
 		$query .= "u.id AS user_id, u.firstname, u.lastname ";
 		$query .= "FROM conference_topic_discussion AS c, users AS u ";
-		$query .= "WHERE c.topic='".$topic_id."' AND c.created_by=u.id";
+		$query .= "WHERE c.conference_topic_id='".$topic_id."' AND c.created_by=u.id";
 
 		return DB::query(Database::SELECT, $query)->execute();
 	}

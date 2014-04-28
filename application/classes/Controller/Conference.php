@@ -699,7 +699,7 @@ class Controller_Conference extends Controller {
 				$room_name[$i]['name'] = $value->get('room_name');
 				
 				$session_data = new Service_Schedule();
-				$session_result = $session_data->get_session_list($value->get('conference_session'));
+				$session_result = $session_data->get_session_list($value->get('conference_session_id'));
 				$session_date = strtotime($session_result->get('date'));
 				$room_name[$i]['session'] = date('d/m/Y',$session_date).' - '.$session_result->get('title');
 				
@@ -768,7 +768,7 @@ class Controller_Conference extends Controller {
 				$result_room = $room_data->get_room($roomid);
 				
 				$roomname = $result_room->get('room_name');
-				$sessionid = $result_room->get('conference_session');
+				$sessionid = $result_room->get('conference_session_id');
 				
 				$session_data = new Service_Schedule();
 				$session_result = $session_data->get_session_list($sessionid);
@@ -842,38 +842,38 @@ class Controller_Conference extends Controller {
 
 		}
 		
-		$query = "DELETE FROM seminar WHERE conference='".$id."'";
+		$query = "DELETE FROM seminar WHERE conference_id='".$id."'";
 		$result = DB::query(Database::DELETE , $query)->execute();		
 
-		$query = "DELETE FROM event_file WHERE event='".$id."'";
+		$query = "DELETE FROM conference_file WHERE conference_id='".$id."'";
 		$result = DB::query(Database::DELETE , $query)->execute();				
 
-		$query = "DELETE FROM event_photo WHERE event='".$id."'";
+		$query = "DELETE FROM conference_photo WHERE conference_id='".$id."'";
 		$result = DB::query(Database::DELETE , $query)->execute();				
 
-		$query = "DELETE FROM event_video WHERE event='".$id."'";
+		$query = "DELETE FROM conference_video WHERE conference_id='".$id."'";
 		$result = DB::query(Database::DELETE , $query)->execute();				
 
 		$query = "DELETE FROM conference WHERE id='".$id."'";
 		$result = DB::query(Database::DELETE , $query)->execute();
 
-		$query = "DELETE FROM attendee WHERE conference='".$id."'";
+		$query = "DELETE FROM attendee WHERE conference_id='".$id."'";
 		$result = DB::query(Database::DELETE , $query)->execute();
 
-		$query = "DELETE FROM attendee WHERE conference='".$id."'";
+		$query = "DELETE FROM attendee WHERE conference_id='".$id."'";
 		$result = DB::query(Database::DELETE , $query)->execute();
 
-		$query = "SELECT * FROM conference_topic WHERE conference='".$id."'";
+		$query = "SELECT * FROM conference_topic WHERE conference_id='".$id."'";
 		$result = DB::query(Database::SELECT , $query)->execute();	
 
 		$topic_id = $result->get('id');
 		
 		if(isset($topic_id) && !empty($topic_id))
 		{
-			$query = "DELETE FROM conference_topic_discussion WHERE topic='".$topic_id."'";
+			$query = "DELETE FROM conference_topic_discussion WHERE conference_topic_id='".$topic_id."'";
 			$result = DB::query(Database::DELETE , $query)->execute();			
 
-			$query = "DELETE FROM conference_topic WHERE conference='".$id."'";
+			$query = "DELETE FROM conference_topic WHERE conference_id='".$id."'";
 			$result = DB::query(Database::DELETE , $query)->execute();
 		}
 
@@ -897,16 +897,16 @@ class Controller_Conference extends Controller {
 
 		$organization_orm = ORM::factory('Organization' , $conference_orm->get('organizer'));
 
-		$seminar_orm = ORM::factory('Seminar')->where('conference' , '=' , $id)->find();
+		$seminar_orm = ORM::factory('Seminar')->where('conference_id' , '=' , $id)->find();
 
-		$category_orm = ORM::factory('CategoryConference')->where('conference' , '=' , $id)->find();
+		$category_orm = ORM::factory('CategoryConference')->where('conference_id' , '=' , $id)->find();
 
 		$query = "SELECT tags.* FROM tags, conference_tag WHERE conference_tag.conference_id='".$id."' AND conference_tag.tag_id=tags.id";
 		$result = DB::query(Database::SELECT , $query)->execute();
 
 		$venue_orm = ORM::factory('Venue' , $conference_orm->get('venue'));
 
-		$address_orm = ORM::factory('Address' , $venue_orm->get('address'));
+		$address_orm = ORM::factory('Address' , $venue_orm->get('address_id'));
 
 		$country_orm = ORM::factory('Country')->where('code' , '=' , $address_orm->get('country'))->find();
 			
@@ -925,7 +925,7 @@ class Controller_Conference extends Controller {
 		$view->description = $conference_orm->get('description');
 		$view->organizer = $organization_orm->get('name');
 		$view->website = $conference_orm->get('website');
-		$view->category = $category_orm->get('category');
+		$view->category = $category_orm->get('category_id');
 		$view->tags = $result;
 		$view->contact_person = $conference_orm->get('contact_person');
 		$view->contact_email = $conference_orm->get('contact_email');
@@ -975,8 +975,8 @@ class Controller_Conference extends Controller {
 			
 			$conference_orm = ORM::factory('Conference' , $conference_id);
 			$venue_orm = ORM::factory('Venue' , $conference_orm->get('venue'));
-			$address_orm = ORM::factory('Address' , $venue_orm->get('address'));
-			$seminar_orm = ORM::factory('Seminar')->where('conference' , '=' , $conference_id)->find();
+			$address_orm = ORM::factory('Address' , $venue_orm->get('address_id'));
+			$seminar_orm = ORM::factory('Seminar')->where('conference_id' , '=' , $conference_id)->find();
 			$organization_orm = ORM::factory('Organization' , $conference_orm->get('organizer'));
 			
 
@@ -985,13 +985,13 @@ class Controller_Conference extends Controller {
 			$organization_orm->values($data['Organization'])->save();
 			$conference_orm->values($data['Conference'])->save();
 
-			$query = "DELETE FROM category_conference WHERE conference='".$conference_id."'";
+			$query = "DELETE FROM category_conference WHERE conference_id='".$conference_id."'";
 			$result = DB::query(Database::DELETE , $query)->execute();
 
 			foreach ($data['Category'] as $category) 
 			{
 				$category_conference = ORM::factory('CategoryConference');
-				$category['conference'] = $conference_id;
+				$category['conference_id'] = $conference_id;
 				Log::instance()->add(Log::INFO, 'Category data create: :message', array('message', print_r($data['Category'], true)));
 				$category_conference->values($category)->create();
 			}
@@ -1080,14 +1080,14 @@ class Controller_Conference extends Controller {
 
 		$registration_orm = ORM::factory('Registration')->where('conference_id' , '=' , $id)->find();
 
-		$category_orm = ORM::factory('CategoryConference')->where('conference' , '=' , $id)->find();
+		$category_orm = ORM::factory('CategoryConference')->where('conference_id' , '=' , $id)->find();
 
 		$query = "SELECT tags.* FROM tags, conference_tag WHERE conference_tag.conference_id='".$id."' AND conference_tag.tag_id=tags.id";
 		$result = DB::query(Database::SELECT , $query)->execute();
 
 		$venue_orm = ORM::factory('Venue' , $conference_orm->get('venue'));
 
-		$address_orm = ORM::factory('Address' , $venue_orm->get('address'));
+		$address_orm = ORM::factory('Address' , $venue_orm->get('address_id'));
 
 		$country_orm = ORM::factory('Country')->where('code' , '=' , $address_orm->get('country'))->find();
 			
@@ -1126,7 +1126,7 @@ class Controller_Conference extends Controller {
 		$view->reg_end_date = $reg_end_date;
 		$view->organizer = $organization_orm->get('name');
 		$view->website = $conference_orm->get('website');
-		$view->category = $category_orm->get('category');
+		$view->category = $category_orm->get('category_id');
 		$view->tags = $result;
 		$view->deadline = $deadline;
 		$view->accept_notify = $accept_notify;
@@ -1183,7 +1183,7 @@ class Controller_Conference extends Controller {
 			
 			$conference_orm = ORM::factory('Conference' , $conference_id);
 			$venue_orm = ORM::factory('Venue' , $conference_orm->get('venue'));
-			$address_orm = ORM::factory('Address' , $venue_orm->get('address'));
+			$address_orm = ORM::factory('Address' , $venue_orm->get('address_id'));
 			$registration_orm = ORM::factory('Registration')->where('conference_id' , '=' , $conference_id)->find();
 			$organization_orm = ORM::factory('Organization' , $conference_orm->get('organizer'));
 
@@ -1192,13 +1192,13 @@ class Controller_Conference extends Controller {
 			$organization_orm->values($data['Organization'])->save();
 			$conference_orm->values($data['Conference'])->save();
 
-			$query = "DELETE FROM category_conference WHERE conference='".$conference_id."'";
+			$query = "DELETE FROM category_conference WHERE conference_id='".$conference_id."'";
 			$result = DB::query(Database::DELETE , $query)->execute();
 
 			foreach ($data['Category'] as $category) 
 			{
 				$category_conference = ORM::factory('CategoryConference');
-				$category['conference'] = $conference_id;
+				$category['conference_id'] = $conference_id;
 				Log::instance()->add(Log::INFO, 'Category data create: :message', array('message', print_r($data['Category'], true)));
 				$category_conference->values($category)->create();
 			}

@@ -2,5 +2,5 @@
 
 class Model_File extends ORM {
 
-	protected $_table_name = 'event_file';
+	protected $_table_name = 'conference_file';
 }

@@ -7,11 +7,11 @@ class Model_Session extends ORM {
 	protected $_has_many = array(
 		'rooms' => array(
 			'model' => 'Room',
-			'foreign_key' => 'conference_session'
+			'foreign_key' => 'conference_session_id'
 		),
 		'timetables' => array(
 			'model' => 'Time',
-			'foreign_key' => 'conference_session'
+			'foreign_key' => 'conference_session_id'
 		),
 
 	);
@@ -19,7 +19,7 @@ class Model_Session extends ORM {
 	protected $_belong_to = array(
 		'conference' => array(
 			'model' => 'Conference',
-			'foreign_key' => 'event'
+			'foreign_key' => 'conference_id'
 		),
 	);
 

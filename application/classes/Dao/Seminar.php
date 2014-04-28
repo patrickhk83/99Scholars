@@ -6,7 +6,7 @@ class Dao_Seminar {
 	{
 		$seminar = ORM::factory('Seminar');
 
-		$seminar->conference = $conf_id;
+		$seminar->conference_id = $conf_id;
 		$seminar->speaker = $speaker;
 		$seminar->abstract = $abstract;
 
@@ -18,7 +18,7 @@ class Dao_Seminar {
 	public function get_by_conference_id($conf_id)
 	{
 		$seminar = ORM::factory('Seminar')
-						->where('conference', '=', $conf_id)
+						->where('conference_id', '=', $conf_id)
 						->find();
 
 		return $seminar;
