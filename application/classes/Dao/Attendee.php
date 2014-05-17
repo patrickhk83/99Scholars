@@ -6,8 +6,8 @@ class Dao_Attendee {
 	{
 		$attendee = ORM::factory('Attendee');
 
-		$attendee->user_id = $user_id;
-		$attendee->conference_id = $conference_id;
+		$attendee->user = $user_id;
+		$attendee->conference = $conference_id;
 
 		$attendee->save();
 		return $attendee->pk();
@@ -16,7 +16,7 @@ class Dao_Attendee {
 	public function get_attendee_list($conference_id)
 	{
 		$attendees = ORM::factory('Attendee')
-						->where('conference_id', '=', $conference_id)
+						->where('conference', '=', $conference_id)
 						->find_all();
 
 		return $attendees;
@@ -25,8 +25,8 @@ class Dao_Attendee {
 	public function delete($user_id, $conference_id)
 	{
 		$query = DB::delete('attendee')
-					->where('user_id', '=', $user_id)
-					->where('conference_id', '=', $conference_id);
+					->where('user', '=', $user_id)
+					->where('conference', '=', $conference_id);
 
 		$query->execute();
 	}

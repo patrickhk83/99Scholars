@@ -13,7 +13,7 @@ class Service_Schedule {
 	public function get_session_data($conference_id)
 	{
 		$Session = ORM::factory('Session')
-						->where('conference_id', '=', $conference_id)
+						->where('event', '=', $conference_id)
 						->find_all();
 		return $Session;
 	}
@@ -22,8 +22,8 @@ class Service_Schedule {
 	{
 		$rooms = ORM::factory('Room')
 			->join('conference_session', 'LEFT')
-			->on('room.conference_session_id', '=', 'conference_session.id')
-			->where('conference_session.conference_id', '=', DB::expr($conference_id))
+			->on('room.conference_session', '=', 'conference_session.id')
+			->where('conference_session.event', '=', DB::expr($conference_id))
 			->find_all();
 			     
 		return $rooms;
@@ -32,7 +32,7 @@ class Service_Schedule {
 	public function get_room_session_list($session_id)
 	{
 		$rooms = ORM::factory('Room')
-			->where('conference_session_id', '=', $session_id)
+			->where('conference_session', '=', $session_id)
 			->find_all();
 			     
 		return $rooms;
@@ -41,7 +41,7 @@ class Service_Schedule {
 	public function get_time_session_list($session_id)
 	{
 		$time = ORM::factory('Time')
-			->where('conference_session_id', '=', $session_id)
+			->where('conference_session', '=', $session_id)
 			->find_all();
 			     
 		return $time;
@@ -51,8 +51,8 @@ class Service_Schedule {
 	{
 		$rooms = ORM::factory('Time')
 			->join('conference_session', 'LEFT')
-			->on('time.conference_session_id', '=', 'conference_session.id')
-			->where('conference_session.conference_id', '=', DB::expr($conference_id))
+			->on('time.conference_session', '=', 'conference_session.id')
+			->where('conference_session.event', '=', DB::expr($conference_id))
 			->find_all();
 			     
 		return $rooms;
@@ -64,8 +64,8 @@ class Service_Schedule {
 			->join('conference_time_table', 'LEFT')
 			->on('timeslot.time_table', '=', 'conference_time_table.id')
 			->join('conference_session', 'LEFT')
-			->on('conference_time_table.conference_session_id', '=', 'conference_session.id')
-			->where('conference_session.conference_id', '=', DB::expr($conference_id))
+			->on('conference_time_table.conference_session', '=', 'conference_session.id')
+			->where('conference_session.event', '=', DB::expr($conference_id))
 			->find_all();
 			     
 		return $presentations;
@@ -100,28 +100,28 @@ class Service_Schedule {
 	
 	public function get_all_session_list($conf_id)
 	{
-		$query = DB::select('date')->from('conference_session')->where('conference_id', '=', $conf_id)->distinct('date');
+		$query = DB::select('date')->from('conference_session')->where('event', '=', $conf_id)->distinct('date');
 		
 		return $query->execute();
 	}
 	
 	public function get_all_ids_session($conf_id, $date)
 	{
-		$query = DB::select('id','date')->from('conference_session')->where('conference_id', '=', $conf_id)->where('date', '=', $date);
+		$query = DB::select('id','date')->from('conference_session')->where('event', '=', $conf_id)->where('date', '=', $date);
 		
 		return $query->execute();
 	}
 	
 	public function get_all_room_list($session_id)
 	{
-		$query = DB::select('id','room_name')->from('conference_room')->where('conference_session_id', '=', $session_id);
+		$query = DB::select('id','room_name')->from('conference_room')->where('conference_session', '=', $session_id);
 		
 		return $query->execute();
 	}
 	
 	public function get_all_time_list($session_id)
 	{
-		$query = DB::select('id','start_time','end_time')->from('conference_time_table')->where('conference_session_id', '=', $session_id)->order_by('start_time', 'asc')->order_by('end_time', 'desc')->group_by('start_time');
+		$query = DB::select('id','start_time','end_time')->from('conference_time_table')->where('conference_session', '=', $session_id)->order_by('start_time', 'asc')->order_by('end_time', 'desc')->group_by('start_time');
 		
 		return $query->execute();
 	}

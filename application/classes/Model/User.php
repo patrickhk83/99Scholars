@@ -8,20 +8,20 @@ class Model_User extends Model_Auth_User {
     	'attendee' => array(
         	'model'       => 'Conference',
         	'through' => 'attendee',
-        	'far_key' => 'conference_id',
-        	'foreign_key' => 'user_id',
+        	'far_key' => 'conference',
+        	'foreign_key' => 'user',
     	),
     	'following' => array(
     		'model' => 'User',
     		'through' => 'follow_people',
-    		'far_key' => 'follow_user_id',
-    		'foreign_key' => 'user_id'
+    		'far_key' => 'follow_user',
+    		'foreign_key' => 'user'
     	),
     	'follower' => array(
     		'model' => 'User',
     		'through' => 'follow_people',
-    		'far_key' => 'user_id',
-    		'foreign_key' => 'follow_user_id'
+    		'far_key' => 'user',
+    		'foreign_key' => 'follow_user'
     	),
     	//for Kohana's Auth model
     	'user_tokens' => array('model' => 'User_Token'),
@@ -36,8 +36,8 @@ class Model_User extends Model_Auth_User {
         	'foreign_key' => 'user',
     	),
     	'degree' => array(
-        	'model'       => 'Degree',
-        	'foreign_key' => 'user_id',
+        	'model'       => 'UserDegree',
+        	'foreign_key' => 'user',
     	),
     	'contact' => array(
         	'model'       => 'UserContact',

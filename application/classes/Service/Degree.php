@@ -12,9 +12,9 @@ class Service_Degree {
 		foreach ($results->as_array() as $result) {
 			$degree = array();
 
-			$degree['type'] = $this->get_degree_name($result->get('degree_id'));
+			$degree['type'] = $this->get_degree_name($result->get('degree'));
 			$degree['major'] = $result->get('major');
-			$degree['university'] = $this->get_institute_name($result->get('organization_id'));
+			$degree['university'] = $this->get_institute_name($result->get('institute'));
 			$degree['year'] = $result->get('graduate_year');
 
 			array_push($degrees, $degree);

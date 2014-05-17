@@ -7,7 +7,7 @@ class Dao_Message {
 		/*Insert data into pm_conversation*/
 		$conversation = ORM::factory('Conversation');
 		
-		$conversation->owner_id = $user_id;
+		$conversation->owner = $user_id;
 		$conversation->created_date = time();
 		
 		$conversation->save();

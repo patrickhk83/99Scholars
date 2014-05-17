@@ -26,33 +26,33 @@ class Service_UserAction {
 			$new_activity->action_type = $controller_name;
 			$new_activity->component_type = $action_name;
 			$new_activity->save();
-			$activity_id = $new_activity->id;
+			$action_id = $new_activity->id;
 		}
 		else
 		{
-			$activity_id = $activity->id;
+			$action_id = $activity->id;
 		}
 
-		$user_action = ORM::factory('UserAction');
+		$users_actions = ORM::factory('UserAction');
 		$current_user_id = Service_Login::get_user_in_session();		
 		$current_time = date("H:i:s d/m/Y" , time());
 		$ip_addr = $this->getRealIpAddr();
 
 		if(!is_null($current_user_id))
-			$user_action->user_id = $current_user_id;
+			$users_actions->user_id = $current_user_id;
 		else 
-			$user_action->user_id = -1;
+			$users_actions->user_id = -1;
 
 
-		$user_action->activity_id = $activity_id;
-		$user_action->action_time = $current_time;
-		$user_action->ip_addr = $ip_addr;
-		$user_action->string1 = $string1;
-		$user_action->string2 = $string2;
-		$user_action->number1 = $number1;
-		$user_action->number2 = $number2;
+		$users_actions->action_id = $action_id;
+		$users_actions->action_time = $current_time;
+		$users_actions->ip_addr = $ip_addr;
+		$users_actions->string1 = $string1;
+		$users_actions->string2 = $string2;
+		$users_actions->number1 = $number1;
+		$users_actions->number2 = $number2;
 
-		$user_action->save();
+		$users_actions->save();
 	}
 
 	public function get_actions()
@@ -63,7 +63,7 @@ class Service_UserAction {
 	public function get_guests_actions($bCounter , $page_num , $per_page , $action_filter , $start_date)
 	{
 		$offset = ($page_num - 1) * $per_page;
-		$from_table_str = "FROM user_action, activities ";
+		$from_table_str = "FROM users_actions, activities ";
 		if(strcmp($action_filter , "All") != 0)
 			$action_filter_query = "activities.action_type='".$action_filter."'";
 		else
@@ -72,11 +72,11 @@ class Service_UserAction {
 		{
 			$start_date_str = $start_date;
 			$start_date_str = str_replace("-", "/" , $start_date_str);
-			$start_date_query = "user_action.action_time LIKE '%".$start_date_str."%'";
+			$start_date_query = "users_actions.action_time LIKE '%".$start_date_str."%'";
 		}
 		else
 			$start_date_query = "";
-		$order_by_query = "ORDER BY user_action.id DESC LIMIT ".$offset.", ".$per_page;
+		$order_by_query = "ORDER BY users_actions.id DESC LIMIT ".$offset.", ".$per_page;
 
 		if($bCounter)
 		{
@@ -84,12 +84,12 @@ class Service_UserAction {
 		}
 		else
 		{
-			$query_str = "SELECT user_action.*, activities.component_type as component_type ";
+			$query_str = "SELECT users_actions.*, activities.component_type as component_type ";
 		}	
 		$query_str .= $from_table_str;
 		$query_str .= "WHERE ";
-		$query_str .= "user_action.user_id='-1' AND ";
-		$query_str .= "user_action.activity_id=activities.id";
+		$query_str .= "users_actions.user_id='-1' AND ";
+		$query_str .= "users_actions.action_id=activities.id";
 		if($action_filter_query != "") $query_str .= " AND ".$action_filter_query;
 		//if($user_filter_query != "") $query_str .= " AND ".$user_filter_query;
 		if($start_date_query != "") $query_str .= " AND ".$start_date_query;
@@ -101,10 +101,10 @@ class Service_UserAction {
 		return $result;
 	}
 
-	public function get_user_action($bCounter , $page_num , $per_page , $action_filter , $user_filter , $start_date)
+	public function get_users_actions($bCounter , $page_num , $per_page , $action_filter , $user_filter , $start_date)
 	{
 		$offset = ($page_num - 1) * $per_page;
-		$from_table_str = "FROM user_action, user, activities ";
+		$from_table_str = "FROM users_actions, user, activities ";
 
 		if(strcmp($action_filter , "All") != 0)
 			$action_filter_query = "activities.action_type='".$action_filter."'";
@@ -128,12 +128,12 @@ class Service_UserAction {
 		{
 			$start_date_str = $start_date;
 			$start_date_str = str_replace("-", "/" , $start_date_str);
-			$start_date_query = "user_action.action_time LIKE '%".$start_date_str."%'";
+			$start_date_query = "users_actions.action_time LIKE '%".$start_date_str."%'";
 		}
 		else
 			$start_date_query = "";
 
-		$order_by_query = "ORDER BY user_action.id DESC LIMIT ".$offset.", ".$per_page;
+		$order_by_query = "ORDER BY users_actions.id DESC LIMIT ".$offset.", ".$per_page;
 
 		if($bCounter)
 		{
@@ -141,13 +141,13 @@ class Service_UserAction {
 		}
 		else
 		{
-			$query_str = "SELECT user_action.*, user.firstname as firstname, user.lastname as lastname, user.email as email, activities.component_type as component_type ";
+			$query_str = "SELECT users_actions.*, user.firstname as firstname, user.lastname as lastname, user.email as email, activities.component_type as component_type ";
 		}	
 
 		$query_str .= $from_table_str;
 		$query_str .= "WHERE ";
-		$query_str .= "user_action.user_id=user.id AND ";
-		$query_str .= "user_action.activity_id=activities.id";
+		$query_str .= "users_actions.user_id=user.id AND ";
+		$query_str .= "users_actions.action_id=activities.id";
 		if($action_filter_query != "") $query_str .= " AND ".$action_filter_query;
 		if($user_filter_query != "") $query_str .= " AND ".$user_filter_query;
 		if($start_date_query != "") $query_str .= " AND ".$start_date_query;

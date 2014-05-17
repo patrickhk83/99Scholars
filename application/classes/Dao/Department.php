@@ -2,13 +2,13 @@
 
 class Dao_Department {
 
-	public function create($name, $description, $organization_id)
+	public function create($name, $description, $organization)
 	{
 		$department = ORM::factory('Department');
 
 		$department->name = $name;
 		$department->description = $description;
-		$department->organization_id = $organization_id;
+		$department->organization = $organization;
 		$department->save();
 
 		return $department->pk();

@@ -17,8 +17,8 @@ class Service_UserFollow {
 	{
 		$follow_people = ORM::factory('FollowPeople');
 
-		$follow_people->user_id = $user;
-		$follow_people->follow_user_id = $follow_user;
+		$follow_people->user = $user;
+		$follow_people->follow_user = $follow_user;
 		$follow_people->created_by = $user;
 		$follow_people->created_date = time();
 
@@ -28,8 +28,8 @@ class Service_UserFollow {
 	public function unfollow($user, $follow_user)
 	{
 		$follow_people = ORM::factory('FollowPeople')
-				->where('user_id', '=', $user)
-				->and_where('follow_user_id', '=', $follow_user)
+				->where('user', '=', $user)
+				->and_where('follow_user', '=', $follow_user)
 				->find();
 
 		if($follow_people->loaded())
@@ -46,8 +46,8 @@ class Service_UserFollow {
 		}
 
 		$follow_people = ORM::factory('FollowPeople')
-				->where('user_id', '=', $user)
-				->and_where('follow_user_id', '=', $follow_user)
+				->where('user', '=', $user)
+				->and_where('follow_user', '=', $follow_user)
 				->find();
 
 		if($follow_people->loaded())

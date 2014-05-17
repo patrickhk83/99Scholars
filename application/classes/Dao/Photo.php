@@ -21,7 +21,7 @@ class Dao_Photo {
 		
 		$photo = ORM::factory('Photo');
 		
-		$photo->conference_id = $conf_id;
+		$photo->event = $conf_id;
 		$photo->photo_name = $filename;
 		$photo->caption= $desc;
 		$photo->size = $filesize;
@@ -38,7 +38,7 @@ class Dao_Photo {
 	{
 		$Photos = ORM::factory('Photo')
 						->where('created_by', '=', $user_id)
-						->where('conference_id', '=', $conference_id)
+						->where('event', '=', $conference_id)
 						->find_all();
 
 		return $Photos;
@@ -47,7 +47,7 @@ class Dao_Photo {
 	public function get_all_photo_list($conference_id)
 	{
 		$Photos = ORM::factory('Photo')
-						->where('conference_id', '=', $conference_id)
+						->where('event', '=', $conference_id)
 						->find_all();
 
 		return $Photos;
@@ -57,17 +57,17 @@ class Dao_Photo {
 	{
 		if(Service_Login::is_login() && Auth::instance()->get_user()->is_admin())
         {
-			$query = DB::delete('conference_photo')
+			$query = DB::delete('event_photo')
 						->where('photo_name', '=', $photoname)
-						->where('conference_id', '=', $conf_id);
+						->where('event', '=', $conf_id);
 						
 
         }
         else
         {
-			$query = DB::delete('conference_photo')
+			$query = DB::delete('event_photo')
 						->where('photo_name', '=', $photoname)
-						->where('conference_id', '=', $conf_id)
+						->where('event', '=', $conf_id)
 						->where('created_by', '=', $user_id);
 		}				
 		$query->execute();
@@ -77,23 +77,23 @@ class Dao_Photo {
 	{
 		if(Service_Login::is_login() && Auth::instance()->get_user()->is_admin())
         {
-			$query = DB::update('conference_photo')
+			$query = DB::update('event_photo')
 						->set(array(
 							'caption' => $desc,
 						))
 						->where('photo_name', '=', $photoname)
-						->where('conference_id', '=', $conf_id);
+						->where('event', '=', $conf_id);
 
 
 		}
 		else
 		{
-			$query = DB::update('conference_photo')
+			$query = DB::update('event_photo')
 						->set(array(
 							'caption' => $desc,
 						))
 						->where('photo_name', '=', $photoname)
-						->where('conference_id', '=', $conf_id)
+						->where('event', '=', $conf_id)
 						->where('created_by', '=', $user_id);
 		}
 		$query->execute();

@@ -6,7 +6,7 @@ class Service_Conference {
 	 * @var   Kohana_Cache instances
 	 */
 	protected static $instance = array();
- 
+
 	Protected $_conference;
 	Protected $_venue;
 	Protected $_organizer;
@@ -54,7 +54,7 @@ class Service_Conference {
 		if(isset($user_id) && $user_id !== NULL)
 		{
 			$attendee_field = ", d.id as booked ";
-			$attendee_join = "LEFT OUTER JOIN attendee d ON c.id = d.conference_id and d.user_id = ".$user_id." ";
+			$attendee_join = "LEFT OUTER JOIN attendee d ON c.id = d.conference and d.user = ".$user_id." ";
 		}
 
 		$sql = "select c.id, c.name, c.start_date, c.end_date, c.type, c.venue".$attendee_field." from conference as c ".$attendee_join;
@@ -72,7 +72,7 @@ class Service_Conference {
 
 		if($this->has_value($category))
 		{
-			$condition = $condition."(c.id in (select conference_id from category_conference where category_id in (".$category."))) ";
+			$condition = $condition."(c.id in (select conference from category_conference where category in (".$category."))) ";
 			$has_condition = true;
 		}
 
@@ -143,7 +143,7 @@ class Service_Conference {
 				$has_condition = true;
 			}
 
-			$condition = $condition."(c.venue in (select v.id from venue as v where v.address_id in (select a.id from address as a where a.country in (".$country.")))) ";
+			$condition = $condition."(c.venue in (select v.id from venue as v where v.address in (select a.id from address as a where a.country in (".$country.")))) ";
 		}
 
 		if($page == 1)
@@ -213,7 +213,7 @@ class Service_Conference {
 		if($nCount > 0) return TRUE;
 
 		$query = "SELECT COUNT(*) AS nCount FROM conference, venue, address WHERE ";
-		$query .= "conference.id='".$conf_id."' AND venue.id=conference.venue AND address.id=venue.address_id ";
+		$query .= "conference.id='".$conf_id."' AND venue.id=conference.venue AND address.id=venue.address ";
 		$query .= "AND (address.address LIKE '%".$search_text."%' OR ";
 		$query .= "address.city LIKE '%".$search_text."%' OR ";
 		$query .= "address.state LIKE '%".$search_text."%' OR ";
@@ -262,7 +262,7 @@ class Service_Conference {
 		if($nCount > 0) return TRUE;
 
 		$query = "SELECT COUNT(*) AS nCount FROM conference, venue, address WHERE ";
-		$query .= "conference.id='".$conf_id."' AND venue.id=conference.venue AND address.id=venue.address_id ";
+		$query .= "conference.id='".$conf_id."' AND venue.id=conference.venue AND address.id=venue.address ";
 		$query .= "AND (";
 
 		$nCount1 = 0;
@@ -282,7 +282,7 @@ class Service_Conference {
 		if($nCount > 0) return TRUE;
 
 		$query = "SELECT COUNT(*) AS nCount FROM conference AS c, venue AS v, address AS a ";
-		$query .= "WHERE c.id='".$conf_id."' AND v.id=c.venue AND a.id=v.address_id AND ";
+		$query .= "WHERE c.id='".$conf_id."' AND v.id=c.venue AND a.id=v.address AND ";
 
 		$nCount1 = 0;	
 		foreach($search_text_array as $element)
@@ -435,7 +435,7 @@ class Service_Conference {
 
 		$model['name'] = $venue->get('name');
 
-		$address = ORM::factory('Address', $venue->get('address_id'));
+		$address = ORM::factory('Address', $venue->get('address'));
 
 		$model['address'] = $address->get('address');
 		$model['city'] = $address->get('city');
@@ -473,13 +473,13 @@ class Service_Conference {
 	protected function get_categories($conf_id)
 	{
 		$cat_confs = ORM::factory('CategoryConference')
-						->where('conference_id', '=', $conf_id)
+						->where('conference', '=', $conf_id)
 						->find_all();
 
 		$cat_array = array();
 
 		foreach ($cat_confs as $cat_conf) {
-			array_push($cat_array, $this->get_category_name($cat_conf->get('category_id')));
+			array_push($cat_array, $this->get_category_name($cat_conf->get('category')));
 		}
 
 		return $cat_array;
@@ -517,7 +517,7 @@ class Service_Conference {
 			//create
 			Log::instance()->add(Log::INFO, 'address data create: :message', array('message', print_r($data['Address'], true)));
 			$address = $this->_address->values($data['Address'])->create();
-			$data['Venue']['address_id'] = $this->_address->pk();
+			$data['Venue']['address'] = $this->_address->pk();
 			$this->_venue->values($data['Venue'])->save();
 
 			Log::instance()->add(Log::INFO, 'Organization data save: :message', array('message', print_r($data['Organization'], true)));
@@ -540,7 +540,7 @@ class Service_Conference {
 			foreach ($data['Category'] as $category) 
 			{
 				$category_conference = ORM::factory('CategoryConference');
-				$category['conference_id'] = $confernce_id;
+				$category['conference'] = $confernce_id;
 				Log::instance()->add(Log::INFO, 'Category data create: :message', array('message', print_r($data['Category'], true)));
 				$category_conference->values($category)->create();
 			}
@@ -558,7 +558,7 @@ class Service_Conference {
 			if($data['Conference']['type'] == 2)
 			{
 				Log::instance()->add(Log::INFO, 'Seminar data save: :message', array('message', print_r($data['Seminar'], true)));
-				$data['Seminar']['conference_id'] = $confernce_id;
+				$data['Seminar']['conference'] = $confernce_id;
 				$this->_seminar->values($data['Seminar'])->save();
 			}
 			$db->commit();
@@ -600,7 +600,7 @@ class Service_Conference {
 
 	public function get_conference_user_attend($user_id)
 	{
-		$sql = 'select * from conference as c where c.id in (select conference from attendee as a where a.user_id = '.$user_id.')';
+		$sql = 'select * from conference as c where c.id in (select conference from attendee as a where a.user = '.$user_id.')';
 
 		$results = $this->convert_for_listing(
 						DB::query(Database::SELECT, $sql)
@@ -712,7 +712,7 @@ class Service_Conference {
 
 		$query = "SELECT c.id AS seminar_id, c.name AS seminar_name FROM conference AS c, venue AS v, address AS a ";
 
-		$query .= "WHERE c.type='2' AND v.id=c.venue AND a.id=v.address_id AND ";
+		$query .= "WHERE c.type='2' AND v.id=c.venue AND a.id=v.address AND ";
 
 		$nCount = 0;
 		foreach($search_text_array as $element)

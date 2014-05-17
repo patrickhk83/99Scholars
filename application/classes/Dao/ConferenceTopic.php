@@ -6,7 +6,7 @@ class Dao_ConferenceTopic {
 	{
 		$topic = ORM::factory('ConferenceTopic');
 
-		$topic->conference_id = $conference_id;
+		$topic->conference = $conference_id;
 		$topic->title = $title;
 		$topic->content = $content;
 		$topic->created_by = $user_id;
@@ -18,9 +18,9 @@ class Dao_ConferenceTopic {
 
 	public function get_topic_list_with_author($conference_id)
 	{
-		$sql = 'SELECT c.id, c.conference_id, c.title, c.content, c.created_date, u.id AS user_id, u.firstname, u.lastname FROM conference_topic c '
+		$sql = 'SELECT c.id, c.conference, c.title, c.content, c.created_date, u.id AS user_id, u.firstname, u.lastname FROM conference_topic c '
 				.'LEFT OUTER JOIN user u ON c.created_by = u.id '
-				.'WHERE c.conference_id = '.$conference_id;
+				.'WHERE c.conference = '.$conference_id;
 
 		return DB::query(Database::SELECT, $sql)
 					->execute()
@@ -29,7 +29,7 @@ class Dao_ConferenceTopic {
 
 	public function get_with_author($id)
 	{
-		$query = "SELECT c.id, c.conference_id, c.title, c.content, c.created_date, ";
+		$query = "SELECT c.id, c.conference, c.title, c.content, c.created_date, ";
 		$query .= "u.id AS user_id, u.firstname, u.lastname ";
 		$query .= "FROM conference_topic c, users AS u ";
 		$query .= "WHERE c.id='".$id."' AND u.id=c.created_by";

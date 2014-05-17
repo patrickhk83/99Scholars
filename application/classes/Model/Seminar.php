@@ -23,7 +23,7 @@ class Model_Seminar extends ORM {
 	protected $_belongs_to = array(
     	'organizer' => array(
         	'model'       => 'Organization',
-        	'foreign_key' => 'organization_id',
+        	'foreign_key' => 'university',
     	),
 	);
 

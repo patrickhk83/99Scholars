@@ -6,10 +6,10 @@ class Dao_Degree {
 	{
 		$degree = ORM::factory('Degree');
 
-		$degree->user_id = $user_id;
-		$degree->degree_id = $degree_type;
+		$degree->user = $user_id;
+		$degree->degree = $degree_type;
 		$degree->major = $major;
-		$degree->organization_id = $institute;
+		$degree->institute = $institute;
 		$degree->graduate_year = $graduate_year;
 
 		$degree->save();
@@ -20,7 +20,7 @@ class Dao_Degree {
 	public function get_by_user_id($user_id, $recent_first = FALSE)
 	{
 		$query = ORM::factory('Degree')
-						->where('user_id', '=', $user_id);
+						->where('user', '=', $user_id);
 		
 		if($recent_first)
 		{

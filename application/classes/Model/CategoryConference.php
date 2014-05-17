@@ -7,7 +7,7 @@ class Model_CategoryConference extends ORM {
 	public function rules()
 	{
 		return array(
-			'category_id' => array(
+			'category' => array(
 				array('not_empty')
         	),
     	);
@@ -15,7 +15,7 @@ class Model_CategoryConference extends ORM {
 	public function filters()
 	{
 		return array(
-			'category_id' => array(
+			'category' => array(
 	            array('trim'),
 	        )
 	    );
@@ -24,7 +24,7 @@ class Model_CategoryConference extends ORM {
 	protected $_belongs_to = array(
     	'conference_category' => array(
         	'model'       => 'ConferenceCategory',
-        	'foreign_key' => 'category_id',
+        	'foreign_key' => 'category',
     	),
 	);
 }

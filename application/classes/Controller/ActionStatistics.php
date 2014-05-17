@@ -29,8 +29,8 @@ class Controller_ActionStatistics extends Controller {
 		else $view->start_date = $start_date;
 
 
-		$user_action = new Service_UserAction();
-		$actions = $user_action->get_actions();
+		$users_actions = new Service_UserAction();
+		$actions = $users_actions->get_actions();
 
 		$str_options = "";
 
@@ -42,10 +42,10 @@ class Controller_ActionStatistics extends Controller {
 			$str_options .= ">".$act->action_type."</option>";
 		}
 
-		$total_record = $user_action->get_user_action(true , $page_num , $per_page , $action_filter , $user_filter , $start_date);
+		$total_record = $users_actions->get_users_actions(true , $page_num , $per_page , $action_filter , $user_filter , $start_date);
 		
 		
-		$pagination_link = $user_action->custom_bootstrap_pagination(
+		$pagination_link = $users_actions->custom_bootstrap_pagination(
 																		"index",		
 																		$page_num , 
 																		$per_page , 
@@ -56,10 +56,10 @@ class Controller_ActionStatistics extends Controller {
 																	);
 		$view->link = $pagination_link;
 
-		$user_action_records = $user_action->get_user_action(false , $page_num , $per_page , $action_filter , $user_filter , $start_date);
+		$users_actions_records = $users_actions->get_users_actions(false , $page_num , $per_page , $action_filter , $user_filter , $start_date);
 		$str_table = "";
 		$nCount = ($page_num - 1) * $per_page;
-		foreach($user_action_records as $record)
+		foreach($users_actions_records as $record)
 		{
 			$nCount ++;
 			$str_table .= "<tr><td>".$record['user_id']."</td><td>".$record['ip_addr']."</td><td>";
@@ -101,8 +101,8 @@ class Controller_ActionStatistics extends Controller {
 		else $view->start_date = $start_date;
 
 
-		$user_action = new Service_UserAction();
-		$actions = $user_action->get_actions();
+		$users_actions = new Service_UserAction();
+		$actions = $users_actions->get_actions();
 
 		$str_options = "";
 
@@ -114,11 +114,11 @@ class Controller_ActionStatistics extends Controller {
 			$str_options .= ">".$act->action_type."</option>";
 		}
 		$view->str_options = $str_options;
-		$total_record = $user_action->get_guests_actions(true , $page_num , $per_page , $action_filter , $start_date);
+		$total_record = $users_actions->get_guests_actions(true , $page_num , $per_page , $action_filter , $start_date);
 	
 		
 		
-		$pagination_link = $user_action->custom_bootstrap_pagination(
+		$pagination_link = $users_actions->custom_bootstrap_pagination(
 																		"guests",
 																		$page_num , 
 																		$per_page , 
@@ -130,11 +130,11 @@ class Controller_ActionStatistics extends Controller {
 
 
 		$view->link = $pagination_link;
-		$user_action_records = $user_action->get_guests_actions(false , $page_num , $per_page , $action_filter , $start_date);
+		$users_actions_records = $users_actions->get_guests_actions(false , $page_num , $per_page , $action_filter , $start_date);
 		$str_table = "";
 		$nCount = ($page_num - 1) * $per_page;
 
-		foreach($user_action_records as $record)
+		foreach($users_actions_records as $record)
 		{
 			$nCount ++;
 			$str_table .= "<tr><td>".$nCount."</td><td>".$record['ip_addr']."</td><td>Guest</td><td>";
@@ -150,8 +150,8 @@ class Controller_ActionStatistics extends Controller {
 
 	public function action_suggest_user()
 	{
-		$user_action = new Service_UserAction();
-		$suggests = $user_action->suggest_user_list($this->request->post('term'));
+		$users_actions = new Service_UserAction();
+		$suggests = $users_actions->suggest_user_list($this->request->post('term'));
 		$suggested_list = array();
 		foreach ($suggests as $suggest) {
 			$suggested_list[] = $suggest->get('firstname')." ".$suggest->get('lastname');	
