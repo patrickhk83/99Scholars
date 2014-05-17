@@ -13,8 +13,7 @@ class Controller_Comment extends Controller {
 	}
 	public function action_delete() {
 		$comment_id = $this->request->param('id');
-		//$comment = new Model_Comment($comment_id);
-		$comment = ORM::factory('comment' , $comment_id);
+		$comment = new Model_Comment($comment_id);
 		$comment->delete();
 		$this->redirect('/blogarticles', 302);
 	}
