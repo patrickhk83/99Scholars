@@ -41,6 +41,7 @@
             <li><a href="http://facebook.com/99scholars" target="_blank"><?= HTML::image('img/fb.png') ?></a></li>
             <li><a href="http://twitter.com/99scholars"  target="_blank"><?= HTML::image('img/twitter.png') ?></li>
             <li><a href="http://www.linkedin.com/company/99scholars" target="_blank"><?= HTML::image('img/linkedin.png') ?></a></li>
+            <li><a href="https://plus.google.com/112757686835720168415" rel="publisher" target="_blank"><?= HTML::image('img/google_plus.png') ?></a></li>
           </ul>   
           <div class="clearfix"></div>
         </div>

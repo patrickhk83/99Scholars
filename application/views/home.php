@@ -4,7 +4,7 @@
       
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas hidden-xs" id="sidebar" role="navigation">
           <div class="well sidebar-nav filter">
-            <form role="form">
+            <form role="form">            	
               <ul class="nav"> 
                 <li><h5 class="font-gothic">Filter by Subject</h5></li>
                 <li class="criteria-container">
